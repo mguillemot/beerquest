@@ -11,6 +11,7 @@ import flash.events.TimerEvent;
 import flash.geom.Point;
 import flash.utils.Timer;
 
+import mx.collections.ArrayCollection;
 import mx.core.UIComponent;
 
 public class GameBoard extends UIComponent {
@@ -93,6 +94,7 @@ public class GameBoard extends UIComponent {
                 break;
             case 82: // r
                 regenBoard();
+                _collectedTokens.addItem({type:TokenType.BLOND_BEER, big:(Math.random() < 0.5)});
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
@@ -525,6 +527,11 @@ public class GameBoard extends UIComponent {
         dispatchEvent(new Event("scoreChanged"));
     }
 
+    [Bindable]
+    public function get collectedTokens():ArrayCollection {
+        return _collectedTokens;
+    }
+
     private var _board:Array = new Array();
     private var _selectedX:int = -1;
     private var _selectedY:int = -1;
@@ -537,5 +544,6 @@ public class GameBoard extends UIComponent {
     private var _currentActionStart:int = 0;
     private var _availableMoves:int;
     private var _score:Number = 0;
+    private var _collectedTokens:ArrayCollection = new ArrayCollection();
 }
 }

@@ -15,4 +15,5 @@
     <mx:Label text="Score: {board.score}" x="10" y="10"/>
     <mx:Label text="Available moves: {board.availableMoves}" x="200" y="10"/>
     <local:GameBoard x="10" y="40" width="300" height="300" id="board"/>
+    <local:TokenCollectionView x="10" y="350" width="200" height="40" collection="{board.collectedTokens}"/>
 </s:Application>
