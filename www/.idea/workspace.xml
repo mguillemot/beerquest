@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="8f48027e-07ce-4b9f-9c55-b89931362e9f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/BeerQuest.iml" afterPath="$PROJECT_DIR$/.idea/BeerQuest.iml" />
     </list>
     <ignored path="BeerQuest.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,7 +66,7 @@
       <file leaf-file-name="Gemfile" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Gemfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="71" selection-start="197" selection-end="197" vertical-scroll-proportion="0.43001688">
+            <state line="7" column="13" selection-start="97" selection-end="97" vertical-scroll-proportion="0.20067453">
               <folding />
             </state>
           </provider>
@@ -447,7 +444,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="71" selection-start="197" selection-end="197" vertical-scroll-proportion="0.43001688">
+        <state line="7" column="13" selection-start="97" selection-end="97" vertical-scroll-proportion="0.20067453">
           <folding />
         </state>
       </provider>
