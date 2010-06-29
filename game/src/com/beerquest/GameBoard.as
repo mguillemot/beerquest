@@ -1,6 +1,8 @@
 package com.beerquest {
 import com.greensock.TweenLite;
 
+import com.greensock.easing.Linear;
+
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
@@ -14,7 +16,7 @@ import mx.core.UIComponent;
 public class GameBoard extends UIComponent {
 
     private static const EXPLODE_DURATION_FRAMES:int = 10;
-    private static const SWAP_TIME_MS:Number = 500;
+    private static const SWAP_TIME_MS:Number = 400;
     private static const FALL_TIME_MS:Number = 200;
 
     public function GameBoard() {
@@ -38,14 +40,46 @@ public class GameBoard extends UIComponent {
             regenBoard();
         });
         addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-        //addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+        addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
     }
 
     private function onMouseUp(e:MouseEvent):void {
         var local:Point = globalToLocal(new Point(e.stageX, e.stageY));
+        if (_draggingX != -1 && _draggingY != -1) {
+            var lx:int = Math.floor(local.x / width * Constants.BOARD_SIZE);
+            var ly:int = Math.floor(local.y / height * Constants.BOARD_SIZE);
+            var dx:Number = lx - _draggingX;
+            var dy:Number = ly - _draggingY;
+            if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
+                // Horizontal drag
+                if (dx > 0 && _draggingX + 1 < Constants.BOARD_SIZE) {
+                    selectCell(_draggingX, _draggingY);
+                    swapTokens(_draggingX + 1, _draggingY);
+                } else if (dx < 0 && _draggingX - 1 >= 0) {
+                    selectCell(_draggingX, _draggingY);
+                    swapTokens(_draggingX - 1, _draggingY);
+                }
+            } else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
+                // Vertical drag
+                if (dy > 0 && _draggingY + 1 < Constants.BOARD_SIZE) {
+                    selectCell(_draggingX, _draggingY);
+                    swapTokens(_draggingX, _draggingY + 1);
+                } else if (dy < 0 && _draggingY - 1 >= 0) {
+                    selectCell(_draggingX, _draggingY);
+                    swapTokens(_draggingX, _draggingY - 1);
+                }
+            }
+        }
+        _draggingX = _draggingY = -1;
+    }
+
+    private function onMouseDown(e:MouseEvent):void {
+        var local:Point = globalToLocal(new Point(e.stageX, e.stageY));
         var x:int = Math.floor(local.x / width * Constants.BOARD_SIZE);
         var y:int = Math.floor(local.y / height * Constants.BOARD_SIZE);
+        _draggingX = x;
+        _draggingY = y;
         clickCell(x, y);
     }
 
@@ -158,6 +192,7 @@ public class GameBoard extends UIComponent {
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid swap coords: " + x + ":" + y;
         }
+        trace("swap(" + x + ":" + y + ")");
         _swapX = x;
         _swapY = y;
         var sx:int = _selectedX;
@@ -311,7 +346,7 @@ public class GameBoard extends UIComponent {
                         var upToken:Token = getToken(i, jj);
                         if (upToken != null) {
                             upToken.falling = true;
-                            TweenLite.to(upToken, FALL_TIME_MS / 1000, {y: (jj + 1) * height / Constants.BOARD_SIZE});
+                            TweenLite.to(upToken, FALL_TIME_MS / 1000, {y: (jj + 1) * height / Constants.BOARD_SIZE, ease:Linear.easeNone});
                         }
                     }
                     break;
@@ -495,6 +530,8 @@ public class GameBoard extends UIComponent {
     private var _selectedY:int = -1;
     private var _swapX:int = -1;
     private var _swapY:int = -1;
+    private var _draggingX:int = -1;
+    private var _draggingY:int = -1;
     private var _currentFrame:int = 0;
     private var _currentAction:String = "";
     private var _currentActionStart:int = 0;

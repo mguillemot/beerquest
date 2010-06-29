@@ -9,5 +9,5 @@
   <file-specs>
     <path-element>src/BeerQuest.mxml</path-element>
   </file-specs>
-  <output>E:/Boulot/BeerQuest-game/out/production/BeerQuest/BeerQuest.swf</output>
+  <output>E:/Boulot/beerquest/game/out/BeerQuest.swf</output>
 </flex-config>
