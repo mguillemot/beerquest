@@ -43,6 +43,6 @@ production:
   reconnect: false
   database: beerquest_production
   pool: 5
-  username: root
-  password: 
+  username: beerquest
+  password: glouglou
   host: localhost
