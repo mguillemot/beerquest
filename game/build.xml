@@ -1,0 +1,5 @@
+<project name="BeerQuest" basedir=".">
+  <target name="dist">
+      <copy file="out/BeerQuest.swf" todir="../www/public/swf" overwrite="true"/>
+  </target>
+</project>

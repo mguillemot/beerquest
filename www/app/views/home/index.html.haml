@@ -1,0 +1,12 @@
+%h1 Beer Quest
+#game
+%input#testEvent{:type => 'button', :value => "Raise event"}
+:javascript
+  $(function() {
+    $('#game').flashembed("/swf/BeerQuest.swf", {
+      token: "azerty"
+    });
+    $('#testEvent').click(function() {
+      $('#game object')[0].testJs();
+    });
+  });

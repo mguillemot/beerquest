@@ -2,18 +2,55 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:mx="library://ns.adobe.com/flex/mx"
-               xmlns:local="com.beerquest.*">
+               xmlns:local="com.beerquest.*"
+               creationComplete="init()"
+               width="640" height="480">
     <fx:Script><![CDATA[
+        import mx.controls.Alert;
+        import mx.core.FlexGlobals;
+
+        private function init():void {
+            try {
+                ExternalInterface.addCallback("testJs", testJs);
+            } catch (e:Error) {
+                trace("Impossible to connect to ExternalInterface.")
+            }
+        }
+
+        public function testJs():void {
+            Alert.show("coucou de la part du JS!!");
+        }
+
+        private function sendAjax():void {
+            var request:URLRequest = new URLRequest("/account");
+            //            request.contentType = "text/xml";
+            //            request.data = dataXML.toXMLString();
+            //            request.method = URLRequestMethod.POST;
+            var loader:URLLoader = new URLLoader();
+            loader.addEventListener(Event.COMPLETE, completeHandler);
+            try {
+                loader.load(request);
+                trace("Request sent.");
+            } catch (e:ArgumentError) {
+                trace("An ArgumentError has occurred.");
+            } catch (e:SecurityError) {
+                trace("A SecurityError has occurred.");
+            }
+        }
+
+        private function completeHandler(event:Event):void
+        {
+            trace("Request completed.");
+            var loader:URLLoader = URLLoader(event.target);
+            var variables:URLVariables = new URLVariables(loader.data);
+            Alert.show("toto="+variables.toto);
+            Alert.show("titi="+variables.titi);
+        }
         ]]></fx:Script>
-    <!--<s:Button click="Alert.show('Hello, world')" label="Say Hello"/>-->
-    <fx:Script><![CDATA[
-        [Embed(source="symbols.swf", symbol="Beer")]
-        [Bindable]
-        public var beer:Class;
-        ]]></fx:Script>
-    <!--<mx:Image source="{beer}" width="100" height="100" x="200" y="200"/>-->
     <mx:Label text="Score: {board.score}" x="10" y="10"/>
     <mx:Label text="Available moves: {board.availableMoves}" x="200" y="10"/>
     <local:GameBoard x="10" y="40" width="300" height="300" id="board"/>
     <local:TokenCollectionView x="10" y="350" width="200" height="40" collection="{board.collectedTokens}"/>
+    <mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>
+    <mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>
 </s:Application>

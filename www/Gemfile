@@ -4,8 +4,10 @@ gem 'rails', '3.0.0.beta4'
 
 gem 'mysql'
 
+gem 'haml'
+
 # Web server
-gem "mongrel", :group => :development
+gem 'mongrel', :group => :development
 # gem 'unicorn'
 
 # Deploy with Capistrano
