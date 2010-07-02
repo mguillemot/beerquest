@@ -43,9 +43,18 @@
             trace("Request completed.");
             var loader:URLLoader = URLLoader(event.target);
             var variables:URLVariables = new URLVariables(loader.data);
-            Alert.show("toto="+variables.toto);
-            Alert.show("titi="+variables.titi);
+            Alert.show("toto=" + variables.toto);
+            Alert.show("titi=" + variables.titi);
         }
+
+        private function callJs():void {
+            try {
+                ExternalInterface.call("callFromFlex", "plup");
+            } catch (e:Error) {
+                trace("Impossible to connect to ExternalInterface.")
+            }
+        }
+
         ]]></fx:Script>
     <mx:Label text="Score: {board.score}" x="10" y="10"/>
     <mx:Label text="Available moves: {board.availableMoves}" x="200" y="10"/>
@@ -53,4 +62,5 @@
     <local:TokenCollectionView x="10" y="350" width="200" height="40" collection="{board.collectedTokens}"/>
     <mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>
     <mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>
+    <mx:Button x="300" y="450" label="Call JS" click="callJs()"/>
 </s:Application>
