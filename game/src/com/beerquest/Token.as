@@ -15,7 +15,7 @@ public class Token extends Sprite {
         _id = nextId++;
 
         graphics.clear();
-        graphics.lineStyle(0, 0x0);
+//        graphics.lineStyle(3, 0xff000000);
         graphics.drawRect(0, 0, 100, 100);
         graphics.lineStyle(1, 0x0);
         graphics.beginFill(type.color);

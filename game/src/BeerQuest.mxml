@@ -44,7 +44,7 @@
             var loader:URLLoader = URLLoader(event.target);
             var variables:URLVariables = new URLVariables(loader.data);
             Alert.show("toto=" + variables.toto);
-            Alert.show("titi=" + variables.titi);
+            //            Alert.show("titi=" + variables.titi);
         }
 
         private function callJs():void {

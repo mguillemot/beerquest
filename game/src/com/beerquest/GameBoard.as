@@ -1,6 +1,5 @@
 package com.beerquest {
 import com.greensock.TweenLite;
-
 import com.greensock.easing.Linear;
 
 import flash.display.Sprite;
@@ -46,29 +45,31 @@ public class GameBoard extends UIComponent {
     }
 
     private function onMouseUp(e:MouseEvent):void {
-        var local:Point = globalToLocal(new Point(e.stageX, e.stageY));
-        if (_draggingX != -1 && _draggingY != -1) {
-            var lx:int = Math.floor(local.x / width * Constants.BOARD_SIZE);
-            var ly:int = Math.floor(local.y / height * Constants.BOARD_SIZE);
-            var dx:Number = lx - _draggingX;
-            var dy:Number = ly - _draggingY;
-            if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
-                // Horizontal drag
-                if (dx > 0 && _draggingX + 1 < Constants.BOARD_SIZE) {
-                    selectCell(_draggingX, _draggingY);
-                    swapTokens(_draggingX + 1, _draggingY);
-                } else if (dx < 0 && _draggingX - 1 >= 0) {
-                    selectCell(_draggingX, _draggingY);
-                    swapTokens(_draggingX - 1, _draggingY);
-                }
-            } else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
-                // Vertical drag
-                if (dy > 0 && _draggingY + 1 < Constants.BOARD_SIZE) {
-                    selectCell(_draggingX, _draggingY);
-                    swapTokens(_draggingX, _draggingY + 1);
-                } else if (dy < 0 && _draggingY - 1 >= 0) {
-                    selectCell(_draggingX, _draggingY);
-                    swapTokens(_draggingX, _draggingY - 1);
+        if (_currentAction == "") {
+            var local:Point = globalToLocal(new Point(e.stageX, e.stageY));
+            if (_draggingX != -1 && _draggingY != -1) {
+                var lx:int = Math.floor(local.x / width * Constants.BOARD_SIZE);
+                var ly:int = Math.floor(local.y / height * Constants.BOARD_SIZE);
+                var dx:Number = lx - _draggingX;
+                var dy:Number = ly - _draggingY;
+                if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
+                    // Horizontal drag
+                    if (dx > 0 && _draggingX + 1 < Constants.BOARD_SIZE) {
+                        selectCell(_draggingX, _draggingY);
+                        swapTokens(_draggingX + 1, _draggingY);
+                    } else if (dx < 0 && _draggingX - 1 >= 0) {
+                        selectCell(_draggingX, _draggingY);
+                        swapTokens(_draggingX - 1, _draggingY);
+                    }
+                } else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
+                    // Vertical drag
+                    if (dy > 0 && _draggingY + 1 < Constants.BOARD_SIZE) {
+                        selectCell(_draggingX, _draggingY);
+                        swapTokens(_draggingX, _draggingY + 1);
+                    } else if (dy < 0 && _draggingY - 1 >= 0) {
+                        selectCell(_draggingX, _draggingY);
+                        swapTokens(_draggingX, _draggingY - 1);
+                    }
                 }
             }
         }
@@ -134,21 +135,8 @@ public class GameBoard extends UIComponent {
         if (checkSeries() > 0) {
             throw "regenerated board has groups";
         }
-        regenHiddenTokens();
         clearSelection();
         startAction("");
-    }
-
-    private function regenHiddenTokens():void {
-        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-            var token:Token = getToken(i, -1);
-            if (token != null) {
-                removeToken(token);
-            }
-            token = generateToken();
-            addToken(token);
-            setToken(i, -1, token);
-        }
     }
 
     private function generateToken(type:TokenType = null):Token {
@@ -345,7 +333,14 @@ public class GameBoard extends UIComponent {
                 if (token == null) {
                     falling = true;
                     for (var jj:int = j - 1; jj >= -1; jj--) {
-                        var upToken:Token = getToken(i, jj);
+                        var upToken:Token;
+                        if (jj >= 0) {
+                            upToken = getToken(i, jj);
+                        } else {
+                            upToken = generateToken();
+                            addToken(upToken);
+                            setToken(i, jj, upToken);
+                        }
                         if (upToken != null) {
                             upToken.falling = true;
                             TweenLite.to(upToken, FALL_TIME_MS / 1000, {y: (jj + 1) * height / Constants.BOARD_SIZE, ease:Linear.easeNone});
@@ -359,7 +354,6 @@ public class GameBoard extends UIComponent {
             var timer:Timer = new Timer(FALL_TIME_MS, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                 updateFalling();
-                regenHiddenTokens();
                 endDestroySeries();
             });
             timer.start();
@@ -400,7 +394,6 @@ public class GameBoard extends UIComponent {
     private function endDestroySeries2():void {
         startAction("endFalling");
         resetFalling();
-        regenHiddenTokens();
         startAction("");
         destroySeries();
     }
@@ -424,18 +417,6 @@ public class GameBoard extends UIComponent {
             }
         }
     }
-
-    /*override protected function createChildren():void {
-     super.createChildren();
-     }
-
-     override protected function commitProperties():void {
-     super.commitProperties();
-     }
-
-     override protected function measure():void {
-     super.measure();
-     }  */
 
     private function get hasSelectedCell():Boolean {
         return (_selectedX != -1 && _selectedY != -1);
@@ -479,7 +460,7 @@ public class GameBoard extends UIComponent {
         graphics.clear();
         graphics.beginFill(0xffffff);
         graphics.drawRect(0, 0, unscaledWidth, unscaledHeight);
-        graphics.lineStyle(2, 0x0);
+        graphics.lineStyle(1, 0x0);
         var i:int;
         for (i = 0; i <= Constants.BOARD_SIZE; i++) {
             graphics.moveTo(i * unscaledWidth / Constants.BOARD_SIZE, 0);
