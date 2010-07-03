@@ -1,5 +1,7 @@
 BeerQuest::Application.routes.draw do |map|
-  get "home/index"
+	get "help", :to => "home#help"
+  get "privacy", :to => "home#privacy"
+  get "tos", :to => "home#tos"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -6,8 +6,11 @@ gem 'mysql'
 
 gem 'haml'
 
+gem 'json'
+gem 'mini_fb'
+
 # Web server
-gem 'mongrel', :group => :development
+#gem 'mongrel', :group => :development
 # gem 'unicorn'
 
 # Deploy with Capistrano

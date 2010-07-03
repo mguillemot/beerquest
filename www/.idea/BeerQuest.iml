@@ -19,10 +19,34 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="mongrel" version="0" bound="GREATER_OR_EQUAL" git="false" />
+        <dependency name="hashie" version="0" bound="GREATER_OR_EQUAL" git="false" />
+      </requirement>
+      <source manual="true" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="json" version="0" bound="GREATER_OR_EQUAL" git="false" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="mime-types" version="0" bound="GREATER_OR_EQUAL" git="false" />
+      </requirement>
+      <source manual="true" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="mini_fb" version="0" bound="GREATER_OR_EQUAL" git="false" />
       </requirement>
       <source manual="true" />
       <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="mongrel" version="0" bound="GREATER_OR_EQUAL" git="false" />
+      </requirement>
+      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
@@ -37,6 +61,12 @@
       </requirement>
       <source from="Gemfile" />
     </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="rest-client" version="0" bound="GREATER_OR_EQUAL" git="false" />
+      </requirement>
+      <source manual="true" />
+    </requirement>
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
@@ -45,18 +75,25 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/actionpack-3.0.0.beta4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/activerecord-3.0.0.beta4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] bundler (v0.9.26, C:/Ruby187/lib/ruby/gems/1.8/gems/bundler-0.9.26)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/activeresource-3.0.0.beta4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/railties-3.0.0.beta4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/rails-3.0.0.beta4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/actionmailer-3.0.0.beta4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-3.0.0.beta4)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] mysql (v2.8.1, C:/Ruby187/lib/ruby/gems/1.8/gems/mysql-2.8.1-x86-mingw32)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] mongrel (v1.1.5, C:/Ruby187/lib/ruby/gems/1.8/gems/mongrel-1.1.5-x86-mingw32)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] gem_plugin (v0.2.3, C:/Ruby187/lib/ruby/gems/1.8/gems/gem_plugin-0.2.3)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] cgi_multipart_eof_fix (v2.5.0, C:/Ruby187/lib/ruby/gems/1.8/gems/cgi_multipart_eof_fix-2.5.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] haml (v3.0.13, C:/Ruby187/lib/ruby/gems/1.8/gems/haml-3.0.13)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] hashie (v0.2.1, C:/Ruby187/lib/ruby/gems/1.8/gems/hashie-0.2.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] mime-types (v1.16, C:/Ruby187/lib/ruby/gems/1.8/gems/mime-types-1.16)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] mini_fb (v1.0.6, C:/Ruby187/lib/ruby/gems/1.8/gems/mini_fb-1.0.6)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rest-client (v1.6.0, C:/Ruby187/lib/ruby/gems/1.8/gems/rest-client-1.6.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] mime-types (v1.16, C:/Ruby187/lib/ruby/gems/1.8/gems/mime-types-1.16)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/actionmailer-3.0.0.beta4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/rails-3.0.0.beta4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] bundler (v0.9.26, C:/Ruby187/lib/ruby/gems/1.8/gems/bundler-0.9.26)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/railties-3.0.0.beta4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/activeresource-3.0.0.beta4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-3.0.0.beta4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/activerecord-3.0.0.beta4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/actionpack-3.0.0.beta4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] json (v1.4.3, C:/Ruby187/lib/ruby/gems/1.8/gems/json-1.4.3-x86-mingw32)" level="application" />
   </component>
 </module>
 
