@@ -1,4 +1,5 @@
-package com.beerquest {
+package com.beerquest.ui {
+import com.beerquest.*;
 import com.greensock.TweenLite;
 import com.greensock.easing.Linear;
 
@@ -10,16 +11,15 @@ import flash.events.TimerEvent;
 import flash.geom.Point;
 import flash.utils.Timer;
 
-import mx.collections.ArrayCollection;
 import mx.core.UIComponent;
 
-public class GameBoard extends UIComponent {
+public class BoardView extends UIComponent {
 
     private static const EXPLODE_DURATION_FRAMES:int = 10;
     private static const SWAP_TIME_MS:Number = 400;
     private static const FALL_TIME_MS:Number = 200;
 
-    public function GameBoard() {
+    public function BoardView() {
         super();
 
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
@@ -95,7 +95,7 @@ public class GameBoard extends UIComponent {
                 break;
             case 82: // r
                 regenBoard();
-                _collectedTokens.addItem({type:TokenType.BLOND_BEER, big:(Math.random() < 0.5)});
+                game.me.addCollectedBeer(TokenType.BLOND_BEER, Math.random() < 0.5);
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
@@ -312,11 +312,11 @@ public class GameBoard extends UIComponent {
             var state:BoardState = getCurrentState();
             for each (var group:Object in state.computeGroups()) {
                 if (group.length == 3) {
-                    score += 100;
+                    game.me.score += 100;
                 } else if (group.length == 4) {
-                    score += 1000;
+                    game.me.score += 1000;
                 } else if (group.length == 5) {
-                    score += 10000;
+                    game.me.score += 10000;
                 }
             }
         }
@@ -498,20 +498,8 @@ public class GameBoard extends UIComponent {
         dispatchEvent(new Event("availableMovesChanged"));
     }
 
-    [Bindable(event="scoreChanged")]
-    public function get score():Number {
-        return _score;
-    }
-
-    public function set score(value:Number):void {
-        _score = value;
-        dispatchEvent(new Event("scoreChanged"));
-    }
-
     [Bindable]
-    public function get collectedTokens():ArrayCollection {
-        return _collectedTokens;
-    }
+    public var game:Game;
 
     private var _board:Array = new Array();
     private var _selectedX:int = -1;
@@ -524,7 +512,5 @@ public class GameBoard extends UIComponent {
     private var _currentAction:String = "";
     private var _currentActionStart:int = 0;
     private var _availableMoves:int;
-    private var _score:Number = 0;
-    private var _collectedTokens:ArrayCollection = new ArrayCollection();
 }
 }

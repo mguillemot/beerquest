@@ -1,4 +1,5 @@
-package com.beerquest {
+package com.beerquest.ui {
+import com.beerquest.*;
 
 import mx.collections.ArrayCollection;
 import mx.core.UIComponent;
@@ -8,7 +9,7 @@ public class TokenCollectionView extends UIComponent {
     public function TokenCollectionView() {
         graphics.clear();
         graphics.lineStyle(1, 0x0);
-        graphics.drawRect(0, 0, 200, 30);
+        graphics.drawRect(0, 0, 170, 30);
     }
 
     [Bindable]

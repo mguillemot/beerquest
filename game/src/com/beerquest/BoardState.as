@@ -215,11 +215,11 @@ public class BoardState {
         }
     }
 
-    private function generateNewCell():TokenType {
+    public function generateNewCell():TokenType {
         return TokenType.fromValue(_rand.nextInt(1, 7));
     }
 
     private var _state:Array = new Array();
-    private var _rand:MersenneTwister = new MersenneTwister(Math.random()*1000000);
+    private var _rand:MersenneTwister = new MersenneTwister(Math.floor(Math.random()*int.MAX_VALUE));
 }
 }

@@ -2,10 +2,12 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:mx="library://ns.adobe.com/flex/mx"
-               xmlns:local="com.beerquest.*"
+               xmlns:ui="com.beerquest.ui.*"
                creationComplete="init()"
-               width="640" height="480">
+               width="700" height="480">
     <fx:Script><![CDATA[
+        import com.beerquest.Game;
+
         import mx.controls.Alert;
         import mx.core.FlexGlobals;
 
@@ -55,11 +57,13 @@
             }
         }
 
+        [Bindable]
+        public var game:Game = new Game();
         ]]></fx:Script>
-    <mx:Label text="Score: {board.score}" x="10" y="10"/>
-    <mx:Label text="Available moves: {board.availableMoves}" x="200" y="10"/>
-    <local:GameBoard x="10" y="40" width="300" height="300" id="board"/>
-    <local:TokenCollectionView x="10" y="350" width="200" height="40" collection="{board.collectedTokens}"/>
+    <ui:PlayerView x="0" y="60" width="180" height="300" player="{game.me}"/>
+    <ui:PlayerView x="520" y="60" width="180" height="300" player="{game.opponent}"/>
+    <mx:Label text="Available moves: {boardView.availableMoves}" x="200" y="10"/>
+    <ui:BoardView x="200" y="60" width="300" height="300" id="boardView" game="{game}"/>
     <mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>
     <mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>
     <mx:Button x="300" y="450" label="Call JS" click="callJs()"/>
