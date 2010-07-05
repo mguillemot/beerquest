@@ -1,3 +1,23 @@
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	width: 740px;
+}
+
+body {
+	width: 740px;
+}
+
+div.main {
+	width: 740px;
+	background: #ffc0cb;
+	word-wrap: break-word;
+}
+
 #game {
 	width: 640px;
 	height: 480px;

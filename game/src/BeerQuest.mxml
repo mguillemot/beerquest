@@ -60,9 +60,10 @@
         [Bindable]
         public var game:Game = new Game();
         ]]></fx:Script>
-    <ui:PlayerView x="0" y="60" width="180" height="300" player="{game.me}"/>
-    <ui:PlayerView x="520" y="60" width="180" height="300" player="{game.opponent}"/>
-    <mx:Label text="Available moves: {boardView.availableMoves}" x="200" y="10"/>
+    <ui:PlayerView x="5" y="60" width="180" height="300" player="{game.me}"/>
+    <ui:PlayerView x="525" y="60" width="180" height="300" player="{game.opponent}"/>
+    <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10"/>
+    <mx:Label text="Combo: {boardView.combo} / Multiplier: x {boardView.multiplier}" x="10" y="30"/>
     <ui:BoardView x="200" y="60" width="300" height="300" id="boardView" game="{game}"/>
     <mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>
     <mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>

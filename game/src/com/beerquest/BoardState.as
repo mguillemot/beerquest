@@ -65,7 +65,7 @@ public class BoardState {
                         di++;
                     }
                     if (di >= 3) {
-                        groups.push({type:"horizontal", startX:i, startY:j, length:di});
+                        groups.push({type:"horizontal", startX:i, startY:j, length:di, token:cell});
                     }
                     i += (di - 1);
                 }
@@ -82,7 +82,7 @@ public class BoardState {
                         dj++;
                     }
                     if (dj >= 3) {
-                        groups.push({type:"vertical", startX:i, startY:j, length:dj});
+                        groups.push({type:"vertical", startX:i, startY:j, length:dj, token:cell});
                     }
                     j += (dj - 1);
                 }

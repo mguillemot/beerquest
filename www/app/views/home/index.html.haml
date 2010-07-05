@@ -1,17 +1,36 @@
 %h1 Beer Quest IV: Challenge of the Bartender
+
+- if @access_token
+	Access token: #{@access_token}
+- else
+	No access token
+
 #game
 %input#testEvent{:type => 'button', :value => "Raise event"}
 :javascript
-  $(function() {
-    $('#game').flashembed("/swf/BeerQuest.swf", {
-      token: "azerty"
-    });
-    $('#testEvent').click(function() {
-      $('#game object')[0].testJs();
-    });
-  });
+	$(function() {
+		$('#game').flashembed("/swf/BeerQuest.swf", {
+			token: "azerty"
+		});
+		$('#testEvent').click(function() {
+			$('#game object')[0].testJs();
+		});
+	});
 
-  function callFromFlex(s) {
-    alert("Called from Flex with: " + s);
-  }
-.oauth "OAuth URL: #{@oauth_url}"
+	function callFromFlex(s) {
+		alert("Called from Flex with: " + s);
+	}
+.oauth
+	%a{:href => @oauth_url}
+		Authorize application
+
+.profile
+	I am
+	%fb:name{:uid => "loggedinuser"}
+	I am 2
+	%fb:name{:uid => "profileowner"}
+	The app is
+	%fb:application-name
+
+.login
+	%fb:login-button

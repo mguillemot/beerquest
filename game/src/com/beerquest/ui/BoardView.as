@@ -3,6 +3,7 @@ import com.beerquest.*;
 import com.greensock.TweenLite;
 import com.greensock.easing.Linear;
 
+import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
@@ -32,6 +33,7 @@ public class BoardView extends UIComponent {
 
             // Mask
             var rect:Sprite = new Sprite();
+            rect.name = "mask";
             rect.graphics.beginFill(0xff0000);
             rect.graphics.drawRect(0, 0, width, height);
             addChild(rect);
@@ -95,7 +97,7 @@ public class BoardView extends UIComponent {
                 break;
             case 82: // r
                 regenBoard();
-                game.me.addCollectedBeer(TokenType.BLOND_BEER, Math.random() < 0.5);
+                game.me.addCollectedBeer(TokenType.BLOND_BEER, false);
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
@@ -109,7 +111,6 @@ public class BoardView extends UIComponent {
         switch (_currentAction) {
             case "exploding":
                 if (elapsed >= EXPLODE_DURATION_FRAMES) {
-                    trace("Explosion ended");
                     endDestroySeries();
                 }
                 break;
@@ -118,25 +119,47 @@ public class BoardView extends UIComponent {
 
     private function regenBoard():void {
         startAction("regenBoard");
-
+        removeAllTokens();
+        var i:int, j:int, token:Token;
         var state:BoardState = new BoardState();
         state.generateRandomWithoutGroups();
-        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-            for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
-                var token:Token = getToken(i, j);
-                if (token != null) {
-                    removeToken(token);
-                }
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = 0; j < Constants.BOARD_SIZE; j++) {
                 token = generateToken(state.getCell(i, j));
                 addToken(token);
                 setToken(i, j, token);
             }
         }
+
         if (checkSeries() > 0) {
             throw "regenerated board has groups";
         }
         clearSelection();
         startAction("");
+    }
+
+    private function removeAllTokens():void {
+        var i:int, j:int, token:Token;
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = -1; j < Constants.BOARD_SIZE; j++) {
+                token = getToken(i, j);
+                if (token != null) {
+                    removeToken(token);
+                }
+            }
+        }
+        if (numChildren != 1) {
+            // If we regenerated the board while some tokens were falling...
+            var toRemove:Array = new Array();
+            for (i = 0; i < numChildren; i++) {
+                if (getChildAt(i).name != "mask") {
+                    toRemove.push(getChildAt(i));
+                }
+            }
+            for each (var child:DisplayObject in toRemove) {
+                removeChild(child);
+            }
+        }
     }
 
     private function generateToken(type:TokenType = null):Token {
@@ -208,6 +231,7 @@ public class BoardView extends UIComponent {
             if (valid) {
                 setToken(x, y, src);
                 setToken(sx, sy, dst);
+                startScoring();
                 startAction("");
                 destroySeries();
             } else {
@@ -297,8 +321,10 @@ public class BoardView extends UIComponent {
     }
 
     private function destroySeries():void {
-        if (checkSeries() > 0) {
+        var series:int = checkSeries();
+        if (series > 0) {
             startAction("exploding");
+            combo += series;
             for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
                 for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                     var token:Token = getToken(i, j);
@@ -308,17 +334,22 @@ public class BoardView extends UIComponent {
                 }
             }
 
-            // TODO mieux faire
             var state:BoardState = getCurrentState();
             for each (var group:Object in state.computeGroups()) {
                 if (group.length == 3) {
-                    game.me.score += 100;
+                    game.me.score += 10 * combo;
+                    game.me.addCollectedBeer(group.token, false);
                 } else if (group.length == 4) {
-                    game.me.score += 1000;
+                    game.me.score += 20 * combo;
+                    game.me.addCollectedBeer(group.token, false);
                 } else if (group.length == 5) {
-                    game.me.score += 10000;
+                    game.me.score += 40 * combo;
+                    game.me.addCollectedBeer(group.token, false);
+                    game.me.addCollectedBeer(group.token, false);
                 }
             }
+        } else {
+            endScoring();
         }
     }
 
@@ -360,6 +391,15 @@ public class BoardView extends UIComponent {
         } else {
             endDestroySeries2();
         }
+    }
+
+    private function startScoring():void {
+        _scoring = true;
+        combo = 0;
+    }
+
+    private function endScoring():void {
+        _scoring = false;
     }
 
     private function dumpBoard():void {
@@ -482,10 +522,10 @@ public class BoardView extends UIComponent {
     private function refreshStats():void {
         var state:BoardState = getCurrentState();
         availableMoves = state.computeMoves().length;
-        trace("available moves:");
+        /*trace("available moves:");
         for each (var move:Object in state.computeMoves()) {
             trace("  " + move.type + " of " + move.startX + ":" + move.startY);
-        }
+        }*/
     }
 
     [Bindable(event="availableMovesChanged")]
@@ -496,6 +536,26 @@ public class BoardView extends UIComponent {
     public function set availableMoves(value:int):void {
         _availableMoves = value;
         dispatchEvent(new Event("availableMovesChanged"));
+    }
+
+    [Bindable(event="comboChanged")]
+    public function get combo():Number {
+        return _combo;
+    }
+
+    public function set combo(value:Number):void {
+        _combo = value;
+        dispatchEvent(new Event("comboChanged"));
+    }
+
+    [Bindable(event="multiplierChanged")]
+    public function get multiplier():Number {
+        return _multiplier;
+    }
+
+    public function set multiplier(value:Number):void {
+        _multiplier = value;
+        dispatchEvent(new Event("multiplierChanged"));
     }
 
     [Bindable]
@@ -512,5 +572,8 @@ public class BoardView extends UIComponent {
     private var _currentAction:String = "";
     private var _currentActionStart:int = 0;
     private var _availableMoves:int;
+    private var _scoring:Boolean = false;
+    private var _combo:Number = 0;
+    private var _multiplier:Number = 1.0;
 }
 }
