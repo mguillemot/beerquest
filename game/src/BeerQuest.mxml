@@ -17,6 +17,8 @@
             } catch (e:Error) {
                 trace("Impossible to connect to ExternalInterface.")
             }
+
+            remainingTurns.setProgress(42, 100);
         }
 
         public function testJs():void {
@@ -60,12 +62,17 @@
         [Bindable]
         public var game:Game = new Game();
         ]]></fx:Script>
-    <ui:PlayerView x="5" y="60" width="180" height="300" player="{game.me}"/>
-    <ui:PlayerView x="525" y="60" width="180" height="300" player="{game.opponent}"/>
+    <ui:PlayerView x="15" y="80" player="{game.me}"/>
+    <ui:PlayerView x="505" y="80" player="{game.opponent}"/>
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10"/>
     <mx:Label text="Combo: {boardView.combo} / Multiplier: x {boardView.multiplier}" x="10" y="30"/>
-    <ui:BoardView x="200" y="60" width="300" height="300" id="boardView" game="{game}"/>
+    <ui:BoardView x="200" y="80" width="300" height="300" id="boardView" game="{game}"/>
     <mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>
     <mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>
     <mx:Button x="300" y="450" label="Call JS" click="callJs()"/>
+    <mx:Canvas x="200" y="5" width="300" height="70" backgroundColor="red">
+        <mx:Label y="4" x="0" width="300" text="Le Bar du Rond Point" textAlign="center" fontSize="16" fontWeight="bold"/>
+        <mx:Label y="23" x="0" width="300" text="(Paris - France)" textAlign="center" fontSize="10"/>
+        <mx:ProgressBar id="remainingTurns" y="42" x="10" width="280" trackHeight="10" color="black" maximum="100" mode="manual" label="Fermeture à 23:00 - Encore 15 coups à boire" labelPlacement="center"/>
+    </mx:Canvas>
 </s:Application>

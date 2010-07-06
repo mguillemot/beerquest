@@ -498,24 +498,28 @@ public class BoardView extends UIComponent {
     override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
         super.updateDisplayList(unscaledWidth, unscaledHeight);
         graphics.clear();
-        graphics.beginFill(0xffffff);
-        graphics.drawRect(0, 0, unscaledWidth, unscaledHeight);
-        graphics.lineStyle(1, 0x0);
-        var i:int;
-        for (i = 0; i <= Constants.BOARD_SIZE; i++) {
-            graphics.moveTo(i * unscaledWidth / Constants.BOARD_SIZE, 0);
-            graphics.lineTo(i * unscaledWidth / Constants.BOARD_SIZE, unscaledHeight);
-            graphics.moveTo(0, i * unscaledHeight / Constants.BOARD_SIZE);
-            graphics.lineTo(unscaledWidth, i * unscaledHeight / Constants.BOARD_SIZE);
+        //        graphics.lineStyle(1, 0x0);
+        var i:int, j:int;
+        for (i = 0; i <= Constants.BOARD_SIZE - 1; i++) {
+            for (j = 0; j <= Constants.BOARD_SIZE - 1; j++) {
+                graphics.beginFill((i + j) % 2 == 0 ? 0x808080 : 0xC0C0C0);
+                graphics.drawRect(i * unscaledWidth / Constants.BOARD_SIZE, j * unscaledWidth / Constants.BOARD_SIZE,
+                        unscaledHeight / Constants.BOARD_SIZE, unscaledHeight / Constants.BOARD_SIZE);
+                graphics.endFill();
+                //                graphics.moveTo(i * unscaledWidth / Constants.BOARD_SIZE, 0);
+                //                graphics.lineTo(i * unscaledWidth / Constants.BOARD_SIZE, unscaledHeight);
+                //                graphics.moveTo(0, i * unscaledHeight / Constants.BOARD_SIZE);
+                //                graphics.lineTo(unscaledWidth, i * unscaledHeight / Constants.BOARD_SIZE);
+            }
         }
         graphics.endFill();
 
         if (_selectedX != -1 && _selectedY != -1) {
             graphics.lineStyle(2, 0xff0000);
-            graphics.beginFill(0xFFD7AD);
+            //graphics.beginFill(0x80FFD7AD);
             graphics.drawRect(_selectedX * unscaledWidth / Constants.BOARD_SIZE, _selectedY * unscaledHeight / Constants.BOARD_SIZE,
                     unscaledWidth / Constants.BOARD_SIZE, unscaledHeight / Constants.BOARD_SIZE);
-            graphics.endFill();
+            //graphics.endFill();
         }
     }
 
@@ -523,9 +527,9 @@ public class BoardView extends UIComponent {
         var state:BoardState = getCurrentState();
         availableMoves = state.computeMoves().length;
         /*trace("available moves:");
-        for each (var move:Object in state.computeMoves()) {
-            trace("  " + move.type + " of " + move.startX + ":" + move.startY);
-        }*/
+         for each (var move:Object in state.computeMoves()) {
+         trace("  " + move.type + " of " + move.startX + ":" + move.startY);
+         }*/
     }
 
     [Bindable(event="availableMovesChanged")]

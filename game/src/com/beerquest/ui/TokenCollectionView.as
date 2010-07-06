@@ -8,10 +8,13 @@ import mx.core.UIComponent;
 import mx.events.CollectionEvent;
 
 public class TokenCollectionView extends UIComponent {
+
     public function TokenCollectionView() {
+        width = 170;
+        height = 30;
         graphics.clear();
         graphics.lineStyle(1, 0x0);
-        graphics.drawRect(0, 0, 170, 30);
+        graphics.drawRect(0, 0, width, height);
     }
 
     [Bindable]
@@ -59,7 +62,6 @@ public class TokenCollectionView extends UIComponent {
     }
 
     private function recomputeCoords():void {
-        trace("width:"+width);
         var cursorX:Number = 0;
         var cursorY:Number = 0;
         for (var i:int = 0; i < _collection.length; i++) {
