@@ -2,82 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="8f48027e-07ce-4b9f-9c55-b89931362e9f" name="Default" comment="">
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\signup.html.erb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\CHANGELOG" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\SecurityPatterns.txt" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\login.html.erb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\TODO" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\step_definitions\user_steps.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\observer.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/main.css" afterPath="$PROJECT_DIR$/public/stylesheets/main.css" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\spec\models\user_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\authorization\stateful_roles.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\tasks\auth.rake" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\Rakefile" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\authorization.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\rails\init.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\Authorization.txt" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\SecurityFramework.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\Trustification.txt" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\init.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\model.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\authenticated_test_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\USAGE" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\step_definitions\ra_response_steps.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\test\model_functional_test.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\authentication\by_cookie_token.rb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\migration.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\accounts.feature" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\Authentication.txt" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\sessions.feature" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/xd_receiver.htm" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\trustification\email_validation.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\_model_partial.html.erb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\authentication.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\authentication\by_password.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\spec\helpers\users_helper_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\authorization\aasm_roles.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\signup_notification.erb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\spec\fixtures\users.yml" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\test\functional_test.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\site_keys.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\spec\controllers\authenticated_system_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\SecurityFramework.graffle" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\model_helper_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\test\unit_test.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.haml" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\step_definitions\ra_navigation_steps.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\spec\controllers\access_control_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\RailsPlugins.txt" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\lib\insert_routes.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\model_helper.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\model_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\spec\controllers\users_controller_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\test\mailer_test.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\restful-authentication.gemspec" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\step_definitions\rest_auth_features_helper.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/facebook.rb" afterPath="$PROJECT_DIR$/config/initializers/facebook.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.haml" afterPath="$PROJECT_DIR$/app/views/home/index.html.haml" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\Tradeoffs.txt" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\step_definitions\ra_resource_steps.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\lib\trustification.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\mailer.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\authenticated_generator.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\activation.erb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\spec\controllers\sessions_controller_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\README.textile" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\features\step_definitions\ra_env.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\notes\AccessControl.txt" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\vendor\plugins\restful-authentication\generators\authenticated\templates\authenticated_system.rb" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/main.css" afterPath="$PROJECT_DIR$/public/stylesheets/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/projectCodeStyle.xml" afterPath="$PROJECT_DIR$/.idea/projectCodeStyle.xml" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="BeerQuest.iws" />
@@ -137,55 +64,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/routes.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="34" selection-start="958" selection-end="958" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html.haml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="48" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.html.haml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="36" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="facebook.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/initializers/facebook.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="27" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="178" selection-end="178" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="18" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0">
+            <state line="20" column="54" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -194,16 +76,7 @@
       <file leaf-file-name="main.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="43" selection-start="92" selection-end="92" vertical-scroll-proportion="0.34401348">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="facebook_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="19" selection-start="491" selection-end="504" vertical-scroll-proportion="0.0">
+            <state line="21" column="43" selection-start="195" selection-end="195" vertical-scroll-proportion="0.59401">
               <folding />
             </state>
           </provider>
@@ -220,6 +93,9 @@
     <option name="VCS_SHOW_CONFIRMATION" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="GIT_EXECUTABLE" value="C:\Program Files (x86)\Git\bin\git.exe" />
+    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
+    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
     <option name="LINE_SEPARATORS_CONVERSION_ASK" value="false" />
   </component>
   <component name="IdeDocumentHistory">
@@ -232,7 +108,6 @@
         <option value="$PROJECT_DIR$/db/migrate/20100703101044_create_scores.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20100703101243_create_bars.rb" />
         <option value="$PROJECT_DIR$/app/models/bar.rb" />
-        <option value="$PROJECT_DIR$/public/stylesheets/main.css" />
         <option value="$PROJECT_DIR$/public/xd_receiver.html" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
@@ -241,6 +116,7 @@
         <option value="$PROJECT_DIR$/config/initializers/facebook.rb" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
+        <option value="$PROJECT_DIR$/public/stylesheets/main.css" />
       </list>
     </option>
   </component>
@@ -287,6 +163,7 @@
     </navigator>
     <panes>
       <pane id="RailsProjectView" />
+      <pane id="Scope" />
       <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
@@ -484,18 +361,18 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.sourceCode.General" />
+    <property name="recentsLimit" value="5" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="options.searchVisible" value="true" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Rails.Development: BeerQuest">
     <configuration default="false" name="db:create:all" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
@@ -591,6 +468,13 @@
       <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -610,13 +494,6 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda">
@@ -748,15 +625,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24920969" sideWeight="0.6631016" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24920969" sideWeight="0.67058825" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -850,11 +727,6 @@
         <state line="27" column="34" selection-start="958" selection-end="958" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="48" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="36" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0" />
@@ -870,21 +742,30 @@
         <state line="3" column="0" selection-start="178" selection-end="178" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="19" selection-start="491" selection-end="504" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="18" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0">
+        <state line="14" column="18" selection-start="331" selection-end="331" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="19" selection-start="491" selection-end="504" vertical-scroll-proportion="0.42429283">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="54" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/stylesheets/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="43" selection-start="92" selection-end="92" vertical-scroll-proportion="0.34401348">
+        <state line="21" column="43" selection-start="195" selection-end="195" vertical-scroll-proportion="0.59401">
           <folding />
         </state>
       </provider>
