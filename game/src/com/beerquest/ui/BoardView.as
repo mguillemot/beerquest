@@ -43,7 +43,7 @@ public class BoardView extends UIComponent {
             var rect:Sprite = new Sprite();
             rect.name = "mask";
             rect.graphics.beginFill(0xff0000);
-            rect.graphics.drawRect(0-1, 0-1, width+2, height+2);
+            rect.graphics.drawRect(0 - 1, 0 - 1, width + 2, height + 2);
             addChild(rect);
             mask = rect;
 
@@ -106,8 +106,16 @@ public class BoardView extends UIComponent {
             case 32: // space
                 break;
             case 82: // r
-                //regenBoard();
+                regenBoard();
+                break;
+            case 84: // t
                 game.me.addCollectedBeer(TokenType.BLOND_BEER, false);
+                break;
+            case 89: // y
+                game.me.addCollectedBeer(TokenType.BROWN_BEER, false);
+                break;
+            case 85: // u
+                game.me.addCollectedBeer(TokenType.AMBER_BEER, false);
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);

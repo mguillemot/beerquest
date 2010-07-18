@@ -26,6 +26,7 @@
         }
     </mx:Style>
     <mx:Script><![CDATA[
+        import com.beerquest.BeerCollectedEvent;
         import com.beerquest.PlayerData;
 
         [Bindable]
@@ -34,6 +35,11 @@
         private function init():void {
             alcoholBar.setProgress(33, 100);
             pissBar.setProgress(70, 100);
+            addEventListener(BeerCollectedEvent.BEER_COLLECTED, onBeerCollected);
+        }
+
+        private function onBeerCollected(e:BeerCollectedEvent):void {
+            player.fullBeers++;
         }
 
         [Embed(source="../../../capacity-active.png")]
@@ -45,6 +51,7 @@
         [Embed(source="../../../capacity-disabled.png")]
         private static var CapacityDisabled:Class;
         ]]></mx:Script>
+    <mx:NumberFormatter id="scoreFormatter" useThousandsSeparator="true" decimalSeparatorTo="," thousandsSeparatorTo="."/>
     <mx:Label text="Score: {player.score} caps" x="10" y="80"/>
     <mx:ProgressBar id="alcoholBar" x="0" y="5" width="176" trackHeight="10" color="black" maximum="100"
                     mode="manual" label="Alcoolémie" labelPlacement="center"/>
@@ -54,7 +61,7 @@
         <mx:Image source="@Embed(source='../../../player-score.png')"/>
 
         <mx:Canvas x="5" y="2" width="120">
-            <mx:Label id="caps" text="9.999.999" width="100%" styleName="small-score">
+            <mx:Label id="caps" text="{scoreFormatter.format(player.score)}" width="100%" styleName="small-score">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
@@ -71,7 +78,7 @@
         </mx:Canvas>
 
         <mx:Canvas x="5" y="25" width="120">
-            <mx:Label id="collectedBeers" text="136" width="100%" styleName="score">
+            <mx:Label id="collectedBeers" text="{player.fullBeers}" width="100%" styleName="score">
                 <mx:filters>
                     <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>

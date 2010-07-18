@@ -21,6 +21,7 @@
     </fx:Style>
     <fx:Script><![CDATA[
         import com.beerquest.Game;
+        import com.beerquest.PlayerData;
 
         import mx.controls.Alert;
 
@@ -70,8 +71,7 @@
             }
         }
 
-        [Bindable]
-        public var game:Game = new Game();
+        public var game:Game = new Game(new PlayerData("Jeano Babouin", "Le bois-sans-soif", 89), new PlayerData("Mattiou Guillegay", "Le Saint-Bernard", 42));
         ]]></fx:Script>
     <mx:Image source="@Embed(source='background.png')"/>
     <ui:PlayerDataView x="40" y="60" player="{game.me}"/>

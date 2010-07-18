@@ -2,9 +2,9 @@ package com.beerquest {
 import flash.events.EventDispatcher;
 
 public class Game extends EventDispatcher{
-    public function Game() {
-        _me = new PlayerData();
-        _opponent = new PlayerData();
+    public function Game(me:PlayerData, opponent:PlayerData) {
+        _me = me;
+        _opponent = opponent;
         _board = new BoardState();
     }
 

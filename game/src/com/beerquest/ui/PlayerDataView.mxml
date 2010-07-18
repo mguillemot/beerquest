@@ -46,17 +46,17 @@
     <mx:Image id="portrait" x="220" y="25" width="50" height="50"/>
     <mx:Canvas id="normal">
         <mx:Canvas x="20" y="20" width="190">
-            <mx:Label width="100%" text="Matthieu Guillemot" styleName="name" textAlign="right"/>
+            <mx:Label width="100%" text="{player.name}" styleName="name" textAlign="right"/>
         </mx:Canvas>
         <mx:Canvas x="20" y="40" width="190">
-            <mx:Label width="100%" text="dit «le boit-sans-soif»" styleName="description" textAlign="right">
+            <mx:Label width="100%" text="dit «{player.title}»" styleName="description" textAlign="right">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
         </mx:Canvas>
         <mx:Canvas x="20" y="58" width="190">
-            <mx:Label width="100%" text="Lvl 89" styleName="description" textAlign="right">
+            <mx:Label width="100%" text="Lvl {player.level}" styleName="description" textAlign="right">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
@@ -65,17 +65,17 @@
     </mx:Canvas>
     <mx:Canvas id="reverse" visible="false">
         <mx:Canvas x="80" y="20" width="190">
-            <mx:Label width="100%" text="Matthieu Guillemot" styleName="name"/>
+            <mx:Label width="100%" text="{player.name}" styleName="name"/>
         </mx:Canvas>
         <mx:Canvas x="80" y="40" width="190">
-            <mx:Label width="100%" text="dit «le boit-sans-soif»" styleName="description">
+            <mx:Label width="100%" text="dit «{player.title}»" styleName="description">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
         </mx:Canvas>
         <mx:Canvas x="80" y="58" width="190">
-            <mx:Label width="100%" text="Lvl 89" styleName="description">
+            <mx:Label width="100%" text="Lvl {player.level}" styleName="description">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
