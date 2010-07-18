@@ -18,15 +18,30 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new Event("scoreChanged"));
     }
 
-    public function get collectedBeers():ArrayCollection {
-        return _collectedBeers;
+    [Bindable(event="fullBeersChanged")]
+    public function get fullBeers():Number {
+        return _fullBeers;
+    }
+
+    public function set fullBeers(value:Number):void {
+        _fullBeers = value;
+        dispatchEvent(new Event("fullBeersChanged"));
+    }
+
+    public function get partialBeers():ArrayCollection {
+        return _partialBeers;
     }
 
     public function addCollectedBeer(type:TokenType, big:Boolean):void {
-        _collectedBeers.addItem({type: type, big: big});
+        if (big) {
+            fullBeers++;
+        } else {
+            _partialBeers.addItem(type);
+        }
     }
 
     private var _score:Number = 0;
-    private var _collectedBeers:ArrayCollection = new ArrayCollection();
+    private var _fullBeers:Number = 0;
+    private var _partialBeers:ArrayCollection = new ArrayCollection();
 }
 }

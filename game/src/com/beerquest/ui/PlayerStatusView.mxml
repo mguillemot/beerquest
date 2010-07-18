@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+           xmlns:ui="com.beerquest.ui.*"
+           width="176"
+           creationComplete="init()">
+    <mx:Style>
+        .score {
+            fontFamily: Kro;
+            fontSize: 32;
+            color: white;
+            textAlign: right;
+        }
+
+        .small-score {
+            fontFamily: Kro;
+            fontSize: 16;
+            color: white;
+            textAlign: right;
+        }
+
+        .multiplier {
+            fontFamily: "Arial";
+            fontSize: 14;
+            color: #a23e03;
+            textAlign: center;
+        }
+    </mx:Style>
+    <mx:Script><![CDATA[
+        import com.beerquest.PlayerData;
+
+        [Bindable]
+        public var player:PlayerData;
+
+        private function init():void {
+            alcoholBar.setProgress(33, 100);
+            pissBar.setProgress(70, 100);
+        }
+
+        [Embed(source="../../../capacity-active.png")]
+        private static var CapacityActive:Class;
+
+        [Embed(source="../../../capacity-inactive.png")]
+        private static var CapacityInactive:Class;
+
+        [Embed(source="../../../capacity-disabled.png")]
+        private static var CapacityDisabled:Class;
+        ]]></mx:Script>
+    <mx:Label text="Score: {player.score} caps" x="10" y="80"/>
+    <mx:ProgressBar id="alcoholBar" x="0" y="5" width="176" trackHeight="10" color="black" maximum="100"
+                    mode="manual" label="Alcoolémie" labelPlacement="center"/>
+    <mx:ProgressBar id="pissBar" x="0" y="35" width="176" trackHeight="10" color="black" maximum="100" mode="manual"
+                    label="Pisse" labelPlacement="center"/>
+    <mx:Canvas x="0" y="65">
+        <mx:Image source="@Embed(source='../../../player-score.png')"/>
+
+        <mx:Canvas x="5" y="2" width="120">
+            <mx:Label id="caps" text="9.999.999" width="100%" styleName="small-score">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+        <mx:Image x="130" y="7" source="@Embed(source='../../../caps.png')"/>
+
+        <mx:Canvas x="148" y="5" width="25">
+            <mx:Label id="multiplier" text="X3" width="100%" styleName="multiplier">
+                <mx:filters>
+                    <mx:GlowFilter blurX="2" blurY="2" alpha="1" color="0xffffff" quality="2"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+
+        <mx:Canvas x="5" y="25" width="120">
+            <mx:Label id="collectedBeers" text="136" width="100%" styleName="score">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+        <mx:Image x="130" y="32" source="@Embed(source='../../../collected-beer.png')"/>
+
+        <ui:TokenCollectionView x="3" y="82" collection="{player.partialBeers}"/>
+    </mx:Canvas>
+    <mx:VBox x="0" y="190" width="100%" horizontalAlign="center">
+        <mx:Image source="{CapacityActive}"/>
+        <mx:Image source="{CapacityInactive}"/>
+        <mx:Image source="{CapacityInactive}"/>
+    </mx:VBox>
+</mx:Canvas>

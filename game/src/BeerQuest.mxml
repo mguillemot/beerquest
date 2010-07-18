@@ -4,12 +4,25 @@
                xmlns:mx="library://ns.adobe.com/flex/mx"
                xmlns:ui="com.beerquest.ui.*"
                creationComplete="init()"
-               width="700" height="480">
+               width="779" height="630">
+    <fx:Style>
+        @font-face {
+            src: url("kronika.ttf");
+            fontFamily: Kro;
+            embedAsCFF: false;
+            advancedAntiAliasing: true;
+        }
+
+        .game-type {
+            fontFamily: Kro;
+            fontSize: 16;
+            color: #753e00;
+        }
+    </fx:Style>
     <fx:Script><![CDATA[
         import com.beerquest.Game;
 
         import mx.controls.Alert;
-        import mx.core.FlexGlobals;
 
         private function init():void {
             try {
@@ -17,8 +30,6 @@
             } catch (e:Error) {
                 trace("Impossible to connect to ExternalInterface.")
             }
-
-            remainingTurns.setProgress(42, 100);
         }
 
         public function testJs():void {
@@ -62,17 +73,44 @@
         [Bindable]
         public var game:Game = new Game();
         ]]></fx:Script>
-    <ui:PlayerView x="15" y="80" player="{game.me}"/>
-    <ui:PlayerView x="505" y="80" player="{game.opponent}"/>
+    <mx:Image source="@Embed(source='background.png')"/>
+    <ui:PlayerDataView x="40" y="60" player="{game.me}"/>
+    <ui:PlayerDataView x="440" y="60" player="{game.opponent}" mirror="true"/>
+    <mx:VBox x="225" y="10" width="320" horizontalAlign="center" verticalGap="0">
+        <mx:Image source="@Embed(source='battle-biture.png')"/>
+        <mx:Spacer height="15"/>
+        <mx:Image source="@Embed(source='vs.png')"/>
+        <mx:HBox verticalAlign="middle" horizontalGap="2">
+            <mx:Label text="Duel" styleName="game-type"/>
+            <mx:Image source="@Embed(source='collected-beer-small.png')"/>
+            <mx:Label text="152" styleName="game-type"/>
+        </mx:HBox>
+    </mx:VBox>
+    <ui:PlayerStatusView x="30" y="170" player="{game.me}"/>
+    <ui:PlayerStatusView x="565" y="170" player="{game.opponent}"/>
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10"/>
     <mx:Label text="Combo: {boardView.combo} / Multiplier: x {boardView.multiplier}" x="10" y="30"/>
-    <ui:BoardView x="200" y="80" width="300" height="300" id="boardView" game="{game}"/>
-    <mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>
-    <mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>
-    <mx:Button x="300" y="450" label="Call JS" click="callJs()"/>
-    <mx:Canvas x="200" y="5" width="300" height="70" backgroundColor="red">
-        <mx:Label y="4" x="0" width="300" text="Le Bar du Rond Point" textAlign="center" fontSize="16" fontWeight="bold"/>
-        <mx:Label y="23" x="0" width="300" text="(Paris - France)" textAlign="center" fontSize="10"/>
-        <mx:ProgressBar id="remainingTurns" y="42" x="10" width="280" trackHeight="10" color="black" maximum="100" mode="manual" label="Fermeture à 23:00 - Encore 15 coups à boire" labelPlacement="center"/>
+    <ui:BoardView x="225" y="158" width="320" height="320" id="boardView" game="{game}"/>
+    <!--<mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>-->
+    <!--<mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>-->
+    <!--<mx:Button x="300" y="450" label="Call JS" click="callJs()"/>-->
+    <mx:Label id="remainingTurns" x="225" y="476" width="320" text="Il est 20:15 | Reste 33 coups à boire"
+              textAlign="center"/>
+    <mx:Canvas x="0" y="492">
+        <mx:Image x="18" source="@Embed(source='banner.png')"/>
+        <mx:Label id="barName" x="445" y="10" width="300" color="white" text="Le Des-Murges Bar" textAlign="center"
+                  fontSize="24"
+                  fontWeight="bold" fontStyle="italic">
+            <mx:filters>
+                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+        <mx:Label id="barDescription" x="445" y="36" width="300" color="white" text="France - Paris | 18:00 - 23:00"
+                  textAlign="center"
+                  fontWeight="bold" fontStyle="italic" fontSize="12">
+            <mx:filters>
+                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
     </mx:Canvas>
 </s:Application>

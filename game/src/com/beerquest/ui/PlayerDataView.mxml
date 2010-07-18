@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+           xmlns:fx="http://www.adobe.com/2006/mxml"
+           xmlns:ui="com.beerquest.ui.*"
+           width="292" height="102"
+           creationComplete="init()">
+    <fx:Style>
+        .name {
+            fontFamily: Kro;
+            fontSize: 16;
+            color: #753e00;
+        }
+
+        .description {
+            fontFamily: Kro;
+            fontSize: 14;
+            color: white;
+        }
+    </fx:Style>
+    <fx:Script><![CDATA[
+        import com.beerquest.PlayerData;
+
+        [Bindable]
+        public var player:PlayerData;
+
+        public var mirror:Boolean;
+
+        private function init():void {
+            var loader:Loader = new Loader();
+            portrait.addChild(loader);
+            loader.load(new URLRequest("http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg"));
+
+            if (mirror) {
+                background.transformX = width / 2;
+                background.scaleX = -1;
+                portrait.x = 20;
+                normal.visible = false;
+                reverse.visible = true;
+            }
+
+            portrait.graphics.lineStyle(5, 0xc9700b);
+            portrait.graphics.drawRect(0, 0, portrait.width, portrait.height);
+        }
+        ]]></fx:Script>
+    <mx:Image id="background" source="@Embed(source='../../../player-encart.png')"/>
+    <mx:Image id="portrait" x="220" y="25" width="50" height="50"/>
+    <mx:Canvas id="normal">
+        <mx:Canvas x="20" y="20" width="190">
+            <mx:Label width="100%" text="Matthieu Guillemot" styleName="name" textAlign="right"/>
+        </mx:Canvas>
+        <mx:Canvas x="20" y="40" width="190">
+            <mx:Label width="100%" text="dit «le boit-sans-soif»" styleName="description" textAlign="right">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+        <mx:Canvas x="20" y="58" width="190">
+            <mx:Label width="100%" text="Lvl 89" styleName="description" textAlign="right">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+    </mx:Canvas>
+    <mx:Canvas id="reverse" visible="false">
+        <mx:Canvas x="80" y="20" width="190">
+            <mx:Label width="100%" text="Matthieu Guillemot" styleName="name"/>
+        </mx:Canvas>
+        <mx:Canvas x="80" y="40" width="190">
+            <mx:Label width="100%" text="dit «le boit-sans-soif»" styleName="description">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+        <mx:Canvas x="80" y="58" width="190">
+            <mx:Label width="100%" text="Lvl 89" styleName="description">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+    </mx:Canvas>
+</mx:Canvas>

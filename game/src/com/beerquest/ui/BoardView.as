@@ -12,6 +12,7 @@ import flash.events.TimerEvent;
 import flash.geom.Point;
 import flash.utils.Timer;
 
+import mx.core.BitmapAsset;
 import mx.core.UIComponent;
 
 public class BoardView extends UIComponent {
@@ -31,13 +32,25 @@ public class BoardView extends UIComponent {
         addEventListener(Event.ADDED_TO_STAGE, function(e:Event):void {
             stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 
+            // Background
+            var bg:BitmapAsset = new BoardBackground();
+            bg.name = "bg";
+            bg.width = width;
+            bg.height = height;
+            addChild(bg);
+
             // Mask
             var rect:Sprite = new Sprite();
             rect.name = "mask";
             rect.graphics.beginFill(0xff0000);
-            rect.graphics.drawRect(0, 0, width, height);
+            rect.graphics.drawRect(0-1, 0-1, width+2, height+2);
             addChild(rect);
             mask = rect;
+
+            // Selection
+            _selection = new Sprite();
+            _selection.graphics.lineStyle(2, 0xff0000);
+            _selection.graphics.drawRect(0, 0, width / Constants.BOARD_SIZE, height / Constants.BOARD_SIZE);
 
             regenBoard();
         });
@@ -91,12 +104,9 @@ public class BoardView extends UIComponent {
         // Note: registered from the application
         switch (e.keyCode) {
             case 32: // space
-                if (_currentAction == "") {
-                    destroySeries();
-                }
                 break;
             case 82: // r
-                regenBoard();
+                //regenBoard();
                 game.me.addCollectedBeer(TokenType.BLOND_BEER, false);
                 break;
             default:
@@ -152,7 +162,7 @@ public class BoardView extends UIComponent {
             // If we regenerated the board while some tokens were falling...
             var toRemove:Array = new Array();
             for (i = 0; i < numChildren; i++) {
-                if (getChildAt(i).name != "mask") {
+                if (getChildAt(i).name == "") {
                     toRemove.push(getChildAt(i));
                 }
             }
@@ -267,17 +277,23 @@ public class BoardView extends UIComponent {
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid select coords: " + x + ":" + y;
         }
+        if (_selectedX == -1 && _selectedY == -1) {
+            addChild(_selection);
+        }
         _selectedX = x;
         _selectedY = y;
+        _selection.x = _selectedX * width / Constants.BOARD_SIZE;
+        _selection.y = _selectedY * height / Constants.BOARD_SIZE;
         trace("Selected " + x + ":" + y);
-        invalidateDisplayList();
     }
 
     private function clearSelection():void {
+        if (_selectedX != -1 && _selectedY != -1) {
+            removeChild(_selection);
+        }
         _selectedX = -1;
         _selectedY = -1;
         trace("Unselected");
-        invalidateDisplayList();
     }
 
     private function checkSeries():int {
@@ -338,14 +354,20 @@ public class BoardView extends UIComponent {
             for each (var group:Object in state.computeGroups()) {
                 if (group.length == 3) {
                     game.me.score += 10 * combo;
-                    game.me.addCollectedBeer(group.token, false);
+                    if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
+                        game.me.addCollectedBeer(group.token, false);
+                    }
                 } else if (group.length == 4) {
                     game.me.score += 20 * combo;
-                    game.me.addCollectedBeer(group.token, false);
+                    if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
+                        game.me.addCollectedBeer(group.token, false);
+                    }
                 } else if (group.length == 5) {
                     game.me.score += 40 * combo;
-                    game.me.addCollectedBeer(group.token, false);
-                    game.me.addCollectedBeer(group.token, false);
+                    if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
+                        game.me.addCollectedBeer(group.token, false);
+                        game.me.addCollectedBeer(group.token, false);
+                    }
                 }
             }
         } else {
@@ -495,34 +517,6 @@ public class BoardView extends UIComponent {
         _board[x][y + 1] = token;
     }
 
-    override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
-        super.updateDisplayList(unscaledWidth, unscaledHeight);
-        graphics.clear();
-        //        graphics.lineStyle(1, 0x0);
-        var i:int, j:int;
-        for (i = 0; i <= Constants.BOARD_SIZE - 1; i++) {
-            for (j = 0; j <= Constants.BOARD_SIZE - 1; j++) {
-                graphics.beginFill((i + j) % 2 == 0 ? 0x808080 : 0xC0C0C0);
-                graphics.drawRect(i * unscaledWidth / Constants.BOARD_SIZE, j * unscaledWidth / Constants.BOARD_SIZE,
-                        unscaledHeight / Constants.BOARD_SIZE, unscaledHeight / Constants.BOARD_SIZE);
-                graphics.endFill();
-                //                graphics.moveTo(i * unscaledWidth / Constants.BOARD_SIZE, 0);
-                //                graphics.lineTo(i * unscaledWidth / Constants.BOARD_SIZE, unscaledHeight);
-                //                graphics.moveTo(0, i * unscaledHeight / Constants.BOARD_SIZE);
-                //                graphics.lineTo(unscaledWidth, i * unscaledHeight / Constants.BOARD_SIZE);
-            }
-        }
-        graphics.endFill();
-
-        if (_selectedX != -1 && _selectedY != -1) {
-            graphics.lineStyle(2, 0xff0000);
-            //graphics.beginFill(0x80FFD7AD);
-            graphics.drawRect(_selectedX * unscaledWidth / Constants.BOARD_SIZE, _selectedY * unscaledHeight / Constants.BOARD_SIZE,
-                    unscaledWidth / Constants.BOARD_SIZE, unscaledHeight / Constants.BOARD_SIZE);
-            //graphics.endFill();
-        }
-    }
-
     private function refreshStats():void {
         var state:BoardState = getCurrentState();
         availableMoves = state.computeMoves().length;
@@ -568,6 +562,7 @@ public class BoardView extends UIComponent {
     private var _board:Array = new Array();
     private var _selectedX:int = -1;
     private var _selectedY:int = -1;
+    private var _selection:Sprite;
     private var _swapX:int = -1;
     private var _swapY:int = -1;
     private var _draggingX:int = -1;
@@ -579,5 +574,8 @@ public class BoardView extends UIComponent {
     private var _scoring:Boolean = false;
     private var _combo:Number = 0;
     private var _multiplier:Number = 1.0;
+
+    [Embed(source="../../../board.png")]
+    private static var BoardBackground:Class;
 }
 }

@@ -1,14 +1,9 @@
 package com.beerquest.ui {
 import com.beerquest.*;
-
 import com.greensock.TweenLite;
 
 import flash.display.Sprite;
 import flash.events.Event;
-
-import flash.utils.getQualifiedClassName;
-
-import flash.utils.getQualifiedSuperclassName;
 
 import mx.core.BitmapAsset;
 import mx.core.MovieClipAsset;
@@ -39,7 +34,7 @@ public class Token extends Sprite {
             case TokenType.BLOND_BEER:
                 _icon = new BlondBeerIcon();
                 break;
-            case TokenType.WHITE_BEER:
+            case TokenType.AMBER_BEER:
                 _icon = new WhiteBeerIcon();
                 break;
             case TokenType.COASTER:
