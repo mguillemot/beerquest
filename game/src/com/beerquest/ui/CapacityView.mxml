@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+        width="158" height="41">
+    <mx:Style>
+        .capacity {
+            fontFamily: Kro;
+            fontSize: 14;
+            color: white;
+            textAlign: center;
+        }
+    </mx:Style>
+    <mx:Script><![CDATA[
+        import com.beerquest.Capacity;
+
+        [Bindable]
+        public function get capacity():Capacity {
+            return _capacity;
+        }
+
+        [Bindable]
+        public function set capacity(value:Capacity):void {
+            _capacity = value;
+            if (value.active) {
+                if (value.clickable) {
+                    background.source = new CapacityActive();
+                } else {
+                    background.source = new CapacityInactive();
+                }
+            } else {
+                background.source = new CapacityDisabled();
+            }
+        }
+
+        private var _capacity:Capacity;
+
+        [Embed(source="../../../capacity-active.png")]
+        private static var CapacityActive:Class;
+
+        [Embed(source="../../../capacity-inactive.png")]
+        private static var CapacityInactive:Class;
+
+        [Embed(source="../../../capacity-disabled.png")]
+        private static var CapacityDisabled:Class;
+        ]]></mx:Script>
+    <mx:Image id="background"/>
+    <mx:Label y="5" text="{capacity.name}" width="100%" styleName="capacity">
+        <mx:filters>
+            <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+        </mx:filters>
+    </mx:Label>
+</mx:Canvas>

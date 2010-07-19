@@ -1,5 +1,7 @@
 package com.beerquest.ui {
 import com.beerquest.*;
+import com.beerquest.Capacity;
+import com.beerquest.events.CapacityGainedEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.greensock.TweenLite;
 import com.greensock.easing.Linear;
@@ -107,8 +109,8 @@ public class BoardView extends UIComponent {
             case 32: // space
                 break;
             case 82: // r
-                //regenBoard();
-                resetToTestBoard();
+                regenBoard();
+                dispatchEvent(new CapacityGainedEvent(currentPlayer));
                 break;
             case 84: // t
                 currentPlayer.addCollectedBeer(TokenType.BLOND_BEER, false);
@@ -423,6 +425,7 @@ public class BoardView extends UIComponent {
                     }
                 } else if (group.length == 4) {
                     currentPlayer.score += 20 * combo * currentPlayer.multiplier;
+                    dispatchEvent(new CapacityGainedEvent(currentPlayer));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.addCollectedBeer(group.token, false);
                     }
@@ -430,6 +433,7 @@ public class BoardView extends UIComponent {
                     currentPlayer.score += 40 * combo * currentPlayer.multiplier;
                     currentPlayer.multiplier += 1;
                     resetMultiplier = false;
+                    dispatchEvent(new CapacityGainedEvent(currentPlayer));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.addCollectedBeer(group.token, false);
                         game.me.addCollectedBeer(group.token, false);

@@ -33,6 +33,7 @@
         }
     </mx:Style>
     <mx:Script><![CDATA[
+        import com.beerquest.Capacity;
         import com.beerquest.PlayerData;
         import com.beerquest.events.BeerCollectedEvent;
         import com.beerquest.events.PissEvent;
@@ -81,15 +82,6 @@
         private function and(a:Boolean, b:Boolean):Boolean {
             return (a && b);
         }
-
-        [Embed(source="../../../capacity-active.png")]
-        private static var CapacityActive:Class;
-
-        [Embed(source="../../../capacity-inactive.png")]
-        private static var CapacityInactive:Class;
-
-        [Embed(source="../../../capacity-disabled.png")]
-        private static var CapacityDisabled:Class;
         ]]></mx:Script>
     <mx:NumberFormatter id="scoreFormatter" useThousandsSeparator="true" decimalSeparatorTo=","
                         thousandsSeparatorTo="."/>
@@ -156,9 +148,9 @@
 
         <ui:TokenCollectionView x="3" y="82" player="{player}"/>
     </mx:Canvas>
-    <mx:VBox x="0" y="190" width="100%" horizontalAlign="center">
-        <mx:Image source="{CapacityActive}"/>
-        <mx:Image source="{CapacityInactive}"/>
-        <mx:Image source="{CapacityInactive}"/>
+    <mx:VBox x="0" y="190" width="100%" horizontalAlign="center" verticalGap="0">
+        <ui:CapacityView capacity="{player.capacities.getItemAt(0) as Capacity}"/>
+        <ui:CapacityView capacity="{player.capacities.getItemAt(1) as Capacity}"/>
+        <ui:CapacityView capacity="{player.capacities.getItemAt(2) as Capacity}"/>
     </mx:VBox>
 </mx:Canvas>

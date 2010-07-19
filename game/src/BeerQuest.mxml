@@ -28,6 +28,7 @@
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
         import com.beerquest.events.BeerCollectedEvent;
+        import com.beerquest.events.CapacityGainedEvent;
         import com.beerquest.events.GameEvent;
         import com.beerquest.events.GemsSwappedEvent;
         import com.beerquest.events.PissEvent;
@@ -38,6 +39,7 @@
         private function init():void {
             addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGameEvent);
             addEventListener(BeerCollectedEvent.BEER_COLLECTED, onGameEvent);
+            addEventListener(CapacityGainedEvent.CAPACITY_GAINED, onGameEvent);
             addEventListener(VomitEvent.VOMIT, onGameEvent);
             addEventListener(PissEvent.PISS, onGameEvent);
 

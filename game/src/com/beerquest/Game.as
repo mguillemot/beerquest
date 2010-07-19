@@ -1,4 +1,5 @@
 package com.beerquest {
+import com.beerquest.events.CapacityGainedEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.PissEvent;
@@ -32,6 +33,8 @@ public class Game extends EventDispatcher {
         } else if (e is PissEvent) {
             e.player.doPiss();
             currentTurn++;
+        } else if (e is CapacityGainedEvent) {
+            e.player.doGainCapacity();
         }
     }
 

@@ -9,6 +9,10 @@ public class PlayerData extends EventDispatcher {
         _name = name;
         _title = title;
         _level = level;
+        _capacities = new ArrayCollection();
+        _capacities.addItem(new Capacity("?"));
+        _capacities.addItem(new Capacity("?"));
+        _capacities.addItem(new Capacity("?"));
     }
 
     [Bindable(event="scoreChanged")]
@@ -71,6 +75,10 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new Event("vomitChanged"));
     }
 
+    public function get capacities():ArrayCollection {
+        return _capacities;
+    }
+
     public function get partialBeers():ArrayCollection {
         return _partialBeers;
     }
@@ -106,6 +114,16 @@ public class PlayerData extends EventDispatcher {
         piss /= 2;
     }
 
+    public function doGainCapacity():void {
+        for (var i:int = 0; i < 3; i++) {
+            var c:Capacity = _capacities.getItemAt(i) as Capacity;
+            if (!c.active) {
+                _capacities.setItemAt(new Capacity("Capacity " + (i + 1), true, true), i);
+                return;
+            }
+        }
+    }
+
     private var _name:String;
     private var _title:String;
     private var _level:Number;
@@ -115,5 +133,6 @@ public class PlayerData extends EventDispatcher {
     private var _piss:Number = 0;
     private var _vomit:Number = 0;
     private var _partialBeers:ArrayCollection = new ArrayCollection();
+    private var _capacities:ArrayCollection;
 }
 }
