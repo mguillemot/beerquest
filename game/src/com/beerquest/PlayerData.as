@@ -41,6 +41,36 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new Event("multiplierChanged"));
     }
 
+    [Bindable(event="pissChanged")]
+    public function get piss():Number {
+        return _piss;
+    }
+
+    public function set piss(value:Number):void {
+        _piss = value;
+        if (_piss < 0) {
+            _piss = 0;
+        } else if (_piss > 100) {
+            _piss = 100;
+        }
+        dispatchEvent(new Event("pissChanged"));
+    }
+
+    [Bindable(event="vomitChanged")]
+    public function get vomit():Number {
+        return _vomit;
+    }
+
+    public function set vomit(value:Number):void {
+        _vomit = value;
+        if (_vomit < 0) {
+            _vomit = 0;
+        } else if (_vomit > 100) {
+            _vomit = 100;
+        }
+        dispatchEvent(new Event("vomitChanged"));
+    }
+
     public function get partialBeers():ArrayCollection {
         return _partialBeers;
     }
@@ -68,12 +98,22 @@ public class PlayerData extends EventDispatcher {
         }
     }
 
+    public function doVomit():void {
+        vomit /= 2;
+    }
+
+    public function doPiss():void {
+        piss /= 2;
+    }
+
     private var _name:String;
     private var _title:String;
     private var _level:Number;
     private var _score:Number = 0;
     private var _multiplier:Number = 1;
     private var _fullBeers:Number = 0;
+    private var _piss:Number = 0;
+    private var _vomit:Number = 0;
     private var _partialBeers:ArrayCollection = new ArrayCollection();
 }
 }

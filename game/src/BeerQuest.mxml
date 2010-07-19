@@ -27,10 +27,20 @@
     <fx:Script><![CDATA[
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
+        import com.beerquest.events.BeerCollectedEvent;
+        import com.beerquest.events.GameEvent;
+        import com.beerquest.events.GemsSwappedEvent;
+        import com.beerquest.events.PissEvent;
+        import com.beerquest.events.VomitEvent;
 
         import mx.controls.Alert;
 
         private function init():void {
+            addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGameEvent);
+            addEventListener(BeerCollectedEvent.BEER_COLLECTED, onGameEvent);
+            addEventListener(VomitEvent.VOMIT, onGameEvent);
+            addEventListener(PissEvent.PISS, onGameEvent);
+
             try {
                 ExternalInterface.addCallback("testJs", testJs);
             } catch (e:Error) {
@@ -40,6 +50,10 @@
             var loader:Loader = new Loader();
             banner.addChild(loader);
             loader.load(new URLRequest("http://erhune.iobb.net:81/images/banner.jpg"));
+        }
+
+        private function onGameEvent(e:GameEvent):void {
+            game.handleEvent(e);
         }
 
         public function testJs():void {
@@ -99,7 +113,7 @@
         </mx:HBox>
     </mx:VBox>
     <ui:PlayerStatusView x="30" y="170" player="{game.me}"/>
-    <ui:PlayerStatusView x="565" y="170" player="{game.opponent}"/>
+    <ui:PlayerStatusView x="565" y="170" player="{game.opponent}" clickable="false"/>
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10"/>
     <mx:Label text="Combo: {boardView.combo}" x="10" y="30"/>
     <ui:BoardView x="225" y="158" width="320" height="320" id="boardView" game="{game}"/>

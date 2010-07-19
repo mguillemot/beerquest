@@ -1,4 +1,9 @@
 package com.beerquest {
+import com.beerquest.events.GameEvent;
+import com.beerquest.events.GemsSwappedEvent;
+import com.beerquest.events.PissEvent;
+import com.beerquest.events.VomitEvent;
+
 import flash.events.Event;
 import flash.events.EventDispatcher;
 
@@ -16,6 +21,18 @@ public class Game extends EventDispatcher {
         _barCloseMinute = barCloseMinute;
 
         _currentTurn = 0;
+    }
+
+    public function handleEvent(e:GameEvent):void {
+        if (e is GemsSwappedEvent) {
+            currentTurn++;
+        } else if (e is VomitEvent) {
+            e.player.doVomit();
+            currentTurn++;
+        } else if (e is PissEvent) {
+            e.player.doPiss();
+            currentTurn++;
+        }
     }
 
     public function get me():PlayerData {
@@ -77,7 +94,7 @@ public class Game extends EventDispatcher {
         dispatchEvent(new Event("currentTurnChanged"));
     }
 
-    private function getFormattedTime(hour:int, minute:int) {
+    private function getFormattedTime(hour:int, minute:int):String {
         var res:String = "";
         if (hour < 10) {
             res += "0";

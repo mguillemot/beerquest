@@ -1,12 +1,12 @@
 package com.beerquest.ui {
 import com.beerquest.*;
+import com.beerquest.events.BeerCollectedEvent;
 import com.greensock.TweenLite;
 
 import flash.display.DisplayObject;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
 
-import mx.collections.ArrayCollection;
 import mx.core.BitmapAsset;
 import mx.core.UIComponent;
 import mx.events.CollectionEvent;
@@ -20,13 +20,14 @@ public class TokenCollectionView extends UIComponent {
         height = 34;
     }
 
-    [Bindable]
-    public function set collection(value:ArrayCollection):void {
-        if (_collection != null) {
-            _collection.removeEventListener(CollectionEvent.COLLECTION_CHANGE, onCollectionChange);
-        }
-        _collection = value;
-        _collection.addEventListener(CollectionEvent.COLLECTION_CHANGE, onCollectionChange);
+
+    public function get player():PlayerData {
+        return _player;
+    }
+
+    public function set player(value:PlayerData):void {
+        _player = value;
+        _player.partialBeers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onCollectionChange);
         compact();
     }
 
@@ -71,7 +72,7 @@ public class TokenCollectionView extends UIComponent {
             return;
         }
         trace("Compacting collected tokens");
-        for (var i:int = 0; i < _collection.length - 2; i++) {
+        for (var i:int = 0; i < player.partialBeers.length - 2; i++) {
             if (isSeries(i)) {
                 _compacting = i;
                 startAction("compact");
@@ -80,10 +81,10 @@ public class TokenCollectionView extends UIComponent {
                 }
                 var timer:Timer = new Timer(APPEAR_TIME_MS, 1);
                 timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
-                    _collection.removeItemAt(i);
-                    _collection.removeItemAt(i);
-                    _collection.removeItemAt(i);
-                    dispatchEvent(new BeerCollectedEvent());
+                    player.partialBeers.removeItemAt(i);
+                    player.partialBeers.removeItemAt(i);
+                    player.partialBeers.removeItemAt(i);
+                    dispatchEvent(new BeerCollectedEvent(player));
                     startAction("");
                     compact();
                 });
@@ -98,7 +99,7 @@ public class TokenCollectionView extends UIComponent {
     private function isSeries(i:int):Boolean {
         var commonType:TokenType = null;
         for (var k:int = 0; k < 3; k++) {
-            var token:TokenType = _collection.getItemAt(i + k) as TokenType;
+            var token:TokenType = player.partialBeers.getItemAt(i + k) as TokenType;
             if (token != TokenType.TRIPLE) {
                 if (commonType == null) {
                     commonType = token;
@@ -130,7 +131,7 @@ public class TokenCollectionView extends UIComponent {
         _currentAction = action;
     }
 
-    private var _collection:ArrayCollection;
+    private var _player:PlayerData;
     private var _currentAction:String;
     private var _compacting:int;
 

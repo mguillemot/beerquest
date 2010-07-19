@@ -24,22 +24,62 @@
             color: #a23e03;
             textAlign: center;
         }
+
+        .action {
+            fontFamily: Kro;
+            fontSize: 14;
+            color: white;
+            textAlign: center;
+        }
     </mx:Style>
     <mx:Script><![CDATA[
-        import com.beerquest.BeerCollectedEvent;
         import com.beerquest.PlayerData;
+        import com.beerquest.events.BeerCollectedEvent;
+        import com.beerquest.events.PissEvent;
+        import com.beerquest.events.VomitEvent;
 
         [Bindable]
         public var player:PlayerData;
 
+        [Bindable]
+        public var clickable:Boolean = true;
+
         private function init():void {
-            alcoholBar.setProgress(33, 100);
-            pissBar.setProgress(70, 100);
+            //alcoholBar.setProgress(33, 100);
+            //pissBar.setProgress(70, 100);
             addEventListener(BeerCollectedEvent.BEER_COLLECTED, onBeerCollected);
         }
 
         private function onBeerCollected(e:BeerCollectedEvent):void {
             player.fullBeers++;
+        }
+
+        private function onMouseOverVomit(e:Event):void {
+            vomitText.setStyle("color", "#ffbaba");
+        }
+
+        private function onMouseOutVomit(e:Event):void {
+            vomitText.setStyle("color", "white");
+        }
+
+        private function onClickVomit(e:Event):void {
+            dispatchEvent(new VomitEvent(player));
+        }
+
+        private function onMouseOverPiss(e:Event):void {
+            pissText.setStyle("color", "#ffbaba");
+        }
+
+        private function onMouseOutPiss(e:Event):void {
+            pissText.setStyle("color", "white");
+        }
+
+        private function onClickPiss(e:Event):void {
+            dispatchEvent(new PissEvent(player));
+        }
+
+        private function and(a:Boolean, b:Boolean):Boolean {
+            return (a && b);
         }
 
         [Embed(source="../../../capacity-active.png")]
@@ -51,13 +91,40 @@
         [Embed(source="../../../capacity-disabled.png")]
         private static var CapacityDisabled:Class;
         ]]></mx:Script>
-    <mx:NumberFormatter id="scoreFormatter" useThousandsSeparator="true" decimalSeparatorTo="," thousandsSeparatorTo="."/>
+    <mx:NumberFormatter id="scoreFormatter" useThousandsSeparator="true" decimalSeparatorTo=","
+                        thousandsSeparatorTo="."/>
     <mx:Label text="Score: {player.score} caps" x="10" y="80"/>
-    <mx:ProgressBar id="alcoholBar" x="0" y="5" width="176" trackHeight="10" color="black" maximum="100"
-                    mode="manual" label="Alcoolémie" labelPlacement="center"/>
-    <mx:ProgressBar id="pissBar" x="0" y="35" width="176" trackHeight="10" color="black" maximum="100" mode="manual"
-                    label="Pisse" labelPlacement="center"/>
-    <mx:Canvas x="0" y="65">
+
+    <mx:Canvas height="34" width="176">
+        <ui:ProgressBar y="9" progress="{player.vomit}" fullColor="0x4b9f00" emptyColor="0xbdff8c"/>
+        <mx:Image x="15" source="@Embed(source='../../../action-button.png')" mouseOver="onMouseOverVomit(event)"
+                  mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"
+                  visible="{and(clickable, player.vomit >= 80)}"/>
+        <mx:Label id="vomitText" x="13" y="3" width="65" text="Gerber" styleName="action"
+                  mouseOver="onMouseOverVomit(event)" mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"
+                  visible="{and(clickable, player.vomit >= 80)}">
+            <mx:filters>
+                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+    </mx:Canvas>
+
+    <mx:Canvas y="33" height="34" width="176">
+        <ui:ProgressBar y="9" progress="{player.piss}" fullColor="0x9f9600" emptyColor="0xf2ba00"/>
+        <mx:Image x="15" source="@Embed(source='../../../action-button.png')" mouseOver="onMouseOverPiss(event)"
+                  mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
+                  visible="{and(clickable, player.piss >= 80)}"/>
+        <mx:Label id="pissText" x="13" y="3" width="65" text="Pisser" styleName="action"
+                  mouseOver="onMouseOverPiss(event)"
+                  mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
+                  visible="{and(clickable, player.piss >= 80)}">
+            <mx:filters>
+                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+    </mx:Canvas>
+
+    <mx:Canvas x="0" y="67">
         <mx:Image source="@Embed(source='../../../player-score.png')"/>
 
         <mx:Canvas x="5" y="2" width="120">
@@ -70,7 +137,8 @@
         <mx:Image x="130" y="7" source="@Embed(source='../../../caps.png')"/>
 
         <mx:Canvas x="148" y="5" width="25">
-            <mx:Label id="multiplier" text="X{player.multiplier}" width="100%" styleName="multiplier" visible="{player.multiplier != 1}">
+            <mx:Label id="multiplier" text="X{player.multiplier}" width="100%" styleName="multiplier"
+                      visible="{player.multiplier != 1}">
                 <mx:filters>
                     <mx:GlowFilter blurX="2" blurY="2" alpha="1" color="0xffffff" quality="2"/>
                 </mx:filters>
@@ -86,7 +154,7 @@
         </mx:Canvas>
         <mx:Image x="130" y="32" source="@Embed(source='../../../collected-beer.png')"/>
 
-        <ui:TokenCollectionView x="3" y="82" collection="{player.partialBeers}"/>
+        <ui:TokenCollectionView x="3" y="82" player="{player}"/>
     </mx:Canvas>
     <mx:VBox x="0" y="190" width="100%" horizontalAlign="center">
         <mx:Image source="{CapacityActive}"/>

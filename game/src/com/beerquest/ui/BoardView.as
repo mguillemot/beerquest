@@ -1,5 +1,6 @@
 package com.beerquest.ui {
 import com.beerquest.*;
+import com.beerquest.events.GemsSwappedEvent;
 import com.greensock.TweenLite;
 import com.greensock.easing.Linear;
 
@@ -124,6 +125,12 @@ public class BoardView extends UIComponent {
             case 79: // o
                 currentPlayer.multiplier += 1;
                 break;
+            case 86: // v
+                currentPlayer.vomit += 10;
+                break;
+            case 66: // b
+                currentPlayer.piss += 10;
+                break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
                 break;
@@ -169,15 +176,15 @@ public class BoardView extends UIComponent {
         var i:int, j:int, token:Token;
         var state:BoardState = new BoardState();
         /*state.setAll([
-            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER]
-        ]);*/
+         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER]
+         ]);*/
         state.setAll([
             [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
             [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
@@ -294,6 +301,7 @@ public class BoardView extends UIComponent {
         var timer:Timer = new Timer(SWAP_TIME_MS, 1);
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
             if (valid) {
+                dispatchEvent(new GemsSwappedEvent(currentPlayer, sx, sy, x, y));
                 setToken(x, y, src);
                 setToken(sx, sy, dst);
                 startScoring();
@@ -426,6 +434,16 @@ public class BoardView extends UIComponent {
                         game.me.addCollectedBeer(group.token, false);
                         game.me.addCollectedBeer(group.token, false);
                     }
+                }
+                if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
+                    currentPlayer.piss += 5;
+                    currentPlayer.vomit += 5;
+                } else if (group.token == TokenType.WATER) {
+                    currentPlayer.piss += 5;
+                } else if (group.token == TokenType.LIQUOR) {
+                    currentPlayer.vomit += 5;
+                } else if (group.token == TokenType.FOOD) {
+                    currentPlayer.vomit -= 10;
                 }
             }
             if (resetMultiplier) {
