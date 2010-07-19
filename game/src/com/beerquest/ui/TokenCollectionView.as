@@ -13,6 +13,8 @@ import mx.events.CollectionEvent;
 
 public class TokenCollectionView extends UIComponent {
 
+    private static const APPEAR_TIME_MS:Number = 200;
+
     public function TokenCollectionView() {
         width = 170;
         height = 34;
@@ -49,7 +51,9 @@ public class TokenCollectionView extends UIComponent {
                     }
                     if (t != null) {
                         t.width = t.height = 9;
+                        t.alpha = 0;
                         addChild(t);
+                        TweenLite.to(t, APPEAR_TIME_MS / 1000, {alpha: 1});
                     }
                 }
                 recomputeCoords();
@@ -68,14 +72,13 @@ public class TokenCollectionView extends UIComponent {
         }
         trace("Compacting collected tokens");
         for (var i:int = 0; i < _collection.length - 2; i++) {
-            var type:Object = _collection.getItemAt(i);
-            if (_collection.getItemAt(i + 1) == type && _collection.getItemAt(i + 2) == type) {
+            if (isSeries(i)) {
                 _compacting = i;
                 startAction("compact");
                 for (var k:int; k < 3; k++) {
-                    TweenLite.to(getChildAt(i + k), 0.2, {alpha: 0});
+                    TweenLite.to(getChildAt(i + k), APPEAR_TIME_MS / 1000, {alpha: 0});
                 }
-                var timer:Timer = new Timer(200, 1);
+                var timer:Timer = new Timer(APPEAR_TIME_MS, 1);
                 timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                     _collection.removeItemAt(i);
                     _collection.removeItemAt(i);
@@ -90,6 +93,21 @@ public class TokenCollectionView extends UIComponent {
         }
         recomputeCoords();
         startAction("");
+    }
+
+    private function isSeries(i:int):Boolean {
+        var commonType:TokenType = null;
+        for (var k:int = 0; k < 3; k++) {
+            var token:TokenType = _collection.getItemAt(i + k) as TokenType;
+            if (token != TokenType.TRIPLE) {
+                if (commonType == null) {
+                    commonType = token;
+                } else if (commonType != token) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private function recomputeCoords():void {

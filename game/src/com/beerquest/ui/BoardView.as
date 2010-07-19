@@ -106,16 +106,23 @@ public class BoardView extends UIComponent {
             case 32: // space
                 break;
             case 82: // r
-                regenBoard();
+                //regenBoard();
+                resetToTestBoard();
                 break;
             case 84: // t
-                game.me.addCollectedBeer(TokenType.BLOND_BEER, false);
+                currentPlayer.addCollectedBeer(TokenType.BLOND_BEER, false);
                 break;
             case 89: // y
-                game.me.addCollectedBeer(TokenType.BROWN_BEER, false);
+                currentPlayer.addCollectedBeer(TokenType.BROWN_BEER, false);
                 break;
             case 85: // u
-                game.me.addCollectedBeer(TokenType.AMBER_BEER, false);
+                currentPlayer.addCollectedBeer(TokenType.AMBER_BEER, false);
+                break;
+            case 73: // i
+                currentPlayer.addCollectedBeer(TokenType.TRIPLE, false);
+                break;
+            case 79: // o
+                currentPlayer.multiplier += 1;
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
@@ -141,6 +148,46 @@ public class BoardView extends UIComponent {
         var i:int, j:int, token:Token;
         var state:BoardState = new BoardState();
         state.generateRandomWithoutGroups();
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = 0; j < Constants.BOARD_SIZE; j++) {
+                token = generateToken(state.getCell(i, j));
+                addToken(token);
+                setToken(i, j, token);
+            }
+        }
+
+        if (checkSeries() > 0) {
+            throw "regenerated board has groups";
+        }
+        clearSelection();
+        startAction("");
+    }
+
+    private function resetToTestBoard():void {
+        startAction("resetToTestBoard");
+        removeAllTokens();
+        var i:int, j:int, token:Token;
+        var state:BoardState = new BoardState();
+        /*state.setAll([
+            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER]
+        ]);*/
+        state.setAll([
+            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
+            [TokenType.WATER,TokenType.FOOD,TokenType.BLOND_BEER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
+            [TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.FOOD,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.WATER,TokenType.FOOD,TokenType.WATER]
+        ]);
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
                 token = generateToken(state.getCell(i, j));
@@ -359,24 +406,30 @@ public class BoardView extends UIComponent {
             }
 
             var state:BoardState = getCurrentState();
+            var resetMultiplier:Boolean = true;
             for each (var group:Object in state.computeGroups()) {
                 if (group.length == 3) {
-                    game.me.score += 10 * combo;
+                    currentPlayer.score += 10 * combo * currentPlayer.multiplier;
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.addCollectedBeer(group.token, false);
                     }
                 } else if (group.length == 4) {
-                    game.me.score += 20 * combo;
+                    currentPlayer.score += 20 * combo * currentPlayer.multiplier;
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.addCollectedBeer(group.token, false);
                     }
                 } else if (group.length == 5) {
-                    game.me.score += 40 * combo;
+                    currentPlayer.score += 40 * combo * currentPlayer.multiplier;
+                    currentPlayer.multiplier += 1;
+                    resetMultiplier = false;
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.addCollectedBeer(group.token, false);
                         game.me.addCollectedBeer(group.token, false);
                     }
                 }
+            }
+            if (resetMultiplier) {
+                currentPlayer.multiplier = 1;
             }
         } else {
             endScoring();
@@ -534,6 +587,10 @@ public class BoardView extends UIComponent {
          }*/
     }
 
+    private function get currentPlayer():PlayerData {
+        return game.me;
+    }
+
     [Bindable(event="availableMovesChanged")]
     public function get availableMoves():int {
         return _availableMoves;
@@ -554,16 +611,6 @@ public class BoardView extends UIComponent {
         dispatchEvent(new Event("comboChanged"));
     }
 
-    [Bindable(event="multiplierChanged")]
-    public function get multiplier():Number {
-        return _multiplier;
-    }
-
-    public function set multiplier(value:Number):void {
-        _multiplier = value;
-        dispatchEvent(new Event("multiplierChanged"));
-    }
-
     [Bindable]
     public var game:Game;
 
@@ -581,7 +628,6 @@ public class BoardView extends UIComponent {
     private var _availableMoves:int;
     private var _scoring:Boolean = false;
     private var _combo:Number = 0;
-    private var _multiplier:Number = 1.0;
 
     [Embed(source="../../../board.png")]
     private static var BoardBackground:Class;

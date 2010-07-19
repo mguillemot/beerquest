@@ -6,11 +6,16 @@
                creationComplete="init()"
                width="779" height="630">
     <fx:Style>
-        @font-face {
-            src: url("kronika.ttf");
-            fontFamily: Kro;
-            embedAsCFF: false;
-            advancedAntiAliasing: true;
+        @font-face
+        {
+            src: url("kronika.ttf")
+        ;
+            fontFamily: Kro
+        ;
+            embedAsCFF: false
+        ;
+            advancedAntiAliasing: true
+        ;
         }
 
         .game-type {
@@ -31,6 +36,10 @@
             } catch (e:Error) {
                 trace("Impossible to connect to ExternalInterface.")
             }
+
+            var loader:Loader = new Loader();
+            banner.addChild(loader);
+            loader.load(new URLRequest("http://erhune.iobb.net:81/images/banner.jpg"));
         }
 
         public function testJs():void {
@@ -71,9 +80,12 @@
             }
         }
 
-        public var game:Game = new Game(new PlayerData("Jeano Babouin", "Le bois-sans-soif", 89), new PlayerData("Mattiou Guillegay", "Le Saint-Bernard", 42));
+        public var game:Game = new Game(new PlayerData("Jeano Babouin", "Le bois-sans-soif", 89),
+                new PlayerData("Mattiou Guillegay", "Le Saint-Bernard", 42),
+                "Le Des-Murges Bar", "Paris - France", 18, 0, 23, 0);
         ]]></fx:Script>
-    <mx:Image source="@Embed(source='background.png')"/>
+    <mx:Image id="banner" x="5" y="492" width="771" height="144"/>
+    <mx:Image source="@Embed(source='background-transp.png')"/>
     <ui:PlayerDataView x="40" y="60" player="{game.me}"/>
     <ui:PlayerDataView x="440" y="60" player="{game.opponent}" mirror="true"/>
     <mx:VBox x="225" y="10" width="320" horizontalAlign="center" verticalGap="0">
@@ -89,23 +101,23 @@
     <ui:PlayerStatusView x="30" y="170" player="{game.me}"/>
     <ui:PlayerStatusView x="565" y="170" player="{game.opponent}"/>
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10"/>
-    <mx:Label text="Combo: {boardView.combo} / Multiplier: x {boardView.multiplier}" x="10" y="30"/>
+    <mx:Label text="Combo: {boardView.combo}" x="10" y="30"/>
     <ui:BoardView x="225" y="158" width="320" height="320" id="boardView" game="{game}"/>
     <!--<mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>-->
     <!--<mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>-->
     <!--<mx:Button x="300" y="450" label="Call JS" click="callJs()"/>-->
-    <mx:Label id="remainingTurns" x="225" y="476" width="320" text="Il est 20:15 | Reste 33 coups à boire"
+    <mx:Label id="remainingTurns" x="225" y="476" width="320"
+              text="Il est {game.currentTime} | Reste {game.remainingTurns} coups à boire"
               textAlign="center"/>
     <mx:Canvas x="0" y="492">
-        <mx:Image x="18" source="@Embed(source='banner.png')"/>
-        <mx:Label id="barName" x="445" y="10" width="300" color="white" text="Le Des-Murges Bar" textAlign="center"
+        <mx:Label x="445" y="10" width="300" color="white" text="{game.barName}" textAlign="center"
                   fontSize="24"
                   fontWeight="bold" fontStyle="italic">
             <mx:filters>
                 <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
             </mx:filters>
         </mx:Label>
-        <mx:Label id="barDescription" x="445" y="36" width="300" color="white" text="France - Paris | 18:00 - 23:00"
+        <mx:Label x="445" y="36" width="300" color="white" text="{game.barLocation} | {game.barOperationTime}"
                   textAlign="center"
                   fontWeight="bold" fontStyle="italic" fontSize="12">
             <mx:filters>

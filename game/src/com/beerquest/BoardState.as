@@ -20,6 +20,14 @@ public class BoardState {
         _state[x * Constants.BOARD_SIZE + y] = value;
     }
 
+    public function setAll(cells:Array):void {
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                setCell(i, j, cells[j][i]);
+            }
+        }
+    }
+
     public function toString():String {
         var repr:String = "";
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
@@ -160,7 +168,7 @@ public class BoardState {
                 setCell(i, j, bottomCell);
                 setCell(i, j + 1, topCell);
                 if (hasGroups) {
-                    moves.push({type:"vertical", startX:i, startY:j, endX:i, endY:(j+1)});
+                    moves.push({type:"vertical", startX:i, startY:j, endX:i, endY:(j + 1)});
                 }
                 setCell(i, j, topCell);
                 setCell(i, j + 1, bottomCell);
@@ -220,6 +228,6 @@ public class BoardState {
     }
 
     private var _state:Array = new Array();
-    private var _rand:MersenneTwister = new MersenneTwister(Math.floor(Math.random()*int.MAX_VALUE));
+    private var _rand:MersenneTwister = new MersenneTwister(Math.floor(Math.random() * int.MAX_VALUE));
 }
 }

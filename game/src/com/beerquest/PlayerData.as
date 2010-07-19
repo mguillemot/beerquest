@@ -31,6 +31,16 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new Event("fullBeersChanged"));
     }
 
+    [Bindable(event="multiplierChanged")]
+    public function get multiplier():Number {
+        return _multiplier;
+    }
+
+    public function set multiplier(value:Number):void {
+        _multiplier = value;
+        dispatchEvent(new Event("multiplierChanged"));
+    }
+
     public function get partialBeers():ArrayCollection {
         return _partialBeers;
     }
@@ -62,6 +72,7 @@ public class PlayerData extends EventDispatcher {
     private var _title:String;
     private var _level:Number;
     private var _score:Number = 0;
+    private var _multiplier:Number = 1;
     private var _fullBeers:Number = 0;
     private var _partialBeers:ArrayCollection = new ArrayCollection();
 }
