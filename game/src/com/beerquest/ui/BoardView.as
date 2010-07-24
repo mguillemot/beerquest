@@ -1,6 +1,5 @@
 package com.beerquest.ui {
 import com.beerquest.*;
-import com.beerquest.Capacity;
 import com.beerquest.events.CapacityGainedEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.greensock.TweenLite;
@@ -107,10 +106,11 @@ public class BoardView extends UIComponent {
         // Note: registered from the application
         switch (e.keyCode) {
             case 32: // space
+                resetToTestBoard();
                 break;
             case 82: // r
                 regenBoard();
-                dispatchEvent(new CapacityGainedEvent(currentPlayer));
+                //dispatchEvent(new CapacityGainedEvent(currentPlayer));
                 break;
             case 84: // t
                 currentPlayer.addCollectedBeer(TokenType.BLOND_BEER, false);
@@ -188,14 +188,14 @@ public class BoardView extends UIComponent {
          [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER]
          ]);*/
         state.setAll([
-            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-            [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-            [TokenType.WATER,TokenType.FOOD,TokenType.BLOND_BEER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-            [TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.FOOD,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.WATER,TokenType.FOOD,TokenType.WATER]
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT]
         ]);
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
@@ -363,42 +363,23 @@ public class BoardView extends UIComponent {
 
     private function checkSeries():int {
         resetMarks();
-        var group:int = 1;
-        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-            for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
-                var token:Token = getToken(i, j);
-                if (token.type != TokenType.NONE) {
-                    // Check for horizontal groups
-                    if (token.markX == 0) {
-                        var di:int = 1;
-                        while ((i + di) < Constants.BOARD_SIZE && getToken(i + di, j).type == token.type) {
-                            di++;
-                        }
-                        if (di >= 3) {
-                            for (var k:int = 0; k < di; k++) {
-                                getToken(i + k, j).markX = group;
-                            }
-                            group++;
-                        }
-                    }
-                    // Check for vertical groups
-                    if (token.markY == 0) {
-                        var dj:int = 1;
-                        while ((j + dj) < Constants.BOARD_SIZE && getToken(i, j + dj).type == token.type) {
-                            dj++;
-                        }
-                        if (dj >= 3) {
-                            for (k = 0; k < dj; k++) {
-                                getToken(i, j + k).markY = group;
-                            }
-                            group++;
-                        }
-                    }
+        var state:BoardState = getCurrentState();
+        var groups:Array = state.computeGroups();
+        for (var i:int = 0; i < groups.length; i++) {
+            var group:Object = groups[i];
+            for (var k:int = 0; k < group.length; k++) {
+                var x:int = group.startX;
+                var y:int = group.startY;
+                if (group.type == "horizontal") {
+                    x += k;
+                } else {
+                    y += k;
                 }
+                getToken(x, y).mark = true;
             }
         }
         invalidateDisplayList();
-        return (group - 1);
+        return groups.length;
     }
 
     private function destroySeries():void {
@@ -409,7 +390,7 @@ public class BoardView extends UIComponent {
             for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
                 for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                     var token:Token = getToken(i, j);
-                    if (token.marked) {
+                    if (token.mark) {
                         token.explode();
                     }
                 }
@@ -427,18 +408,19 @@ public class BoardView extends UIComponent {
                     currentPlayer.score += 20 * combo * currentPlayer.multiplier;
                     dispatchEvent(new CapacityGainedEvent(currentPlayer));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        game.me.addCollectedBeer(group.token, false);
+                        game.me.addCollectedBeer(TokenType.TRIPLE, false);
                     }
-                } else if (group.length == 5) {
+                } else if (group.length >= 5) {
                     currentPlayer.score += 40 * combo * currentPlayer.multiplier;
                     currentPlayer.multiplier += 1;
                     resetMultiplier = false;
                     dispatchEvent(new CapacityGainedEvent(currentPlayer));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        game.me.addCollectedBeer(group.token, false);
-                        game.me.addCollectedBeer(group.token, false);
+                        game.me.addCollectedBeer(TokenType.TRIPLE, false);
+                        game.me.addCollectedBeer(TokenType.TRIPLE, false);
                     }
                 }
+                trace("collected group of size " + group.length);
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                     currentPlayer.piss += 5;
                     currentPlayer.vomit += 5;
@@ -515,7 +497,7 @@ public class BoardView extends UIComponent {
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
                 var token:Token = getToken(i, j);
-                if (token != null && token.marked) {
+                if (token != null && token.mark) {
                     removeToken(token);
                 }
             }
@@ -547,7 +529,7 @@ public class BoardView extends UIComponent {
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 var token:Token = getToken(i, j);
-                token.resetMarks();
+                token.mark = false;
             }
         }
     }

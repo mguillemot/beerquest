@@ -4,7 +4,7 @@
                xmlns:mx="library://ns.adobe.com/flex/mx"
                xmlns:ui="com.beerquest.ui.*"
                creationComplete="init()"
-               width="779" height="630">
+               width="760" height="630">
     <fx:Style>
         @font-face
         {
@@ -34,8 +34,6 @@
         import com.beerquest.events.PissEvent;
         import com.beerquest.events.VomitEvent;
 
-        import mx.controls.Alert;
-
         private function init():void {
             addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGameEvent);
             addEventListener(BeerCollectedEvent.BEER_COLLECTED, onGameEvent);
@@ -43,68 +41,67 @@
             addEventListener(VomitEvent.VOMIT, onGameEvent);
             addEventListener(PissEvent.PISS, onGameEvent);
 
-            try {
-                ExternalInterface.addCallback("testJs", testJs);
-            } catch (e:Error) {
-                trace("Impossible to connect to ExternalInterface.")
-            }
+            /*try {
+             ExternalInterface.addCallback("testJs", testJs);
+             } catch (e:Error) {
+             trace("Impossible to connect to ExternalInterface.")
+             } */
 
             var loader:Loader = new Loader();
             banner.addChild(loader);
-            loader.load(new URLRequest("http://erhune.iobb.net:81/images/banner.jpg"));
+            loader.load(new URLRequest("http://erhune.iobb.net/images/banner.jpg"));
         }
 
         private function onGameEvent(e:GameEvent):void {
             game.handleEvent(e);
         }
 
-        public function testJs():void {
-            Alert.show("coucou de la part du JS!!");
-        }
+        /*public function testJs():void {
+         Alert.show("coucou de la part du JS!!");
+         }
 
-        private function sendAjax():void {
-            var request:URLRequest = new URLRequest("/account");
-            //            request.contentType = "text/xml";
-            //            request.data = dataXML.toXMLString();
-            //            request.method = URLRequestMethod.POST;
-            var loader:URLLoader = new URLLoader();
-            loader.addEventListener(Event.COMPLETE, completeHandler);
-            try {
-                loader.load(request);
-                trace("Request sent.");
-            } catch (e:ArgumentError) {
-                trace("An ArgumentError has occurred.");
-            } catch (e:SecurityError) {
-                trace("A SecurityError has occurred.");
-            }
-        }
+         private function sendAjax():void {
+         var request:URLRequest = new URLRequest("/account");
+         //            request.contentType = "text/xml";
+         //            request.data = dataXML.toXMLString();
+         //            request.method = URLRequestMethod.POST;
+         var loader:URLLoader = new URLLoader();
+         loader.addEventListener(Event.COMPLETE, completeHandler);
+         try {
+         loader.load(request);
+         trace("Request sent.");
+         } catch (e:ArgumentError) {
+         trace("An ArgumentError has occurred.");
+         } catch (e:SecurityError) {
+         trace("A SecurityError has occurred.");
+         }
+         }
 
-        private function completeHandler(event:Event):void
-        {
-            trace("Request completed.");
-            var loader:URLLoader = URLLoader(event.target);
-            var variables:URLVariables = new URLVariables(loader.data);
-            Alert.show("toto=" + variables.toto);
-            //            Alert.show("titi=" + variables.titi);
-        }
+         /private function completeHandler(event:Event):void
+         {
+         trace("Request completed.");
+         var loader:URLLoader = URLLoader(event.target);
+         var variables:URLVariables = new URLVariables(loader.data);
+         Alert.show("toto=" + variables.toto);
+         }
 
-        private function callJs():void {
-            try {
-                ExternalInterface.call("callFromFlex", "plup");
-            } catch (e:Error) {
-                trace("Impossible to connect to ExternalInterface.")
-            }
-        }
+         private function callJs():void {
+         try {
+         ExternalInterface.call("callFromFlex", "plup");
+         } catch (e:Error) {
+         trace("Impossible to connect to ExternalInterface.")
+         }
+         } */
 
         public var game:Game = new Game(new PlayerData("Jeano Babouin", "Le bois-sans-soif", 89),
                 new PlayerData("Mattiou Guillegay", "Le Saint-Bernard", 42),
                 "Le Des-Murges Bar", "Paris - France", 18, 0, 23, 0);
         ]]></fx:Script>
-    <mx:Image id="banner" x="5" y="492" width="771" height="144"/>
+    <mx:Image id="banner" x="0" y="492" width="771" height="144"/>
     <mx:Image source="@Embed(source='background-transp.png')"/>
-    <ui:PlayerDataView x="40" y="60" player="{game.me}"/>
-    <ui:PlayerDataView x="440" y="60" player="{game.opponent}" mirror="true"/>
-    <mx:VBox x="225" y="10" width="320" horizontalAlign="center" verticalGap="0">
+    <ui:PlayerDataView x="35" y="60" player="{game.me}"/>
+    <ui:PlayerDataView x="435" y="60" player="{game.opponent}" mirror="true"/>
+    <mx:VBox x="220" y="10" width="320" horizontalAlign="center" verticalGap="0">
         <mx:Image source="@Embed(source='battle-biture.png')"/>
         <mx:Spacer height="15"/>
         <mx:Image source="@Embed(source='vs.png')"/>
@@ -114,15 +111,15 @@
             <mx:Label text="152" styleName="game-type"/>
         </mx:HBox>
     </mx:VBox>
-    <ui:PlayerStatusView x="30" y="170" player="{game.me}"/>
-    <ui:PlayerStatusView x="565" y="170" player="{game.opponent}" clickable="false"/>
+    <ui:PlayerStatusView x="25" y="170" player="{game.me}"/>
+    <ui:PlayerStatusView x="560" y="170" player="{game.opponent}" clickable="false"/>
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10"/>
     <mx:Label text="Combo: {boardView.combo}" x="10" y="30"/>
-    <ui:BoardView x="225" y="158" width="320" height="320" id="boardView" game="{game}"/>
+    <ui:BoardView x="220" y="158" width="320" height="320" id="boardView" game="{game}"/>
     <!--<mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>-->
     <!--<mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>-->
     <!--<mx:Button x="300" y="450" label="Call JS" click="callJs()"/>-->
-    <mx:Label id="remainingTurns" x="225" y="476" width="320"
+    <mx:Label id="remainingTurns" x="220" y="476" width="320"
               text="Il est {game.currentTime} | Reste {game.remainingTurns} coups à boire"
               textAlign="center"/>
     <mx:Canvas x="0" y="492">

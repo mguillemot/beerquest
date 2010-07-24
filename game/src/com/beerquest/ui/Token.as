@@ -49,6 +49,9 @@ public class Token extends Sprite {
             case TokenType.LIQUOR:
                 _icon = new LiquorIcon();
                 break;
+            case TokenType.VOMIT:
+                _icon = new WaterIcon();
+                break;
         }
         _icon.x = 5;
         _icon.y = 5;
@@ -65,8 +68,7 @@ public class Token extends Sprite {
         //            addChild(_movieClip);
 
         _type = type;
-        markX = 0;
-        markY = 0;
+        _mark = false;
     }
 
     private function onEnterFrame(e:Event):void {
@@ -117,29 +119,12 @@ public class Token extends Sprite {
         _falling = value;
     }
 
-    public function get markX():int {
-        return _markX;
+    public function get mark():Boolean {
+        return _mark;
     }
 
-    public function set markX(value:int):void {
-        _markX = value;
-    }
-
-    public function get markY():int {
-        return _markY;
-    }
-
-    public function set markY(value:int):void {
-        _markY = value;
-    }
-
-    public function resetMarks():void {
-        markX = 0;
-        markY = 0;
-    }
-
-    public function get marked():Boolean {
-        return (_markX != 0 || _markY != 0);
+    public function set mark(value:Boolean):void {
+        _mark = value;
     }
 
     private static var nextId:int = 1;
@@ -150,8 +135,7 @@ public class Token extends Sprite {
     private var _type:TokenType;
     private var _boardX:int = int.MIN_VALUE;
     private var _boardY:int = int.MIN_VALUE;
-    private var _markX:int;
-    private var _markY:int;
+    private var _mark:Boolean;
     private var _falling:Boolean = false;
 
 

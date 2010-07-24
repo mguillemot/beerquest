@@ -9,7 +9,8 @@ public class TokenType {
     public static const FOOD:TokenType = new TokenType(5, 0x60FF16);
     public static const LIQUOR:TokenType = new TokenType(6, 0xFF0C1C);
     public static const COASTER:TokenType = new TokenType(7, 0xFF70EE);
-    public static const TRIPLE:TokenType = new TokenType(8, 0xff00c6);
+    public static const TRIPLE:TokenType = new TokenType(8, 0x0);
+    public static const VOMIT:TokenType = new TokenType(9, 0x0);
 
     public static function fromValue(value:int):TokenType {
         switch (value) {
@@ -29,6 +30,8 @@ public class TokenType {
                 return COASTER;
             case 8:
                 return TRIPLE;
+            case 9:
+                return VOMIT;
             default:
                 return NONE;
         }

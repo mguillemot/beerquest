@@ -67,7 +67,7 @@ public class BoardState {
         for (j = 0; j < Constants.BOARD_SIZE; j++) {
             for (i = 0; i < Constants.BOARD_SIZE - 2; i++) {
                 cell = getCell(i, j);
-                if (cell != TokenType.NONE) {
+                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
                     var di:int = 1;
                     while ((i + di) < Constants.BOARD_SIZE && getCell(i + di, j) == cell) {
                         di++;
@@ -84,7 +84,7 @@ public class BoardState {
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE - 2; j++) {
                 cell = getCell(i, j);
-                if (cell != TokenType.NONE) {
+                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
                     var dj:int = 1;
                     while ((j + dj) < Constants.BOARD_SIZE && getCell(i, j + dj) == cell) {
                         dj++;
@@ -107,7 +107,7 @@ public class BoardState {
         for (j = 0; j < Constants.BOARD_SIZE; j++) {
             for (i = 0; i < Constants.BOARD_SIZE - 2; i++) {
                 cell = getCell(i, j);
-                if (cell != TokenType.NONE) {
+                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
                     var di:int = 1;
                     while ((i + di) < Constants.BOARD_SIZE && getCell(i + di, j) == cell) {
                         di++;
@@ -124,7 +124,7 @@ public class BoardState {
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE - 2; j++) {
                 cell = getCell(i, j);
-                if (cell != TokenType.NONE) {
+                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
                     var dj:int = 1;
                     while ((j + dj) < Constants.BOARD_SIZE && getCell(i, j + dj) == cell) {
                         dj++;
