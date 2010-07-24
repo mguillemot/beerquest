@@ -124,11 +124,13 @@ public class TokenCollectionView extends UIComponent {
             }
             var timer:Timer = new Timer(APPEAR_TIME_MS, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+                for (var j:int = 0; j < series; j++) {
+                    dispatchEvent(new BeerCollectedEvent(player));
+                }
                 var k:int = 0;
                 while (k < player.partialBeers.length) {
                     if (getChildAt(k).alpha < 1) {
                         player.partialBeers.removeItemAt(k);
-                        dispatchEvent(new BeerCollectedEvent(player));
                     } else {
                         k++;
                     }

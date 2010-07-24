@@ -296,8 +296,11 @@ public class BoardView extends UIComponent {
 
     private function clickCell(x:int, y:int):void {
         if (_currentAction == "selectTokenToDestroy") {
-            destroyTokensOfType(getToken(x, y).type);
-            currentPlayer.clearCapacities();
+            var token:TokenType = getToken(x, y).type;
+            if (token.collectible) {
+                destroyTokensOfType(token);
+                currentPlayer.clearCapacities();
+            }
         } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - _pissLevel) {
                 // Cannot click in piss
