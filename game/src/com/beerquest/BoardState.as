@@ -52,6 +52,19 @@ public class BoardState {
         normalize();
     }
 
+    public function getRandomNonVomitCell():Object {
+        // TODO (Erhune) cas où le plateau est rempli de vomi
+        while (true) {
+            var x:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
+            var y:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
+            var token:TokenType = getCell(x, y);
+            if (token != TokenType.VOMIT) {
+                return {x:x, y:y};
+            }
+        }
+        return null;
+    }
+
     public function normalize():void {
         while (hasGroups > 0) {
             destroyGroups();

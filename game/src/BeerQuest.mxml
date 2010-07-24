@@ -41,6 +41,8 @@
             addEventListener(VomitEvent.VOMIT, onGameEvent);
             addEventListener(PissEvent.PISS, onGameEvent);
 
+            game.me.addEventListener("VomitChanged", onVomitChanged);
+
             /*try {
              ExternalInterface.addCallback("testJs", testJs);
              } catch (e:Error) {
@@ -54,6 +56,12 @@
 
         private function onGameEvent(e:GameEvent):void {
             game.handleEvent(e);
+        }
+
+        private function onVomitChanged(e:Event):void {
+            if (game.me.vomit > 80) {
+                boardView.createVomit();
+            }
         }
 
         /*public function testJs():void {
@@ -93,7 +101,8 @@
          }
          } */
 
-        public var game:Game = new Game(new PlayerData("Jeano Babouin", "Le bois-sans-soif", 89),
+        public var game:Game = new Game(
+                new PlayerData("Jeano Babouin", "Le bois-sans-soif", 89),
                 new PlayerData("Mattiou Guillegay", "Le Saint-Bernard", 42),
                 "Le Des-Murges Bar", "Paris - France", 18, 0, 23, 0);
         ]]></fx:Script>

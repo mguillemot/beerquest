@@ -1,4 +1,6 @@
 package com.beerquest {
+import com.beerquest.events.VomitEvent;
+
 import flash.events.Event;
 import flash.events.EventDispatcher;
 
@@ -15,37 +17,37 @@ public class PlayerData extends EventDispatcher {
         _capacities.addItem(new Capacity("?"));
     }
 
-    [Bindable(event="scoreChanged")]
+    [Bindable(event="ScoreChanged")]
     public function get score():Number {
         return _score;
     }
 
     public function set score(value:Number):void {
         _score = value;
-        dispatchEvent(new Event("scoreChanged"));
+        dispatchEvent(new Event("ScoreChanged"));
     }
 
-    [Bindable(event="fullBeersChanged")]
+    [Bindable(event="FullBeersChanged")]
     public function get fullBeers():Number {
         return _fullBeers;
     }
 
     public function set fullBeers(value:Number):void {
         _fullBeers = value;
-        dispatchEvent(new Event("fullBeersChanged"));
+        dispatchEvent(new Event("FullBeersChanged"));
     }
 
-    [Bindable(event="multiplierChanged")]
+    [Bindable(event="MultiplierChanged")]
     public function get multiplier():Number {
         return _multiplier;
     }
 
     public function set multiplier(value:Number):void {
         _multiplier = value;
-        dispatchEvent(new Event("multiplierChanged"));
+        dispatchEvent(new Event("MultiplierChanged"));
     }
 
-    [Bindable(event="pissChanged")]
+    [Bindable(event="PissChanged")]
     public function get piss():Number {
         return _piss;
     }
@@ -57,10 +59,10 @@ public class PlayerData extends EventDispatcher {
         } else if (_piss > 100) {
             _piss = 100;
         }
-        dispatchEvent(new Event("pissChanged"));
+        dispatchEvent(new Event("PissChanged"));
     }
 
-    [Bindable(event="vomitChanged")]
+    [Bindable(event="VomitChanged")]
     public function get vomit():Number {
         return _vomit;
     }
@@ -72,7 +74,7 @@ public class PlayerData extends EventDispatcher {
         } else if (_vomit > 100) {
             _vomit = 100;
         }
-        dispatchEvent(new Event("vomitChanged"));
+        dispatchEvent(new Event("VomitChanged"));
     }
 
     public function get capacities():ArrayCollection {

@@ -1,7 +1,9 @@
 package com.beerquest.ui {
 import com.beerquest.*;
 import com.beerquest.events.CapacityGainedEvent;
+import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
+import com.beerquest.events.VomitEvent;
 import com.greensock.TweenLite;
 import com.greensock.easing.Linear;
 
@@ -210,6 +212,15 @@ public class BoardView extends UIComponent {
         }
         clearSelection();
         startAction("");
+    }
+
+    public function createVomit():void {
+        var cell:Object = getCurrentState().getRandomNonVomitCell();
+        trace("Creating vomit on " + cell.x + ":" + cell.y);
+        var token:Token = generateToken(TokenType.VOMIT);
+        removeToken(getToken(cell.x, cell.y));
+        addToken(token);
+        setToken(cell.x, cell.y, token);
     }
 
     private function removeAllTokens():void {

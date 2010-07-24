@@ -50,7 +50,7 @@ public class Token extends Sprite {
                 _icon = new LiquorIcon();
                 break;
             case TokenType.VOMIT:
-                _icon = new WaterIcon();
+                _icon = new VomitIcon();
                 break;
         }
         _icon.x = 5;
@@ -162,5 +162,8 @@ public class Token extends Sprite {
 
     [Embed(source="../../../verre-eau.png")]
     private static var WaterIcon:Class;
+
+    [Embed(source="../../../vomi.png")]
+    private static var VomitIcon:Class;
 }
 }

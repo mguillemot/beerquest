@@ -28,8 +28,8 @@ public class Game extends EventDispatcher {
         if (e is GemsSwappedEvent) {
             currentTurn++;
         } else if (e is VomitEvent) {
-            e.player.doVomit();
-            currentTurn++;
+            //e.player.doVomit();
+            //currentTurn++;
         } else if (e is PissEvent) {
             e.player.doPiss();
             currentTurn++;
