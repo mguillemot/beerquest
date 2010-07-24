@@ -66,7 +66,7 @@
                 boardView.createVomit();
                 boardView.createVomit();
                 boardView.createVomit();
-                game.me.vomit = 70;
+                game.me.vomit = 50;
             }
         }
 

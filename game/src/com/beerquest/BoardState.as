@@ -247,7 +247,22 @@ public class BoardState {
     }
 
     public function generateNewCell():TokenType {
-        return TokenType.fromValue(_rand.nextInt(1, 7));
+        var r:int = _rand.nextInt(1, 100);
+        if (r <= 15) {
+            return TokenType.BLOND_BEER;
+        } else if (r <= 30) {
+            return TokenType.BROWN_BEER;
+        } else if (r <= 45) {
+            return TokenType.AMBER_BEER;
+        } else if (r <= 60) {
+            return TokenType.FOOD;
+        } else if (r <= 75) {
+            return TokenType.WATER;
+        } else if (r <= 90) {
+            return TokenType.LIQUOR;
+        } else {
+            return TokenType.COASTER;
+        }
     }
 
     private var _state:Array = new Array();
