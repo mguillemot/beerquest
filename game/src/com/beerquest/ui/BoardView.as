@@ -1,9 +1,7 @@
 package com.beerquest.ui {
 import com.beerquest.*;
 import com.beerquest.events.CapacityEvent;
-import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
-import com.beerquest.events.VomitEvent;
 import com.greensock.TweenLite;
 import com.greensock.easing.Linear;
 
@@ -24,6 +22,7 @@ public class BoardView extends UIComponent {
     private static const EXPLODE_DURATION_FRAMES:int = 10;
     private static const SWAP_TIME_MS:Number = 400;
     private static const FALL_TIME_MS:Number = 200;
+    private static const PISS_RAISE_TIME_MS:Number = 500;
 
     public function BoardView() {
         super();
@@ -51,8 +50,24 @@ public class BoardView extends UIComponent {
             addChild(rect);
             mask = rect;
 
+            // Piss
+            _piss = new Sprite();
+            var subPiss:BitmapAsset = new PissAnimation();
+            _piss.addChild(subPiss);
+            subPiss = new PissAnimation();
+            subPiss.x = subPiss.width;
+            _piss.addChild(subPiss);
+            _piss.alpha = 0.7;
+            _piss.name = "piss";
+            _piss.width = 2 * width;
+            _piss.height = 3 * height / Constants.BOARD_SIZE;
+            _piss.y = height;
+            addChild(_piss);
+            pissLevel = 0;
+
             // Selection
             _selection = new Sprite();
+            _selection.name = "selection";
             _selection.graphics.lineStyle(2, 0xff0000);
             _selection.graphics.drawRect(0, 0, width / Constants.BOARD_SIZE, height / Constants.BOARD_SIZE);
 
@@ -134,6 +149,9 @@ public class BoardView extends UIComponent {
             case 66: // b
                 currentPlayer.piss += 10;
                 break;
+            case 65: // a
+                pissLevel = (pissLevel + 1) % 4;
+                break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
                 break;
@@ -149,6 +167,12 @@ public class BoardView extends UIComponent {
                     endDestroySeries();
                 }
                 break;
+        }
+        if (_piss != null) {
+            _piss.x -= 3;
+            if (_piss.x <= -width) {
+                _piss.x = 0;
+            }
         }
     }
 
@@ -606,6 +630,15 @@ public class BoardView extends UIComponent {
          }*/
     }
 
+    public function get pissLevel():int {
+        return _pissLevel;
+    }
+
+    public function set pissLevel(value:int):void {
+        _pissLevel = value;
+        TweenLite.to(_piss, PISS_RAISE_TIME_MS / 1000, {y: (Constants.BOARD_SIZE - _pissLevel) * height / Constants.BOARD_SIZE});
+    }
+
     private function get currentPlayer():PlayerData {
         return game.me;
     }
@@ -630,7 +663,6 @@ public class BoardView extends UIComponent {
         dispatchEvent(new Event("comboChanged"));
     }
 
-    [Bindable]
     public var game:Game;
 
     private var _board:Array = new Array();
@@ -647,8 +679,13 @@ public class BoardView extends UIComponent {
     private var _availableMoves:int;
     private var _scoring:Boolean = false;
     private var _combo:Number = 0;
+    private var _piss:Sprite;
+    private var _pissLevel:int = 0;
 
     [Embed(source="../../../board.png")]
     private static var BoardBackground:Class;
+
+    [Embed(source="../../../effet-pisse.png")]
+    private static var PissAnimation:Class;
 }
 }

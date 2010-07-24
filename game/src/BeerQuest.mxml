@@ -42,6 +42,7 @@
             addEventListener(PissEvent.PISS, onGameEvent);
 
             game.me.addEventListener(GameEvent.VOMIT_CHANGED, onVomitChanged);
+            game.me.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
 
             /*try {
              ExternalInterface.addCallback("testJs", testJs);
@@ -58,7 +59,7 @@
             game.handleEvent(e);
         }
 
-        private function onVomitChanged(e:Event):void {
+        private function onVomitChanged(e:GameEvent):void {
             if (game.me.vomit >= 100) {
                 boardView.createVomit();
                 boardView.createVomit();
@@ -66,6 +67,18 @@
                 boardView.createVomit();
                 boardView.createVomit();
                 game.me.vomit = 70;
+            }
+        }
+
+        private function onPissChanged(e:GameEvent):void {
+            if (game.me.piss >= 100) {
+                boardView.pissLevel = 3;
+            } else if (game.me.piss >= 90) {
+                boardView.pissLevel = 2;
+            } else if (game.me.piss >= 80) {
+                boardView.pissLevel = 1;
+            } else {
+                boardView.pissLevel = 0;
             }
         }
 
