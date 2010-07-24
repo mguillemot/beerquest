@@ -3,34 +3,36 @@
 - if @access_token
 	Access token: #{@access_token}
 - else
-	No access token
+	No access token yet
 
-#game
-%input#testEvent{:type => 'button', :value => "Raise event"}
-:javascript
-	$(function() {
-		$('#game').flashembed("/swf/BeerQuest.swf", {
-			token: "azerty"
-		});
-		$('#testEvent').click(function() {
-			$('#game object')[0].testJs();
-		});
-	});
+%h2 Play
+= link_to "Play", :action => 'play'
 
-	function callFromFlex(s) {
-		alert("Called from Flex with: " + s);
-	}
-.oauth
-	%a{:href => @oauth_url}
-		Authorize application
+%h2 Auth
+%a{:href => @oauth_url, :target => '_top'}
+	Authorize application
 
-.profile
+%h2 Server auth
+%p
+	Your e-mail is
+	= @me ? @me[:email] : "NO AUTH"
+
+%h2 XFMBL
+%p
 	I am
-	%fb:name{:uid => "loggedinuser"}
+	-#%fb:name{:uid => "loggedinuser"}
+%p
 	I am 2
-	%fb:name{:uid => "profileowner"}
+	-#%fb:name{:uid => "profileowner"}
+%p
 	The app is
-	%fb:application-name
+	-#%fb:application-name
+%p
+	Login
+	%fb:login-button{:onlogin => "facebook_onlogin();"}
 
-.login
-	%fb:login-button
+:javascript
+	function facebook_onlogin(){
+		alert("login complete");
+		document.location.href = "#{BeerQuest::FB_APP_URL}";
+	}

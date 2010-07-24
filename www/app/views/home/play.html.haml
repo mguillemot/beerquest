@@ -1,0 +1,17 @@
+%h1 Beer Quest IV: Challenge of the Bartender
+
+#game
+%input#testEvent{:type => 'button', :value => "Raise event"}
+:javascript
+	$(function() {
+		$('#game').flashembed("/swf/BeerQuest.swf", {
+			token: "azerty"
+		});
+		$('#testEvent').click(function() {
+			$('#game object')[0].testJs();
+		});
+	});
+
+	function callFromFlex(s) {
+		alert("Called from Flex with: " + s);
+	}

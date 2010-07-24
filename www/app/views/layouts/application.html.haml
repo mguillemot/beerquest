@@ -3,7 +3,6 @@
 	%head
 		%title Beer Quest
 		= stylesheet_link_tag :all
-		= javascript_include_tag 'http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US'
 		= javascript_include_tag 'http://cdn.jquerytools.org/1.2.3/full/jquery.tools.min.js'
 		= javascript_include_tag 'rails'
 		= javascript_include_tag 'application'
@@ -11,7 +10,11 @@
 	%body
 		.main
 			= yield
-	:javascript
-		FB_RequireFeatures(["XFBML"], function() {
-			FB.Facebook.init("#{BeerQuest::FB_API_KEY}", "xd_receiver.htm");
-		});
+		-#.fb-root
+		#FB_HiddenIFrameContainer{:style => "display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"}
+		= javascript_include_tag 'http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US'
+		:javascript
+			FB_RequireFeatures(["XFBML"], function() {
+				FB.init("#{BeerQuest::FB_API_KEY}", "/xd_receiver.htm");
+				FB.CanvasClient.startTimerToSizeToContent();
+			});

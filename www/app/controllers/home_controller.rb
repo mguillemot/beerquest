@@ -3,6 +3,9 @@ class HomeController < ApplicationController
 		@oauth_url = MiniFB.oauth_url(BeerQuest::FB_APP_ID, BeerQuest::FB_BASE_URL + "facebook/opensession", :scope => "email")
 	end
 
+	def play
+	end
+
 	def help
 	end
 

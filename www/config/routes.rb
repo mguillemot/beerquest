@@ -2,10 +2,12 @@ BeerQuest::Application.routes.draw do |map|
 	get "help", :to => "home#help"
   get "privacy", :to => "home#privacy"
   get "tos", :to => "home#tos"
+  get "play", :to => "home#play"
 
 	post "facebook/authorize", :to => "facebook#authorize"
 	post "facebook/delete", :to => "facebook#delete"
 	get "facebook/opensession", :to => "facebook#opensession"
+	get "facebook/connect", :to => "facebook#connect"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
