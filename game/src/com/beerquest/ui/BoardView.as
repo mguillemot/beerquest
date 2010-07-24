@@ -6,6 +6,7 @@ import com.greensock.TweenLite;
 import com.greensock.easing.Linear;
 
 import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
@@ -30,7 +31,6 @@ public class BoardView extends UIComponent {
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             _board[i] = new Array();
         }
-        clearSelection();
 
         addEventListener(Event.ADDED_TO_STAGE, function(e:Event):void {
             stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -42,27 +42,23 @@ public class BoardView extends UIComponent {
             bg.height = height;
             addChild(bg);
 
-            // Mask
-            var rect:Sprite = new Sprite();
-            rect.name = "mask";
-            rect.graphics.beginFill(0xff0000);
-            rect.graphics.drawRect(0 - 1, 0 - 1, width + 2, height + 2);
-            addChild(rect);
-            mask = rect;
+            // Gems
+            _gemsLayer = new Sprite();
+            addChild(_gemsLayer);
 
             // Piss
-            _piss = new Sprite();
+            _pissLayer = new Sprite();
             var subPiss:BitmapAsset = new PissAnimation();
-            _piss.addChild(subPiss);
+            _pissLayer.addChild(subPiss);
             subPiss = new PissAnimation();
             subPiss.x = subPiss.width;
-            _piss.addChild(subPiss);
-            _piss.alpha = 0.7;
-            _piss.name = "piss";
-            _piss.width = 2 * width;
-            _piss.height = 3 * height / Constants.BOARD_SIZE;
-            _piss.y = height;
-            addChild(_piss);
+            _pissLayer.addChild(subPiss);
+            _pissLayer.alpha = 0.7;
+            _pissLayer.name = "piss";
+            _pissLayer.width = 2 * width;
+            _pissLayer.height = 3 * height / Constants.BOARD_SIZE + 5;
+            _pissLayer.y = height;
+            addChild(_pissLayer);
             pissLevel = 0;
 
             // Selection
@@ -70,6 +66,15 @@ public class BoardView extends UIComponent {
             _selection.name = "selection";
             _selection.graphics.lineStyle(2, 0xff0000);
             _selection.graphics.drawRect(0, 0, width / Constants.BOARD_SIZE, height / Constants.BOARD_SIZE);
+            addChild(_selection);
+
+            // Mask
+            var rect:Sprite = new Sprite();
+            rect.name = "mask";
+            rect.graphics.beginFill(0xff0000);
+            rect.graphics.drawRect(0 - 1, 0 - 1, width + 2, height + 2);
+            addChild(rect);
+            mask = rect;
 
             regenBoard();
         });
@@ -168,10 +173,10 @@ public class BoardView extends UIComponent {
                 }
                 break;
         }
-        if (_piss != null) {
-            _piss.x -= 3;
-            if (_piss.x <= -width) {
-                _piss.x = 0;
+        if (_pissLayer != null) {
+            _pissLayer.x -= 3;
+            if (_pissLayer.x <= -width) {
+                _pissLayer.x = 0;
             }
         }
     }
@@ -251,26 +256,8 @@ public class BoardView extends UIComponent {
     }
 
     private function removeAllTokens():void {
-        var i:int, j:int, token:Token;
-        for (i = 0; i < Constants.BOARD_SIZE; i++) {
-            for (j = -1; j < Constants.BOARD_SIZE; j++) {
-                token = getToken(i, j);
-                if (token != null) {
-                    removeToken(token);
-                }
-            }
-        }
-        if (numChildren != 1) {
-            // If we regenerated the board while some tokens were falling...
-            var toRemove:Array = new Array();
-            for (i = 0; i < numChildren; i++) {
-                if (getChildAt(i).name == "") {
-                    toRemove.push(getChildAt(i));
-                }
-            }
-            for each (var child:DisplayObject in toRemove) {
-                removeChild(child);
-            }
+        while (_gemsLayer.numChildren > 0) {
+            _gemsLayer.removeChildAt(0);
         }
     }
 
@@ -297,6 +284,10 @@ public class BoardView extends UIComponent {
 
     private function clickCell(x:int, y:int):void {
         if (_currentAction == "") {
+            if (y >= Constants.BOARD_SIZE - _pissLevel) {
+                // Cannot click in piss
+                return;
+            }
             if (hasSelectedCell) {
                 var dx:int = Math.abs(_selectedX - x);
                 var dy:int = Math.abs(_selectedY - y);
@@ -380,22 +371,22 @@ public class BoardView extends UIComponent {
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid select coords: " + x + ":" + y;
         }
-        if (_selectedX == -1 && _selectedY == -1) {
-            addChild(_selection);
+        if (y >= Constants.BOARD_SIZE - _pissLevel) {
+            // Cannot select in piss    
+            return;
         }
         _selectedX = x;
         _selectedY = y;
+        _selection.visible = true;
         _selection.x = _selectedX * width / Constants.BOARD_SIZE;
         _selection.y = _selectedY * height / Constants.BOARD_SIZE;
         trace("Selected " + x + ":" + y);
     }
 
     private function clearSelection():void {
-        if (_selectedX != -1 && _selectedY != -1) {
-            removeChild(_selection);
-        }
-        _selectedX = -1;
         _selectedY = -1;
+        _selectedX = -1;
+        _selection.visible = false;
         trace("Unselected");
     }
 
@@ -589,12 +580,12 @@ public class BoardView extends UIComponent {
     }
 
     public function addToken(token:Token):void {
-        addChild(token);
+        _gemsLayer.addChild(token);
     }
 
     public function removeToken(token:Token):void {
         setToken(token.boardX, token.boardY, null);
-        removeChild(token);
+        _gemsLayer.removeChild(token);
     }
 
     public function getToken(x:int, y:int):Token {
@@ -636,7 +627,11 @@ public class BoardView extends UIComponent {
 
     public function set pissLevel(value:int):void {
         _pissLevel = value;
-        TweenLite.to(_piss, PISS_RAISE_TIME_MS / 1000, {y: (Constants.BOARD_SIZE - _pissLevel) * height / Constants.BOARD_SIZE});
+        var epsilon:int = (_pissLevel > 0) ? -5 : 0;
+        TweenLite.to(_pissLayer, PISS_RAISE_TIME_MS / 1000, {y: (Constants.BOARD_SIZE - _pissLevel) * height / Constants.BOARD_SIZE + epsilon});
+        if (_selectedY >= Constants.BOARD_SIZE - _pissLevel) {
+            clearSelection();
+        }
     }
 
     private function get currentPlayer():PlayerData {
@@ -679,7 +674,8 @@ public class BoardView extends UIComponent {
     private var _availableMoves:int;
     private var _scoring:Boolean = false;
     private var _combo:Number = 0;
-    private var _piss:Sprite;
+    private var _gemsLayer:DisplayObjectContainer;
+    private var _pissLayer:DisplayObjectContainer;
     private var _pissLevel:int = 0;
 
     [Embed(source="../../../board.png")]

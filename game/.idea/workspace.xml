@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="36cec4e9-0d20-42a8-b640-434ae12d528e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BeerQuest.mxml" afterPath="$PROJECT_DIR$/src/BeerQuest.mxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
     </list>
     <ignored path="BeerQuest.iws" />
@@ -66,7 +65,7 @@
       <file leaf-file-name="BoardView.as" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="81" selection-start="1841" selection-end="1841" vertical-scroll-proportion="0.2973913">
+            <state line="45" column="39" selection-start="1380" selection-end="1380" vertical-scroll-proportion="0.20173913">
               <folding />
             </state>
           </provider>
@@ -623,13 +622,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Program Files (x86)/flex_sdk_4/frameworks/projects/textLayout/src/flashx/textLayout/compose/ISWFContext.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="62" selection-start="1573" selection-end="1573" vertical-scroll-proportion="0.4055666">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/CapacityEvent.as">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="85" selection-start="372" selection-end="372" vertical-scroll-proportion="0.26608697">
@@ -780,9 +772,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Program Files (x86)/flex_sdk_4/frameworks/projects/textLayout/src/flashx/textLayout/compose/ISWFContext.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="98" selection-start="1661" selection-end="1661" vertical-scroll-proportion="0.777336">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="81" selection-start="1841" selection-end="1841" vertical-scroll-proportion="0.2973913">
+        <state line="45" column="39" selection-start="1380" selection-end="1380" vertical-scroll-proportion="0.20173913">
           <folding />
         </state>
       </provider>
