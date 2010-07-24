@@ -112,22 +112,21 @@ public class BoardView extends UIComponent {
                 break;
             case 82: // r
                 regenBoard();
-                //dispatchEvent(new CapacityGainedEvent(currentPlayer));
                 break;
             case 84: // t
-                currentPlayer.addCollectedBeer(TokenType.BLOND_BEER, false);
+                currentPlayer.addPartialBeer(TokenType.BLOND_BEER);
                 break;
             case 89: // y
-                currentPlayer.addCollectedBeer(TokenType.BROWN_BEER, false);
+                currentPlayer.addPartialBeer(TokenType.BROWN_BEER);
                 break;
             case 85: // u
-                currentPlayer.addCollectedBeer(TokenType.AMBER_BEER, false);
+                currentPlayer.addPartialBeer(TokenType.AMBER_BEER);
                 break;
             case 73: // i
-                currentPlayer.addCollectedBeer(TokenType.TRIPLE, false);
+                currentPlayer.addPartialBeer(TokenType.TRIPLE);
                 break;
             case 79: // o
-                currentPlayer.multiplier += 1;
+                dispatchEvent(new CapacityGainedEvent(currentPlayer));
                 break;
             case 86: // v
                 currentPlayer.vomit += 10;
@@ -416,13 +415,13 @@ public class BoardView extends UIComponent {
             for each (var group:Object in state.computeGroups()) {
                 if (group.length == 3) {
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        game.me.addCollectedBeer(group.token, false);
+                        game.me.addPartialBeer(group.token);
                     }
                 } else if (group.length == 4) {
                     currentPlayer.score += 20 * combo * currentPlayer.multiplier;
                     dispatchEvent(new CapacityGainedEvent(currentPlayer));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        game.me.addCollectedBeer(TokenType.TRIPLE, false);
+                        game.me.addPartialBeer(TokenType.TRIPLE);
                     }
                 } else if (group.length >= 5) {
                     currentPlayer.score += 40 * combo * currentPlayer.multiplier;
@@ -430,8 +429,7 @@ public class BoardView extends UIComponent {
                     resetMultiplier = false;
                     dispatchEvent(new CapacityGainedEvent(currentPlayer));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        game.me.addCollectedBeer(TokenType.TRIPLE, false);
-                        game.me.addCollectedBeer(TokenType.TRIPLE, false);
+                        game.me.fullBeers++;
                     }
                 }
                 currentPlayer.score += group.token.score * combo * currentPlayer.multiplier;

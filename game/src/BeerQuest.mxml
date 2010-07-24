@@ -41,7 +41,7 @@
             addEventListener(VomitEvent.VOMIT, onGameEvent);
             addEventListener(PissEvent.PISS, onGameEvent);
 
-            game.me.addEventListener("VomitChanged", onVomitChanged);
+            game.me.addEventListener(GameEvent.VOMIT_CHANGED, onVomitChanged);
 
             /*try {
              ExternalInterface.addCallback("testJs", testJs);

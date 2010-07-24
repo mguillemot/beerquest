@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
-        width="158" height="41">
+           width="158" height="44">
     <mx:Style>
         .capacity {
             fontFamily: Kro;
@@ -20,32 +20,51 @@
         [Bindable]
         public function set capacity(value:Capacity):void {
             _capacity = value;
-            if (value.active) {
-                if (value.clickable) {
-                    background.source = new CapacityActive();
-                } else {
-                    background.source = new CapacityInactive();
-                }
+            if (value.enabled) {
+                background.source = new CapacityEnabled();
+                var token:Token = new Token(value.correspondingToken);
+                token.width = capaIcon.width;
+                token.height = capaIcon.height;
+                capaIcon.removeAllChildren();
+                capaIcon.rawChildren.addChild(token)
             } else {
                 background.source = new CapacityDisabled();
             }
         }
 
+        private function onMouseOver(e:MouseEvent):void {
+            if (capacity.enabled) {
+                background.source = new CapacityHover();
+            }
+        }
+
+        private function onMouseOut(e:MouseEvent):void {
+            if (capacity.enabled) {
+                background.source = new CapacityEnabled();
+            }
+        }
+
         private var _capacity:Capacity;
 
-        [Embed(source="../../../capacity-active.png")]
-        private static var CapacityActive:Class;
+        [Embed(source="../../../capacity-hover.png")]
+        private static var CapacityHover:Class;
 
-        [Embed(source="../../../capacity-inactive.png")]
-        private static var CapacityInactive:Class;
+        [Embed(source="../../../capacity-enabled.png")]
+        private static var CapacityEnabled:Class;
 
         [Embed(source="../../../capacity-disabled.png")]
         private static var CapacityDisabled:Class;
         ]]></mx:Script>
     <mx:Image id="background"/>
-    <mx:Label y="5" text="{capacity.name}" width="100%" styleName="capacity">
-        <mx:filters>
-            <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-        </mx:filters>
-    </mx:Label>
+    <mx:HBox verticalAlign="middle" width="100%" height="100%" horizontalGap="1" paddingLeft="10" paddingRight="10"
+             mouseOver="onMouseOver(event)" mouseOut="onMouseOut(event)">
+        <mx:Canvas id="capaIcon" width="28" height="28"/>
+        <mx:Canvas width="108">
+            <mx:Label text="{capacity.name}" width="100%" styleName="capacity">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+    </mx:HBox>
 </mx:Canvas>

@@ -1,10 +1,12 @@
 package com.beerquest {
+import com.beerquest.events.GameEvent;
 import com.beerquest.events.VomitEvent;
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
 
 import mx.collections.ArrayCollection;
+import mx.events.CollectionEvent;
 
 public class PlayerData extends EventDispatcher {
     public function PlayerData(name:String, title:String, level:Number) {
@@ -12,9 +14,15 @@ public class PlayerData extends EventDispatcher {
         _title = title;
         _level = level;
         _capacities = new ArrayCollection();
-        _capacities.addItem(new Capacity("?"));
-        _capacities.addItem(new Capacity("?"));
-        _capacities.addItem(new Capacity("?"));
+        _capacities.addItem(Capacity.NONE);
+        _capacities.addItem(Capacity.NONE);
+        _capacities.addItem(Capacity.NONE);
+        _partialBeers = new ArrayCollection();
+        _partialBeers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onPartialBeerCollectionChanged);
+    }
+
+    private function onPartialBeerCollectionChanged(e:CollectionEvent):void {
+        dispatchEvent(new GameEvent(GameEvent.PARTIAL_BEERS_CHANGED, this));
     }
 
     [Bindable(event="ScoreChanged")]
@@ -24,7 +32,7 @@ public class PlayerData extends EventDispatcher {
 
     public function set score(value:Number):void {
         _score = value;
-        dispatchEvent(new Event("ScoreChanged"));
+        dispatchEvent(new GameEvent(GameEvent.SCORE_CHANGED, this));
     }
 
     [Bindable(event="FullBeersChanged")]
@@ -34,7 +42,7 @@ public class PlayerData extends EventDispatcher {
 
     public function set fullBeers(value:Number):void {
         _fullBeers = value;
-        dispatchEvent(new Event("FullBeersChanged"));
+        dispatchEvent(new GameEvent(GameEvent.FULL_BEERS_CHANGED, this));
     }
 
     [Bindable(event="MultiplierChanged")]
@@ -44,7 +52,7 @@ public class PlayerData extends EventDispatcher {
 
     public function set multiplier(value:Number):void {
         _multiplier = value;
-        dispatchEvent(new Event("MultiplierChanged"));
+        dispatchEvent(new GameEvent(GameEvent.MULTIPLIER_CHANGED, this));
     }
 
     [Bindable(event="PissChanged")]
@@ -59,7 +67,7 @@ public class PlayerData extends EventDispatcher {
         } else if (_piss > 100) {
             _piss = 100;
         }
-        dispatchEvent(new Event("PissChanged"));
+        dispatchEvent(new GameEvent(GameEvent.PISS_CHANGED, this));
     }
 
     [Bindable(event="VomitChanged")]
@@ -74,7 +82,7 @@ public class PlayerData extends EventDispatcher {
         } else if (_vomit > 100) {
             _vomit = 100;
         }
-        dispatchEvent(new Event("VomitChanged"));
+        dispatchEvent(new GameEvent(GameEvent.VOMIT_CHANGED, this));
     }
 
     public function get capacities():ArrayCollection {
@@ -97,15 +105,11 @@ public class PlayerData extends EventDispatcher {
         return _level;
     }
 
-    public function addCollectedBeer(type:TokenType, big:Boolean):void {
-        if (big) {
-            fullBeers++;
-        } else {
-            if (_partialBeers.length == 45) {
-                _partialBeers.removeItemAt(0);
-            }
-            _partialBeers.addItem(type);
+    public function addPartialBeer(type:TokenType):void {
+        if (_partialBeers.length == 45) {
+            _partialBeers.removeItemAt(0);
         }
+        _partialBeers.addItem(type);
     }
 
     public function doVomit():void {
@@ -119,8 +123,8 @@ public class PlayerData extends EventDispatcher {
     public function doGainCapacity():void {
         for (var i:int = 0; i < 3; i++) {
             var c:Capacity = _capacities.getItemAt(i) as Capacity;
-            if (!c.active) {
-                _capacities.setItemAt(new Capacity("Capacity " + (i + 1), true, true), i);
+            if (!c.enabled) {
+                _capacities.setItemAt(Capacity.BLOND_STACK_ORDER, i);
                 return;
             }
         }
@@ -134,7 +138,7 @@ public class PlayerData extends EventDispatcher {
     private var _fullBeers:Number = 0;
     private var _piss:Number = 0;
     private var _vomit:Number = 0;
-    private var _partialBeers:ArrayCollection = new ArrayCollection();
+    private var _partialBeers:ArrayCollection;
     private var _capacities:ArrayCollection;
 }
 }

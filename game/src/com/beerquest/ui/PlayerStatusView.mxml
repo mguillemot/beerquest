@@ -55,7 +55,7 @@
             player.fullBeers++;
         }
 
-        private function onMouseOverVomit(e:Event):void {
+        /*private function onMouseOverVomit(e:Event):void {
             vomitText.setStyle("color", "#ffbaba");
         }
 
@@ -64,8 +64,8 @@
         }
 
         private function onClickVomit(e:Event):void {
-            //dispatchEvent(new VomitEvent(player));
-        }
+            dispatchEvent(new VomitEvent(player));
+        }   */
 
         private function onMouseOverPiss(e:Event):void {
             pissText.setStyle("color", "#ffbaba");
@@ -89,16 +89,16 @@
 
     <mx:Canvas height="34" width="176">
         <ui:ProgressBar y="9" progress="{player.vomit}" fullColor="0x4b9f00" emptyColor="0xbdff8c"/>
-        <mx:Image x="15" source="@Embed(source='../../../action-button.png')" mouseOver="onMouseOverVomit(event)"
-                  mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"
-                  visible="{and(clickable, player.vomit >= 80)}"/>
-        <mx:Label id="vomitText" x="13" y="3" width="65" text="Gerber" styleName="action"
-                  mouseOver="onMouseOverVomit(event)" mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"
-                  visible="{and(clickable, player.vomit >= 80)}">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
+        <!--<mx:Image x="15" source="@Embed(source='../../../action-button.png')" mouseOver="onMouseOverVomit(event)"-->
+                  <!--mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"-->
+                  <!--visible="{and(clickable, player.vomit >= 80)}"/>-->
+        <!--<mx:Label id="vomitText" x="13" y="3" width="65" text="Gerber" styleName="action"-->
+                  <!--mouseOver="onMouseOverVomit(event)" mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"-->
+                  <!--visible="{and(clickable, player.vomit >= 80)}">-->
+            <!--<mx:filters>-->
+                <!--<mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>-->
+            <!--</mx:filters>-->
+        <!--</mx:Label>-->
     </mx:Canvas>
 
     <mx:Canvas y="33" height="34" width="176">

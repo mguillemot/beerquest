@@ -7,6 +7,7 @@ import flash.events.Event;
 
 import mx.core.BitmapAsset;
 import mx.core.MovieClipAsset;
+import mx.core.UIComponent;
 
 public class Token extends Sprite {
 
@@ -85,10 +86,6 @@ public class Token extends Sprite {
         if (_icon != null) {
             TweenLite.to(_icon, .25, {alpha: 0});
         }
-    }
-
-    public function get id():int {
-        return _id;
     }
 
     public function get type():TokenType {
