@@ -9,6 +9,7 @@ import mx.collections.ArrayCollection;
 import mx.events.CollectionEvent;
 
 public class PlayerData extends EventDispatcher {
+
     public function PlayerData(name:String, title:String, level:Number) {
         _name = name;
         _title = title;
@@ -87,6 +88,12 @@ public class PlayerData extends EventDispatcher {
 
     public function get capacities():ArrayCollection {
         return _capacities;
+    }
+
+    public function clearCapacities():void {
+        _capacities.setItemAt(Capacity.NONE, 0);
+        _capacities.setItemAt(Capacity.NONE, 1);
+        _capacities.setItemAt(Capacity.NONE, 2);
     }
 
     public function get partialBeers():ArrayCollection {

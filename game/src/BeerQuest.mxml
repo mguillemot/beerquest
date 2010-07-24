@@ -25,6 +25,7 @@
         }
     </fx:Style>
     <fx:Script><![CDATA[
+        import com.beerquest.Capacity;
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
         import com.beerquest.events.BeerCollectedEvent;
@@ -43,6 +44,7 @@
 
             game.me.addEventListener(GameEvent.VOMIT_CHANGED, onVomitChanged);
             game.me.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
+            game.me.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
 
             /*try {
              ExternalInterface.addCallback("testJs", testJs);
@@ -80,6 +82,10 @@
             } else {
                 boardView.pissLevel = 0;
             }
+        }
+
+        private function onCapacityExecuted(e:CapacityEvent):void {
+            boardView.executeCapacity(e.player, e.capacity);
         }
 
         /*public function testJs():void {

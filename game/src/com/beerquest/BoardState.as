@@ -169,7 +169,7 @@ public class BoardState {
         var i:int, j:int;
 
         // Check for horizontal moves
-        for (j = 0; j < Constants.BOARD_SIZE; j++) {
+        for (j = 0; j < Constants.BOARD_SIZE - _pissLevel; j++) {
             for (i = 0; i < Constants.BOARD_SIZE - 1; i++) {
                 var leftCell:TokenType = getCell(i, j);
                 var rightCell:TokenType = getCell(i + 1, j);
@@ -184,7 +184,7 @@ public class BoardState {
         }
 
         // Check for vertical moves
-        for (j = 0; j < Constants.BOARD_SIZE - 1; j++) {
+        for (j = 0; j < Constants.BOARD_SIZE - 1 - _pissLevel; j++) {
             for (i = 0; i < Constants.BOARD_SIZE; i++) {
                 var topCell:TokenType = getCell(i, j);
                 var bottomCell:TokenType = getCell(i, j + 1);
@@ -265,7 +265,17 @@ public class BoardState {
         }
     }
 
+    public function get pissLevel():int {
+        return _pissLevel;
+    }
+
+    public function set pissLevel(pissLevel:int):void {
+        _pissLevel = pissLevel;
+    }
+
     private var _state:Array = new Array();
+    private var _pissLevel:int = 0;
     private var _rand:MersenneTwister = new MersenneTwister(Math.floor(Math.random() * int.MAX_VALUE));
+
 }
 }

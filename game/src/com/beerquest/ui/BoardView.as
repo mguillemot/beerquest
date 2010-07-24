@@ -17,6 +17,7 @@ import flash.utils.Timer;
 
 import mx.core.BitmapAsset;
 import mx.core.UIComponent;
+import mx.managers.CursorManager;
 
 public class BoardView extends UIComponent {
 
@@ -77,6 +78,8 @@ public class BoardView extends UIComponent {
             mask = rect;
 
             regenBoard();
+            _initialized = true;
+            refreshStats();
         });
         addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
         addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -147,6 +150,8 @@ public class BoardView extends UIComponent {
                 break;
             case 79: // o
                 dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, currentPlayer, Capacity.BLOND_STACK_ORDER));
+                dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, currentPlayer, Capacity.WATERFALL));
+                dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, currentPlayer, Capacity.BIG_BANG));
                 break;
             case 86: // v
                 currentPlayer.vomit += 10;
@@ -156,6 +161,12 @@ public class BoardView extends UIComponent {
                 break;
             case 65: // a
                 pissLevel = (pissLevel + 1) % 4;
+                break;
+            case 27: // Escape
+                if (_currentAction == "selectTokenToDestroy") {
+                    CursorManager.removeAllCursors();
+                    startAction("");
+                }
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
@@ -225,7 +236,7 @@ public class BoardView extends UIComponent {
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT]
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.BROWN_BEER]
         ]);
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
@@ -279,11 +290,15 @@ public class BoardView extends UIComponent {
                 state.setCell(i, j, getToken(i, j).type);
             }
         }
+        state.pissLevel = pissLevel;
         return state;
     }
 
     private function clickCell(x:int, y:int):void {
-        if (_currentAction == "") {
+        if (_currentAction == "selectTokenToDestroy") {
+            destroyTokensOfType(getToken(x, y).type);
+            currentPlayer.clearCapacities();
+        } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - _pissLevel) {
                 // Cannot click in piss
                 return;
@@ -411,19 +426,23 @@ public class BoardView extends UIComponent {
         return groups.length;
     }
 
+    private function destroyMarked():void {
+        startAction("exploding");
+        for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                var token:Token = getToken(i, j);
+                if (token.mark) {
+                    token.explode();
+                }
+            }
+        }
+    }
+
     private function destroySeries():void {
         var series:int = checkSeries();
         if (series > 0) {
-            startAction("exploding");
             combo += series;
-            for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
-                for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                    var token:Token = getToken(i, j);
-                    if (token.mark) {
-                        token.explode();
-                    }
-                }
-            }
+            destroyMarked();
 
             var state:BoardState = getCurrentState();
             var resetMultiplier:Boolean = true;
@@ -613,12 +632,14 @@ public class BoardView extends UIComponent {
     }
 
     private function refreshStats():void {
-        var state:BoardState = getCurrentState();
-        availableMoves = state.computeMoves().length;
-        /*trace("available moves:");
-         for each (var move:Object in state.computeMoves()) {
-         trace("  " + move.type + " of " + move.startX + ":" + move.startY);
-         }*/
+        if (_initialized) {
+            var state:BoardState = getCurrentState();
+            availableMoves = state.computeMoves().length;
+            /*trace("available moves:");
+             for each (var move:Object in state.computeMoves()) {
+             trace("  " + move.type + " of " + move.startX + ":" + move.startY);
+             }*/
+        }
     }
 
     public function get pissLevel():int {
@@ -632,6 +653,42 @@ public class BoardView extends UIComponent {
         if (_selectedY >= Constants.BOARD_SIZE - _pissLevel) {
             clearSelection();
         }
+        refreshStats();
+    }
+
+    public function executeCapacity(player:PlayerData, capacity:Capacity):void {
+        if (_currentAction != "") {
+            trace("ERROR: unable to execute capacity because an action is already in progress");
+        }
+        switch (capacity) {
+            case Capacity.BIG_PEANUTS:
+                currentPlayer.piss = 0;
+                currentPlayer.clearCapacities();
+                break;
+            case Capacity.WATERFALL:
+                destroyTokensOfType(TokenType.VOMIT);
+                currentPlayer.clearCapacities();
+                break;
+            case Capacity.BIG_BANG:
+                startAction("selectTokenToDestroy");
+                CursorManager.setCursor(DestroyCursor);
+                break;
+        }
+    }
+
+    private function destroyTokensOfType(targetType:TokenType):void {
+        CursorManager.removeAllCursors();
+        startAction("destroyTokensOfType");
+        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+            for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+                var token:Token = getToken(i, j);
+                if (token.type == targetType) {
+                    token.mark = true;
+                    currentPlayer.score += targetType.score;
+                }
+            }
+        }
+        destroyMarked();
     }
 
     private function get currentPlayer():PlayerData {
@@ -661,6 +718,7 @@ public class BoardView extends UIComponent {
     public var game:Game;
 
     private var _board:Array = new Array();
+    private var _initialized:Boolean = false;
     private var _selectedX:int = -1;
     private var _selectedY:int = -1;
     private var _selection:Sprite;
@@ -683,5 +741,9 @@ public class BoardView extends UIComponent {
 
     [Embed(source="../../../effet-pisse.png")]
     private static var PissAnimation:Class;
+
+    [Embed(source="../../../curseur-bang.png")]
+    private static var DestroyCursor:Class;
+
 }
 }

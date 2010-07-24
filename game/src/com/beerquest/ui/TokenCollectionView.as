@@ -1,10 +1,12 @@
 package com.beerquest.ui {
 import com.beerquest.*;
 import com.beerquest.events.BeerCollectedEvent;
+import com.beerquest.events.CapacityEvent;
 import com.greensock.TweenLite;
 
 import flash.display.DisplayObject;
 import flash.events.TimerEvent;
+import flash.system.Capabilities;
 import flash.utils.Timer;
 
 import mx.core.BitmapAsset;
@@ -28,6 +30,7 @@ public class TokenCollectionView extends UIComponent {
     public function set player(value:PlayerData):void {
         _player = value;
         _player.partialBeers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onCollectionChange);
+        _player.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
         compact();
     }
 
@@ -66,6 +69,13 @@ public class TokenCollectionView extends UIComponent {
         }
     }
 
+    private function onCapacityExecuted(e:CapacityEvent):void {
+        if (e.capacity == Capacity.BLOND_STACK_ORDER || e.capacity == Capacity.BROWN_STACK_ORDER || e.capacity == Capacity.AMBER_STACK_ORDER) {
+            collectType(e.capacity.correspondingToken);
+            player.clearCapacities();
+        }
+    }
+
     public function compact():void {
         if (_currentAction == "compact") {
             trace("Alreading compacting collected tokens");
@@ -94,6 +104,40 @@ public class TokenCollectionView extends UIComponent {
         }
         recomputeCoords();
         startAction("");
+    }
+
+    private function collectType(type:TokenType):void {
+        var count:Number = 0;
+        for each (var partial:TokenType in player.partialBeers) {
+            if (partial == type) {
+                count++;
+            }
+        }
+        var series:Number = Math.floor(count / 3);
+        if (series > 0) {
+            var compactable:Number = series * 3;
+            for (var i:int = 0; i < player.partialBeers.length && compactable > 0; i++) {
+                if (player.partialBeers.getItemAt(i) == type) {
+                    TweenLite.to(getChildAt(i), APPEAR_TIME_MS / 1000, {alpha: 0});
+                    compactable--;
+                }
+            }
+            var timer:Timer = new Timer(APPEAR_TIME_MS, 1);
+            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+                var k:int = 0;
+                while (k < player.partialBeers.length) {
+                    if (getChildAt(k).alpha < 1) {
+                        player.partialBeers.removeItemAt(k);
+                        dispatchEvent(new BeerCollectedEvent(player));
+                    } else {
+                        k++;
+                    }
+                }
+                recomputeCoords();
+                compact();
+            });
+            timer.start();
+        }
     }
 
     private function isSeries(i:int):Boolean {
