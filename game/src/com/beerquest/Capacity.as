@@ -13,6 +13,26 @@ public class Capacity extends EventDispatcher {
     //public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", true, TokenType.LIQUOR);
     public static const TCHIN_TCHIN:Capacity = new Capacity("Tchin Tchin!", true, TokenType.COASTER);
 
+    public static function fromToken(token:TokenType):Capacity {
+        switch (token) {
+            case TokenType.BLOND_BEER:
+                return BLOND_STACK_ORDER;
+            case TokenType.BROWN_BEER:
+                return BROWN_STACK_ORDER;
+            case TokenType.AMBER_BEER:
+                return AMBER_STACK_ORDER;
+            case TokenType.FOOD:
+                return BIG_PEANUTS;
+            case TokenType.LIQUOR:
+                return BIG_BANG;
+            case TokenType.WATER:
+                return WATERFALL;
+            case TokenType.COASTER:
+                return TCHIN_TCHIN;
+        }
+        return null;
+    }
+
     function Capacity(name:String, enabled:Boolean = false, correspondingToken:TokenType = null) {
         super();
         _name = name;
@@ -35,5 +55,6 @@ public class Capacity extends EventDispatcher {
     private var _name:String;
     private var _enabled:Boolean;
     private var _correspondingToken:TokenType;
+
 }
 }

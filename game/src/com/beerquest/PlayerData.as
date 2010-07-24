@@ -120,11 +120,18 @@ public class PlayerData extends EventDispatcher {
         piss /= 2;
     }
 
-    public function doGainCapacity():void {
-        for (var i:int = 0; i < 3; i++) {
-            var c:Capacity = _capacities.getItemAt(i) as Capacity;
+    public function doGainCapacity(capacity:Capacity):void {
+        var i:int, c:Capacity;
+        for (i = 0; i < 3; i++) {
+            c = _capacities.getItemAt(i) as Capacity;
+            if (c == capacity) {
+                return;
+            }
+        }
+        for (i = 0; i < 3; i++) {
+            c = _capacities.getItemAt(i) as Capacity;
             if (!c.enabled) {
-                _capacities.setItemAt(Capacity.BLOND_STACK_ORDER, i);
+                _capacities.setItemAt(capacity, i);
                 return;
             }
         }

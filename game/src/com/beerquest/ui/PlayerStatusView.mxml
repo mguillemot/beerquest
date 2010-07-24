@@ -149,8 +149,8 @@
         <ui:TokenCollectionView x="3" y="82" player="{player}"/>
     </mx:Canvas>
     <mx:VBox x="0" y="190" width="100%" horizontalAlign="center" verticalGap="0">
-        <ui:CapacityView capacity="{player.capacities.getItemAt(0) as Capacity}"/>
-        <ui:CapacityView capacity="{player.capacities.getItemAt(1) as Capacity}"/>
-        <ui:CapacityView capacity="{player.capacities.getItemAt(2) as Capacity}"/>
+        <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"/>
+        <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"/>
+        <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(2) as Capacity}"/>
     </mx:VBox>
 </mx:Canvas>

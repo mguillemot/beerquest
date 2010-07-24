@@ -1,5 +1,5 @@
 package com.beerquest {
-import com.beerquest.events.CapacityGainedEvent;
+import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.PissEvent;
@@ -25,16 +25,22 @@ public class Game extends EventDispatcher {
     }
 
     public function handleEvent(e:GameEvent):void {
-        if (e is GemsSwappedEvent) {
-            currentTurn++;
-        } else if (e is VomitEvent) {
-            //e.player.doVomit();
-            //currentTurn++;
-        } else if (e is PissEvent) {
-            e.player.doPiss();
-            currentTurn++;
-        } else if (e is CapacityGainedEvent) {
-            e.player.doGainCapacity();
+        switch (e.type) {
+            case GemsSwappedEvent.GEMS_SWAPPED:
+                currentTurn++;
+                break;
+            case VomitEvent.VOMIT:
+                //e.player.doVomit();
+                //currentTurn++;
+                break;
+            case PissEvent.PISS:
+                e.player.doPiss();
+                currentTurn++;
+                break;
+            case CapacityEvent.CAPACITY_GAINED:
+                var ce:CapacityEvent = e as CapacityEvent;
+                e.player.doGainCapacity(ce.capacity);
+                break;
         }
     }
 
@@ -77,7 +83,7 @@ public class Game extends EventDispatcher {
         var hour:int = _barOpenHour;
         var minute:int = _barOpenMinute;
         minute += 5 * _currentTurn;
-        hour += Math.floor(minute/60);
+        hour += Math.floor(minute / 60);
         minute = minute % 60;
         return getFormattedTime(hour, minute);
     }

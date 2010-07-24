@@ -1,6 +1,6 @@
 package com.beerquest.ui {
 import com.beerquest.*;
-import com.beerquest.events.CapacityGainedEvent;
+import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.VomitEvent;
@@ -126,7 +126,7 @@ public class BoardView extends UIComponent {
                 currentPlayer.addPartialBeer(TokenType.TRIPLE);
                 break;
             case 79: // o
-                dispatchEvent(new CapacityGainedEvent(currentPlayer));
+                dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, currentPlayer, Capacity.BLOND_STACK_ORDER));
                 break;
             case 86: // v
                 currentPlayer.vomit += 10;
@@ -419,7 +419,7 @@ public class BoardView extends UIComponent {
                     }
                 } else if (group.length == 4) {
                     currentPlayer.score += 20 * combo * currentPlayer.multiplier;
-                    dispatchEvent(new CapacityGainedEvent(currentPlayer));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, currentPlayer, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.addPartialBeer(TokenType.TRIPLE);
                     }
@@ -427,7 +427,7 @@ public class BoardView extends UIComponent {
                     currentPlayer.score += 40 * combo * currentPlayer.multiplier;
                     currentPlayer.multiplier += 1;
                     resetMultiplier = false;
-                    dispatchEvent(new CapacityGainedEvent(currentPlayer));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, currentPlayer, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.fullBeers++;
                     }
