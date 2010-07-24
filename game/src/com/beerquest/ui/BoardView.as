@@ -216,11 +216,15 @@ public class BoardView extends UIComponent {
 
     public function createVomit():void {
         var cell:Object = getCurrentState().getRandomNonVomitCell();
-        trace("Creating vomit on " + cell.x + ":" + cell.y);
-        var token:Token = generateToken(TokenType.VOMIT);
-        removeToken(getToken(cell.x, cell.y));
-        addToken(token);
-        setToken(cell.x, cell.y, token);
+        if (cell != null) {
+            trace("Creating vomit on " + cell.x + ":" + cell.y);
+            var token:Token = generateToken(TokenType.VOMIT);
+            removeToken(getToken(cell.x, cell.y));
+            addToken(token);
+            setToken(cell.x, cell.y, token);
+        } else {
+            trace("Too much vomit on board")
+        }
     }
 
     private function removeAllTokens():void {
@@ -411,7 +415,6 @@ public class BoardView extends UIComponent {
             var resetMultiplier:Boolean = true;
             for each (var group:Object in state.computeGroups()) {
                 if (group.length == 3) {
-                    currentPlayer.score += 10 * combo * currentPlayer.multiplier;
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         game.me.addCollectedBeer(group.token, false);
                     }
@@ -431,16 +434,19 @@ public class BoardView extends UIComponent {
                         game.me.addCollectedBeer(TokenType.TRIPLE, false);
                     }
                 }
-                trace("collected group of size " + group.length);
+                currentPlayer.score += group.token.score * combo * currentPlayer.multiplier;
+                trace("Collected group of " + group.token + " of size " + group.length);
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                    currentPlayer.piss += 5;
-                    currentPlayer.vomit += 5;
+                    currentPlayer.piss += 3 * group.length;
+                    currentPlayer.vomit += 3 * group.length;
                 } else if (group.token == TokenType.WATER) {
-                    currentPlayer.piss += 5;
+                    currentPlayer.piss += 3 * group.length;
+                    currentPlayer.vomit -= 3 * group.length;
                 } else if (group.token == TokenType.LIQUOR) {
-                    currentPlayer.vomit += 5;
+                    currentPlayer.piss -= group.length;
+                    currentPlayer.vomit += 6 * group.length;
                 } else if (group.token == TokenType.FOOD) {
-                    currentPlayer.vomit -= 10;
+                    currentPlayer.vomit -= 7 * group.length;
                 }
             }
             if (resetMultiplier) {

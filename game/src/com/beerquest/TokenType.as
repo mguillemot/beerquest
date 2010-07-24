@@ -1,16 +1,16 @@
 package com.beerquest {
 public class TokenType {
 
-    public static const NONE:TokenType = new TokenType(0, 0x0);
-    public static const BLOND_BEER:TokenType = new TokenType(1, 0xFFEF19);
-    public static const BROWN_BEER:TokenType = new TokenType(2, 0x7F3300);
-    public static const AMBER_BEER:TokenType = new TokenType(3, 0xFCFFE2);
-    public static const WATER:TokenType = new TokenType(4, 0xB7FFFF);
-    public static const FOOD:TokenType = new TokenType(5, 0x60FF16);
-    public static const LIQUOR:TokenType = new TokenType(6, 0xFF0C1C);
-    public static const COASTER:TokenType = new TokenType(7, 0xFF70EE);
-    public static const TRIPLE:TokenType = new TokenType(8, 0x0);
-    public static const VOMIT:TokenType = new TokenType(9, 0x0);
+    public static const NONE:TokenType = new TokenType(0);
+    public static const BLOND_BEER:TokenType = new TokenType(1, 5, true);
+    public static const BROWN_BEER:TokenType = new TokenType(2, 5, true);
+    public static const AMBER_BEER:TokenType = new TokenType(3, 5, true);
+    public static const WATER:TokenType = new TokenType(4, 5, true);
+    public static const FOOD:TokenType = new TokenType(5, 7, true);
+    public static const LIQUOR:TokenType = new TokenType(6, 10, true);
+    public static const COASTER:TokenType = new TokenType(7, 10, true);
+    public static const TRIPLE:TokenType = new TokenType(8);
+    public static const VOMIT:TokenType = new TokenType(9);
 
     public static function fromValue(value:int):TokenType {
         switch (value) {
@@ -37,22 +37,26 @@ public class TokenType {
         }
     }
 
-    function TokenType(value:int, color:uint) {
-        super();
-
+    function TokenType(value:int, score:Number = 0, collectible:Boolean = false) {
         _value = value;
-        _color = color;
+        _score = score;
+        _collectible = collectible;
     }
 
     public function get value():int {
         return _value;
     }
 
-    public function get color():uint {
-        return _color;
+    public function get score():Number {
+        return _score;
+    }
+
+    public function get collectible():Boolean {
+        return _collectible;
     }
 
     private var _value:int;
-    private var _color:uint;
+    private var _score:Number;
+    private var _collectible:Boolean;
 }
 }

@@ -59,8 +59,13 @@
         }
 
         private function onVomitChanged(e:Event):void {
-            if (game.me.vomit > 80) {
+            if (game.me.vomit >= 100) {
                 boardView.createVomit();
+                boardView.createVomit();
+                boardView.createVomit();
+                boardView.createVomit();
+                boardView.createVomit();
+                game.me.vomit = 70;
             }
         }
 

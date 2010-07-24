@@ -53,7 +53,17 @@ public class BoardState {
     }
 
     public function getRandomNonVomitCell():Object {
-        // TODO (Erhune) cas où le plateau est rempli de vomi
+        var vomitCount:int = 0;
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                if (getCell(i, j) == TokenType.VOMIT) {
+                    vomitCount++;
+                }
+            }
+        }
+        if (vomitCount == Constants.BOARD_SIZE * Constants.BOARD_SIZE) {
+            return null;
+        }
         while (true) {
             var x:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
             var y:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
@@ -74,19 +84,19 @@ public class BoardState {
 
     public function computeGroups():Array {
         var groups:Array = new Array();
-        var i:int, j:int, cell:TokenType;
+        var i:int, j:int, token:TokenType;
 
         // Check for horizontal groups
         for (j = 0; j < Constants.BOARD_SIZE; j++) {
             for (i = 0; i < Constants.BOARD_SIZE - 2; i++) {
-                cell = getCell(i, j);
-                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
+                token = getCell(i, j);
+                if (token.collectible) {
                     var di:int = 1;
-                    while ((i + di) < Constants.BOARD_SIZE && getCell(i + di, j) == cell) {
+                    while ((i + di) < Constants.BOARD_SIZE && getCell(i + di, j) == token) {
                         di++;
                     }
                     if (di >= 3) {
-                        groups.push({type:"horizontal", startX:i, startY:j, length:di, token:cell});
+                        groups.push({type:"horizontal", startX:i, startY:j, length:di, token:token});
                     }
                     i += (di - 1);
                 }
@@ -96,14 +106,14 @@ public class BoardState {
         // Check for vertical groups
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE - 2; j++) {
-                cell = getCell(i, j);
-                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
+                token = getCell(i, j);
+                if (token.collectible) {
                     var dj:int = 1;
-                    while ((j + dj) < Constants.BOARD_SIZE && getCell(i, j + dj) == cell) {
+                    while ((j + dj) < Constants.BOARD_SIZE && getCell(i, j + dj) == token) {
                         dj++;
                     }
                     if (dj >= 3) {
-                        groups.push({type:"vertical", startX:i, startY:j, length:dj, token:cell});
+                        groups.push({type:"vertical", startX:i, startY:j, length:dj, token:token});
                     }
                     j += (dj - 1);
                 }
@@ -114,15 +124,15 @@ public class BoardState {
     }
 
     public function get hasGroups():Boolean {
-        var i:int, j:int, cell:TokenType;
+        var i:int, j:int, token:TokenType;
 
         // Check for horizontal groups
         for (j = 0; j < Constants.BOARD_SIZE; j++) {
             for (i = 0; i < Constants.BOARD_SIZE - 2; i++) {
-                cell = getCell(i, j);
-                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
+                token = getCell(i, j);
+                if (token.collectible) {
                     var di:int = 1;
-                    while ((i + di) < Constants.BOARD_SIZE && getCell(i + di, j) == cell) {
+                    while ((i + di) < Constants.BOARD_SIZE && getCell(i + di, j) == token) {
                         di++;
                     }
                     if (di >= 3) {
@@ -136,10 +146,10 @@ public class BoardState {
         // Check for vertical groups
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE - 2; j++) {
-                cell = getCell(i, j);
-                if (cell != TokenType.NONE && cell != TokenType.TRIPLE && cell != TokenType.VOMIT) {
+                token = getCell(i, j);
+                if (token.collectible) {
                     var dj:int = 1;
-                    while ((j + dj) < Constants.BOARD_SIZE && getCell(i, j + dj) == cell) {
+                    while ((j + dj) < Constants.BOARD_SIZE && getCell(i, j + dj) == token) {
                         dj++;
                     }
                     if (dj >= 3) {
