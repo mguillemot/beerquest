@@ -67,7 +67,7 @@
       <file leaf-file-name="PlayerStatusView.mxml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="95" selection-start="3443" selection-end="3443" vertical-scroll-proportion="0.28347826">
+            <state line="106" column="39" selection-start="3689" selection-end="3689" vertical-scroll-proportion="1.466087">
               <folding>
                 <marker date="1280031494440" expanded="true" signature="201:207" placeholder="{...}" />
                 <marker date="1280031494440" expanded="true" signature="240:362" placeholder="{...}" />
@@ -681,7 +681,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="95" selection-start="3443" selection-end="3443" vertical-scroll-proportion="0.28347826">
+        <state line="106" column="39" selection-start="3689" selection-end="3689" vertical-scroll-proportion="1.466087">
           <folding>
             <marker date="1280031494440" expanded="true" signature="201:207" placeholder="{...}" />
             <marker date="1280031494440" expanded="true" signature="240:362" placeholder="{...}" />
