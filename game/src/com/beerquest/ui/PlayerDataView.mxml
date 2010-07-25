@@ -21,15 +21,23 @@
         import com.beerquest.PlayerData;
 
         [Bindable]
-        public var player:PlayerData;
+        public function get player():PlayerData {
+            return _player;
+        }
+
+        [Bindable]
+        public function set player(value:PlayerData):void {
+            _player = value;
+            if (_player != null && player.avatarUrl != null) {
+                var loader:Loader = new Loader();
+                portrait.addChild(loader);
+                loader.load(new URLRequest(player.avatarUrl));
+            }
+        }
 
         public var mirror:Boolean;
 
         private function init():void {
-            var loader:Loader = new Loader();
-            portrait.addChild(loader);
-            loader.load(new URLRequest("http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg"));
-
             if (mirror) {
                 background.transformX = width / 2;
                 background.scaleX = -1;
@@ -41,6 +49,8 @@
             portrait.graphics.lineStyle(5, 0xc9700b);
             portrait.graphics.drawRect(0, 0, portrait.width, portrait.height);
         }
+
+        private var _player:PlayerData;
         ]]></fx:Script>
     <mx:Image id="background" source="@Embed(source='../../../player-encart.png')"/>
     <mx:Image id="portrait" x="220" y="25" width="50" height="50"/>

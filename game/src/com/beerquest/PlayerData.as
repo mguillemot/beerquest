@@ -10,9 +10,10 @@ import mx.events.CollectionEvent;
 
 public class PlayerData extends EventDispatcher {
 
-    public function PlayerData(name:String, title:String, level:Number) {
+    public function PlayerData(name:String, title:String, avatarUrl:String, level:Number) {
         _name = name;
         _title = title;
+        _avatarUrl = avatarUrl;
         _level = level;
         _capacities = new ArrayCollection();
         _capacities.addItem(Capacity.NONE);
@@ -123,6 +124,10 @@ public class PlayerData extends EventDispatcher {
         return _title;
     }
 
+    public function get avatarUrl():String {
+        return _avatarUrl;
+    }
+
     public function get level():Number {
         return _level;
     }
@@ -161,6 +166,7 @@ public class PlayerData extends EventDispatcher {
 
     private var _name:String;
     private var _title:String;
+    private var _avatarUrl:String;
     private var _level:Number;
     private var _score:Number = 0;
     private var _multiplier:Number = 1;

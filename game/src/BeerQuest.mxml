@@ -25,6 +25,7 @@
         }
     </fx:Style>
     <fx:Script><![CDATA[
+        import com.adobe.serialization.json.JSON;
         import com.beerquest.Capacity;
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
@@ -34,6 +35,11 @@
         import com.beerquest.events.GemsSwappedEvent;
         import com.beerquest.events.PissEvent;
         import com.beerquest.events.VomitEvent;
+
+        import mx.controls.Alert;
+        import mx.core.FlexGlobals;
+
+        private static const VERSION:Number = 0.1;
 
         private function init():void {
             addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGameEvent);
@@ -48,9 +54,62 @@
              trace("Impossible to connect to ExternalInterface.")
              } */
 
+            var requiredVersionParam:Number = FlexGlobals.topLevelApplication.parameters.requiredVersion;
+            if (requiredVersionParam > 0) {
+                if (requiredVersionParam > VERSION) {
+                    Alert.show("Current: " + VERSION + "\nRequired: " + requiredVersionParam + "\n\nPlease empty your cache and reload this page.", "Wrong version");
+                }
+            } else {
+                trace("WARN: No 'requiredVersion' found, check disabled");
+            }
+
+            var meData:PlayerData;
+            var meParam:String = FlexGlobals.topLevelApplication.parameters.me;
+            if (meParam != null) {
+                var me:Object = JSON.decode(meParam);
+                meData = new PlayerData(me.name, me.title, me.avatar, me.level);
+            } else {
+                trace("WARN: No 'me' found, initializing game with default value");
+                meData = new PlayerData("Mattiou Guillegay", "Le Saint-Bernard", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 42);
+            }
+
+            var opponentData:PlayerData;
+            var opponentParam:String = FlexGlobals.topLevelApplication.parameters.opponent;
+            if (opponentParam != null) {
+                var opponent:Object = JSON.decode(opponentParam);
+                opponentData = new PlayerData(opponent.name, opponent.title, opponent.avatar, opponent.level);
+            } else {
+                trace("WARN: No 'opponent' found, initializing game with default value");
+                opponentData = new PlayerData("Jeano Babouin", "Le bois-sans-soif", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 89);
+            }
+
+            var barName:String, barLocation:String, barBanner:String, barStartHour:int, barStartMinute:int, barEndHour:int, barEndMinute:int;
+            var barParam:String = FlexGlobals.topLevelApplication.parameters.bar;
+            if (barParam != null) {
+                var bar:Object = JSON.decode(barParam);
+                barName = bar.name;
+                barLocation = bar.location;
+                barBanner = bar.banner;
+                barStartHour = bar.startHour;
+                barStartMinute = bar.startMinute;
+                barEndHour = bar.endHour;
+                barEndMinute = bar.endMinute;
+            } else {
+                trace("WARN: No 'bar' found, initializing game with default value");
+                barName = "Le Des-Murges Bar";
+                barLocation = "Paris - France";
+                barBanner = "http://erhune.iobb.net/images/banner.jpg";
+                barStartHour = 18;
+                barStartMinute = 0;
+                barEndHour = 23;
+                barEndMinute = 0;
+            }
+
+            game = new Game(meData, opponentData, barName, barLocation, barStartHour, barStartMinute, barEndHour, barEndMinute);
+
             var loader:Loader = new Loader();
             banner.addChild(loader);
-            loader.load(new URLRequest("http://erhune.iobb.net/images/banner.jpg"));
+            loader.load(new URLRequest(barBanner));
         }
 
         private function onGameEvent(e:GameEvent):void {
@@ -94,10 +153,8 @@
          }
          } */
 
-        public var game:Game = new Game(
-                new PlayerData("Jeano Babouin", "Le bois-sans-soif", 89),
-                new PlayerData("Mattiou Guillegay", "Le Saint-Bernard", 42),
-                "Le Des-Murges Bar", "Paris - France", 18, 0, 23, 0);
+        [Bindable]
+        public var game:Game;
         ]]></fx:Script>
     <mx:Image id="banner" x="0" y="492" width="771" height="144"/>
     <mx:Image source="@Embed(source='fond-jeu.png')"/>

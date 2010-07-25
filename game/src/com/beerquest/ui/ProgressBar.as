@@ -45,6 +45,6 @@ public class ProgressBar extends UIComponent {
     public var fullColorLight:uint = 0xff0000;
     public var fullColorDark:uint = 0xff0000;
 
-    private var _progress:Number;
+    private var _progress:Number = 0;
 }
 }
