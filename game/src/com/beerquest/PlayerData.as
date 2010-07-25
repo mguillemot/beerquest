@@ -86,6 +86,21 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new GameEvent(GameEvent.VOMIT_CHANGED, this));
     }
 
+    [Bindable(event="CoasterReserveChanged")]
+    public function get coasterReserve():Number {
+        return _coasterReserve;
+    }
+
+    public function set coasterReserve(value:Number):void {
+        _coasterReserve = value;
+        if (_coasterReserve < 0) {
+            _coasterReserve = 0;
+        } else if (_coasterReserve > 3) {
+            _coasterReserve = 3;
+        }
+        dispatchEvent(new GameEvent(GameEvent.COASTER_RESERVE_CHANGED, this));
+    }
+
     public function get capacities():ArrayCollection {
         return _capacities;
     }
@@ -154,5 +169,6 @@ public class PlayerData extends EventDispatcher {
     private var _vomit:Number = 0;
     private var _partialBeers:ArrayCollection;
     private var _capacities:ArrayCollection;
+    private var _coasterReserve:Number = 0;
 }
 }

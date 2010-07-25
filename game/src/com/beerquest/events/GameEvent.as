@@ -10,6 +10,7 @@ public class GameEvent extends Event {
     public static const MULTIPLIER_CHANGED:String = "MultiplierChanged";
     public static const PARTIAL_BEERS_CHANGED:String = "PartialBeersChanged";
     public static const FULL_BEERS_CHANGED:String = "FullBeersChanged";
+    public static const COASTER_RESERVE_CHANGED:String = "CoasterReserveChanged";
 
     public function GameEvent(type:String, player:PlayerData) {
         super(type, true);

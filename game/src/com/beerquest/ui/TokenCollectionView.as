@@ -72,6 +72,7 @@ public class TokenCollectionView extends UIComponent {
     private function onCapacityExecuted(e:CapacityEvent):void {
         if (e.capacity == Capacity.BLOND_STACK_ORDER || e.capacity == Capacity.BROWN_STACK_ORDER || e.capacity == Capacity.AMBER_STACK_ORDER) {
             collectType(e.capacity.correspondingToken);
+            player.score += 75;
             player.clearCapacities();
         }
     }

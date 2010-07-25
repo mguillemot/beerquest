@@ -42,10 +42,6 @@
             addEventListener(VomitEvent.VOMIT, onGameEvent);
             addEventListener(PissEvent.PISS, onGameEvent);
 
-            game.me.addEventListener(GameEvent.VOMIT_CHANGED, onVomitChanged);
-            game.me.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
-            game.me.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
-
             /*try {
              ExternalInterface.addCallback("testJs", testJs);
              } catch (e:Error) {
@@ -59,33 +55,6 @@
 
         private function onGameEvent(e:GameEvent):void {
             game.handleEvent(e);
-        }
-
-        private function onVomitChanged(e:GameEvent):void {
-            if (game.me.vomit >= 100) {
-                boardView.createVomit();
-                boardView.createVomit();
-                boardView.createVomit();
-                boardView.createVomit();
-                boardView.createVomit();
-                game.me.vomit = 50;
-            }
-        }
-
-        private function onPissChanged(e:GameEvent):void {
-            if (game.me.piss >= 100) {
-                boardView.pissLevel = 3;
-            } else if (game.me.piss >= 90) {
-                boardView.pissLevel = 2;
-            } else if (game.me.piss >= 80) {
-                boardView.pissLevel = 1;
-            } else {
-                boardView.pissLevel = 0;
-            }
-        }
-
-        private function onCapacityExecuted(e:CapacityEvent):void {
-            boardView.executeCapacity(e.player, e.capacity);
         }
 
         /*public function testJs():void {
@@ -148,6 +117,7 @@
     <ui:PlayerStatusView x="560" y="165" player="{game.opponent}" clickable="false"/>
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10"/>
     <mx:Label text="Combo: {boardView.combo}" x="10" y="30"/>
+    <mx:Label text="Sous-bocks: {game.me.coasterReserve}" x="10" y="50"/>
     <ui:BoardView x="220" y="153" width="320" height="320" id="boardView" game="{game}"/>
     <!--<mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>-->
     <!--<mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>-->

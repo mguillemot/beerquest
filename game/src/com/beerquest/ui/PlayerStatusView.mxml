@@ -156,7 +156,7 @@
         <ui:TokenCollectionView x="3" y="82" player="{player}"/>
     </mx:Canvas>
     <mx:Spacer height="7"/>
-    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"/>
-    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"/>
-    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(2) as Capacity}"/>
+    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}" clickable="{clickable}"/>
+    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}" clickable="{clickable}"/>
+    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(2) as Capacity}" clickable="{clickable}"/>
 </mx:VBox>
