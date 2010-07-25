@@ -94,29 +94,31 @@ public class BoardView extends UIComponent {
     }
 
     private function onMouseUp(e:MouseEvent):void {
-        if (_currentAction == "") {
+        if (_currentAction == "" && _draggingX != -1 && _draggingY != -1) {
             var local:Point = globalToLocal(new Point(e.stageX, e.stageY));
-            if (_draggingX != -1 && _draggingY != -1) {
-                var lx:int = Math.floor(local.x / width * Constants.BOARD_SIZE);
-                var ly:int = Math.floor(local.y / height * Constants.BOARD_SIZE);
-                var dx:Number = lx - _draggingX;
-                var dy:Number = ly - _draggingY;
-                if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
-                    // Horizontal drag
-                    if (dx > 0 && _draggingX + 1 < Constants.BOARD_SIZE) {
-                        selectCell(_draggingX, _draggingY);
+            var lx:int = Math.floor(local.x / width * Constants.BOARD_SIZE);
+            var ly:int = Math.floor(local.y / height * Constants.BOARD_SIZE);
+            var dx:Number = lx - _draggingX;
+            var dy:Number = ly - _draggingY;
+            if (Math.abs(dx) > 0 && Math.abs(dy) == 0 && _draggingY < Constants.BOARD_SIZE - pissLevel) {
+                // Horizontal drag
+                if (dx > 0 && _draggingX + 1 < Constants.BOARD_SIZE) {
+                    if (selectCell(_draggingX, _draggingY)) {
                         swapTokens(_draggingX + 1, _draggingY);
-                    } else if (dx < 0 && _draggingX - 1 >= 0) {
-                        selectCell(_draggingX, _draggingY);
+                    }
+                } else if (dx < 0 && _draggingX - 1 >= 0) {
+                    if (selectCell(_draggingX, _draggingY)) {
                         swapTokens(_draggingX - 1, _draggingY);
                     }
-                } else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
-                    // Vertical drag
-                    if (dy > 0 && _draggingY + 1 < Constants.BOARD_SIZE) {
-                        selectCell(_draggingX, _draggingY);
+                }
+            } else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
+                // Vertical drag
+                if (dy > 0 && _draggingY + 1 < Constants.BOARD_SIZE - pissLevel) {
+                    if (selectCell(_draggingX, _draggingY)) {
                         swapTokens(_draggingX, _draggingY + 1);
-                    } else if (dy < 0 && _draggingY - 1 >= 0) {
-                        selectCell(_draggingX, _draggingY);
+                    }
+                } else if (dy < 0 && _draggingY - 1 >= 0) {
+                    if (selectCell(_draggingX, _draggingY)) {
                         swapTokens(_draggingX, _draggingY - 1);
                     }
                 }
@@ -138,41 +140,60 @@ public class BoardView extends UIComponent {
         // Note: registered from the application
         switch (e.keyCode) {
             case 32: // space
-                resetToTestBoard();
+                if (Constants.DEBUG) {
+                    resetToTestBoard();
+                }
                 break;
             case 82: // r
-                regenBoard(true);
+                if (Constants.DEBUG) {
+                    regenBoard(true);
+                }
                 break;
             case 84: // t
-                game.me.addPartialBeer(TokenType.BLOND_BEER);
-                game.opponent.addPartialBeer(TokenType.BLOND_BEER);
+                if (Constants.DEBUG) {
+                    game.me.addPartialBeer(TokenType.BLOND_BEER);
+                    game.opponent.addPartialBeer(TokenType.BLOND_BEER);
+                }
                 break;
             case 89: // y
-                game.me.addPartialBeer(TokenType.BROWN_BEER);
-                game.opponent.addPartialBeer(TokenType.BROWN_BEER);
+                if (Constants.DEBUG) {
+                    game.me.addPartialBeer(TokenType.BROWN_BEER);
+                    game.opponent.addPartialBeer(TokenType.BROWN_BEER);
+                }
                 break;
             case 85: // u
-                game.me.addPartialBeer(TokenType.AMBER_BEER);
-                game.opponent.addPartialBeer(TokenType.AMBER_BEER);
+                if (Constants.DEBUG) {
+                    game.me.addPartialBeer(TokenType.AMBER_BEER);
+                    game.opponent.addPartialBeer(TokenType.AMBER_BEER);
+                }
                 break;
             case 73: // i
-                game.me.addPartialBeer(TokenType.TRIPLE);
-                game.opponent.addPartialBeer(TokenType.TRIPLE);
+                if (Constants.DEBUG) {
+                    game.me.addPartialBeer(TokenType.TRIPLE);
+                    game.opponent.addPartialBeer(TokenType.TRIPLE);
+                }
                 break;
             case 79: // o
-                dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_STACK_ORDER));
-                dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.TCHIN_TCHIN));
-                dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
+                if (Constants.DEBUG) {
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_STACK_ORDER));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.TCHIN_TCHIN));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
+                }
                 break;
             case 86: // v
-                game.me.vomit += 10;
+                if (Constants.DEBUG) {
+                    game.me.vomit += 10;
+                }
                 break;
             case 66: // b
-                game.me.piss += 10;
+                if (Constants.DEBUG) {
+                    game.me.piss += 10;
+                }
                 break;
             case 65: // a
-                game.me.coasterReserve++;
-                pissLevel = (pissLevel + 1) % 4;
+                if (Constants.DEBUG) {
+                    pissLevel = (pissLevel + 1) % 4;
+                }
                 break;
             case 27: // Escape
                 if (_currentAction == "selectTokenToDestroy") {
@@ -184,7 +205,9 @@ public class BoardView extends UIComponent {
                 }
                 break;
             case 90: // z
-                game.gameOver = !game.gameOver;
+                if (Constants.DEBUG) {
+                    game.gameOver = !game.gameOver;
+                }
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
@@ -424,13 +447,13 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function selectCell(x:int, y:int):void {
+    private function selectCell(x:int, y:int):Boolean {
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid select coords: " + x + ":" + y;
         }
-        if (y >= Constants.BOARD_SIZE - _pissLevel) {
+        if (y >= Constants.BOARD_SIZE - pissLevel) {
             // Cannot select in piss    
-            return;
+            return false;
         }
         _selectedX = x;
         _selectedY = y;
@@ -438,6 +461,7 @@ public class BoardView extends UIComponent {
         _selection.x = _selectedX * width / Constants.BOARD_SIZE;
         _selection.y = _selectedY * height / Constants.BOARD_SIZE;
         trace("Selected " + x + ":" + y);
+        return true;
     }
 
     private function clearSelection():void {
