@@ -48,8 +48,10 @@ public class BoardState {
     }
 
     public function generateRandomWithoutGroups():void {
-        generateFullRandom();
-        normalize();
+        do {
+            generateFullRandom();
+            normalize();
+        } while (computeMoves().length == 0);
     }
 
     public function getRandomNonVomitCell():Object {

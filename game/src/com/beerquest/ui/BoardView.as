@@ -5,6 +5,8 @@ import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.greensock.TweenLite;
+import com.greensock.easing.Back;
+import com.greensock.easing.Expo;
 import com.greensock.easing.Linear;
 
 import flash.display.DisplayObject;
@@ -26,7 +28,7 @@ import mx.managers.CursorManagerPriority;
 
 public class BoardView extends UIComponent {
 
-    private static const EXPLODE_DURATION_FRAMES:int = 10;
+    private static const EXPLODE_DURATION_MS:int = 250;
     private static const SWAP_TIME_MS:Number = 400;
     private static const FALL_TIME_MS:Number = 200;
     private static const PISS_RAISE_TIME_MS:Number = 500;
@@ -82,7 +84,7 @@ public class BoardView extends UIComponent {
             addChild(rect);
             mask = rect;
 
-            regenBoard();
+            regenBoard(false);
             _initialized = true;
             refreshStats();
         });
@@ -139,7 +141,7 @@ public class BoardView extends UIComponent {
                 resetToTestBoard();
                 break;
             case 82: // r
-                regenBoard();
+                regenBoard(true);
                 break;
             case 84: // t
                 game.me.addPartialBeer(TokenType.BLOND_BEER);
@@ -189,14 +191,6 @@ public class BoardView extends UIComponent {
 
     private function onEnterFrame(e:Event):void {
         _currentFrame++;
-        var elapsed:int = _currentFrame - _currentActionStart;
-        switch (_currentAction) {
-            case "exploding":
-                if (elapsed >= EXPLODE_DURATION_FRAMES) {
-                    endDestroySeries();
-                }
-                break;
-        }
         if (_pissLayer != null) {
             _pissLayer.x -= 3;
             if (_pissLayer.x <= -width) {
@@ -205,25 +199,53 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function regenBoard():void {
+    private function regenBoard(discardPrevious:Boolean):void {
         startAction("regenBoard");
-        removeAllTokens();
+        clearSelection();
         var i:int, j:int, token:Token;
+        if (discardPrevious) {
+            game.currentTurn += 5;
+            game.me.vomit = 0;
+            game.me.piss = 0;
+            for (i = 0; i < Constants.BOARD_SIZE; i++) {
+                for (j = 0; j < Constants.BOARD_SIZE; j++) {
+                    token = getToken(i, j);
+                    var duration:Number = 1 + Math.random() * 0.5;
+                    var d:Number = Math.random() * 0.2;
+                    var x:Number = Math.random() * width - width / Constants.BOARD_SIZE;
+                    var y:Number = height + Math.random() * height;
+                    TweenLite.to(token, duration, {x:x, y:y, ease:Expo.easeIn, delay:d});
+                }
+            }
+            var timer:Timer = new Timer(1500, 1);
+            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+                regenBoard2();
+            });
+            timer.start();
+        } else {
+            regenBoard2();
+        }
+    }
+
+    private function regenBoard2():void {
+        startAction("regenBoard2");
+        removeAllTokens();
         var state:BoardState = new BoardState();
         state.generateRandomWithoutGroups();
+        var i:int, j:int, token:Token;
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
                 token = generateToken(state.getCell(i, j));
                 addToken(token);
                 setToken(i, j, token);
+                TweenLite.from(token, 0.7, {x:token.x, y:-height / Constants.BOARD_SIZE, delay:(Constants.BOARD_SIZE - j) * 0.075});
             }
         }
-
-        if (checkSeries() > 0) {
-            throw "regenerated board has groups";
-        }
-        clearSelection();
-        startAction("");
+        var timer:Timer = new Timer(1500, 1);
+        timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+            startAction("");
+        });
+        timer.start();
     }
 
     private function resetToTestBoard():void {
@@ -453,9 +475,14 @@ public class BoardView extends UIComponent {
                 }
             }
         }
+        var timer:Timer = new Timer(EXPLODE_DURATION_MS, 1);
+        timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+            endDestroySeries();
+        });
+        timer.start();
     }
 
-    private function destroySeries():void {
+    private function destroySeries():Boolean {
         var series:int = checkSeries();
         if (series > 0) {
             combo += series;
@@ -525,9 +552,9 @@ public class BoardView extends UIComponent {
             if (resetMultiplier) {
                 game.me.multiplier = 1;
             }
-        } else {
-            endScoring();
+            return true;
         }
+        return false;
     }
 
     private function endDestroySeries():void {
@@ -611,8 +638,11 @@ public class BoardView extends UIComponent {
     private function endDestroySeries2():void {
         startAction("endFalling");
         resetFalling();
-        startAction("");
-        destroySeries();
+        if (!destroySeries()) {
+            endScoring();
+            startAction("");
+            checkAvailableMoves();
+        }
     }
 
     private function resetMarks():void {
@@ -680,6 +710,12 @@ public class BoardView extends UIComponent {
              for each (var move:Object in state.computeMoves()) {
              trace("  " + move.type + " of " + move.startX + ":" + move.startY);
              }*/
+        }
+    }
+
+    private function checkAvailableMoves():void {
+        if (availableMoves == 0) {
+            regenBoard(true);
         }
     }
 

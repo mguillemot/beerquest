@@ -16,10 +16,10 @@ public class Token extends Sprite {
 
         _id = nextId++;
 
-        var mask:Sprite = new Sprite();
-        mask.graphics.drawRect(0, 0, 100, 100);
-        addChild(mask);
-        hitArea = mask;
+        var hit:Sprite = new Sprite();
+        hit.graphics.drawRect(0, 0, 100, 100);
+        addChild(hit);
+        hitArea = hit;
         //graphics.clear();
         //graphics.lineStyle(3, 0xff000000);
         //graphics.beginFill(0x00000000);
@@ -51,13 +51,26 @@ public class Token extends Sprite {
                 _icon = new LiquorIcon();
                 break;
             case TokenType.VOMIT:
-                _icon = new VomitIcon();
+                var vtype:Number = Math.floor(Math.random() * 3);
+                if (vtype == 0) {
+                    _icon = new VomitIcon1();
+                } else if (vtype == 1) {
+                    _icon = new VomitIcon2();
+                } else {
+                    _icon = new VomitIcon3();
+                }
+                _icon.x = 0;
+                _icon.y = 0;
+                _icon.width = 100;
+                _icon.height = 100;
                 break;
         }
-        _icon.x = 5;
-        _icon.y = 5;
-        _icon.width = 90;
-        _icon.height = 90;
+        if (type != TokenType.VOMIT) {
+            _icon.x = 5;
+            _icon.y = 5;
+            _icon.width = 90;
+            _icon.height = 90;
+        }
         addChild(_icon);
         //            _movieClip = new ImportBeerSymbol();
         //            _movieClip.x = 50;
@@ -160,7 +173,13 @@ public class Token extends Sprite {
     [Embed(source="../../../verre-eau.png")]
     private static var WaterIcon:Class;
 
-    [Embed(source="../../../vomi.png")]
-    private static var VomitIcon:Class;
+    [Embed(source="../../../vomi-1.png")]
+    private static var VomitIcon1:Class;
+
+    [Embed(source="../../../vomi-2.png")]
+    private static var VomitIcon2:Class;
+
+    [Embed(source="../../../vomi-3.png")]
+    private static var VomitIcon3:Class;
 }
 }
