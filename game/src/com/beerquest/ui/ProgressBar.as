@@ -1,33 +1,33 @@
 package com.beerquest.ui {
+import flash.display.GradientType;
 import flash.display.Sprite;
 import flash.events.Event;
+
+import flash.geom.Matrix;
 
 import mx.core.UIComponent;
 
 public class ProgressBar extends UIComponent {
     public function ProgressBar() {
-        width = 176;
-        height = 14;
-
-        var mask:Sprite = new Sprite();
-        mask.graphics.beginFill(0x0);
-        mask.graphics.drawRoundRect(0, 0, width, height, 7);
-        mask.graphics.endFill();
-        addChild(mask);
-        this.mask = mask;
+        super();
     }
 
     override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
         super.updateDisplayList(unscaledWidth, unscaledHeight);
 
+        graphics.lineStyle(0, 0, 0);
         graphics.beginFill(emptyColor);
-        graphics.drawRect(0, 0, width, height);
+        graphics.drawRoundRect(0, 0, unscaledWidth, unscaledHeight, 10);
         graphics.endFill();
-        graphics.beginFill(fullColor);
-        graphics.drawRect(0, 0, width * progress / 100, height);
+
+        var m:Matrix = new Matrix();
+        m.createGradientBox(unscaledWidth, unscaledHeight, Math.PI / 2);
+        graphics.beginGradientFill(GradientType.LINEAR, [fullColorLight, fullColorDark], [1.0, 1.0], [0, 255], m);
+        graphics.drawRoundRect(0, 0, unscaledWidth * progress / 100, unscaledHeight, 10);
         graphics.endFill();
-        graphics.lineStyle(2, 0x000000);
-        graphics.drawRoundRect(0, 0, width, height, 7);
+
+        graphics.lineStyle(1, 0x000000, 1.0, true);
+        graphics.drawRoundRect(0, 0, unscaledWidth, unscaledHeight, 10);
     }
 
     [Bindable(event="progressChanged")]
@@ -42,7 +42,8 @@ public class ProgressBar extends UIComponent {
     }
 
     public var emptyColor:uint = 0xffffff;
-    public var fullColor:uint = 0xff0000;
+    public var fullColorLight:uint = 0xff0000;
+    public var fullColorDark:uint = 0xff0000;
 
     private var _progress:Number;
 }

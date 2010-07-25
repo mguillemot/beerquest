@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
-           xmlns:ui="com.beerquest.ui.*"
-           width="176"
-           creationComplete="init()">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         xmlns:ui="com.beerquest.ui.*"
+         width="176" horizontalAlign="center" verticalGap="0"
+         creationComplete="init()">
     <mx:Style>
         .score {
             fontFamily: Kro;
@@ -56,23 +56,25 @@
         }
 
         /*private function onMouseOverVomit(e:Event):void {
-            vomitText.setStyle("color", "#ffbaba");
-        }
+         vomitText.setStyle("color", "#ffbaba");
+         }
 
-        private function onMouseOutVomit(e:Event):void {
-            vomitText.setStyle("color", "white");
-        }
+         private function onMouseOutVomit(e:Event):void {
+         vomitText.setStyle("color", "white");
+         }
 
-        private function onClickVomit(e:Event):void {
-            dispatchEvent(new VomitEvent(player));
-        }   */
+         private function onClickVomit(e:Event):void {
+         dispatchEvent(new VomitEvent(player));
+         }   */
 
         private function onMouseOverPiss(e:Event):void {
-            pissText.setStyle("color", "#ffbaba");
+            //            pissText.setStyle("color", "#ffbaba");
+            wcButton.source = WcIconHover;
         }
 
         private function onMouseOutPiss(e:Event):void {
-            pissText.setStyle("color", "white");
+            //            pissText.setStyle("color", "white");
+            wcButton.source = WcIcon;
         }
 
         private function onClickPiss(e:Event):void {
@@ -82,41 +84,46 @@
         private function and(a:Boolean, b:Boolean):Boolean {
             return (a && b);
         }
+
+        [Embed(source="../../../wc-actif.png")]
+        private static var WcIcon:Class;
+
+        [Embed(source="../../../wc-over.png")]
+        private static var WcIconHover:Class;
         ]]></mx:Script>
     <mx:NumberFormatter id="scoreFormatter" useThousandsSeparator="true" decimalSeparatorTo=","
                         thousandsSeparatorTo="."/>
-    <mx:Label text="Score: {player.score} caps" x="10" y="80"/>
 
-    <mx:Canvas height="34" width="176">
-        <ui:ProgressBar y="9" progress="{player.vomit}" fullColor="0x4b9f00" emptyColor="0xbdff8c"/>
+    <mx:Canvas width="100%">
+        <ui:ProgressBar y="2" width="100%" height="18" progress="{player.vomit}" emptyColor="0x619f00" fullColorLight="0xbbf900" fullColorDark="0x82d500"/>
         <!--<mx:Image x="15" source="@Embed(source='../../../action-button.png')" mouseOver="onMouseOverVomit(event)"-->
-                  <!--mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"-->
-                  <!--visible="{and(clickable, player.vomit >= 80)}"/>-->
+        <!--mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"-->
+        <!--visible="{and(clickable, player.vomit >= 80)}"/>-->
         <!--<mx:Label id="vomitText" x="13" y="3" width="65" text="Gerber" styleName="action"-->
-                  <!--mouseOver="onMouseOverVomit(event)" mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"-->
-                  <!--visible="{and(clickable, player.vomit >= 80)}">-->
-            <!--<mx:filters>-->
-                <!--<mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>-->
-            <!--</mx:filters>-->
+        <!--mouseOver="onMouseOverVomit(event)" mouseOut="onMouseOutVomit(event)" click="onClickVomit(event)"-->
+        <!--visible="{and(clickable, player.vomit >= 80)}">-->
+        <!--<mx:filters>-->
+        <!--<mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>-->
+        <!--</mx:filters>-->
         <!--</mx:Label>-->
     </mx:Canvas>
 
-    <mx:Canvas y="33" height="34" width="176">
-        <ui:ProgressBar y="9" progress="{player.piss}" fullColor="0x9f9600" emptyColor="0xf2ba00"/>
-        <mx:Image x="15" source="@Embed(source='../../../action-button.png')" mouseOver="onMouseOverPiss(event)"
+    <mx:Canvas width="100%">
+        <ui:ProgressBar y="9" width="100%" height="18" progress="{player.piss}" emptyColor="0x9f9600" fullColorLight="0xfbe400" fullColorDark="0xcd1be00"/>
+        <mx:Image x="15" id="wcButton" source="{WcIcon}" mouseOver="onMouseOverPiss(event)"
                   mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
                   visible="{and(clickable, player.piss >= 80)}"/>
-        <mx:Label id="pissText" x="13" y="3" width="65" text="Pisser" styleName="action"
-                  mouseOver="onMouseOverPiss(event)"
-                  mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
-                  visible="{and(clickable, player.piss >= 80)}">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
+        <!--<mx:Label id="pissText" x="13" y="3" width="65" text="Pisser" styleName="action"-->
+        <!--mouseOver="onMouseOverPiss(event)"-->
+        <!--mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"-->
+        <!--visible="{and(clickable, player.piss >= 80)}">-->
+        <!--<mx:filters>-->
+        <!--<mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>-->
+        <!--</mx:filters>-->
+        <!--</mx:Label>-->
     </mx:Canvas>
 
-    <mx:Canvas x="0" y="67">
+    <mx:Canvas width="100%">
         <mx:Image source="@Embed(source='../../../player-score.png')"/>
 
         <mx:Canvas x="5" y="2" width="120">
@@ -148,9 +155,8 @@
 
         <ui:TokenCollectionView x="3" y="82" player="{player}"/>
     </mx:Canvas>
-    <mx:VBox x="0" y="190" width="100%" horizontalAlign="center" verticalGap="0">
-        <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"/>
-        <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"/>
-        <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(2) as Capacity}"/>
-    </mx:VBox>
-</mx:Canvas>
+    <mx:Spacer height="7"/>
+    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"/>
+    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"/>
+    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(2) as Capacity}"/>
+</mx:VBox>
