@@ -183,6 +183,9 @@ public class BoardView extends UIComponent {
                     startAction("");
                 }
                 break;
+            case 90: // z
+                game.gameOver = !game.gameOver;
+                break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
                 break;
@@ -863,6 +866,19 @@ public class BoardView extends UIComponent {
         executeCapacity(e.player, e.capacity);
     }
 
+    [Bindable]
+    public function get playable():Boolean {
+        return _playable;
+    }
+
+    [Bindable]
+    public function set playable(value:Boolean):void {
+        _playable = value;
+        if (!_playable) {
+            startAction("gameOver");
+        }
+    }
+
     private var _game:Game;
     private var _board:Array = new Array();
     private var _initialized:Boolean = false;
@@ -884,6 +900,7 @@ public class BoardView extends UIComponent {
     private var _pissLevel:int = 0;
     private var _destroyCursor:int = 0;
     private var _coasterCursor:int = 0;
+    private var _playable:Boolean = true;
 
     [Embed(source="../../../board.png")]
     private static var BoardBackground:Class;

@@ -10,17 +10,18 @@ import flash.events.EventDispatcher;
 
 public class Game extends EventDispatcher {
 
-    public function Game(me:PlayerData, opponent:PlayerData, barName:String, barLocation:String, barOpenHour:int, barOpenMinute:int, barCloseHour:int, barCloseMinute:int) {
+    public function Game(me:PlayerData, opponent:PlayerData, barName:String, barLocation:String, barOpen:String, barClose:String) {
         _me = me;
         _opponent = opponent;
         _board = new BoardState();
         _barName = barName;
         _barLocation = barLocation;
-        _barOpenHour = barOpenHour;
-        _barOpenMinute = barOpenMinute;
-        _barCloseHour = barCloseHour;
-        _barCloseMinute = barCloseMinute;
-
+        var openParts:Array = barOpen.split(":");
+        _barOpenHour = parseInt(openParts[0]);
+        _barOpenMinute = parseInt(openParts[1]);
+        var closeParts:Array = barClose.split(":");
+        _barCloseHour = parseInt(closeParts[0]);
+        _barCloseMinute = parseInt(closeParts[1]);
         _currentTurn = 0;
     }
 
@@ -74,8 +75,22 @@ public class Game extends EventDispatcher {
         return getFormattedTime(_barOpenHour, _barOpenMinute) + " - " + getFormattedTime(_barCloseHour, _barCloseMinute);
     }
 
+    [Bindable(event="gameOverChanged")]
+    public function get gameOver():Boolean {
+        return _gameOver;
+    }
+
+    public function set gameOver(value:Boolean):void {
+        _gameOver = value;
+        dispatchEvent(new Event("gameOverChanged"));
+    }
+
     public function get totalTurns():int {
-        return ((_barCloseHour * 60 + _barCloseMinute) - (_barOpenHour * 60 + _barOpenMinute)) / 5;
+        var closeHour:int = _barCloseHour;
+        if (_barCloseHour < _barOpenHour) {
+            closeHour += 24;
+        }
+        return ((closeHour * 60 + _barCloseMinute) - (_barOpenHour * 60 + _barOpenMinute)) / 5;
     }
 
     [Bindable(event="currentTurnChanged")]
@@ -90,7 +105,7 @@ public class Game extends EventDispatcher {
 
     [Bindable(event="currentTurnChanged")]
     public function get remainingTurns():int {
-        return (totalTurns - _currentTurn);
+        return Math.max(0, totalTurns - _currentTurn);
     }
 
     [Bindable(event="currentTurnChanged")]
@@ -101,6 +116,9 @@ public class Game extends EventDispatcher {
     public function set currentTurn(value:int):void {
         _currentTurn = value;
         dispatchEvent(new Event("currentTurnChanged"));
+        if (remainingTurns <= 0) {
+            gameOver = true;
+        }
     }
 
     private function getFormattedTime(hour:int, minute:int):String {
@@ -126,6 +144,7 @@ public class Game extends EventDispatcher {
     private var _barOpenMinute:int;
     private var _barCloseHour:int;
     private var _barCloseMinute:int;
+    private var _gameOver:Boolean = false;
 
     private var _currentTurn:int;
 }
