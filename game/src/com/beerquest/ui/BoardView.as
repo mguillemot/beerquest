@@ -15,10 +15,12 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.geom.Point;
+import flash.media.Sound;
 import flash.utils.Timer;
 
 import mx.core.BitmapAsset;
 import mx.core.UIComponent;
+import mx.effects.SoundEffect;
 import mx.managers.CursorManager;
 import mx.managers.CursorManagerPriority;
 
@@ -168,6 +170,7 @@ public class BoardView extends UIComponent {
                 break;
             case 65: // a
                 game.me.coasterReserve++;
+                pissLevel = (pissLevel + 1) % 4;
                 break;
             case 27: // Escape
                 if (_currentAction == "selectTokenToDestroy") {
@@ -461,6 +464,7 @@ public class BoardView extends UIComponent {
             var state:BoardState = getCurrentState();
             var resetMultiplier:Boolean = true;
             var player:PlayerData = game.me;
+            var maxGroup:int = 0;
             if (game.me.coasterReserve > 0) {
                 player = game.opponent;
                 game.me.coasterReserve--;
@@ -491,6 +495,9 @@ public class BoardView extends UIComponent {
                         player.coasterReserve += 3;
                     }
                 }
+                if (group.length > maxGroup) {
+                    maxGroup = group.length;
+                }
                 game.me.score += group.token.score * combo * game.me.multiplier;
                 trace("Collected group of " + group.token + " of size " + group.length);
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
@@ -506,6 +513,15 @@ public class BoardView extends UIComponent {
                     player.vomit -= 7 * group.length;
                 }
             }
+            var fx:Sound;
+            if (maxGroup == 3) {
+                fx = new Beer3FX();
+            } else if (maxGroup == 3) {
+                fx = new Beer4FX();
+            } else {
+                fx = new Beer5FX();
+            }
+            fx.play();
             if (resetMultiplier) {
                 game.me.multiplier = 1;
             }
@@ -672,11 +688,16 @@ public class BoardView extends UIComponent {
     }
 
     public function set pissLevel(value:int):void {
+        var dy:int = value - _pissLevel;
         _pissLevel = value;
         var epsilon:int = (_pissLevel > 0) ? -5 : 0;
         TweenLite.to(_pissLayer, PISS_RAISE_TIME_MS / 1000, {y: (Constants.BOARD_SIZE - _pissLevel) * height / Constants.BOARD_SIZE + epsilon});
         if (_selectedY >= Constants.BOARD_SIZE - _pissLevel) {
             clearSelection();
+        }
+        if (dy > 0) {
+            var fx:Sound = new PissRaiseFX();
+            fx.play();
         }
         refreshStats();
     }
@@ -786,6 +807,8 @@ public class BoardView extends UIComponent {
             createVomit();
             createVomit();
             game.me.vomit = 50;
+            var fx:Sound = new VomitFX();
+            fx.play();
         }
     }
 
@@ -837,6 +860,21 @@ public class BoardView extends UIComponent {
 
     [Embed(source="../../../sous-bock.png")]
     private static var CoasterCursor:Class;
+
+    [Embed(source="../../../son-montee-pisse.mp3")]
+    private static var PissRaiseFX:Class;
+
+    [Embed(source="../../../vomir.mp3")]
+    private static var VomitFX:Class;
+
+    [Embed(source="../../../biere-x3.mp3")]
+    private static var Beer3FX:Class;
+
+    [Embed(source="../../../biere-x4.mp3")]
+    private static var Beer4FX:Class;
+
+    [Embed(source="../../../biere-x5.mp3")]
+    private static var Beer5FX:Class;
 
 }
 }

@@ -6,6 +6,7 @@ import com.greensock.TweenLite;
 
 import flash.display.DisplayObject;
 import flash.events.TimerEvent;
+import flash.media.Sound;
 import flash.system.Capabilities;
 import flash.utils.Timer;
 
@@ -87,6 +88,8 @@ public class TokenCollectionView extends UIComponent {
             if (isSeries(i)) {
                 _compacting = i;
                 startAction("compact");
+                var fx:Sound = new CapsFX();
+                fx.play();
                 for (var k:int; k < 3; k++) {
                     TweenLite.to(getChildAt(i + k), APPEAR_TIME_MS / 1000, {alpha: 0});
                 }
@@ -193,5 +196,9 @@ public class TokenCollectionView extends UIComponent {
 
     [Embed(source="../../../small-triple.png")]
     private static var SmallTriple:Class;
+
+    [Embed(source="../../../bruit-caps.mp3")]
+    private static var CapsFX:Class;
+
 }
 }

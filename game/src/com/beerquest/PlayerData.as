@@ -5,6 +5,8 @@ import com.beerquest.events.VomitEvent;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 
+import flash.media.Sound;
+
 import mx.collections.ArrayCollection;
 import mx.events.CollectionEvent;
 
@@ -139,12 +141,10 @@ public class PlayerData extends EventDispatcher {
         _partialBeers.addItem(type);
     }
 
-    public function doVomit():void {
-        vomit /= 2;
-    }
-
     public function doPiss():void {
         piss /= 2;
+        var fx:Sound = new PissFX();
+        fx.play();
     }
 
     public function doGainCapacity(capacity:Capacity):void {
@@ -176,5 +176,9 @@ public class PlayerData extends EventDispatcher {
     private var _partialBeers:ArrayCollection;
     private var _capacities:ArrayCollection;
     private var _coasterReserve:Number = 0;
+
+    [Embed(source="../../pipi.mp3")]
+    private static var PissFX:Class;
+    
 }
 }
