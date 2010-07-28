@@ -1,5 +1,6 @@
 package com.beerquest.ui {
 import com.beerquest.*;
+import com.beerquest.BoardState;
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
@@ -332,7 +333,7 @@ public class BoardView extends UIComponent {
 
     private function generateToken(type:TokenType = null):Token {
         if (type == null) {
-            type = getCurrentState().generateNewCell();
+            type = BoardState.generateNewCell();
         }
         var token:Token = new Token(type);
         token.width = width / Constants.BOARD_SIZE;

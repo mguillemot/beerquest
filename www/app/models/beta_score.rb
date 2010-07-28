@@ -3,7 +3,7 @@ class BetaScore < ActiveRecord::Base
 
 	def self.high_scores(me = nil)
 		scores = []
-		all(:group => "account_id", :order => "score DESC", :limit => 5, :include => :account).each_with_index do |s, i|
+		find_by_sql("SELECT MAX(score) AS score, account_id FROM beta_scores GROUP BY account_id ORDER BY score DESC LIMIT 5").each_with_index do |s, i|
 			scores.push({
 													:firstName => s.account.first_name,
 													:lastName => s.account.last_name,

@@ -248,7 +248,7 @@ public class BoardState {
         }
     }
 
-    public function generateNewCell():TokenType {
+    public static function generateNewCell():TokenType {
         var r:int = _rand.nextInt(1, 100);
         if (r <= 15) {
             return TokenType.BLOND_BEER;
@@ -289,7 +289,7 @@ public class BoardState {
 
     private var _state:Array = new Array();
     private var _pissLevel:int = 0;
-    private var _rand:MersenneTwister = new MersenneTwister(Math.floor(Math.random() * int.MAX_VALUE));
+    private static var _rand:MersenneTwister = new MersenneTwister(Math.floor(Math.random() * int.MAX_VALUE));
 
 }
 }
