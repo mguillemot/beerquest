@@ -7,7 +7,6 @@ import flash.events.Event;
 
 import mx.core.BitmapAsset;
 import mx.core.MovieClipAsset;
-import mx.core.UIComponent;
 
 public class Token extends Sprite {
 
@@ -20,13 +19,6 @@ public class Token extends Sprite {
         hit.graphics.drawRect(0, 0, 100, 100);
         addChild(hit);
         hitArea = hit;
-        //graphics.clear();
-        //graphics.lineStyle(3, 0xff000000);
-        //graphics.beginFill(0x00000000);
-        //graphics.lineStyle(1, 0x0);
-        //graphics.beginFill(type.color);
-        //graphics.drawCircle(50, 50, 40);
-        //graphics.endFill();
 
         switch (type) {
             case TokenType.BROWN_BEER:
@@ -50,6 +42,9 @@ public class Token extends Sprite {
             case TokenType.LIQUOR:
                 _icon = new LiquorIcon();
                 break;
+            case TokenType.TOMATO_JUICE:
+                _icon = new TomatoIcon();
+                break;
             case TokenType.VOMIT:
                 var vtype:Number = Math.floor(Math.random() * 3);
                 if (vtype == 0) {
@@ -63,6 +58,7 @@ public class Token extends Sprite {
                 _icon.y = 0;
                 _icon.width = 100;
                 _icon.height = 100;
+                //_icon.rotation = 90;
                 break;
         }
         if (type != TokenType.VOMIT) {
@@ -72,14 +68,6 @@ public class Token extends Sprite {
             _icon.height = 90;
         }
         addChild(_icon);
-        //            _movieClip = new ImportBeerSymbol();
-        //            _movieClip.x = 50;
-        //            _movieClip.y = 50;
-        //            _movieClip.width = 70;
-        //            _movieClip.height = 70;
-        //            _movieClip.stop();
-        //            _movieClip.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-        //            addChild(_movieClip);
 
         _type = type;
         _mark = false;
@@ -149,9 +137,6 @@ public class Token extends Sprite {
     private var _falling:Boolean = false;
 
 
-    [Embed(source="../../../symbols.swf", symbol="Beer")]
-    private static var ImportBeerSymbol:Class;
-
     [Embed(source="../../../biere-brune.png")]
     private static var BrownBeerIcon:Class;
 
@@ -172,6 +157,9 @@ public class Token extends Sprite {
 
     [Embed(source="../../../verre-eau.png")]
     private static var WaterIcon:Class;
+
+    [Embed(source="../../../jus-tomate.png")]
+    private static var TomatoIcon:Class;
 
     [Embed(source="../../../vomi-1.png")]
     private static var VomitIcon1:Class;

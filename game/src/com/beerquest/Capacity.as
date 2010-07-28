@@ -10,7 +10,7 @@ public class Capacity extends EventDispatcher {
     public static const BIG_PEANUTS:Capacity = new Capacity("Big Peanuts", true, TokenType.FOOD);
     public static const BIG_BANG:Capacity = new Capacity("Big Bang", true, TokenType.LIQUOR);
     public static const WATERFALL:Capacity = new Capacity("Waterfall", true, TokenType.WATER);
-    //public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", true, TokenType.LIQUOR);
+    public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", true, TokenType.TOMATO_JUICE);
     public static const TCHIN_TCHIN:Capacity = new Capacity("Tchin Tchin!", true, TokenType.COASTER);
 
     public static function fromToken(token:TokenType):Capacity {
@@ -29,6 +29,8 @@ public class Capacity extends EventDispatcher {
                 return WATERFALL;
             case TokenType.COASTER:
                 return TCHIN_TCHIN;
+            case TokenType.TOMATO_JUICE:
+                return BLOODY_MARY;
         }
         return null;
     }

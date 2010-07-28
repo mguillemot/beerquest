@@ -7,7 +7,6 @@ import com.greensock.TweenLite;
 import flash.display.DisplayObject;
 import flash.events.TimerEvent;
 import flash.media.Sound;
-import flash.system.Capabilities;
 import flash.utils.Timer;
 
 import mx.core.BitmapAsset;
@@ -75,6 +74,13 @@ public class TokenCollectionView extends UIComponent {
             collectType(e.capacity.correspondingToken);
             player.score += 75;
             player.clearCapacities();
+        }
+        if (e.capacity == Capacity.BLOND_STACK_ORDER) {
+            Constants.STATS.capaBlondUsed++;
+        } else if (e.capacity == Capacity.BROWN_STACK_ORDER) {
+            Constants.STATS.capaBrownUsed++;
+        } else if (e.capacity == Capacity.AMBER_STACK_ORDER) {
+            Constants.STATS.capaAmberUsed++;
         }
     }
 

@@ -1,10 +1,7 @@
 package com.beerquest {
 import com.beerquest.events.GameEvent;
-import com.beerquest.events.VomitEvent;
 
-import flash.events.Event;
 import flash.events.EventDispatcher;
-
 import flash.media.Sound;
 
 import mx.collections.ArrayCollection;
@@ -12,7 +9,8 @@ import mx.events.CollectionEvent;
 
 public class PlayerData extends EventDispatcher {
 
-    public function PlayerData(name:String, title:String, avatarUrl:String, level:Number) {
+    public function PlayerData(id:int, name:String, title:String, avatarUrl:String, level:Number) {
+        _id = id;
         _name = name;
         _title = title;
         _avatarUrl = avatarUrl;
@@ -118,6 +116,10 @@ public class PlayerData extends EventDispatcher {
         return _partialBeers;
     }
 
+    public function get id():int {
+        return _id;
+    }
+
     public function get name():String {
         return _name;
     }
@@ -164,6 +166,7 @@ public class PlayerData extends EventDispatcher {
         }
     }
 
+    private var _id:int;
     private var _name:String;
     private var _title:String;
     private var _avatarUrl:String;

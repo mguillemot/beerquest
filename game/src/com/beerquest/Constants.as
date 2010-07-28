@@ -6,6 +6,8 @@ public class Constants {
 
     public static const BOARD_SIZE:int = 8;
 
+    public static const STATS:GameStats = new GameStats();
+    
     function Constants() {
     }
 }

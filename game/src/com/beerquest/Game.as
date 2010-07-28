@@ -10,7 +10,8 @@ import flash.events.EventDispatcher;
 
 public class Game extends EventDispatcher {
 
-    public function Game(me:PlayerData, opponent:PlayerData, barName:String, barLocation:String, barOpen:String, barClose:String) {
+    public function Game(mode:String, me:PlayerData, opponent:PlayerData, barName:String, barLocation:String, barOpen:String, barClose:String, highScores:Array) {
+        _mode = mode;
         _me = me;
         _opponent = opponent;
         _board = new BoardState();
@@ -22,13 +23,14 @@ public class Game extends EventDispatcher {
         var closeParts:Array = barClose.split(":");
         _barCloseHour = parseInt(closeParts[0]);
         _barCloseMinute = parseInt(closeParts[1]);
+        _highScores = highScores;
         _currentTurn = 0;
     }
 
     public function handleEvent(e:GameEvent):void {
         switch (e.type) {
             case GemsSwappedEvent.GEMS_SWAPPED:
-                currentTurn++;
+                newTurn();
                 break;
             case VomitEvent.VOMIT:
                 //e.player.doVomit();
@@ -36,7 +38,8 @@ public class Game extends EventDispatcher {
                 break;
             case PissEvent.PISS:
                 e.player.doPiss();
-                currentTurn++;
+                newTurn();
+                Constants.STATS.pissCount++;
                 break;
             case CapacityEvent.CAPACITY_GAINED:
                 var ce:CapacityEvent = e as CapacityEvent;
@@ -45,12 +48,20 @@ public class Game extends EventDispatcher {
         }
     }
 
+    public function get mode():String {
+        return _mode;
+    }
+
     public function get me():PlayerData {
         return _me;
     }
 
     public function get opponent():PlayerData {
         return _opponent;
+    }
+
+    public function get highScores():Array {
+        return _highScores;
     }
 
     public function set board(value:BoardState):void {
@@ -83,6 +94,9 @@ public class Game extends EventDispatcher {
     public function set gameOver(value:Boolean):void {
         _gameOver = value;
         dispatchEvent(new Event("gameOverChanged"));
+        if (_gameOver) {
+            dispatchEvent(new GameEvent(GameEvent.GAME_OVER, null));
+        }
     }
 
     public function get totalTurns():int {
@@ -113,12 +127,18 @@ public class Game extends EventDispatcher {
         return _currentTurn;
     }
 
-    public function set currentTurn(value:int):void {
-        _currentTurn = value;
+    public function gainAdditionalTurns(t:int):void {
+        _currentTurn = Math.max(0, _currentTurn - t);
+        dispatchEvent(new Event("currentTurnChanged"));
+    }
+
+    public function newTurn():void {
+        _currentTurn++;
         dispatchEvent(new Event("currentTurnChanged"));
         if (remainingTurns <= 0) {
             gameOver = true;
         }
+        Constants.STATS.startTurn(board.pissLevel, board.vomitCount);
     }
 
     private function getFormattedTime(hour:int, minute:int):String {
@@ -135,6 +155,7 @@ public class Game extends EventDispatcher {
         return res;
     }
 
+    private var _mode:String;
     private var _me:PlayerData;
     private var _opponent:PlayerData;
     private var _board:BoardState;
@@ -145,6 +166,7 @@ public class Game extends EventDispatcher {
     private var _barCloseHour:int;
     private var _barCloseMinute:int;
     private var _gameOver:Boolean = false;
+    private var _highScores:Array;
 
     private var _currentTurn:int;
 }

@@ -1,15 +1,12 @@
 package com.beerquest.ui {
 import com.beerquest.*;
-import com.beerquest.TokenType;
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.greensock.TweenLite;
-import com.greensock.easing.Back;
 import com.greensock.easing.Expo;
 import com.greensock.easing.Linear;
 
-import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
@@ -22,7 +19,6 @@ import flash.utils.Timer;
 
 import mx.core.BitmapAsset;
 import mx.core.UIComponent;
-import mx.effects.SoundEffect;
 import mx.managers.CursorManager;
 import mx.managers.CursorManagerPriority;
 
@@ -152,31 +148,27 @@ public class BoardView extends UIComponent {
             case 84: // t
                 if (Constants.DEBUG) {
                     game.me.addPartialBeer(TokenType.BLOND_BEER);
-                    game.opponent.addPartialBeer(TokenType.BLOND_BEER);
                 }
                 break;
             case 89: // y
                 if (Constants.DEBUG) {
                     game.me.addPartialBeer(TokenType.BROWN_BEER);
-                    game.opponent.addPartialBeer(TokenType.BROWN_BEER);
                 }
                 break;
             case 85: // u
                 if (Constants.DEBUG) {
                     game.me.addPartialBeer(TokenType.AMBER_BEER);
-                    game.opponent.addPartialBeer(TokenType.AMBER_BEER);
                 }
                 break;
             case 73: // i
                 if (Constants.DEBUG) {
                     game.me.addPartialBeer(TokenType.TRIPLE);
-                    game.opponent.addPartialBeer(TokenType.TRIPLE);
                 }
                 break;
             case 79: // o
                 if (Constants.DEBUG) {
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOODY_MARY));
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_STACK_ORDER));
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.TCHIN_TCHIN));
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
                 }
                 break;
@@ -230,9 +222,13 @@ public class BoardView extends UIComponent {
         clearSelection();
         var i:int, j:int, token:Token;
         if (discardPrevious) {
-            game.currentTurn += 5;
             game.me.vomit = 0;
             game.me.piss = 0;
+            game.newTurn();
+            game.newTurn();
+            game.newTurn();
+            game.newTurn();
+            game.newTurn();
             for (i = 0; i < Constants.BOARD_SIZE; i++) {
                 for (j = 0; j < Constants.BOARD_SIZE; j++) {
                     token = getToken(i, j);
@@ -248,6 +244,7 @@ public class BoardView extends UIComponent {
                 regenBoard2();
             });
             timer.start();
+            Constants.STATS.resetCount++;
         } else {
             regenBoard2();
         }
@@ -362,6 +359,7 @@ public class BoardView extends UIComponent {
                 destroyTokensOfType(token);
                 game.me.score += 150;
                 game.me.clearCapacities();
+                Constants.STATS.capaLiquorUsed++;
             }
         } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - _pissLevel) {
@@ -432,6 +430,7 @@ public class BoardView extends UIComponent {
                     startAction("");
                 });
                 timer.start();
+                Constants.STATS.invalidMoves++;
             }
         });
         timer.start();
@@ -510,6 +509,7 @@ public class BoardView extends UIComponent {
     }
 
     private function destroySeries():Boolean {
+        // One phase of a turn
         var series:int = checkSeries();
         if (series > 0) {
             combo += series;
@@ -565,7 +565,11 @@ public class BoardView extends UIComponent {
                     player.vomit += 6 * group.length;
                 } else if (group.token == TokenType.FOOD) {
                     player.vomit -= 7 * group.length;
+                } else if (group.token == TokenType.TOMATO_JUICE) {
+                    player.piss += 2 * group.length;
+                    player.vomit -= 4 * group.length;
                 }
+                Constants.STATS.addCollectedGroup(group.token, group.length);
             }
             var fx:Sound;
             if (maxGroup == 3) {
@@ -576,7 +580,8 @@ public class BoardView extends UIComponent {
                 fx = new Beer5FX();
             }
             fx.play();
-            if (resetMultiplier) {
+            if (resetMultiplier && game.me.multiplier != 1) {
+                Constants.STATS.addMultiplier(game.me.multiplier);
                 game.me.multiplier = 1;
             }
             return true;
@@ -631,6 +636,7 @@ public class BoardView extends UIComponent {
 
     private function endScoring():void {
         _scoring = false;
+        Constants.STATS.addCombo(combo);
     }
 
     private function dumpBoard():void {
@@ -774,11 +780,13 @@ public class BoardView extends UIComponent {
                 game.me.piss = 0;
                 game.me.score += 100;
                 game.me.clearCapacities();
+                Constants.STATS.capaFoodUsed++;
                 break;
             case Capacity.WATERFALL:
                 destroyTokensOfType(TokenType.VOMIT);
                 game.me.score += 75;
                 game.me.clearCapacities();
+                Constants.STATS.capaWaterUsed++;
                 break;
             case Capacity.BIG_BANG:
                 startAction("selectTokenToDestroy");
@@ -790,6 +798,17 @@ public class BoardView extends UIComponent {
                 stealPartialBeers();
                 game.me.score += 150;
                 game.me.clearCapacities();
+                Constants.STATS.capaCoasterUsed++;
+                break;
+            case Capacity.BLOODY_MARY:
+                game.me.score += 150;
+                game.gainAdditionalTurns(6);
+                createVomit();
+                createVomit();
+                createVomit();
+                game.me.clearCapacities();
+                Constants.STATS.capaTomatoUsed++;
+                break;
         }
     }
 
@@ -872,6 +891,7 @@ public class BoardView extends UIComponent {
             game.me.vomit = 50;
             var fx:Sound = new VomitFX();
             fx.play();
+            Constants.STATS.vomitCount++;
         }
     }
 

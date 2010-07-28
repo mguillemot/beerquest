@@ -263,7 +263,7 @@ public class BoardState {
         } else if (r <= 90) {
             return TokenType.LIQUOR;
         } else {
-            return TokenType.COASTER;
+            return TokenType.TOMATO_JUICE;
         }
     }
 
@@ -273,6 +273,18 @@ public class BoardState {
 
     public function set pissLevel(pissLevel:int):void {
         _pissLevel = pissLevel;
+    }
+
+    public function get vomitCount():Number {
+        var count:int = 0;
+        for (var j:int = Constants.BOARD_SIZE - 1; j >= 1; j--) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                if (getCell(i, j) == TokenType.VOMIT) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     private var _state:Array = new Array();

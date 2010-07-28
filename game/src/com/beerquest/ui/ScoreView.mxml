@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+           width="189" height="76" initialize="init()">
+    <mx:Style>
+        .scoreview-score {
+            fontFamily: Kro;
+            fontSize: 16px;
+            color: #753e00;
+        }
+
+        .scoreview-name {
+            fontFamily: Kro;
+            fontSize: 14px;
+            color: #753e00;
+        }
+
+        .scoreview-rank {
+            fontFamily: Kro;
+            fontSize: 28px;
+            color: red;
+            textAlign: right;
+        }
+    </mx:Style>
+    <mx:Script><![CDATA[
+
+        private function init():void {
+            background.source = (personal) ? PersonalRecordBg : OtherRecordBg;
+            
+            portrait.graphics.lineStyle(5, 0xc9700b);
+            portrait.graphics.drawRect(0, 0, portrait.width, portrait.height);
+        }
+
+        public function get avatarUrl():String {
+            return _avatarUrl;
+        }
+
+        public function set avatarUrl(value:String):void {
+            _avatarUrl = value;
+            var loader:Loader = new Loader();
+            loader.load(new URLRequest(_avatarUrl));
+            portrait.addChild(loader);
+        }
+
+
+        [Bindable]
+        public function get personal():Boolean {
+            return _personal;
+        }
+
+        [Bindable]
+        public function set personal(value:Boolean):void {
+            _personal = value;
+            if (background != null) {
+                background.source = (personal) ? PersonalRecordBg : OtherRecordBg;
+            }
+        }
+
+        [Bindable]
+        public var firstName:String;
+
+        [Bindable]
+        public var lastName:String;
+
+        [Bindable]
+        public var score:int;
+
+        [Bindable]
+        public var rank:int;
+
+        private var _avatarUrl:String;
+        private var _personal:Boolean;
+
+        [Embed(source="../../../fond-reccord-joueur.png")]
+        private static var OtherRecordBg:Class;
+
+        [Embed(source="../../../fond-reccord-perco.png")]
+        private static var PersonalRecordBg:Class;
+
+        ]]></mx:Script>
+    <mx:Image id="background"/>
+    <mx:Image id="portrait" x="10" y="12" width="50" height="50"/>
+    <mx:Canvas x="65" y="4" width="120" height="66">
+        <mx:HBox horizontalGap="2" verticalAlign="middle">
+            <mx:Image source="@Embed(source='../../../collected-beer-small.png')"/>
+            <mx:Label text="{score}" styleName="scoreview-score">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:HBox>
+        <mx:Label x="5" y="22" width="100%" text="{firstName}" styleName="scoreview-name"/>
+        <mx:Label x="5" y="40" width="100%" text="{lastName}" styleName="scoreview-name"/>
+    </mx:Canvas>
+    <mx:Canvas x="102" y="4" width="80" height="66">
+        <mx:Label y="10" width="100%" text="{rank}" styleName="scoreview-rank">
+            <mx:filters>
+                <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+    </mx:Canvas>
+</mx:Canvas>
