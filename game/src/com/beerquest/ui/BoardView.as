@@ -332,8 +332,7 @@ public class BoardView extends UIComponent {
 
     private function generateToken(type:TokenType = null):Token {
         if (type == null) {
-            var value:int = Math.floor(Math.random() * 7) + 1;
-            type = TokenType.fromValue(value);
+            type = getCurrentState().generateNewCell();
         }
         var token:Token = new Token(type);
         token.width = width / Constants.BOARD_SIZE;
