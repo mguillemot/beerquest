@@ -2,13 +2,19 @@
 %html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml"}
 	%head
 		%title Beer Quest
-		= stylesheet_link_tag :all
+		%meta{:charset => "utf-8"}
 		= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
 		= javascript_include_tag 'rails'
 		= javascript_include_tag 'jquery.json'
 		= javascript_include_tag 'jquery.swfobject.1-1-1.min'
 		= javascript_include_tag 'application'
+		<!--[if IE]>
+		= javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
+		<![endif]-->
 		= csrf_meta_tag
+		%style
+			article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+		= stylesheet_link_tag :all
 	%body
 		.main
 			= yield

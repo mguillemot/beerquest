@@ -9,20 +9,86 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100703101243) do
+ActiveRecord::Schema.define(:version => 20100728151610) do
 
   create_table "accounts", :force => true do |t|
-    t.string   "login",      :limit => 32,  :null => false
+    t.string   "login",      :limit => 32,                 :null => false
     t.string   "password",   :limit => 32
     t.string   "email",      :limit => 128
+    t.string   "first_name",                               :null => false
+    t.string   "last_name",                                :null => false
+    t.string   "avatar"
+    t.integer  "play_count",                :default => 0, :null => false
+    t.datetime "total_play",                               :null => false
+    t.datetime "last_play"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title",                                    :null => false
+    t.integer  "level",                     :default => 0, :null => false
   end
 
   create_table "bars", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "beta_scores", :force => true do |t|
+    t.integer  "account_id",                                        :null => false
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "mode"
+    t.string   "game_version"
+    t.integer  "caps"
+    t.datetime "play_time"
+    t.decimal  "avg_time_per_turn",   :precision => 5, :scale => 2
+    t.integer  "total_turns"
+    t.text     "replay"
+    t.integer  "collected_blond"
+    t.integer  "collected_brown"
+    t.integer  "collected_amber"
+    t.integer  "collected_food"
+    t.integer  "collected_water"
+    t.integer  "collected_liquor"
+    t.integer  "collected_coaster"
+    t.integer  "collected_tomato"
+    t.integer  "max_groups_per_turn"
+    t.decimal  "avg_groups_per_turn", :precision => 5, :scale => 2
+    t.integer  "max_group_size"
+    t.integer  "groups_3"
+    t.integer  "groups_4"
+    t.integer  "groups_5"
+    t.integer  "multiplier_count"
+    t.integer  "max_multiplier"
+    t.integer  "max_combo"
+    t.decimal  "avg_combo",           :precision => 5, :scale => 2
+    t.integer  "capa_blond_gained"
+    t.integer  "capa_blond_used"
+    t.integer  "capa_brown_gained"
+    t.integer  "capa_brown_used"
+    t.integer  "capa_amber_gained"
+    t.integer  "capa_amber_used"
+    t.integer  "capa_food_gained"
+    t.integer  "capa_food_used"
+    t.integer  "capa_water_gained"
+    t.integer  "capa_water_used"
+    t.integer  "capa_liquor_gained"
+    t.integer  "capa_liquor_used"
+    t.integer  "capa_tomato_gained"
+    t.integer  "capa_tomato_used"
+    t.integer  "capa_coaster_gained"
+    t.integer  "capa_coaster_used"
+    t.integer  "piss_count"
+    t.integer  "vomit_count"
+    t.integer  "reset_count"
+    t.integer  "max_piss_level"
+    t.decimal  "avg_piss_level",      :precision => 5, :scale => 2
+    t.integer  "max_vomit"
+    t.decimal  "avg_vomit",           :precision => 5, :scale => 2
+    t.integer  "invalid_moves"
+    t.string   "user_agent"
+    t.string   "flash_version"
   end
 
   create_table "scores", :force => true do |t|

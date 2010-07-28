@@ -1,7 +1,14 @@
 %h1 Beer Quest IV: Challenge of the Bartender
-
+%br
+%br
+#identity
+	You are logged as
+	%strong
+		= @full_name
+%br
 #game
-%input#testEvent{:type => 'button', :value => "Raise event"}
+
+-#%input#testEvent{:type => 'button', :value => "Raise event"}
 :javascript
 	$(function() {
 		$('#game').flash({
@@ -11,26 +18,12 @@
 			hasVersion: 9,
 			flashvars: {
 				token: "azerty",
-				//requiredVersion: 0.1,
-				me: $.JSON.encode({
-					name: "ABC",
-					title: "Le Beau",
-					level: 42,
-					avatar: "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg"
-				}),
-				opponent: $.JSON.encode({
-					name: "DEF",
-					title: "Le Moche",
-					level: 23,
-					avatar: "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg"
-				}),
-				bar: $.JSON.encode({
-					name: "Le Salon de Massage",
-					location: "Tôkyô - Japon",
-					banner: "http://erhune.iobb.net/images/banner.jpg",
-					open: "21:00",
-					close: "2:00"
-				})
+				requiredVersion: 0.1,
+				mode: "solo",
+				me: $.JSON.encode(#{@me}),
+				opponent: $.JSON.encode(#{@opponent}),
+				bar: $.JSON.encode(#{@bar}),
+				highScores: $.JSON.encode(#{@scores})
 			}
 		});
 		$('#testEvent').click(function() {

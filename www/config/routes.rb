@@ -1,13 +1,17 @@
 BeerQuest::Application.routes.draw do |map|
+
 	get "help", :to => "home#help"
   get "privacy", :to => "home#privacy"
   get "tos", :to => "home#tos"
-  get "play", :to => "home#play"
+  get "play(/:id)", :to => "home#play"
 
 	post "facebook/authorize", :to => "facebook#authorize"
 	post "facebook/delete", :to => "facebook#delete"
 	get "facebook/opensession", :to => "facebook#opensession"
 	get "facebook/connect", :to => "facebook#connect"
+
+	get "getscores(/:id)", :to => "scores#getscores"
+	post "postscore/:id", :to => "scores#postscore"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -23,6 +27,7 @@ BeerQuest::Application.routes.draw do |map|
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 	resources :account
+	resources :scores
 
   # Sample resource route with options:
   #   resources :products do

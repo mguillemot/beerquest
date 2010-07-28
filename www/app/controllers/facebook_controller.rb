@@ -33,5 +33,5 @@ class FacebookController < ApplicationController
 			# The cookies may have been modified as the signature does not match
 			render :text => "BIG ERROR"
 		end
-	end
+	end  
 end
