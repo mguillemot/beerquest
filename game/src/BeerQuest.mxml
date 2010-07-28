@@ -179,7 +179,7 @@
                 data.score = game.me.fullBeers;
                 data.caps = game.me.score;
 
-                var request:URLRequest = new URLRequest("http://localhost:81/postscore/" + game.me.id);
+                var request:URLRequest = new URLRequest("http://erhune.iobb.net/postscore/" + game.me.id);
                 request.method = URLRequestMethod.POST;
                 request.data = data;
                 var loader:URLLoader = new URLLoader();
