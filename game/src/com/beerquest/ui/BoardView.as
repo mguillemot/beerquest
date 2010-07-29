@@ -269,6 +269,7 @@ public class BoardView extends UIComponent {
             startAction("");
         });
         timer.start();
+        game.board = getCurrentState();
     }
 
     private function resetToTestBoard():void {
@@ -674,6 +675,7 @@ public class BoardView extends UIComponent {
         startAction("endFalling");
         resetFalling();
         if (!destroySeries()) {
+            game.board = getCurrentState();
             endScoring();
             startAction("");
             checkAvailableMoves();

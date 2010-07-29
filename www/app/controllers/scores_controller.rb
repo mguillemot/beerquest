@@ -10,9 +10,16 @@ class ScoresController < ApplicationController
 	end
 
 	def postscore
-		data = params.reject { |k,v| k == "id" || k == "method" || k == "action" || k == "controller" || v == "NaN" }
-		score = BetaScore.new(data)
+		score = BetaScore.new
+		logger.debug score.attributes
+		params.each do |k,v|
+			logger.debug "k=#{k} v=#{v}"
+			if score.attributes.key?(k) && v != "NaN"
+				score[k] = v
+			end
+		end
 		score.account_id = params[:id].to_i
+		score.user_agent = request.env["HTTP_USER_AGENT"]
 		score.save!
 		render :text => "OK"
 	end

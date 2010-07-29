@@ -26,13 +26,7 @@ public class GameStats {
             maxVomitOnBoard = vomitCount;
         }
         vomitsOnBoard.push(vomitCount);
-    }
-
-    public function addGroupsPerTurn(count:Number):void {
-        if (count > maxGroupsPerTurn) {
-            maxGroupsPerTurn = count;
-        }
-        groupsPerTurn.push(count);
+        totalTurns++;
     }
 
     public function avg(a:Array):Number {
@@ -134,8 +128,6 @@ public class GameStats {
         result.collected_liquor = collectedLiquor;
         result.collected_coaster = collectedCoaster;
         result.collected_tomato = collectedTomato;
-        result.max_groups_per_turn = maxGroupsPerTurn;
-        result.avg_groups_per_turn = avg(groupsPerTurn);
         result.max_group_size = maxGroupSize;
         result.groups_3 = groups3;
         result.groups_4 = groups4;

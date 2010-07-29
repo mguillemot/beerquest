@@ -4,6 +4,9 @@ class HomeController < ApplicationController
 	end
 
 	def play
+		@mode = "solo"
+		@server_url = url_for(:controller => 'scores', :action => 'postscore')
+		@token = "test"
 		@opponent = {
 						:name => "Hop Onent",
 						:title => "Le Moche",

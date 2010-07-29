@@ -188,6 +188,7 @@
                 data.game_version = Constants.VERSION.toString();
                 data.score = game.me.fullBeers;
                 data.caps = game.me.score;
+                data.flash_version = Capabilities.version;
 
                 var request:URLRequest = new URLRequest(serverUrl);
                 request.method = URLRequestMethod.POST;
