@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="36cec4e9-0d20-42a8-b640-434ae12d528e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BeerQuest.mxml" afterPath="$PROJECT_DIR$/src/BeerQuest.mxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/Constants.as" afterPath="$PROJECT_DIR$/src/com/beerquest/Constants.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/GameStats.as" afterPath="$PROJECT_DIR$/src/com/beerquest/GameStats.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/wrapper.html" afterPath="$PROJECT_DIR$/src/wrapper.html" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="BeerQuest.iws" />
@@ -74,10 +71,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.as" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Constants.as" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/Constants.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="109" selection-start="285" selection-end="285" vertical-scroll-proportion="0.3252174">
+            <state line="13" column="49" selection-start="289" selection-end="289" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -101,10 +98,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BeerQuest.mxml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BeerQuest.mxml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BeerQuest.mxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="188" column="73" selection-start="8499" selection-end="8499" vertical-scroll-proportion="0.0">
+            <state line="140" column="31" selection-start="5718" selection-end="5718" vertical-scroll-proportion="0.44295302">
               <folding>
                 <marker date="1280414789656" expanded="true" signature="272:278" placeholder="{...}" />
                 <marker date="1280414789656" expanded="true" signature="272:278" placeholder="{...}" />
@@ -237,7 +234,6 @@
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/ScoreView.mxml" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/TokenCollectionView.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as" />
-        <option value="$PROJECT_DIR$/src/wrapper.html" />
         <option value="$PROJECT_DIR$/src/com/beerquest/PlayerData.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/Token.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
@@ -249,6 +245,7 @@
         <option value="$PROJECT_DIR$/src/BeerQuest.mxml" />
         <option value="$PROJECT_DIR$/src/com/beerquest/GameStats.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/Constants.as" />
+        <option value="$PROJECT_DIR$/src/wrapper.html" />
       </list>
     </option>
   </component>
@@ -441,7 +438,7 @@
       <recent name="E:\Boulot\BeerQuest\src\BeerQuest" />
     </key>
   </component>
-  <component name="RunManager" selected="Flex.BeerQuest">
+  <component name="RunManager" selected="Flex.BeerQuest wrapper">
     <configuration default="true" type="PhpRunConfigurationType" factoryName="PHP">
       <method>
         <option name="AntTarget" enabled="false" />
@@ -585,7 +582,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="false" name="BeerQuest" type="FlexRunConfigurationType" factoryName="Flex" html_or_swf_file_path="$PROJECT_DIR$/out/BeerQuest.swf" main_class_name="" module_name="BeerQuest" run_mode="HtmlOrSwfFile" url_to_launch="">
+    <configuration default="false" name="BeerQuest" type="FlexRunConfigurationType" factoryName="Flex" html_or_swf_file_path="$PROJECT_DIR$/out/BeerQuest.swf" main_class_name="" module_name="BeerQuest" run_mode="Url" url_to_launch="http://erhune.iobb.net/play/1">
       <RunnerSettings RunnerId="FlexDebugRunner" />
       <RunnerSettings RunnerId="FlexRunner" />
       <ConfigurationWrapper RunnerId="FlexDebugRunner" />
@@ -631,15 +628,15 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13368984" sideWeight="0.6666667" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34768212" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13368984" sideWeight="0.5441501" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44812363" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994652" sideWeight="0.5927152" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32560706" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32560706" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19518717" sideWeight="0.6666667" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19518717" sideWeight="0.5441501" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -710,11 +707,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/wrapper.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="33" selection-start="934" selection-end="934" vertical-scroll-proportion="0.816" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/adobe/serialization/json/JSON.as">
       <provider selected="true" editor-type-id="text-editor">
         <state line="80" column="0" selection-start="2981" selection-end="2981" vertical-scroll-proportion="0.0" />
@@ -807,9 +799,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Constants.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="49" selection-start="289" selection-end="289" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/GameStats.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="27" selection-start="1040" selection-end="1040" vertical-scroll-proportion="-19.72">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/wrapper.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="41" selection-start="1044" selection-end="1045" vertical-scroll-proportion="0.5971564">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/BeerQuest.mxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="188" column="73" selection-start="8499" selection-end="8499" vertical-scroll-proportion="0.0">
+        <state line="140" column="31" selection-start="5718" selection-end="5718" vertical-scroll-proportion="0.44295302">
           <folding>
             <marker date="1280414789656" expanded="true" signature="272:278" placeholder="{...}" />
             <marker date="1280414789656" expanded="true" signature="272:278" placeholder="{...}" />
@@ -919,20 +932,6 @@
             <marker date="1280414789656" expanded="true" signature="9429:10727" placeholder="/*...*/" />
             <marker date="1280414789656" expanded="true" signature="9429:10727" placeholder="/*...*/" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/GameStats.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="27" selection-start="1040" selection-end="1040" vertical-scroll-proportion="-19.72">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Constants.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="109" selection-start="285" selection-end="285" vertical-scroll-proportion="0.3252174">
-          <folding />
         </state>
       </provider>
     </entry>

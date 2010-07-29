@@ -16,19 +16,21 @@
         //<![CDATA[
           $(function() {
           	$('#game').flash({
-          		swf: "../out/BeerQuest.swf",
-          		width: 760,
-          		height: 612,
-          		hasVersion: 9,
-          		flashvars: {
-          			token: "azerty",
-          			requiredVersion: 0.1,
-          			mode: "solo",
-          			me: $.JSON.encode({"title":"Le Beau","level":42,"avatar":"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg","name":"ABC"}),
-          			opponent: $.JSON.encode({"title":"Le Moche","level":23,"avatar":"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg","name":"DEF"}),
-          			bar: $.JSON.encode({"banner":"http://erhune.iobb.net/images/banner.jpg","open":"21:00","close":"2:00","location":"Tôkyô - Japon","name":"Le Salon de Massage"}),
-          			highScores: $.JSON.encode([{"score":15,"lastName":"Bebin","avatar":"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg","me":false,"rank":1,"firstName":"Joris"},{"score":10,"lastName":"Guillemot","avatar":"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg","me":false,"rank":2,"firstName":"Matthieu"}])
-          		}
+                  swf: "../out/BeerQuest.swf",
+                              width: 760,
+                              height: 612,
+                              hasVersion: 9,
+                              flashvars: {
+                                  mode: "solo",
+                                  serverUrl: "http://erhune.iobb.net/postscore/1",
+                                  token: "test",
+                                  requireVersion: 0.2,
+                                  me: $.JSON.encode({"avatar":"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg","level":1,"title":"L'Otake","name":"Matthieu Guillemot","id":1}),
+                                  opponent: $.JSON.encode({"avatar":"http://static.ak.fbcdn.net/rsrc.php/z5HB7/hash/ecyu2wwn.gif","level":15,"title":"Le Moche","name":"Hop Onent"}),
+                                  bar: $.JSON.encode({"close":"2:00","location":"T\u00f4ky\u00f4 - Japon","open":"21:00","banner":"http://erhune.iobb.net/images/banner.jpg","name":"Le Salon de Massage"}),
+                                  highScores: $.JSON.encode([{"avatar":"http://profile.ak.fbcdn.net/profile-ak-snc1/profile5/1490/14/q674728432_4926.jpg","rank":1,"score":3,"firstName":"Joris","me":false,"lastName":"Bebin"}])
+                              }
+
           	});
           	$('#testEvent').click(function() {
           		$('#game object')[0].testJs();
