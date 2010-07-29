@@ -82,6 +82,16 @@
                 }
             }
 
+            serverUrl = FlexGlobals.topLevelApplication.parameters.serverUrl;
+            if (serverUrl == null) {
+                trace("WARN: No 'serverUrl' found");
+                serverUrl = "http://localhost:81/postscore";
+                if (!Constants.DEBUG) {
+                    freezeGame = true;
+                }
+            }
+            trace("Using the following server URL: " + serverUrl);
+
             var meData:PlayerData;
             var meParam:String = FlexGlobals.topLevelApplication.parameters.me;
             if (meParam != null) {
@@ -171,7 +181,7 @@
         }
 
         private function onGameOver(e:GameEvent):void {
-            if (game.me.id > 0) {
+            if (!scoresSent && game.me.id > 0) {
                 // Transmit score & stats to the server
                 var data:URLVariables = Constants.STATS.getForSerialization();
                 data.mode = game.mode;
@@ -179,7 +189,7 @@
                 data.score = game.me.fullBeers;
                 data.caps = game.me.score;
 
-                var request:URLRequest = new URLRequest("http://erhune.iobb.net/postscore/" + game.me.id);
+                var request:URLRequest = new URLRequest(serverUrl);
                 request.method = URLRequestMethod.POST;
                 request.data = data;
                 var loader:URLLoader = new URLLoader();
@@ -192,6 +202,8 @@
                 } catch (e:SecurityError) {
                     trace("Post score: a SecurityError has occurred.");
                 }
+
+                scoresSent = true;
             }
         }
 
@@ -238,6 +250,9 @@
 
         [Bindable]
         public var game:Game;
+
+        private var serverUrl:String;
+        private var scoresSent:Boolean = false;
 
         [Embed(source="battle-biture.png")]
         private static var BattleBiture:Class;

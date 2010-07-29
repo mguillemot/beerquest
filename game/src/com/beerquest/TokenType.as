@@ -2,12 +2,12 @@ package com.beerquest {
 public class TokenType {
 
     public static const NONE:TokenType = new TokenType(0);
-    public static const BLOND_BEER:TokenType = new TokenType(1, 5, true);
-    public static const BROWN_BEER:TokenType = new TokenType(2, 5, true);
-    public static const AMBER_BEER:TokenType = new TokenType(3, 5, true);
-    public static const WATER:TokenType = new TokenType(4, 5, true);
-    public static const FOOD:TokenType = new TokenType(5, 7, true);
-    public static const LIQUOR:TokenType = new TokenType(6, 10, true);
+    public static const BLOND_BEER:TokenType = new TokenType(1, 1, true);
+    public static const BROWN_BEER:TokenType = new TokenType(2, 1, true);
+    public static const AMBER_BEER:TokenType = new TokenType(3, 1, true);
+    public static const WATER:TokenType = new TokenType(4, 2, true);
+    public static const FOOD:TokenType = new TokenType(5, 2, true);
+    public static const LIQUOR:TokenType = new TokenType(6, 5, true);
     public static const COASTER:TokenType = new TokenType(7, 10, true);
     public static const TOMATO_JUICE:TokenType = new TokenType(8, 10, true);
     public static const TRIPLE:TokenType = new TokenType(9);

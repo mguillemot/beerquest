@@ -1,6 +1,5 @@
 package com.beerquest.ui {
 import com.beerquest.*;
-import com.beerquest.BoardState;
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
@@ -169,7 +168,7 @@ public class BoardView extends UIComponent {
             case 79: // o
                 if (Constants.DEBUG) {
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOODY_MARY));
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_STACK_ORDER));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_FURY_BAR));
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
                 }
                 break;
@@ -356,7 +355,7 @@ public class BoardView extends UIComponent {
         if (_currentAction == "selectTokenToDestroy") {
             var token:TokenType = getToken(x, y).type;
             if (token.collectible) {
-                destroyTokensOfType(token);
+                destroyTokensOfType(token, true);
                 game.me.score += 150;
                 game.me.clearCapacities();
                 Constants.STATS.capaLiquorUsed++;
@@ -531,28 +530,31 @@ public class BoardView extends UIComponent {
                         player.coasterReserve++;
                     }
                 } else if (group.length == 4) {
-                    game.me.score += 20 * combo * game.me.multiplier;
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         player.addPartialBeer(TokenType.TRIPLE);
                     } else if (group.token == TokenType.COASTER) {
-                        player.coasterReserve++;
+                        player.coasterReserve += 2;
                     }
                 } else if (group.length >= 5) {
-                    game.me.score += 40 * combo * game.me.multiplier;
                     game.me.multiplier += 1;
                     resetMultiplier = false;
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        player.fullBeers++;
+                        player.addPartialBeer(TokenType.TRIPLE);
+                        player.addPartialBeer(TokenType.TRIPLE);
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve += 3;
                     }
                 }
+                if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
+                    player.fullBeers += group.length;
+                }
+
                 if (group.length > maxGroup) {
                     maxGroup = group.length;
                 }
-                game.me.score += group.token.score * combo * game.me.multiplier;
+                game.me.score += group.token.score * group.length * combo * game.me.multiplier;
                 trace("Collected group of " + group.token + " of size " + group.length);
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                     player.piss += 3 * group.length;
@@ -783,7 +785,7 @@ public class BoardView extends UIComponent {
                 Constants.STATS.capaFoodUsed++;
                 break;
             case Capacity.WATERFALL:
-                destroyTokensOfType(TokenType.VOMIT);
+                destroyTokensOfType(TokenType.VOMIT, false);
                 game.me.score += 75;
                 game.me.clearCapacities();
                 Constants.STATS.capaWaterUsed++;
@@ -793,6 +795,24 @@ public class BoardView extends UIComponent {
                 if (_destroyCursor == 0) {
                     _destroyCursor = CursorManager.setCursor(DestroyCursor, CursorManagerPriority.HIGH);
                 }
+                break;
+            case Capacity.BLOND_FURY_BAR:
+                game.me.fullBeers += destroyTokensOfType(TokenType.BLOND_BEER, false);
+                game.me.score += 75;
+                game.me.clearCapacities();
+                Constants.STATS.capaBlondUsed++;
+                break;
+            case Capacity.BROWN_FURY_BAR:
+                game.me.fullBeers += destroyTokensOfType(TokenType.BROWN_BEER, false);
+                game.me.score += 75;
+                game.me.clearCapacities();
+                Constants.STATS.capaBrownUsed++;
+                break;
+            case Capacity.AMBER_FURY_BAR:
+                game.me.fullBeers += destroyTokensOfType(TokenType.AMBER_BEER, false);
+                game.me.score += 75;
+                game.me.clearCapacities();
+                Constants.STATS.capaAmberUsed++;
                 break;
             case Capacity.TCHIN_TCHIN:
                 stealPartialBeers();
@@ -819,22 +839,27 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function destroyTokensOfType(targetType:TokenType):void {
+    private function destroyTokensOfType(targetType:TokenType, score:Boolean):int {
         if (_destroyCursor != 0) {
             CursorManager.removeCursor(_destroyCursor);
             _destroyCursor = 0;
         }
         startAction("destroyTokensOfType");
+        var count:int = 0;
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 var token:Token = getToken(i, j);
                 if (token.type == targetType) {
                     token.mark = true;
-                    game.me.score += targetType.score;
+                    if (score) {
+                        game.me.score += targetType.score;
+                    }
+                    count++;
                 }
             }
         }
         destroyMarked();
+        return count;
     }
 
     [Bindable(event="availableMovesChanged")]

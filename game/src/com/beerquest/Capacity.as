@@ -5,8 +5,11 @@ public class Capacity extends EventDispatcher {
 
     public static const NONE:Capacity = new Capacity("?");
     public static const BLOND_STACK_ORDER:Capacity = new Capacity("Stack Order", true, TokenType.BLOND_BEER);
+    public static const BLOND_FURY_BAR:Capacity = new Capacity("Fury Bar", true, TokenType.BLOND_BEER);
     public static const BROWN_STACK_ORDER:Capacity = new Capacity("Stack Order", true, TokenType.BROWN_BEER);
+    public static const BROWN_FURY_BAR:Capacity = new Capacity("Fury Bar", true, TokenType.BROWN_BEER);
     public static const AMBER_STACK_ORDER:Capacity = new Capacity("Stack Order", true, TokenType.AMBER_BEER);
+    public static const AMBER_FURY_BAR:Capacity = new Capacity("Fury Bar", true, TokenType.AMBER_BEER);
     public static const BIG_PEANUTS:Capacity = new Capacity("Big Peanuts", true, TokenType.FOOD);
     public static const BIG_BANG:Capacity = new Capacity("Big Bang", true, TokenType.LIQUOR);
     public static const WATERFALL:Capacity = new Capacity("Waterfall", true, TokenType.WATER);
@@ -16,11 +19,11 @@ public class Capacity extends EventDispatcher {
     public static function fromToken(token:TokenType):Capacity {
         switch (token) {
             case TokenType.BLOND_BEER:
-                return BLOND_STACK_ORDER;
+                return BLOND_FURY_BAR;
             case TokenType.BROWN_BEER:
-                return BROWN_STACK_ORDER;
+                return BROWN_FURY_BAR;
             case TokenType.AMBER_BEER:
-                return AMBER_STACK_ORDER;
+                return AMBER_FURY_BAR;
             case TokenType.FOOD:
                 return BIG_PEANUTS;
             case TokenType.LIQUOR:

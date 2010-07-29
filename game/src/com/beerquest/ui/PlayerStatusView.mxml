@@ -38,7 +38,6 @@
         import com.beerquest.PlayerData;
         import com.beerquest.events.BeerCollectedEvent;
         import com.beerquest.events.PissEvent;
-        import com.beerquest.events.VomitEvent;
 
         [Bindable]
         public var game:Game;
@@ -50,26 +49,12 @@
         public var clickable:Boolean = true;
 
         private function init():void {
-            //alcoholBar.setProgress(33, 100);
-            //pissBar.setProgress(70, 100);
             addEventListener(BeerCollectedEvent.BEER_COLLECTED, onBeerCollected);
         }
 
         private function onBeerCollected(e:BeerCollectedEvent):void {
-            player.fullBeers++;
+            player.fullBeers += 5;
         }
-
-        /*private function onMouseOverVomit(e:Event):void {
-         vomitText.setStyle("color", "#ffbaba");
-         }
-
-         private function onMouseOutVomit(e:Event):void {
-         vomitText.setStyle("color", "white");
-         }
-
-         private function onClickVomit(e:Event):void {
-         dispatchEvent(new VomitEvent(player));
-         }   */
 
         private function onMouseOverPiss(e:Event):void {
             //            pissText.setStyle("color", "#ffbaba");
