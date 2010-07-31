@@ -12,7 +12,7 @@
 :javascript
 	$(function() {
 		$('#game').flash({
-			swf: "/swf/BeerQuest.swf",
+			swf: "/swf/BeerQuest-#{@required_version}.swf",
 			width: 760,
 			height: 612,
 			hasVersion: 9,
@@ -20,7 +20,7 @@
 				mode: "#{@mode}",
 				serverUrl: "#{@server_url}",
 				token: "#{@token}",
-				requiredVersion: 0.2,
+				requiredVersion: #{@required_version},
 				me: $.JSON.encode(#{@me}),
 				opponent: $.JSON.encode(#{@opponent}),
 				bar: $.JSON.encode(#{@bar}),

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100729142902) do
+ActiveRecord::Schema.define(:version => 20100731053242) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login",      :limit => 32,                 :null => false
@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(:version => 20100729142902) do
     t.integer  "invalid_moves"
     t.string   "user_agent"
     t.string   "flash_version"
+    t.integer  "stack_ejected"
+    t.integer  "stack_collected"
   end
 
   create_table "scores", :force => true do |t|

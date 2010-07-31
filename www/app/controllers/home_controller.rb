@@ -4,6 +4,7 @@ class HomeController < ApplicationController
 	end
 
 	def play
+		@required_version = "0.3"
 		@mode = "solo"
 		@server_url = url_for(:controller => 'scores', :action => 'postscore')
 		@token = "test"
