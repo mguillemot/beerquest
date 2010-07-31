@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+           width="29" height="29"
+           mouseOver="onMouseOver(event)" mouseOut="onMouseOut(event)" click="onClick(event)">
+    <mx:Script><![CDATA[
+        private function onMouseOver(e:MouseEvent):void {
+            mouseOver = true;
+        }
+
+        private function onMouseOut(e:MouseEvent):void {
+            mouseOver = false;
+        }
+
+        private function onClick(e:MouseEvent):void {
+            on = !on;
+        }
+
+        private function refreshImage():void {
+            if (on) {
+                button.source = (mouseOver) ? HoverState : EnabledState;
+            } else {
+                button.source = DisabledState;
+            }
+        }
+
+        [Bindable]
+        public function get on():Boolean {
+            return _on;
+        }
+
+        [Bindable]
+        public function set on(value:Boolean):void {
+            _on = value;
+            stage.quality = (on) ? StageQuality.HIGH : StageQuality.LOW;
+            refreshImage();
+        }
+
+        private function get mouseOver():Boolean {
+            return _mouseOver;
+        }
+
+        private function set mouseOver(value:Boolean):void {
+            _mouseOver = value;
+            refreshImage();
+        }
+
+        private var _on:Boolean = true;
+        private var _mouseOver:Boolean = false;
+
+        [Embed(source='../../../qualite-activee.png')]
+        private static var EnabledState:Class;
+
+        [Embed(source='../../../qualite-desactivee.png')]
+        private static var DisabledState:Class;
+
+        [Embed(source='../../../qualite-over.png')]
+        private static var HoverState:Class;
+        ]]></mx:Script>
+    <mx:Image id="button" source="{EnabledState}"/>
+</mx:Canvas>

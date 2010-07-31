@@ -145,8 +145,10 @@ public class PlayerData extends EventDispatcher {
 
     public function doPiss():void {
         piss /= 2;
-        var fx:Sound = new PissFX();
-        fx.play();
+        if (Constants.SOUND_ENABLED) {
+            var fx:Sound = new PissFX();
+            fx.play();
+        }
     }
 
     public function doGainCapacity(capacity:Capacity):void {
@@ -182,6 +184,6 @@ public class PlayerData extends EventDispatcher {
 
     [Embed(source="../../pipi.mp3")]
     private static var PissFX:Class;
-    
+
 }
 }

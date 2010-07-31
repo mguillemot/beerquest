@@ -66,8 +66,10 @@ public class TokenCollectionView extends UIComponent {
                     startAction("collecting");
                     dispatchEvent(new BeerCollectedEvent(player));
                     Constants.STATS.stackCollected++;
-                    var fx:Sound = new CapsFX();
-                    fx.play();
+                    if (Constants.SOUND_ENABLED) {
+                        var fx:Sound = new CapsFX();
+                        fx.play();
+                    }
                     for each (s in _casiers) {
                         TweenLite.to(s, OPERATION_TIME_MS / 1000, {alpha: 0});
                     }

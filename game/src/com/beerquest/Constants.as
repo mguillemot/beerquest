@@ -7,6 +7,8 @@ public class Constants {
     public static const BOARD_SIZE:int = 8;
 
     public static const STATS:GameStats = new GameStats();
+
+    public static var SOUND_ENABLED:Boolean = true;
     
     function Constants() {
     }

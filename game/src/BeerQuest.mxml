@@ -353,4 +353,6 @@
             </mx:filters>
         </mx:Label>
     </mx:Canvas>
+    <ui:SoundButton x="20" y="500" on="true"/>
+    <ui:QualityButton x="20" y="528" on="true"/>
 </s:Application>

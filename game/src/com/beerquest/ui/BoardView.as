@@ -591,15 +591,17 @@ public class BoardView extends UIComponent {
                 }
                 Constants.STATS.addCollectedGroup(group.token, group.length);
             }
-            var fx:Sound;
-            if (maxGroup == 3) {
-                fx = new Beer3FX();
-            } else if (maxGroup == 3) {
-                fx = new Beer4FX();
-            } else {
-                fx = new Beer5FX();
+            if (Constants.SOUND_ENABLED) {
+                var fx:Sound;
+                if (maxGroup == 3) {
+                    fx = new Beer3FX();
+                } else if (maxGroup == 3) {
+                    fx = new Beer4FX();
+                } else {
+                    fx = new Beer5FX();
+                }
+                fx.play();
             }
-            fx.play();
             if (resetMultiplier && game.me.multiplier != 1) {
                 Constants.STATS.addMultiplier(game.me.multiplier);
                 game.me.multiplier = 1;
@@ -804,7 +806,7 @@ public class BoardView extends UIComponent {
         if (_selectedY >= Constants.BOARD_SIZE - _pissLevel) {
             clearSelection();
         }
-        if (dy > 0) {
+        if (dy > 0 && Constants.SOUND_ENABLED) {
             var fx:Sound = new PissRaiseFX();
             fx.play();
         }
@@ -953,8 +955,10 @@ public class BoardView extends UIComponent {
             createVomit();
             createVomit();
             game.me.vomit = 50;
-            var fx:Sound = new VomitFX();
-            fx.play();
+            if (Constants.SOUND_ENABLED) {
+                var fx:Sound = new VomitFX();
+                fx.play();
+            }
             Constants.STATS.vomitCount++;
         }
     }
@@ -1017,7 +1021,7 @@ public class BoardView extends UIComponent {
     [Embed(source="../../../effet-pisse.png")]
     private static var PissAnimation:Class;
 
-    [Embed(source="../../../curseur-bang.png")]
+    [Embed(source="../../../curseur-bigbang.png")]
     private static var DestroyCursor:Class;
 
     [Embed(source="../../../sous-bock.png")]
