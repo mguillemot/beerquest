@@ -3,12 +3,12 @@ import com.beerquest.*;
 import com.greensock.TweenLite;
 
 import flash.display.Sprite;
-import flash.events.Event;
 
 import mx.core.BitmapAsset;
-import mx.core.MovieClipAsset;
 
 public class Token extends Sprite {
+
+    private static const HINT_CYCLE_MS:Number = 800;
 
     public function Token(type:TokenType) {
         super();
@@ -73,17 +73,17 @@ public class Token extends Sprite {
         _mark = false;
     }
 
-    private function onEnterFrame(e:Event):void {
-        if (_movieClip != null && _movieClip.currentLabel == "end_explode") {
-            removeChild(_movieClip);
-            _movieClip = null;
-        }
-    }
+    /*private function onEnterFrame(e:Event):void {
+     if (_movieClip != null && _movieClip.currentLabel == "end_explode") {
+     removeChild(_movieClip);
+     _movieClip = null;
+     }
+     }*/
 
     public function explode():void {
-        if (_movieClip != null) {
-            _movieClip.gotoAndPlay("start_explode");
-        }
+        /*if (_movieClip != null) {
+         _movieClip.gotoAndPlay("start_explode");
+         }*/
         if (_icon != null) {
             TweenLite.to(_icon, .25, {alpha: 0});
         }
@@ -125,15 +125,41 @@ public class Token extends Sprite {
         _mark = value;
     }
 
+    public function get hint():Boolean {
+        return _hint;
+    }
+
+    public function set hint(value:Boolean):void {
+        trace("hint=" + value + " on " + boardX + ":" + boardY);
+        if (value) {
+            if (_hintTween == null) {
+                _hintTween = new TweenLite(this, HINT_CYCLE_MS / 2 / 1000, {alpha:0.5, overwrite:0, delay:5, onComplete:function():void {
+                    _hintTween.reverse();
+                }, onReverseComplete:function():void {
+                    _hintTween.restart();
+                }});
+            }
+        } else {
+            if (_hintTween != null) {
+                _hintTween.setEnabled(false);
+                _hintTween = null;
+            }
+            alpha = 1;
+        }
+        _hint = value;
+    }
+
     private static var nextId:int = 1;
 
     private var _id:int;
     private var _icon:BitmapAsset;
-    private var _movieClip:MovieClipAsset;
+    //private var _movieClip:MovieClipAsset;
     private var _type:TokenType;
     private var _boardX:int = int.MIN_VALUE;
     private var _boardY:int = int.MIN_VALUE;
     private var _mark:Boolean;
+    private var _hint:Boolean = false;
+    private var _hintTween:TweenLite;
     private var _falling:Boolean = false;
 
 

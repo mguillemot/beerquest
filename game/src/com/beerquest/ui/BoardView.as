@@ -756,11 +756,30 @@ public class BoardView extends UIComponent {
     private function refreshStats():void {
         if (_initialized) {
             var state:BoardState = getCurrentState();
-            availableMoves = state.computeMoves().length;
+            var moves:Array = state.computeMoves();
+            availableMoves = moves.length;
+            if (moves.length > 0) {
+                moves = Utils.randomizeArray(moves);
+                setHint(moves[0].hintX, moves[0].hintY);
+            } else {
+                setHint(-1, -1);
+            }
             /*trace("available moves:");
              for each (var move:Object in state.computeMoves()) {
              trace("  " + move.type + " of " + move.startX + ":" + move.startY);
              }*/
+        }
+    }
+
+    private function setHint(x:int, y:int):void {
+        if (_hint != null) {
+            _hint.hint = false;
+        }
+        if (x != -1 && y != -1) {
+            _hint = getToken(x, y);
+            _hint.hint = true;
+        } else {
+            _hint = null;
         }
     }
 
@@ -983,6 +1002,7 @@ public class BoardView extends UIComponent {
     private var _combo:Number = 0;
     private var _gemsLayer:DisplayObjectContainer;
     private var _pissLayer:DisplayObjectContainer;
+    private var _hint:Token = null;
     private var _pissLevel:int = 0;
     private var _destroyCursor:int = 0;
     private var _coasterCursor:int = 0;

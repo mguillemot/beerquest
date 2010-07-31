@@ -176,9 +176,15 @@ public class BoardState {
                 var leftCell:TokenType = getCell(i, j);
                 var rightCell:TokenType = getCell(i + 1, j);
                 setCell(i, j, rightCell);
-                setCell(i + 1, j, leftCell);
+                setCell(i + 1, j, TokenType.NONE);
                 if (hasGroups) {
-                    moves.push({type:"horizontal", startX:i, startY:j, endX:(i + 1), endY:j});
+                    moves.push({type:"horizontal", startX:i, startY:j, endX:(i + 1), endY:j, hintX:(i + 1), hintY:j});
+                } else {
+                    setCell(i, j, TokenType.NONE);
+                    setCell(i + 1, j, leftCell);
+                    if (hasGroups) {
+                        moves.push({type:"horizontal", startX:i, startY:j, endX:(i + 1), endY:j, hintX:i, hintY:j});
+                    }
                 }
                 setCell(i, j, leftCell);
                 setCell(i + 1, j, rightCell);
@@ -191,9 +197,15 @@ public class BoardState {
                 var topCell:TokenType = getCell(i, j);
                 var bottomCell:TokenType = getCell(i, j + 1);
                 setCell(i, j, bottomCell);
-                setCell(i, j + 1, topCell);
+                setCell(i, j + 1, TokenType.NONE);
                 if (hasGroups) {
-                    moves.push({type:"vertical", startX:i, startY:j, endX:i, endY:(j + 1)});
+                    moves.push({type:"vertical", startX:i, startY:j, endX:i, endY:(j + 1), hintX:i, hintY:(j + 1)});
+                } else {
+                    setCell(i, j, TokenType.NONE);
+                    setCell(i, j + 1, topCell);
+                    if (hasGroups) {
+                        moves.push({type:"vertical", startX:i, startY:j, endX:i, endY:(j + 1), hintX:i, hintY:j});
+                    }
                 }
                 setCell(i, j, topCell);
                 setCell(i, j + 1, bottomCell);
