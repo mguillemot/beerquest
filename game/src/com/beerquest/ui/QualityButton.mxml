@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
            width="29" height="29"
-           mouseOver="onMouseOver(event)" mouseOut="onMouseOut(event)" click="onClick(event)">
+           mouseOver="onMouseOver(event)" mouseOut="onMouseOut(event)" click="onClick(event)"
+           toolTip="Active/désactive le mode haute qualité.">
     <mx:Script><![CDATA[
         private function onMouseOver(e:MouseEvent):void {
             mouseOver = true;
