@@ -585,6 +585,8 @@ public class BoardView extends UIComponent {
                     local.y += height / Constants.BOARD_SIZE * group.length / 2;
                 }
                 var scoreCoords:Point = localToGlobal(local);
+                var now:Date = new Date();
+                trace("event "+scoreGain+" raised at " + now.seconds + "." + now.milliseconds);
                 dispatchEvent(new ScoreEvent(scoreGain, scoreCoords.x, scoreCoords.y));
 
                 game.me.score += scoreGain;

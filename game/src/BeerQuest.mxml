@@ -68,12 +68,15 @@
         import com.beerquest.events.ScoreEvent;
         import com.beerquest.events.VomitEvent;
         import com.beerquest.ui.ScoreFx;
+        import com.greensock.OverwriteManager;
         import com.greensock.TweenLite;
 
         import mx.controls.Alert;
         import mx.core.FlexGlobals;
 
         private function init():void {
+            OverwriteManager.init();
+
             addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGameEvent);
             addEventListener(BeerCollectedEvent.BEER_COLLECTED, onGameEvent);
             addEventListener(CapacityEvent.CAPACITY_GAINED, onGameEvent);
@@ -241,10 +244,16 @@
             vfx.value = e.quantity;
             vfx.x = e.stageX - vfx.width / 2;
             vfx.y = e.stageY - vfx.height / 2;
-            addElement(vfx);
-            TweenLite.to(vfx, 1, {alpha:0, onComplete:function():void {
-                removeElement(vfx);
-            }});
+            vfxLayer.addChild(vfx);
+            var now:Date = new Date();
+            trace("event " + e.quantity + " received at " + now.seconds + "." + now.milliseconds);
+            vfx.addEventListener(Event.ADDED, function(e:Event):void {
+                var now:Date = new Date();
+                trace("child " + vfx.value + " added at " + now.seconds + "." + now.milliseconds);
+                TweenLite.to(vfx, 1, {alpha:0, y:"-20", onComplete:function():void {
+                    vfxLayer.removeChild(vfx);
+                }});
+            });
         }
 
         private function onScorePosted(e:Event):void {

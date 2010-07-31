@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="center" width="30" height="30">
+    <mx:Style>
+        .score-fx {
+            fontFamily: Kro;
+            fontSize: 18;
+            color: white;
+        }
+    </mx:Style>
+    <mx:Script><![CDATA[
+        [Bindable]
+        public var value:Number;
+        ]]></mx:Script>
+    <mx:HBox height="100%" verticalAlign="middle" horizontalGap="0">
+        <mx:Label text="+{value}" styleName="score-fx">
+            <mx:filters>
+                <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+    </mx:HBox>
+</mx:VBox>
