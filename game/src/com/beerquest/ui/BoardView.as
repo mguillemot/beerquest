@@ -57,7 +57,7 @@ public class BoardView extends UIComponent {
             subPiss = new PissAnimation();
             subPiss.x = subPiss.width;
             _pissLayer.addChild(subPiss);
-            _pissLayer.alpha = 0.7;
+            _pissLayer.alpha = 0.6;
             _pissLayer.name = "piss";
             _pissLayer.width = 2 * width;
             _pissLayer.height = 3 * height / Constants.BOARD_SIZE + 5;
@@ -201,6 +201,8 @@ public class BoardView extends UIComponent {
                     game.gameOver = !game.gameOver;
                 }
                 break;
+            case 69: // e
+                break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
                 break;
@@ -222,21 +224,17 @@ public class BoardView extends UIComponent {
         clearSelection();
         var i:int, j:int, token:Token;
         if (discardPrevious) {
-            game.me.vomit = 0;
-            game.me.piss = 0;
-            game.newTurn();
-            game.newTurn();
-            game.newTurn();
-            game.newTurn();
-            game.newTurn();
+            //game.newTurn(); désactivé pour des question d'équilibre (probable)
             for (i = 0; i < Constants.BOARD_SIZE; i++) {
                 for (j = 0; j < Constants.BOARD_SIZE; j++) {
                     token = getToken(i, j);
-                    var duration:Number = 1 + Math.random() * 0.5;
-                    var d:Number = Math.random() * 0.2;
-                    var x:Number = Math.random() * width - width / Constants.BOARD_SIZE;
-                    var y:Number = height + Math.random() * height;
-                    TweenLite.to(token, duration, {x:x, y:y, ease:Expo.easeIn, delay:d});
+                    if (token.type != TokenType.VOMIT) {
+                        var duration:Number = 1 + Math.random() * 0.5;
+                        var d:Number = Math.random() * 0.2;
+                        var x:Number = Math.random() * width - width / Constants.BOARD_SIZE;
+                        var y:Number = height + Math.random() * height;
+                        TweenLite.to(token, duration, {x:x, y:y, ease:Expo.easeIn, delay:d});
+                    }
                 }
             }
             var timer:Timer = new Timer(1500, 1);
@@ -252,16 +250,18 @@ public class BoardView extends UIComponent {
 
     private function regenBoard2():void {
         startAction("regenBoard2");
-        removeAllTokens();
+        removeAllTokens(TokenType.VOMIT); // ...except
         var state:BoardState = new BoardState();
         state.generateRandomWithoutGroups();
         var i:int, j:int, token:Token;
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
-                token = generateToken(state.getCell(i, j));
-                addToken(token);
-                setToken(i, j, token);
-                TweenLite.from(token, 0.7, {x:token.x, y:-height / Constants.BOARD_SIZE, delay:(Constants.BOARD_SIZE - j) * 0.075});
+                if (getToken(i, j) == null) {
+                    token = generateToken(state.getCell(i, j));
+                    addToken(token);
+                    setToken(i, j, token);
+                    TweenLite.from(token, 0.7, {x:token.x, y:-height / Constants.BOARD_SIZE, delay:(Constants.BOARD_SIZE - j) * 0.075});
+                }
             }
         }
         var timer:Timer = new Timer(1500, 1);
@@ -325,9 +325,23 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function removeAllTokens():void {
+    private function removeAllTokens(except:TokenType = null):void {
+        var toKeep:Array = new Array();
+        var token:Token;
         while (_gemsLayer.numChildren > 0) {
-            _gemsLayer.removeChildAt(0);
+            token = _gemsLayer.removeChildAt(0) as Token;
+            if (token.type == except) {
+                toKeep.push(token);
+            }
+        }
+        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+            for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+                setToken(i, j, null);
+            }
+        }
+        for each (token in toKeep) {
+            _gemsLayer.addChild(token);
+            setToken(token.boardX, token.boardY, token);
         }
     }
 
@@ -778,6 +792,7 @@ public class BoardView extends UIComponent {
     public function executeCapacity(player:PlayerData, capacity:Capacity):void {
         if (_currentAction != "") {
             trace("ERROR: unable to execute capacity because an action is already in progress");
+            return;
         }
         switch (capacity) {
             case Capacity.BIG_PEANUTS:

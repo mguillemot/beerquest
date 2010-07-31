@@ -249,20 +249,20 @@ public class BoardState {
     }
 
     public static function generateNewCell():TokenType {
-        var r:int = _rand.nextInt(1, 100);
-        if (r <= 15) {
+        var r:int = _rand.nextInt(1, 17);
+        if (r <= 3) {
             return TokenType.BLOND_BEER;
-        } else if (r <= 30) {
+        } else if (r <= 6) {
             return TokenType.BROWN_BEER;
-        } else if (r <= 45) {
+        } else if (r <= 9) {
             return TokenType.AMBER_BEER;
-        } else if (r <= 60) {
+        } else if (r <= 11) {
             return TokenType.FOOD;
-        } else if (r <= 75) {
+        } else if (r <= 13) {
             return TokenType.WATER;
-        } else if (r <= 90) {
+        } else if (r <= 15) {
             return TokenType.LIQUOR;
-        } else {
+        } else { // r <= 17
             return TokenType.TOMATO_JUICE;
         }
     }
@@ -286,6 +286,7 @@ public class BoardState {
         }
         return count;
     }
+
 
     private var _state:Array = new Array();
     private var _pissLevel:int = 0;

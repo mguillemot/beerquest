@@ -160,6 +160,8 @@ public class GameStats {
         result.max_vomit = maxVomitOnBoard;
         result.avg_vomit = avg(vomitsOnBoard);
         result.invalid_moves = invalidMoves;
+        result.stack_ejected = stackEjected;
+        result.stack_collected = stackCollected;
         return result;
     }
 
@@ -210,6 +212,8 @@ public class GameStats {
     public var maxVomitOnBoard:Number = 0;
     public var vomitsOnBoard:Array = new Array();
     public var invalidMoves:Number = 0;
+    public var stackEjected:Number = 0;
+    public var stackCollected:Number = 0;
 
 }
 }

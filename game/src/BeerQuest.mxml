@@ -270,9 +270,9 @@
             <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
         </mx:filters>
     </mx:Label>
-    <ui:PlayerDataView x="35" y="55" player="{game.me}"/>
+    <ui:PlayerDataView x="20" y="20" player="{game.me}"/>
     <ui:PlayerDataView x="435" y="55" player="{game.opponent}" mirror="true" visible="{game.mode == 'vs'}"/>
-    <mx:VBox x="220" y="5" width="320" horizontalAlign="center" verticalGap="0">
+    <mx:VBox x="220" y="25" width="320" horizontalAlign="center" verticalGap="0">
         <mx:Image id="modeHeader"/>
         <mx:Spacer height="15"/>
         <mx:Image source="@Embed(source='vs.png')" visible="{game.mode == 'vs'}"/>
@@ -282,10 +282,10 @@
             <mx:Label text="152" styleName="game-type"/>
         </mx:HBox>
     </mx:VBox>
-    <ui:PlayerStatusView x="25" y="165" game="{game}" player="{game.me}"/>
+    <ui:PlayerStatusView x="25" y="135" game="{game}" player="{game.me}"/>
     <ui:PlayerStatusView x="560" y="165" game="{game}" player="{game.opponent}" clickable="false"
                          visible="{game.mode == 'vs'}"/>
-    <mx:VBox x="550" y="20" width="196" horizontalAlign="center" verticalGap="8" visible="{game.mode == 'solo'}">
+    <mx:VBox x="545" y="20" width="196" horizontalAlign="center" verticalGap="8" visible="{game.mode == 'solo'}">
         <mx:Image source="@Embed(source='bar-scrores.png')"/>
         <mx:Spacer height="5"/>
         <ui:ScoreView personal="{game.highScores[0].me}" firstName="{game.highScores[0].firstName}"
@@ -307,7 +307,7 @@
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10" visible="{Constants.DEBUG}"/>
     <mx:Label text="Combo: {boardView.combo}" x="10" y="30" visible="{Constants.DEBUG}"/>
     <mx:Label text="Sous-bocks: {game.me.coasterReserve}" x="10" y="50" visible="{Constants.DEBUG}"/>
-    <mx:Canvas x="220" y="153" width="320" height="320">
+    <mx:Canvas x="220" y="110" width="320" height="320">
         <ui:BoardView id="boardView" width="100%" height="100%" game="{game}" playable="{game.gameOver}"/>
         <mx:Canvas width="100%" height="100%" backgroundColor="black" alpha="0.8" visible="{game.gameOver}">
             <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>

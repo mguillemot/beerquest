@@ -58,6 +58,10 @@ public class TokenType {
         return _collectible;
     }
 
+    public function toString():String {
+        return "TT" + _value;
+    }
+
     private var _value:int;
     private var _score:Number;
     private var _collectible:Boolean;
