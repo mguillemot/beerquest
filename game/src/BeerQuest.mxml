@@ -30,6 +30,18 @@
             color: #ff0000;
             textAlign: center;
         }
+
+        .currentTime {
+            fontSize: 32px;
+            fontWeight: bold;
+            textAlign: center;
+        }
+
+        .remainingTurns {
+            fontSize: 12px;
+            fontWeight: bold;
+            textAlign: center;
+        }
     </fx:Style>
     <fx:Script><![CDATA[
         import com.adobe.serialization.json.JSON;
@@ -316,9 +328,11 @@
     <!--<mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>-->
     <!--<mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>-->
     <!--<mx:Button x="300" y="450" label="Call JS" click="callJs()"/>-->
-    <mx:Label id="remainingTurns" x="220" y="472" width="320"
-              text="Il est {game.currentTime} | Reste {game.remainingTurns} coups à boire"
-              textAlign="center"/>
+    <mx:Canvas x="300" y="435" width="160" height="50">
+        <ui:ClockView x="5" y="5" width="40" height="40" hour="{game.currentHour}" minutes="{game.currentMinute}"/>
+        <mx:Label x="50" y="-3" width="110" text="{game.currentTime}" styleName="currentTime"/>
+        <mx:Label x="50" y="29" width="110" text="{game.remainingTurns} coups à boire" styleName="remainingTurns"/>
+    </mx:Canvas>
     <mx:Canvas x="0" y="492">
         <mx:Label x="445" y="10" width="300" color="white" text="{game.barName}" textAlign="center"
                   fontSize="24"

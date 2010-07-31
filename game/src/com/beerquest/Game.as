@@ -113,8 +113,25 @@ public class Game extends EventDispatcher {
         var minute:int = _barOpenMinute;
         minute += 5 * _currentTurn;
         hour += Math.floor(minute / 60);
-        minute = minute % 60;
+        minute %= 60;
+        hour %= 24;
         return getFormattedTime(hour, minute);
+    }
+
+    [Bindable(event="currentTurnChanged")]
+    public function get currentHour():int {
+        var hour:int = _barOpenHour;
+        var minute:int = _barOpenMinute;
+        minute += 5 * _currentTurn;
+        hour += Math.floor(minute / 60);
+        return (hour % 24);
+    }
+
+    [Bindable(event="currentTurnChanged")]
+    public function get currentMinute():int {
+        var minute:int = _barOpenMinute;
+        minute += 5 * _currentTurn;
+        return (minute % 60);
     }
 
     [Bindable(event="currentTurnChanged")]

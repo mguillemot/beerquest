@@ -202,6 +202,9 @@ public class BoardView extends UIComponent {
                 }
                 break;
             case 69: // e
+                if (Constants.DEBUG) {
+                    game.newTurn();
+                }
                 break;
             default:
                 trace("unknown key pressed: " + e.keyCode);
