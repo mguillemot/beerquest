@@ -47,8 +47,24 @@ public class TokenCollectionView extends UIComponent {
         sprite.x = width;
         sprite.y = 1;
         addChild(sprite);
-        var currentCasierType:TokenType = (_casiers.length > 0) ? getSpriteType(_casiers[0]) : null;
-        if (isCompatible(currentCasierType, token)) {
+        var currentCasierType:TokenType = null;
+        if (_casiers.length >= 1) {
+            if (_casiers.length == 2 && getSpriteType(_casiers[0]) == TokenType.TRIPLE) {
+                currentCasierType = getSpriteType(_casiers[1]);
+            } else {
+                currentCasierType = getSpriteType(_casiers[0]);
+            }
+        }
+        if (_casiers.length == 0 && token == TokenType.TRIPLE) {
+            // Cas de merde très particulier
+            _casiers.push(sprite);
+            TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 3) * 11});
+            timer = new Timer(OPERATION_TIME_MS, 1);
+            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+                startAction("");
+            });
+            timer.start();
+        } else if (isCompatible(currentCasierType, token)) {
             if (_casiers.length == 1) {
                 // Add to middle of casier
                 TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 2) * 11});
@@ -113,12 +129,24 @@ public class TokenCollectionView extends UIComponent {
             _casiers.push(sprite);
         } else {
             // Push current casier content away
-            var distance:int = _casiers.length * 11;
+            var pushQty:int, availableSlot:int;
+            if (_casiers.length == 2 && getSpriteType(_casiers[1]) == TokenType.TRIPLE) {
+                pushQty = 1;
+                availableSlot = 1;
+            } else {
+                pushQty = _casiers.length;
+                availableSlot = 0;
+            }
+            var distance:int = pushQty * 11;
             for each (s in _stack) {
                 TweenLite.to(s, OPERATION_TIME_MS / 1000, {x:"-" + distance});
             }
-            TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 3) * 11});
+            TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 3 + availableSlot) * 11});
             _casiers = new Array();
+            if (availableSlot == 1) {
+                // Push back the last triple of the stack
+                _casiers.push(_stack[_stack.length - 1]);
+            }
             _casiers.push(sprite);
             timer = new Timer(OPERATION_TIME_MS, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
