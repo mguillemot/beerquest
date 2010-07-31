@@ -9,12 +9,14 @@ import mx.events.CollectionEvent;
 
 public class PlayerData extends EventDispatcher {
 
-    public function PlayerData(id:int, name:String, title:String, avatarUrl:String, level:Number) {
+    public function PlayerData(id:int, name:String, title:String, avatarUrl:String, level:Number, totalBeers:Number, totalCaps:Number) {
         _id = id;
         _name = name;
         _title = title;
         _avatarUrl = avatarUrl;
         _level = level;
+        _totalBeers = totalBeers;
+        _totalCaps = totalCaps;
         _capacities = new ArrayCollection();
         _capacities.addItem(Capacity.NONE);
         _capacities.addItem(Capacity.NONE);
@@ -136,6 +138,14 @@ public class PlayerData extends EventDispatcher {
         return _level;
     }
 
+    public function get totalBeers():Number {
+        return _totalBeers;
+    }
+
+    public function get totalCaps():Number {
+        return _totalCaps;
+    }
+
     public function addPartialBeer(type:TokenType):void {
         if (_partialBeers.length == 45) {
             _partialBeers.removeItemAt(0);
@@ -173,6 +183,8 @@ public class PlayerData extends EventDispatcher {
     private var _title:String;
     private var _avatarUrl:String;
     private var _level:Number;
+    private var _totalBeers:Number;
+    private var _totalCaps:Number;
     private var _score:Number = 0;
     private var _multiplier:Number = 1;
     private var _fullBeers:Number = 0;

@@ -63,7 +63,7 @@
         </mx:Canvas>
         <mx:HBox x="72" y="47" width="120" horizontalGap="4" verticalAlign="middle" toolTip="Le nombre de bières que tu as bues dans toute ta carrière.">
             <mx:Image source="@Embed(source='../../../collected-beer-small.png')"/>
-            <mx:Label text="{scoreFormatter.format(12345)}" styleName="description">
+            <mx:Label text="{scoreFormatter.format(player.totalBeers)}" styleName="description">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
@@ -71,7 +71,7 @@
         </mx:HBox>
         <mx:HBox x="72" y="69" width="120" horizontalGap="2" verticalAlign="middle" toolTip="Le nombre de caps que tu pourras dépenser entre les parties.">
             <mx:Image source="@Embed(source='../../../caps.png')"/>
-            <mx:Label text="{scoreFormatter.format(9999999)}" styleName="description">
+            <mx:Label text="{scoreFormatter.format(player.totalCaps)}" styleName="description">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>

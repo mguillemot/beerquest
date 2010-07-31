@@ -9,9 +9,12 @@ class HomeController < ApplicationController
 		@server_url = url_for(:controller => 'scores', :action => 'postscore')
 		@token = "test"
 		@opponent = {
+						:id => 123,
 						:name => "Hop Onent",
 						:title => "Le Moche",
 						:level => 15,
+						:total_beers => 67890,
+						:total_caps => 666666,
 						:avatar => "http://static.ak.fbcdn.net/rsrc.php/z5HB7/hash/ecyu2wwn.gif"
 		}.to_json
 		@bar = {
@@ -30,6 +33,8 @@ class HomeController < ApplicationController
 							:name => @full_name,
 							:title => account.title,
 							:level => account.level,
+							:total_beers => 12345,
+							:total_caps => 1000042,
 							:avatar => account.avatar
 			}.to_json
 			@scores = BetaScore.high_scores(params[:id].to_i).to_json
@@ -40,6 +45,8 @@ class HomeController < ApplicationController
 							:name => @full_name,
 							:title => "L'Inconnu",
 							:level => 0,
+							:total_beers => 0,
+							:total_caps => 0,
 							:avatar => "http://static.ak.fbcdn.net/rsrc.php/z5HB7/hash/ecyu2wwn.gif"
 			}.to_json
 			@scores = BetaScore.high_scores.to_json

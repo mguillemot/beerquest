@@ -55,15 +55,7 @@ public class BoardState {
     }
 
     public function getRandomNonVomitCell():Object {
-        var vomitCount:int = 0;
-        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
-            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                if (getCell(i, j) == TokenType.VOMIT) {
-                    vomitCount++;
-                }
-            }
-        }
-        if (vomitCount == Constants.BOARD_SIZE * Constants.BOARD_SIZE) {
+        if (count(TokenType.VOMIT) == Constants.BOARD_SIZE * Constants.BOARD_SIZE) {
             return null;
         }
         while (true) {
@@ -75,6 +67,18 @@ public class BoardState {
             }
         }
         return null;
+    }
+    
+    public function count(token:TokenType):int {
+        var count:int = 0;
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                if (getCell(i, j) == token) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     public function normalize():void {

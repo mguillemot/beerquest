@@ -228,11 +228,15 @@ public class BoardView extends UIComponent {
         clearSelection();
         var i:int, j:int, token:Token;
         if (discardPrevious) {
-            //game.newTurn(); désactivé pour des question d'équilibre (probable)
+            resetMarks();
             for (i = 0; i < Constants.BOARD_SIZE; i++) {
                 for (j = 0; j < Constants.BOARD_SIZE; j++) {
                     token = getToken(i, j);
-                    if (token.type != TokenType.VOMIT) {
+                    if (token.type == TokenType.VOMIT && Math.random() >= 0.75) {
+                        token.mark = true; // delete this vomit
+                        game.newTurn();
+                    }
+                    if (token.type != TokenType.VOMIT || token.mark) {
                         var duration:Number = 1 + Math.random() * 0.5;
                         var d:Number = Math.random() * 0.2;
                         var x:Number = Math.random() * width - width / Constants.BOARD_SIZE;
@@ -254,7 +258,7 @@ public class BoardView extends UIComponent {
 
     private function regenBoard2():void {
         startAction("regenBoard2");
-        removeAllTokens(TokenType.VOMIT); // ...except
+        removeAllTokensExceptNonMarkedVomit();
         var state:BoardState = new BoardState();
         state.generateRandomWithoutGroups();
         var i:int, j:int, token:Token;
@@ -329,12 +333,12 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function removeAllTokens(except:TokenType = null):void {
+    private function removeAllTokens(exceptNonMarkedVomit:Boolean = false):void {
         var toKeep:Array = new Array();
         var token:Token;
         while (_gemsLayer.numChildren > 0) {
             token = _gemsLayer.removeChildAt(0) as Token;
-            if (token.type == except) {
+            if (exceptNonMarkedVomit && token.type == TokenType.VOMIT && !token.mark) {
                 toKeep.push(token);
             }
         }
@@ -347,6 +351,10 @@ public class BoardView extends UIComponent {
             _gemsLayer.addChild(token);
             setToken(token.boardX, token.boardY, token);
         }
+    }
+
+    private function removeAllTokensExceptNonMarkedVomit():void {
+        removeAllTokens(true);
     }
 
     private function generateToken(type:TokenType = null):Token {
@@ -586,7 +594,7 @@ public class BoardView extends UIComponent {
                 }
                 var scoreCoords:Point = localToGlobal(local);
                 var now:Date = new Date();
-                trace("event "+scoreGain+" raised at " + now.seconds + "." + now.milliseconds);
+                trace("event " + scoreGain + " raised at " + now.seconds + "." + now.milliseconds);
                 dispatchEvent(new ScoreEvent(scoreGain, scoreCoords.x, scoreCoords.y));
 
                 game.me.score += scoreGain;

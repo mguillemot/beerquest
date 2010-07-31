@@ -4,11 +4,8 @@
     <list default="true" readonly="true" id="8f48027e-07ce-4b9f-9c55-b89931362e9f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/play.html.haml" afterPath="$PROJECT_DIR$/app/views/home/play.html.haml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/BeerQuest.iml" afterPath="$PROJECT_DIR$/.idea/BeerQuest.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\swf\BeerQuest.swf" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/swf/BeerQuest-0.3.swf" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="BeerQuest.iws" />
@@ -68,10 +65,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="home_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="21" selection-start="196" selection-end="213" vertical-scroll-proportion="0.0">
+            <state line="19" column="72" selection-start="599" selection-end="599" vertical-scroll-proportion="0.028286189">
               <folding />
             </state>
           </provider>
@@ -104,10 +101,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="play.html.haml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="play.html.haml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/play.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="59" selection-start="400" selection-end="400" vertical-scroll-proportion="0.5657238">
+            <state line="23" column="35" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -155,8 +152,8 @@
         <option value="$PROJECT_DIR$/app/controllers/scores_controller.rb" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/db/migrate/20100731053242_add_stats_about_stack.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/home/play.html.haml" />
+        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
       </list>
     </option>
   </component>
@@ -793,16 +790,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/home/play.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="21" selection-start="196" selection-end="213" vertical-scroll-proportion="0.0">
+        <state line="23" column="35" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/play.html.haml">
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="59" selection-start="400" selection-end="400" vertical-scroll-proportion="0.5657238">
+        <state line="19" column="72" selection-start="599" selection-end="599" vertical-scroll-proportion="0.028286189">
           <folding />
         </state>
       </provider>

@@ -125,10 +125,10 @@
             var meParam:String = FlexGlobals.topLevelApplication.parameters.me;
             if (meParam != null) {
                 var me:Object = JSON.decode(meParam);
-                meData = new PlayerData(me.id, me.name, me.title, me.avatar, me.level);
+                meData = new PlayerData(me.id, me.name, me.title, me.avatar, me.level, me.total_beers, me.total_caps);
             } else {
                 trace("WARN: No 'me' found");
-                meData = new PlayerData(0, "Mattiou Guillegay", "Le Saint-Bernard", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 42);
+                meData = new PlayerData(0, "Mattiou Guillegay", "Le Saint-Bernard", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 42, 12345, 1000042);
                 if (!Constants.DEBUG) {
                     freezeGame = true;
                 }
@@ -139,10 +139,10 @@
                 var opponentParam:String = FlexGlobals.topLevelApplication.parameters.opponent;
                 if (opponentParam != null) {
                     var opponent:Object = JSON.decode(opponentParam);
-                    opponentData = new PlayerData(0, opponent.name, opponent.title, opponent.avatar, opponent.level);
+                    opponentData = new PlayerData(opponent.id, opponent.name, opponent.title, opponent.avatar, opponent.level, opponent.total_beers, opponent.total_caps);
                 } else {
                     trace("WARN: No 'opponent' found");
-                    opponentData = new PlayerData(0, "Jeano Babouin", "Le bois-sans-soif", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 89);
+                    opponentData = new PlayerData(0, "Jeano Babouin", "Le bois-sans-soif", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 89, 555, 100000);
                     if (!Constants.DEBUG) {
                         freezeGame = true;
                     }
