@@ -3,6 +3,7 @@ import com.beerquest.*;
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
+import com.beerquest.events.ScoreEvent;
 import com.greensock.TweenLite;
 import com.greensock.easing.Expo;
 import com.greensock.easing.Linear;
@@ -568,11 +569,25 @@ public class BoardView extends UIComponent {
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                     player.fullBeers += group.length;
                 }
-
                 if (group.length > maxGroup) {
                     maxGroup = group.length;
                 }
-                game.me.score += group.token.score * group.length * combo * game.me.multiplier;
+
+                // Dispatch event for vfx display
+                var scoreGain:int = group.token.score * group.length * combo * game.me.multiplier;
+                var token:Token = getToken(group.startX, group.startY);
+                var local:Point = new Point(token.x, token.y);
+                if (group.type == "horizontal") {
+                    local.x += width / Constants.BOARD_SIZE * group.length / 2;
+                    local.y += height / Constants.BOARD_SIZE / 2;
+                } else {
+                    local.x += width / Constants.BOARD_SIZE / 2;
+                    local.y += height / Constants.BOARD_SIZE * group.length / 2;
+                }
+                var scoreCoords:Point = localToGlobal(local);
+                dispatchEvent(new ScoreEvent(scoreGain, scoreCoords.x, scoreCoords.y));
+
+                game.me.score += scoreGain;
                 trace("Collected group of " + group.token + " of size " + group.length);
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                     player.piss += 3 * group.length;

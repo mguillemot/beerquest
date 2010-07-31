@@ -30,13 +30,23 @@
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
         import com.beerquest.events.BeerCollectedEvent;
+        import com.beerquest.events.GameEvent;
         import com.beerquest.events.PissEvent;
+        import com.greensock.TweenLite;
 
         [Bindable]
         public var game:Game;
 
         [Bindable]
-        public var player:PlayerData;
+        public function get player():PlayerData {
+            return _player;
+        }
+
+        [Bindable]
+        public function set player(value:PlayerData):void {
+            _player = value;
+            _player.addEventListener(GameEvent.FULL_BEERS_CHANGED, onFullBeersChanged);
+        }
 
         [Bindable]
         public var clickable:Boolean = true;
@@ -47,6 +57,13 @@
 
         private function onBeerCollected(e:BeerCollectedEvent):void {
             player.fullBeers += 5;
+        }
+
+        private function onFullBeersChanged(e:GameEvent):void {
+            scoreIcon.scaleX = scoreIcon.scaleY = 1;
+            var tween:TweenLite = new TweenLite(scoreIcon, 0.3, {scaleX:1.2, scaleY:1.2, onComplete:function():void {
+                tween.reverse();
+            }});
         }
 
         private function onMouseOverPiss(e:Event):void {
@@ -70,6 +87,8 @@
         private function and(a:Boolean, b:Boolean):Boolean {
             return (a && b);
         }
+
+        private var _player:PlayerData;
 
         [Embed(source="../../../wc-actif.png")]
         private static var WcIcon:Class;
@@ -109,7 +128,7 @@
                     </mx:filters>
                 </mx:Label>
             </mx:Canvas>
-            <mx:Image x="130" y="7" source="@Embed(source='../../../collected-beer.png')"/>
+            <mx:Image id="scoreIcon" x="130" y="7" source="@Embed(source='../../../collected-beer.png')"/>
         </mx:Canvas>
         <mx:Canvas x="3" y="57" width="170" height="11" backgroundColor="0x000000" backgroundAlpha="0"
                    toolTip="Collecte 3 jetons de la même couleur pour gagner 5 bouteilles supplémentaires !">
