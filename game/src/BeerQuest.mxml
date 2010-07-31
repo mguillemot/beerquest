@@ -67,9 +67,7 @@
         import com.beerquest.events.PissEvent;
         import com.beerquest.events.ScoreEvent;
         import com.beerquest.events.VomitEvent;
-        import com.beerquest.ui.ScoreFx;
         import com.greensock.OverwriteManager;
-        import com.greensock.TweenLite;
 
         import mx.controls.Alert;
         import mx.core.FlexGlobals;
@@ -240,20 +238,7 @@
         }
 
         private function onCapsGained(e:ScoreEvent):void {
-            var vfx:ScoreFx = new ScoreFx();
-            vfx.value = e.quantity;
-            vfx.x = e.stageX - vfx.width / 2;
-            vfx.y = e.stageY - vfx.height / 2;
-            vfxLayer.addChild(vfx);
-            var now:Date = new Date();
-            trace("event " + e.quantity + " received at " + now.seconds + "." + now.milliseconds);
-            vfx.addEventListener(Event.ADDED, function(e:Event):void {
-                var now:Date = new Date();
-                trace("child " + vfx.value + " added at " + now.seconds + "." + now.milliseconds);
-                TweenLite.to(vfx, 1, {alpha:0, y:"-20", onComplete:function():void {
-                    vfxLayer.removeChild(vfx);
-                }});
-            });
+            vfxLayer.addEffectAt(e.quantity, e.stageX, e.stageY);
         }
 
         private function onScorePosted(e:Event):void {
@@ -388,5 +373,5 @@
     </mx:Canvas>
     <ui:SoundButton x="20" y="500" on="true"/>
     <ui:QualityButton x="20" y="528" on="true"/>
-    <mx:Canvas id="vfxLayer" width="100%" height="100%"/>
+    <ui:EffectLayer id="vfxLayer" width="100%" height="100%"/>
 </s:Application>
