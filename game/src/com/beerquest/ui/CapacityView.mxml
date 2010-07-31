@@ -27,11 +27,17 @@
                 var token:Token = new Token(value.correspondingToken);
                 token.width = capaIcon.width;
                 token.height = capaIcon.height;
-                capaIcon.removeAllChildren();
-                capaIcon.rawChildren.addChild(token)
+                while (capaIcon.rawChildren.numChildren > 0) {
+                    capaIcon.rawChildren.removeChildAt(0);
+                }
+                capaIcon.rawChildren.addChild(token);
+                box.toolTip = value.tooltip;
             } else {
                 background.source = CapacityDisabled;
-                capaIcon.removeAllChildren();
+                while (capaIcon.rawChildren.numChildren > 0) {
+                    capaIcon.rawChildren.removeChildAt(0);
+                }
+                box.toolTip = null;
             }
         }
 

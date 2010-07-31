@@ -6,16 +6,20 @@
                creationComplete="init()"
                width="760" height="612">
     <fx:Style>
-        @font-face
-        {
-            src: url("kronika.ttf")
-        ;
-            fontFamily: Kro
-        ;
-            embedAsCFF: false
-        ;
-            advancedAntiAliasing: true
-        ;
+        @namespace mx "library://ns.adobe.com/flex/mx";
+
+        @font-face {
+            src: url("kronika.ttf");
+            fontFamily: Kro;
+            embedAsCFF: false;
+            advancedAntiAliasing: true;
+        }
+
+        mx|ToolTip {
+            fontFamily: Kro;
+            fontSize: 14;
+            color: black;
+            backgroundColor: #ff0000;
         }
 
         .game-type {
@@ -328,7 +332,7 @@
     <!--<mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>-->
     <!--<mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>-->
     <!--<mx:Button x="300" y="450" label="Call JS" click="callJs()"/>-->
-    <mx:Canvas x="300" y="435" width="160" height="50">
+    <mx:Canvas x="300" y="435" width="160" height="50" backgroundColor="0x000000" backgroundAlpha="0" toolTip="Tours restants avant la fin de la partie.">
         <ui:ClockView x="5" y="5" width="40" height="40" hour="{game.currentHour}" minutes="{game.currentMinute}"/>
         <mx:Label x="50" y="-3" width="110" text="{game.currentTime}" styleName="currentTime"/>
         <mx:Label x="50" y="29" width="110" text="{game.remainingTurns} coups à boire" styleName="remainingTurns"/>
