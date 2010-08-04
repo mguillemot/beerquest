@@ -384,7 +384,7 @@ public class BoardView extends UIComponent {
             if (token.collectible) {
                 destroyTokensOfType(token, true);
                 game.me.score += 150;
-                game.me.clearCapacities();
+                game.me.usedCapacity(Capacity.BIG_BANG);
                 Constants.STATS.capaLiquorUsed++;
             }
         } else if (_currentAction == "") {
@@ -549,17 +549,18 @@ public class BoardView extends UIComponent {
                 player = game.opponent;
                 game.me.coasterReserve--;
             }
+            var partialBeersCollected:Array = new Array();
             for each (var group:Object in state.computeGroups()) {
                 if (group.length == 3) {
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        player.addPartialBeer(group.token);
+                        partialBeersCollected.push(group.token);
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve++;
                     }
                 } else if (group.length == 4) {
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        player.addPartialBeer(TokenType.TRIPLE);
+                        partialBeersCollected.push(TokenType.TRIPLE);
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve += 2;
                     }
@@ -568,12 +569,33 @@ public class BoardView extends UIComponent {
                     resetMultiplier = false;
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                        player.addPartialBeer(TokenType.TRIPLE);
-                        player.addPartialBeer(TokenType.TRIPLE);
+                        partialBeersCollected.push(TokenType.TRIPLE);
+                        partialBeersCollected.push(TokenType.TRIPLE);
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve += 3;
                     }
                 }
+
+                // Reorder collected partial beers during the phase to favorize stack groups
+                while (partialBeersCollected.length > 0) {
+                    var preferred:TokenType = player.preferredPartialBeer;
+                    if (preferred == TokenType.NONE || preferred == TokenType.TRIPLE) {
+                        player.addPartialBeer(partialBeersCollected.pop());
+                    } else {
+                        var found:Boolean = false;
+                        for (var i:int = 0; i < partialBeersCollected.length; i++) {
+                            if (TokenType.isCompatible(partialBeersCollected[i], preferred)) {
+                                player.addPartialBeer(partialBeersCollected[i]);
+                                partialBeersCollected.splice(i, 1);
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            player.addPartialBeer(partialBeersCollected.pop());
+                        }
+                    }
+                }
+
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                     player.fullBeers += group.length;
                 }
@@ -606,7 +628,6 @@ public class BoardView extends UIComponent {
                     player.piss += 3 * group.length;
                     player.vomit -= 3 * group.length;
                 } else if (group.token == TokenType.LIQUOR) {
-                    player.piss -= group.length;
                     player.vomit += 6 * group.length;
                 } else if (group.token == TokenType.FOOD) {
                     player.vomit -= 7 * group.length;
@@ -719,8 +740,9 @@ public class BoardView extends UIComponent {
         startAction("endFalling");
         resetFalling();
         if (!destroySeries()) {
-            game.board = getCurrentState();
             endScoring();
+            game.board = getCurrentState();
+            game.newTurn();
             startAction("");
             checkAvailableMoves();
         }
@@ -847,13 +869,13 @@ public class BoardView extends UIComponent {
             case Capacity.BIG_PEANUTS:
                 game.me.piss = 0;
                 game.me.score += 100;
-                game.me.clearCapacities();
+                game.me.usedCapacity(capacity);
                 Constants.STATS.capaFoodUsed++;
                 break;
             case Capacity.WATERFALL:
                 destroyTokensOfType(TokenType.VOMIT, false);
                 game.me.score += 75;
-                game.me.clearCapacities();
+                game.me.usedCapacity(capacity);
                 Constants.STATS.capaWaterUsed++;
                 break;
             case Capacity.BIG_BANG:
@@ -865,25 +887,25 @@ public class BoardView extends UIComponent {
             case Capacity.BLOND_FURY_BAR:
                 game.me.fullBeers += destroyTokensOfType(TokenType.BLOND_BEER, false);
                 game.me.score += 75;
-                game.me.clearCapacities();
+                game.me.usedCapacity(capacity);
                 Constants.STATS.capaBlondUsed++;
                 break;
             case Capacity.BROWN_FURY_BAR:
                 game.me.fullBeers += destroyTokensOfType(TokenType.BROWN_BEER, false);
                 game.me.score += 75;
-                game.me.clearCapacities();
+                game.me.usedCapacity(capacity);
                 Constants.STATS.capaBrownUsed++;
                 break;
             case Capacity.AMBER_FURY_BAR:
                 game.me.fullBeers += destroyTokensOfType(TokenType.AMBER_BEER, false);
                 game.me.score += 75;
-                game.me.clearCapacities();
+                game.me.usedCapacity(capacity);
                 Constants.STATS.capaAmberUsed++;
                 break;
             case Capacity.TCHIN_TCHIN:
                 stealPartialBeers();
                 game.me.score += 150;
-                game.me.clearCapacities();
+                game.me.usedCapacity(capacity);
                 Constants.STATS.capaCoasterUsed++;
                 break;
             case Capacity.BLOODY_MARY:
@@ -892,7 +914,7 @@ public class BoardView extends UIComponent {
                 createVomit();
                 createVomit();
                 createVomit();
-                game.me.clearCapacities();
+                game.me.usedCapacity(capacity);
                 Constants.STATS.capaTomatoUsed++;
                 break;
         }
@@ -973,7 +995,7 @@ public class BoardView extends UIComponent {
     }
 
     private function onVomitChanged(e:GameEvent):void {
-        if (game.me.vomit >= 100) {
+        if (game.me.vomit > 100) {
             createVomit();
             createVomit();
             createVomit();

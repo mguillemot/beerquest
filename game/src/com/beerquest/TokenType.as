@@ -40,6 +40,10 @@ public class TokenType {
         }
     }
 
+    public static function isCompatible(t1:TokenType, t2:TokenType):Boolean {
+        return (t1 == t2 || t1 == TokenType.TRIPLE || t2 == TokenType.TRIPLE);
+    }
+
     function TokenType(value:int, score:Number = 0, collectible:Boolean = false) {
         _value = value;
         _score = score;

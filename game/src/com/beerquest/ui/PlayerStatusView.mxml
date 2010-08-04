@@ -145,8 +145,7 @@
 
     <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"
                      clickable="{and(clickable, !game.gameOver)}"/>
+    <mx:Spacer height="10"/>
     <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"
-                     clickable="{and(clickable, !game.gameOver)}"/>
-    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(2) as Capacity}"
                      clickable="{and(clickable, !game.gameOver)}"/>
 </mx:VBox>

@@ -18,9 +18,9 @@ public class PlayerData extends EventDispatcher {
         _totalBeers = totalBeers;
         _totalCaps = totalCaps;
         _capacities = new ArrayCollection();
-        _capacities.addItem(Capacity.NONE);
-        _capacities.addItem(Capacity.NONE);
-        _capacities.addItem(Capacity.NONE);
+        for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
+            _capacities.addItem(Capacity.NONE);
+        }
         _partialBeers = new ArrayCollection();
         _partialBeers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onPartialBeerCollectionChanged);
     }
@@ -83,8 +83,8 @@ public class PlayerData extends EventDispatcher {
         _vomit = value;
         if (_vomit < 0) {
             _vomit = 0;
-        } else if (_vomit > 100) {
-            _vomit = 100;
+        } else if (_vomit > 101) {
+            _vomit = 101;
         }
         dispatchEvent(new GameEvent(GameEvent.VOMIT_CHANGED, this));
     }
@@ -109,13 +109,35 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function clearCapacities():void {
-        _capacities.setItemAt(Capacity.NONE, 0);
-        _capacities.setItemAt(Capacity.NONE, 1);
-        _capacities.setItemAt(Capacity.NONE, 2);
+        for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
+            _capacities.setItemAt(Capacity.NONE, i);
+        }
+    }
+
+    public function usedCapacity(c:Capacity):Boolean {
+        for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
+            if (_capacities.getItemAt(i) == c) {
+                _capacities.setItemAt(Capacity.NONE, i);
+                return true;
+            }
+        }
+        return false;
     }
 
     public function get partialBeers():ArrayCollection {
         return _partialBeers;
+    }
+
+    public function get preferredPartialBeer():TokenType {
+        if (_partialBeers.length == 0) {
+            return TokenType.NONE;
+        } else if (_partialBeers.length == 1) {
+            return _partialBeers.getItemAt(0) as TokenType;
+        } else if (_partialBeers.getItemAt(0) == TokenType.TRIPLE) {
+            return _partialBeers.getItemAt(_partialBeers.length - 2) as TokenType;
+        } else {
+            return _partialBeers.getItemAt(_partialBeers.length - 1) as TokenType;
+        }
     }
 
     public function get id():int {
@@ -161,21 +183,22 @@ public class PlayerData extends EventDispatcher {
         }
     }
 
-    public function doGainCapacity(capacity:Capacity):void {
+    public function doGainCapacity(capacity:Capacity):Boolean {
         var i:int, c:Capacity;
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < Constants.MAX_CAPACITIES; i++) {
             c = _capacities.getItemAt(i) as Capacity;
             if (c == capacity) {
-                return;
+                return false;
             }
         }
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < Constants.MAX_CAPACITIES; i++) {
             c = _capacities.getItemAt(i) as Capacity;
             if (!c.enabled) {
                 _capacities.setItemAt(capacity, i);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     private var _id:int;

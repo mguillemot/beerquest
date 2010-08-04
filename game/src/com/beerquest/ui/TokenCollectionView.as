@@ -64,7 +64,7 @@ public class TokenCollectionView extends UIComponent {
                 startAction("");
             });
             timer.start();
-        } else if (isCompatible(currentCasierType, token)) {
+        } else if (TokenType.isCompatible(currentCasierType, token)) {
             if (_casiers.length == 1) {
                 // Add to middle of casier
                 TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 2) * 11});
@@ -101,7 +101,7 @@ public class TokenCollectionView extends UIComponent {
                             // Refill stack with old tokens
                             startAction("refilling");
                             var refillQty:int;
-                            if (_stack.length >= 2 && isCompatible(getSpriteType(_stack[_stack.length - 1]), getSpriteType(_stack[_stack.length - 2]))) {
+                            if (_stack.length >= 2 && TokenType.isCompatible(getSpriteType(_stack[_stack.length - 1]), getSpriteType(_stack[_stack.length - 2]))) {
                                 refillQty = 2;
                                 _casiers.push(_stack[_stack.length - 2]);
                                 _casiers.push(_stack[_stack.length - 1]);
@@ -155,7 +155,7 @@ public class TokenCollectionView extends UIComponent {
             timer.start();
         }
         _stack.push(sprite);
-        if ((_stack.length + 3 - _casiers.length) > MAX_STACK) {
+        while ((_stack.length + 3 - _casiers.length) > MAX_STACK) {
             trace("TokenView EXPLUSE");
             s = _stack.shift();
             removeChild(s);
@@ -196,10 +196,6 @@ public class TokenCollectionView extends UIComponent {
             return TokenType.TRIPLE;
         }
         return null;
-    }
-
-    private static function isCompatible(t1:TokenType, t2:TokenType):Boolean {
-        return (t1 == t2 || t1 == TokenType.TRIPLE || t2 == TokenType.TRIPLE);
     }
 
     private function onCollectionChange(e:CollectionEvent):void {

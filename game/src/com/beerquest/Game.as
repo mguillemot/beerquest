@@ -30,7 +30,7 @@ public class Game extends EventDispatcher {
     public function handleEvent(e:GameEvent):void {
         switch (e.type) {
             case GemsSwappedEvent.GEMS_SWAPPED:
-                newTurn();
+                //newTurn();
                 break;
             case VomitEvent.VOMIT:
                 //e.player.doVomit();
@@ -109,13 +109,7 @@ public class Game extends EventDispatcher {
 
     [Bindable(event="currentTurnChanged")]
     public function get currentTime():String {
-        var hour:int = _barOpenHour;
-        var minute:int = _barOpenMinute;
-        minute += 5 * _currentTurn;
-        hour += Math.floor(minute / 60);
-        minute %= 60;
-        hour %= 24;
-        return getFormattedTime(hour, minute);
+        return getFormattedTime(currentHour, currentMinute);
     }
 
     [Bindable(event="currentTurnChanged")]
@@ -131,7 +125,11 @@ public class Game extends EventDispatcher {
     public function get currentMinute():int {
         var minute:int = _barOpenMinute;
         minute += 5 * _currentTurn;
-        return (minute % 60);
+        minute %= 60;
+        while (minute < 0) {
+            minute += 60;
+        }
+        return minute;
     }
 
     [Bindable(event="currentTurnChanged")]
@@ -145,7 +143,7 @@ public class Game extends EventDispatcher {
     }
 
     public function gainAdditionalTurns(t:int):void {
-        _currentTurn = Math.max(0, _currentTurn - t);
+        _currentTurn -= t;
         dispatchEvent(new Event("currentTurnChanged"));
     }
 
