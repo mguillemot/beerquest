@@ -1,0 +1,14 @@
+%h1 Beer Quest IV: Challenge of the Bartender
+
+- if @access_token
+	Access token: #{@access_token}
+- else
+	No access token yet
+
+%h2 Play
+= link_to "Play", :controller => 'home', :action => 'play'
+
+%h2 Server auth
+%p
+	Your e-mail is
+	= @me ? @me[:email] : "NO AUTH"

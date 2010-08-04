@@ -1,10 +1,6 @@
 class HomeController < ApplicationController
-	def index
-		@oauth_url = MiniFB.oauth_url(BeerQuest::FB_APP_ID, BeerQuest::FB_BASE_URL + "facebook/opensession", :scope => "email")
-	end
-
 	def play
-		@required_version = "0.3"
+		@required_version = "0.4"
 		@mode = "solo"
 		@server_url = url_for(:controller => 'scores', :action => 'postscore')
 		@token = "test"
@@ -18,8 +14,8 @@ class HomeController < ApplicationController
 						:avatar => "http://static.ak.fbcdn.net/rsrc.php/z5HB7/hash/ecyu2wwn.gif"
 		}.to_json
 		@bar = {
-						:name => "Le Salon de Massage",
-						:location => "Tôkyô - Japon",
+						:name => "Chez Robert",
+						:location => "Roubaix - France",
 						:banner => "http://erhune.iobb.net/images/banner.jpg",
 						:open => "21:00",
 						:close => "2:00"
@@ -33,8 +29,8 @@ class HomeController < ApplicationController
 							:name => @full_name,
 							:title => account.title,
 							:level => account.level,
-							:total_beers => 12345,
-							:total_caps => 1000042,
+							:total_beers => 0,
+							:total_caps => 0,
 							:avatar => account.avatar
 			}.to_json
 			@scores = BetaScore.high_scores(params[:id].to_i).to_json
