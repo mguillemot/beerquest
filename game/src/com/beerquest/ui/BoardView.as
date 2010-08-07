@@ -169,7 +169,7 @@ public class BoardView extends UIComponent {
                 break;
             case 79: // o
                 if (Constants.DEBUG) {
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_PEANUTS));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.DIVINE_PEANUTS));
                 }
                 break;
             case 86: // v
@@ -194,7 +194,7 @@ public class BoardView extends UIComponent {
                         _destroyCursor = 0;
                     }
                     startAction("");
-                } 
+                }
                 break;
             case 90: // z
                 if (Constants.DEBUG) {
@@ -327,6 +327,7 @@ public class BoardView extends UIComponent {
             removeToken(getToken(cell.x, cell.y));
             addToken(token);
             setToken(cell.x, cell.y, token);
+            TweenLite.from(token, .5, {scaleX:0.1, scaleY:0.1});
         } else {
             trace("Too much vomit on board")
         }
@@ -382,6 +383,7 @@ public class BoardView extends UIComponent {
         if (_currentAction == "selectTokenToDestroy") {
             token = getToken(x, y).type;
             if (token.collectible) {
+                dispatchEvent(new ScoreEvent(150, 0, null, null, Capacity.BIG_BANG));
                 game.me.usedCapacity(Capacity.BIG_BANG);
                 game.me.score += 150;
                 destroyTokensOfType(token, true);
@@ -867,15 +869,20 @@ public class BoardView extends UIComponent {
             trace("ERROR: unable to execute capacity because an action is already in progress");
             return;
         }
+        var score:int, beers:int;
         switch (capacity) {
-            case Capacity.BIG_PEANUTS:
+            case Capacity.DIVINE_PEANUTS:
+                score = 100;
+                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += 100;
+                game.me.score += score;
                 transformTokensOfType(TokenType.LIQUOR, TokenType.WATER);
                 break;
             case Capacity.WATERFALL:
+                score = 75;
+                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += 75;
+                game.me.score += score;
                 destroyTokensOfType(TokenType.VOMIT, false);
                 break;
             case Capacity.BIG_BANG:
@@ -885,28 +892,41 @@ public class BoardView extends UIComponent {
                 }
                 break;
             case Capacity.BLOND_FURY_BAR:
+                score = 75;
+                beers = destroyTokensOfType(TokenType.BLOND_BEER, false);
+                dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += 75;
-                game.me.fullBeers += destroyTokensOfType(TokenType.BLOND_BEER, false);
+                game.me.score += score;
+                game.me.fullBeers += beers;
                 break;
             case Capacity.BROWN_FURY_BAR:
+                score = 75;
+                beers = destroyTokensOfType(TokenType.BROWN_BEER, false);
+                dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += 75;
-                game.me.fullBeers += destroyTokensOfType(TokenType.BROWN_BEER, false);
+                game.me.score += score;
+                game.me.fullBeers += beers;
                 break;
             case Capacity.AMBER_FURY_BAR:
+                score = 75;
+                beers = destroyTokensOfType(TokenType.AMBER_BEER, false);
+                dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += 75;
-                game.me.fullBeers += destroyTokensOfType(TokenType.AMBER_BEER, false);
+                game.me.score += score;
+                game.me.fullBeers += beers;
                 break;
             case Capacity.TCHIN_TCHIN:
+                score = 150;
+                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += 150;
+                game.me.score += score;
                 stealPartialBeers();
                 break;
             case Capacity.BLOODY_MARY:
+                score = 150;
+                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += 150;
+                game.me.score += score;
                 game.gainAdditionalTurns(6);
                 createVomit();
                 createVomit();

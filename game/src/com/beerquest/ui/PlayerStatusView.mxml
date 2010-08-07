@@ -45,7 +45,15 @@
         public var clickable:Boolean = true;
 
         public function get tokenEntryPoint():Point {
-            return stack.stageEntryPoint; 
+            return stack.stageEntryPoint;
+        }
+
+        public function locateCapacity(capacity:Capacity):Point {
+            if (player.capacities.getItemAt(1) == capacity) {
+                return localToGlobal(new Point(capa1.x + capa1.width / 2, capa1.y + capa1.height / 2));
+            } else {
+                return localToGlobal(new Point(capa0.x + capa0.width / 2, capa0.y + capa0.height / 2));
+            }
         }
 
         private function init():void {
@@ -140,9 +148,9 @@
 
     <mx:Spacer height="25"/>
 
-    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"
+    <ui:CapacityView id="capa0" player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"
                      clickable="{and(clickable, !game.gameOver)}"/>
     <mx:Spacer height="10"/>
-    <ui:CapacityView player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"
+    <ui:CapacityView id="capa1" player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"
                      clickable="{and(clickable, !game.gameOver)}"/>
 </mx:VBox>

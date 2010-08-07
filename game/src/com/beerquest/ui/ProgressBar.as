@@ -54,19 +54,23 @@ public class ProgressBar extends UIComponent {
 
         if (alert) {
             if (_progress >= 80) {
+                var duration:Number = 0.8 - (_progress - 80) / 20 / 4;
+                var delay:Number = 1 - (_progress - 80) / 20;
                 if (_tween == null) {
-                    _tween = new TweenLite(_bar, 0.8 - (_progress - 80) / 20 / 4, {colorTransform:{tint:0xff0000, tintAmount:0.7}, ease:Quad.easeIn, delay:(1 - (_progress - 80) / 20), onComplete:function():void {
+                    _tween = new TweenLite(_bar, duration, {colorTransform:{tint:0xff0000, tintAmount:0.7}, ease:Quad.easeIn, delay:delay, onComplete:function():void {
                         _tween.reverse();
                     }, onReverseComplete:function():void {
                         _tween.restart(true);
                     }});
                 } else {
-                    _tween.duration = 0.8 - (_progress - 80) / 20 / 4;
-                    _tween.delay = 1 - (_progress - 80) / 20;
+                    _tween.duration = duration;
+                    _tween.delay = delay;
                 }
             } else {
                 if (_tween != null) {
-                    _tween.reverse();
+                    if (!_tween.reversed) {
+                        _tween.reverse();
+                    }
                     _tween.vars.onReverseComplete = null;
                     _tween = null;
                 }

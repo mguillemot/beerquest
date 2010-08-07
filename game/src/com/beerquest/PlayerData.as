@@ -118,7 +118,7 @@ public class PlayerData extends EventDispatcher {
             case Capacity.BIG_BANG:
                 Constants.STATS.capaLiquorUsed++;
                 break;
-            case Capacity.BIG_PEANUTS:
+            case Capacity.DIVINE_PEANUTS:
                 Constants.STATS.capaFoodUsed++;
                 break;
             case Capacity.BLOND_FURY_BAR:

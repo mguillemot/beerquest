@@ -89,7 +89,7 @@
             // Event listeners
             addEventListener(CapacityEvent.CAPACITY_GAINED, onGameEvent);
             addEventListener(PissEvent.PISS, onGameEvent);
-            addEventListener(ScoreEvent.SCORE_GAINED, onCapsGained);
+            addEventListener(ScoreEvent.SCORE_GAINED, onScoreGained);
             addEventListener(TokenEvent.TOKEN_GAINED, onTokenGained);
 
             /*try {
@@ -248,9 +248,17 @@
             }
         }
 
-        private function onCapsGained(e:ScoreEvent):void {
-            vfxLayer.addScoreEffect(e.caps, e.beers, e.stageX, e.stageY);
-            trace("beer gain " + e.beers);
+        private function onScoreGained(e:ScoreEvent):void {
+            var x:Number, y:Number;
+            if (e.capacity != null) {
+                var capaLoc:Point = myStatus.locateCapacity(e.capacity);
+                x = capaLoc.x;
+                y = capaLoc.y;
+            } else {
+                x = e.stageX;
+                y = e.stageY;
+            }
+            vfxLayer.addScoreEffect(e.caps, e.beers, x, y);
         }
 
         private function onTokenGained(e:TokenEvent):void {

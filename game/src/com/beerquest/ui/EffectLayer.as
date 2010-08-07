@@ -12,11 +12,11 @@ import mx.controls.Image;
 import org.osmf.traits.TemporalTrait;
 
 public class EffectLayer extends Canvas {
-    public static const SCORE_EFFECT_TIME_MS:int = 1000;
+    public static const SCORE_EFFECT_TIME_MS:int = 1800;
     public static const TOKEN_EFFECT_TIME_MS:int = 800;
 
-    private static const NUM_SCORE_EFFECTS:int = 10;
-    private static const NUM_TOKEN_EFFECTS:int = 5;
+    private static const NUM_SCORE_EFFECTS:int = 8;
+    private static const NUM_TOKEN_EFFECTS:int = 4;
 
     public function EffectLayer() {
         super();
@@ -24,10 +24,7 @@ public class EffectLayer extends Canvas {
 
         _scoreEffectBuffer = new Array();
         for (i = 0; i < NUM_SCORE_EFFECTS; i++) {
-            var fx:ScoreFx = new ScoreFx();
-            fx.visible = false;
-            addChild(fx);
-            _scoreEffectBuffer.push(fx);
+            regenScoreEffect();
         }
 
         _tokenEffectBuffer = new Array();
@@ -84,6 +81,13 @@ public class EffectLayer extends Canvas {
                 _tokenEffectBuffer.push(vfx);
             }});
         }
+    }
+
+    private function regenScoreEffect():void {
+        var fx:ScoreFx = new ScoreFx();
+        fx.visible = false;
+        addChild(fx);
+        _scoreEffectBuffer.push(fx);
     }
 
     private var _scoreEffectBuffer:Array;
