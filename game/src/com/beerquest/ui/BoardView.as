@@ -228,12 +228,14 @@ public class BoardView extends UIComponent {
         var i:int, j:int, token:Token;
         if (discardPrevious) {
             resetMarks();
+            game.newTurn();
+            game.newTurn();
+            game.newTurn();
             for (i = 0; i < Constants.BOARD_SIZE; i++) {
                 for (j = 0; j < Constants.BOARD_SIZE; j++) {
                     token = getToken(i, j);
                     if (token.type == TokenType.VOMIT && Math.random() >= 0.75) {
                         token.mark = true; // delete this vomit
-                        game.newTurn();
                     }
                     if (token.type != TokenType.VOMIT || token.mark) {
                         var duration:Number = 1 + Math.random() * 0.5;

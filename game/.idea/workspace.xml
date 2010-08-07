@@ -69,7 +69,7 @@
       <file leaf-file-name="BoardView.as" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="393" column="37" selection-start="16018" selection-end="16018" vertical-scroll-proportion="0.61619717">
+            <state line="229" column="37" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.21302816">
               <folding />
             </state>
           </provider>
@@ -1147,7 +1147,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="393" column="37" selection-start="16018" selection-end="16018" vertical-scroll-proportion="0.61619717">
+        <state line="229" column="37" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.21302816">
           <folding />
         </state>
       </provider>
