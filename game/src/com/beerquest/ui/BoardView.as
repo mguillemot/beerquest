@@ -251,6 +251,10 @@ public class BoardView extends UIComponent {
                 regenBoard2();
             });
             timer.start();
+            if (Constants.SOUND_ENABLED) {
+                var fx:Sound = new BoardResetFX();
+                fx.play();
+            }
             Constants.STATS.resetCount++;
         } else {
             regenBoard2();
@@ -391,6 +395,10 @@ public class BoardView extends UIComponent {
                 game.me.usedCapacity(Capacity.BIG_BANG);
                 destroyTokensOfType(token);
                 game.me.score += score;
+                if (Constants.SOUND_ENABLED) {
+                    var fx:Sound = new BigBangFX();
+                    fx.play();
+                }
             }
         } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - _pissLevel) {
@@ -625,8 +633,16 @@ public class BoardView extends UIComponent {
                     }
                 } else if (group.token == TokenType.LIQUOR) {
                     player.vomit += 6 * group.length;
+                    if (Constants.SOUND_ENABLED) {
+                        fx = new LiquorFX();
+                        fx.play();
+                    }
                 } else if (group.token == TokenType.FOOD) {
                     player.vomit -= 7 * group.length;
+                    if (Constants.SOUND_ENABLED) {
+                        fx = new FoodFX();
+                        fx.play();
+                    }
                 } else if (group.token == TokenType.TOMATO_JUICE) {
                     player.piss += 2 * group.length;
                     player.vomit -= 4 * group.length;
@@ -874,6 +890,7 @@ public class BoardView extends UIComponent {
             return;
         }
         var score:int, beers:int;
+        var fx:Sound;
         switch (capacity) {
             case Capacity.DIVINE_PEANUTS:
                 score = 100;
@@ -881,6 +898,10 @@ public class BoardView extends UIComponent {
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
                 transformTokensOfType(TokenType.LIQUOR, TokenType.WATER);
+                if (Constants.SOUND_ENABLED) {
+                    fx = new GenericCapaFX();
+                    fx.play();
+                }
                 break;
             case Capacity.WATERFALL:
                 score = 75;
@@ -888,6 +909,10 @@ public class BoardView extends UIComponent {
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
                 destroyTokensOfType(TokenType.VOMIT);
+                if (Constants.SOUND_ENABLED) {
+                    fx = new GenericCapaFX();
+                    fx.play();
+                }
                 break;
             case Capacity.BIG_BANG:
                 startAction("selectTokenToDestroy");
@@ -902,6 +927,10 @@ public class BoardView extends UIComponent {
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
                 game.me.fullBeers += beers;
+                if (Constants.SOUND_ENABLED) {
+                    fx = new GenericCapaFX();
+                    fx.play();
+                }
                 break;
             case Capacity.BROWN_FURY_BAR:
                 score = 75;
@@ -910,6 +939,10 @@ public class BoardView extends UIComponent {
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
                 game.me.fullBeers += beers;
+                if (Constants.SOUND_ENABLED) {
+                    fx = new GenericCapaFX();
+                    fx.play();
+                }
                 break;
             case Capacity.AMBER_FURY_BAR:
                 score = 75;
@@ -918,6 +951,10 @@ public class BoardView extends UIComponent {
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
                 game.me.fullBeers += beers;
+                if (Constants.SOUND_ENABLED) {
+                    fx = new GenericCapaFX();
+                    fx.play();
+                }
                 break;
             case Capacity.TCHIN_TCHIN:
                 score = 150;
@@ -925,6 +962,10 @@ public class BoardView extends UIComponent {
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
                 stealPartialBeers();
+                if (Constants.SOUND_ENABLED) {
+                    fx = new GenericCapaFX();
+                    fx.play();
+                }
                 break;
             case Capacity.BLOODY_MARY:
                 score = 150;
@@ -935,6 +976,10 @@ public class BoardView extends UIComponent {
                 createVomit();
                 createVomit();
                 createVomit();
+                if (Constants.SOUND_ENABLED) {
+                    fx = new GenericCapaFX();
+                    fx.play();
+                }
                 break;
         }
     }
@@ -1120,7 +1165,7 @@ public class BoardView extends UIComponent {
     [Embed(source="../../../vomir.mp3")]
     private static var VomitFX:Class;
 
-    [Embed(source="../../../biere-x3.mp3")]
+    [Embed(source="../../../biere.mp3")]
     private static var BeerFX:Class;
 
     [Embed(source="../../../boisson-a.mp3")]
@@ -1128,6 +1173,21 @@ public class BoardView extends UIComponent {
 
     [Embed(source="../../../boisson-b.mp3")]
     private static var TomatoFX:Class;
+
+    [Embed(source="../../../cahouete.mp3")]
+    private static var FoodFX:Class;
+
+    [Embed(source="../../../big-bang.mp3")]
+    private static var BigBangFX:Class;
+
+    [Embed(source="../../../liqueur.mp3")]
+    private static var LiquorFX:Class;
+
+    [Embed(source="../../../vidange-tableau.mp3")]
+    private static var BoardResetFX:Class;
+
+    [Embed(source="../../../bruit-caps.mp3")]
+    private static var GenericCapaFX:Class;
 
 }
 }

@@ -240,7 +240,7 @@ public class PlayerData extends EventDispatcher {
     [Embed(source="../../pipi.mp3")]
     private static var PissFX:Class;
 
-    [Embed(source="../../capa.mp3")]
+    [Embed(source="../../ok-capa.mp3")]
     private static var CapaGainFX:Class;
 
 }

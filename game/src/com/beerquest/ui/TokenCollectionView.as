@@ -84,7 +84,7 @@ public class TokenCollectionView extends UIComponent {
                     dispatchEvent(new BeerCollectedEvent(player));
                     Constants.STATS.stackCollected++;
                     if (Constants.SOUND_ENABLED) {
-                        var fx:Sound = new CapsFX();
+                        var fx:Sound = new StackFX();
                         fx.play();
                     }
                     for each (s in _casiers) {
@@ -260,8 +260,8 @@ public class TokenCollectionView extends UIComponent {
     [Embed(source="../../../small-triple.png")]
     private static var SmallTriple:Class;
 
-    [Embed(source="../../../bruit-caps.mp3")]
-    private static var CapsFX:Class;
+    [Embed(source="../../../verser-biere.mp3")]
+    private static var StackFX:Class;
 
 }
 }
