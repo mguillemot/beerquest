@@ -12,6 +12,9 @@ import mx.controls.Image;
 import org.osmf.traits.TemporalTrait;
 
 public class EffectLayer extends Canvas {
+    public static const SCORE_EFFECT_TIME_MS:int = 1000;
+    public static const TOKEN_EFFECT_TIME_MS:int = 800;
+
     private static const NUM_SCORE_EFFECTS:int = 10;
     private static const NUM_TOKEN_EFFECTS:int = 5;
 
@@ -36,15 +39,17 @@ public class EffectLayer extends Canvas {
         }
     }
 
-    public function addScoreEffect(value:int, x:Number, y:Number):void {
+    public function addScoreEffect(caps:int, beers:int, x:Number, y:Number):void {
         if (_scoreEffectBuffer.length > 0) {
             var vfx:ScoreFx = _scoreEffectBuffer.pop();
             vfx.visible = true;
             vfx.alpha = 1;
-            vfx.value = value;
+            vfx.caps = caps;
+            vfx.beers = beers;
             vfx.x = x - vfx.width / 2;
             vfx.y = y - vfx.height / 2;
-            TweenLite.to(vfx, 1, {alpha:0, y:"-20", onComplete:function():void {
+            TweenLite.to(vfx, SCORE_EFFECT_TIME_MS / 2 / 1000, {alpha:0, delay:SCORE_EFFECT_TIME_MS / 2 / 1000});
+            TweenLite.to(vfx, SCORE_EFFECT_TIME_MS / 1000, {y:"-20", onComplete:function():void {
                 vfx.visible = false;
                 _scoreEffectBuffer.push(vfx);
             }});
@@ -73,8 +78,8 @@ public class EffectLayer extends Canvas {
             vfx.scaleX = vfx.scaleY = 4;
             vfx.x = sx - vfx.width * vfx.scaleX / 2;
             vfx.y = sy - vfx.height * vfx.scaleY / 2;
-            TweenLite.to(vfx, 0.5, {alpha:1});
-            TweenLite.to(vfx, 1, {x:dx, y:dy, scaleX:1, scaleY:1, ease:Quad.easeIn, onComplete:function():void {
+            TweenLite.to(vfx, TOKEN_EFFECT_TIME_MS / 1000 / 2, {alpha:1});
+            TweenLite.to(vfx, TOKEN_EFFECT_TIME_MS / 1000, {x:dx, y:dy, scaleX:1, scaleY:1, ease:Quad.easeIn, onComplete:function():void {
                 vfx.visible = false;
                 _tokenEffectBuffer.push(vfx);
             }});

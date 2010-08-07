@@ -5,15 +5,14 @@ class ScoresController < ApplicationController
 	def getscores
 		me = nil
 		me = params[:id].to_i if params[:id] 
-		scores = BetaScore.high_scores me
+		scores = Replay.high_scores me
 		render :text => scores.to_json
 	end
 
 	def postscore
-		score = BetaScore.new
+		score = Replay.new
 		logger.debug score.attributes
 		params.each do |k,v|
-			logger.debug "k=#{k} v=#{v}"
 			if score.attributes.key?(k) && v != "NaN"
 				score[k] = v
 			end

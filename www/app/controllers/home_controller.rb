@@ -33,7 +33,7 @@ class HomeController < ApplicationController
 							:total_caps => 0,
 							:avatar => account.avatar
 			}.to_json
-			@scores = BetaScore.high_scores(params[:id].to_i).to_json
+			@scores = Replay.high_scores(params[:id].to_i).to_json
 		rescue ActiveRecord::RecordNotFound
 			@full_name = "Anne Onymous"
 			@me = {
@@ -45,7 +45,7 @@ class HomeController < ApplicationController
 							:total_caps => 0,
 							:avatar => "http://static.ak.fbcdn.net/rsrc.php/z5HB7/hash/ecyu2wwn.gif"
 			}.to_json
-			@scores = BetaScore.high_scores.to_json
+			@scores = Replay.high_scores.to_json
 		end
 	end
 

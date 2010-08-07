@@ -1,6 +1,7 @@
 package com.beerquest {
 import com.beerquest.events.GameEvent;
 
+import com.beerquest.ui.EffectLayer;
 import com.beerquest.ui.TokenCollectionView;
 
 import flash.events.EventDispatcher;
@@ -187,7 +188,7 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function addPartialBeer(type:TokenType):void {
-        var timer:Timer = new Timer(1000, 1);
+        var timer:Timer = new Timer(EffectLayer.TOKEN_EFFECT_TIME_MS, 1);
         timer.addEventListener(TimerEvent.TIMER, function():void {
             if (_partialBeers.length == TokenCollectionView.MAX_STACK) {
                 _partialBeers.removeItemAt(0);
@@ -211,6 +212,10 @@ public class PlayerData extends EventDispatcher {
             c = _capacities.getItemAt(i) as Capacity;
             if (!c.enabled) {
                 _capacities.setItemAt(capacity, i);
+                if (Constants.SOUND_ENABLED) {
+                    var fx:Sound = new CapaGainFX();
+                    fx.play();
+                }
                 return true;
             }
         }
@@ -234,6 +239,9 @@ public class PlayerData extends EventDispatcher {
 
     [Embed(source="../../pipi.mp3")]
     private static var PissFX:Class;
+
+    [Embed(source="../../capa.mp3")]
+    private static var CapaGainFX:Class;
 
 }
 }

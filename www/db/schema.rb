@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100731053242) do
+ActiveRecord::Schema.define(:version => 20100807055536) do
 
   create_table "accounts", :force => true do |t|
     t.string   "login",      :limit => 32,                 :null => false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20100731053242) do
     t.datetime "updated_at"
   end
 
-  create_table "beta_scores", :force => true do |t|
+  create_table "replays", :force => true do |t|
     t.integer  "account_id",                                         :null => false
     t.integer  "score"
     t.datetime "created_at"

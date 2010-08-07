@@ -24,8 +24,6 @@ import mx.core.UIComponent;
 import mx.managers.CursorManager;
 import mx.managers.CursorManagerPriority;
 
-import org.osmf.traits.TemporalTrait;
-
 public class BoardView extends UIComponent {
 
     private static const EXPLODE_DURATION_MS:int = 250;
@@ -597,16 +595,45 @@ public class BoardView extends UIComponent {
                         }
                     }
                 }
-
-                if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                    player.fullBeers += group.length;
-                }
                 if (group.length > maxGroup) {
                     maxGroup = group.length;
                 }
 
-                // Dispatch events for vfx display
                 var scoreGain:int = group.token.score * group.length * combo;
+                var beerGain:int = 0;
+                var fx:Sound;
+                if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
+                    beerGain = group.length;
+                    player.piss += 3 * group.length;
+                    player.vomit += 3 * group.length;
+                    if (Constants.SOUND_ENABLED) {
+                        fx = new BeerFX();
+                        fx.play();
+                    }
+                } else if (group.token == TokenType.WATER) {
+                    player.piss += 3 * group.length;
+                    player.vomit -= 3 * group.length;
+                    if (Constants.SOUND_ENABLED) {
+                        fx = new WaterFX();
+                        fx.play();
+                    }
+                } else if (group.token == TokenType.LIQUOR) {
+                    player.vomit += 6 * group.length;
+                } else if (group.token == TokenType.FOOD) {
+                    player.vomit -= 7 * group.length;
+                } else if (group.token == TokenType.TOMATO_JUICE) {
+                    player.piss += 2 * group.length;
+                    player.vomit -= 4 * group.length;
+                    if (Constants.SOUND_ENABLED) {
+                        fx = new TomatoFX();
+                        fx.play();
+                    }
+                }
+                game.me.score += scoreGain;
+                game.me.fullBeers += beerGain;
+                Constants.STATS.addCollectedGroup(group.token, group.length);
+
+                // Dispatch events for vfx display
                 var token:Token = getToken(group.startX, group.startY);
                 var local:Point = new Point(token.x, token.y);
                 if (group.type == "horizontal") {
@@ -618,40 +645,10 @@ public class BoardView extends UIComponent {
                 }
                 var scoreCoords:Point = localToGlobal(local);
                 var now:Date = new Date();
-                trace("event " + scoreGain + " raised at " + now.seconds + "." + now.milliseconds);
-                dispatchEvent(new ScoreEvent(scoreGain, scoreCoords.x, scoreCoords.y));
+                dispatchEvent(new ScoreEvent(scoreGain, beerGain, scoreCoords.x, scoreCoords.y));
                 if (collectedToken != null) {
                     dispatchEvent(new TokenEvent(collectedToken, scoreCoords.x, scoreCoords.y));
                 }
-
-                game.me.score += scoreGain;
-                trace("Collected group of " + group.token + " of size " + group.length);
-                if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                    player.piss += 3 * group.length;
-                    player.vomit += 3 * group.length;
-                } else if (group.token == TokenType.WATER) {
-                    player.piss += 3 * group.length;
-                    player.vomit -= 3 * group.length;
-                } else if (group.token == TokenType.LIQUOR) {
-                    player.vomit += 6 * group.length;
-                } else if (group.token == TokenType.FOOD) {
-                    player.vomit -= 7 * group.length;
-                } else if (group.token == TokenType.TOMATO_JUICE) {
-                    player.piss += 2 * group.length;
-                    player.vomit -= 4 * group.length;
-                }
-                Constants.STATS.addCollectedGroup(group.token, group.length);
-            }
-            if (Constants.SOUND_ENABLED) {
-                var fx:Sound;
-                if (maxGroup == 3) {
-                    fx = new Beer3FX();
-                } else if (maxGroup == 3) {
-                    fx = new Beer4FX();
-                } else {
-                    fx = new Beer5FX();
-                }
-                fx.play();
             }
             return true;
         } else {
@@ -1103,13 +1100,13 @@ public class BoardView extends UIComponent {
     private static var VomitFX:Class;
 
     [Embed(source="../../../biere-x3.mp3")]
-    private static var Beer3FX:Class;
+    private static var BeerFX:Class;
 
-    [Embed(source="../../../biere-x4.mp3")]
-    private static var Beer4FX:Class;
+    [Embed(source="../../../boisson-a.mp3")]
+    private static var WaterFX:Class;
 
-    [Embed(source="../../../biere-x5.mp3")]
-    private static var Beer5FX:Class;
+    [Embed(source="../../../boisson-b.mp3")]
+    private static var TomatoFX:Class;
 
 }
 }
