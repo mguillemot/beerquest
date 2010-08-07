@@ -23,6 +23,8 @@ import mx.core.UIComponent;
 import mx.managers.CursorManager;
 import mx.managers.CursorManagerPriority;
 
+import org.osmf.traits.TemporalTrait;
+
 public class BoardView extends UIComponent {
 
     private static const EXPLODE_DURATION_MS:int = 250;
@@ -168,9 +170,7 @@ public class BoardView extends UIComponent {
                 break;
             case 79: // o
                 if (Constants.DEBUG) {
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOODY_MARY));
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_FURY_BAR));
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_PEANUTS));
                 }
                 break;
             case 86: // v
@@ -193,6 +193,12 @@ public class BoardView extends UIComponent {
                     if (_destroyCursor != 0) {
                         CursorManager.removeCursor(_destroyCursor);
                         _destroyCursor = 0;
+                    }
+                    startAction("");
+                } else if (_currentAction == "selectTokenToTransform") {
+                    if (_peanutCursor != 0) {
+                        CursorManager.removeCursor(_peanutCursor);
+                        _peanutCursor = 0;
                     }
                     startAction("");
                 }
@@ -379,13 +385,23 @@ public class BoardView extends UIComponent {
     }
 
     private function clickCell(x:int, y:int):void {
+        var token:TokenType;
         if (_currentAction == "selectTokenToDestroy") {
-            var token:TokenType = getToken(x, y).type;
+            token = getToken(x, y).type;
             if (token.collectible) {
                 destroyTokensOfType(token, true);
                 game.me.score += 150;
                 game.me.usedCapacity(Capacity.BIG_BANG);
                 Constants.STATS.capaLiquorUsed++;
+            }
+        } else if (_currentAction == "selectTokenToTransform") {
+            token = getToken(x, y).type;
+            if (token == TokenType.AMBER_BEER || token == TokenType.BLOND_BEER || token == TokenType.BROWN_BEER || TokenType.WATER
+                    || token == TokenType.COASTER || token == TokenType.LIQUOR || token == TokenType.TOMATO_JUICE) {
+                transformTokensOfType(token, TokenType.FOOD);
+                game.me.score += 100;
+                game.me.usedCapacity(Capacity.BIG_PEANUTS);
+                Constants.STATS.capaFoodUsed++;
             }
         } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - _pissLevel) {
@@ -742,7 +758,9 @@ public class BoardView extends UIComponent {
         if (!destroySeries()) {
             endScoring();
             game.board = getCurrentState();
-            game.newTurn();
+            if (!_resolvingCapacity) {
+                game.newTurn();
+            }
             startAction("");
             checkAvailableMoves();
         }
@@ -867,10 +885,10 @@ public class BoardView extends UIComponent {
         }
         switch (capacity) {
             case Capacity.BIG_PEANUTS:
-                game.me.piss = 0;
-                game.me.score += 100;
-                game.me.usedCapacity(capacity);
-                Constants.STATS.capaFoodUsed++;
+                startAction("selectTokenToTransform");
+                if (_peanutCursor == 0) {
+                    _peanutCursor = CursorManager.setCursor(PeanutCursor, CursorManagerPriority.HIGH);
+                }
                 break;
             case Capacity.WATERFALL:
                 destroyTokensOfType(TokenType.VOMIT, false);
@@ -946,7 +964,34 @@ public class BoardView extends UIComponent {
                 }
             }
         }
+        _resolvingCapacity = true;
         destroyMarked();
+        _resolvingCapacity = false;
+        return count;
+    }
+
+    private function transformTokensOfType(source:TokenType, target:TokenType):int {
+        if (_peanutCursor != 0) {
+            CursorManager.removeCursor(_peanutCursor);
+            _peanutCursor = 0;
+        }
+        startAction("transformTokensOfType");
+        var count:int = 0;
+        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+            for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+                var token:Token = getToken(i, j);
+                if (token.type == source) {
+                    removeToken(token);
+                    token = generateToken(target);
+                    addToken(token);
+                    setToken(i, j, token);
+                    count++;
+                }
+            }
+        }
+        _resolvingCapacity = true;
+        destroySeries();
+        _resolvingCapacity = false;
         return count;
     }
 
@@ -1060,7 +1105,9 @@ public class BoardView extends UIComponent {
     private var _pissLevel:int = 0;
     private var _destroyCursor:int = 0;
     private var _coasterCursor:int = 0;
+    private var _peanutCursor:int = 0;
     private var _playable:Boolean = true;
+    private var _resolvingCapacity:Boolean = false;
 
     [Embed(source="../../../board.png")]
     private static var BoardBackground:Class;
@@ -1073,6 +1120,9 @@ public class BoardView extends UIComponent {
 
     [Embed(source="../../../sous-bock.png")]
     private static var CoasterCursor:Class;
+
+    [Embed(source="../../../cahouet.png")]
+    private static var PeanutCursor:Class;
 
     [Embed(source="../../../son-montee-pisse.mp3")]
     private static var PissRaiseFX:Class;

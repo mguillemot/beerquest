@@ -187,12 +187,6 @@ public class PlayerData extends EventDispatcher {
         var i:int, c:Capacity;
         for (i = 0; i < Constants.MAX_CAPACITIES; i++) {
             c = _capacities.getItemAt(i) as Capacity;
-            if (c == capacity) {
-                return false;
-            }
-        }
-        for (i = 0; i < Constants.MAX_CAPACITIES; i++) {
-            c = _capacities.getItemAt(i) as Capacity;
             if (!c.enabled) {
                 _capacities.setItemAt(capacity, i);
                 return true;
