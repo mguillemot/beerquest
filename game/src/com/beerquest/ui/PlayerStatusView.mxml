@@ -17,13 +17,6 @@
             color: white;
             textAlign: right;
         }
-
-        .multiplier {
-            fontFamily: "Arial";
-            fontSize: 14;
-            color: #a23e03;
-            textAlign: center;
-        }
     </mx:Style>
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;

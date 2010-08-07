@@ -195,13 +195,7 @@ public class BoardView extends UIComponent {
                         _destroyCursor = 0;
                     }
                     startAction("");
-                } else if (_currentAction == "selectTokenToTransform") {
-                    if (_peanutCursor != 0) {
-                        CursorManager.removeCursor(_peanutCursor);
-                        _peanutCursor = 0;
-                    }
-                    startAction("");
-                }
+                } 
                 break;
             case 90: // z
                 if (Constants.DEBUG) {
@@ -559,7 +553,6 @@ public class BoardView extends UIComponent {
             destroyMarked();
 
             var state:BoardState = getCurrentState();
-            var resetMultiplier:Boolean = true;
             var player:PlayerData = game.me;
             var maxGroup:int = 0;
             if (game.me.coasterReserve > 0) {
@@ -582,8 +575,6 @@ public class BoardView extends UIComponent {
                         player.coasterReserve += 2;
                     }
                 } else if (group.length >= 5) {
-                    game.me.multiplier += 1;
-                    resetMultiplier = false;
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(TokenType.TRIPLE);
@@ -621,7 +612,7 @@ public class BoardView extends UIComponent {
                 }
 
                 // Dispatch event for vfx display
-                var scoreGain:int = group.token.score * group.length * combo * game.me.multiplier;
+                var scoreGain:int = group.token.score * group.length * combo;
                 var token:Token = getToken(group.startX, group.startY);
                 var local:Point = new Point(token.x, token.y);
                 if (group.type == "horizontal") {
@@ -664,10 +655,6 @@ public class BoardView extends UIComponent {
                     fx = new Beer5FX();
                 }
                 fx.play();
-            }
-            if (resetMultiplier && game.me.multiplier != 1) {
-                Constants.STATS.addMultiplier(game.me.multiplier);
-                game.me.multiplier = 1;
             }
             return true;
         } else {
@@ -888,10 +875,9 @@ public class BoardView extends UIComponent {
         }
         switch (capacity) {
             case Capacity.BIG_PEANUTS:
-                startAction("selectTokenToTransform");
-                if (_peanutCursor == 0) {
-                    _peanutCursor = CursorManager.setCursor(PeanutCursor, CursorManagerPriority.HIGH);
-                }
+                transformTokensOfType(TokenType.LIQUOR, TokenType.WATER);
+                game.me.score += 100;
+                game.me.usedCapacity(capacity);
                 break;
             case Capacity.WATERFALL:
                 destroyTokensOfType(TokenType.VOMIT, false);
@@ -968,10 +954,6 @@ public class BoardView extends UIComponent {
     }
 
     private function transformTokensOfType(source:TokenType, target:TokenType):int {
-        if (_peanutCursor != 0) {
-            CursorManager.removeCursor(_peanutCursor);
-            _peanutCursor = 0;
-        }
         startAction("transformTokensOfType");
         var count:int = 0;
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
@@ -1102,7 +1084,6 @@ public class BoardView extends UIComponent {
     private var _pissLevel:int = 0;
     private var _destroyCursor:int = 0;
     private var _coasterCursor:int = 0;
-    private var _peanutCursor:int = 0;
     private var _playable:Boolean = true;
     private var _resolvingCapacity:Boolean = false;
 
@@ -1117,9 +1098,6 @@ public class BoardView extends UIComponent {
 
     [Embed(source="../../../sous-bock.png")]
     private static var CoasterCursor:Class;
-
-    [Embed(source="../../../cahouet.png")]
-    private static var PeanutCursor:Class;
 
     [Embed(source="../../../son-montee-pisse.mp3")]
     private static var PissRaiseFX:Class;

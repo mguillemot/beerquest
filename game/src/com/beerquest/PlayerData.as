@@ -49,16 +49,6 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new GameEvent(GameEvent.FULL_BEERS_CHANGED, this));
     }
 
-    [Bindable(event="MultiplierChanged")]
-    public function get multiplier():Number {
-        return _multiplier;
-    }
-
-    public function set multiplier(value:Number):void {
-        _multiplier = value;
-        dispatchEvent(new GameEvent(GameEvent.MULTIPLIER_CHANGED, this));
-    }
-
     [Bindable(event="PissChanged")]
     public function get piss():Number {
         return _piss;
@@ -226,7 +216,6 @@ public class PlayerData extends EventDispatcher {
     private var _totalBeers:Number;
     private var _totalCaps:Number;
     private var _score:Number = 0;
-    private var _multiplier:Number = 1;
     private var _fullBeers:Number = 0;
     private var _piss:Number = 0;
     private var _vomit:Number = 0;

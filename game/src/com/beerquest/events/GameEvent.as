@@ -7,7 +7,6 @@ public class GameEvent extends Event {
     public static const VOMIT_CHANGED:String = "VomitChanged";
     public static const PISS_CHANGED:String = "PissChanged";
     public static const SCORE_CHANGED:String = "ScoreChanged";
-    public static const MULTIPLIER_CHANGED:String = "MultiplierChanged";
     public static const PARTIAL_BEERS_CHANGED:String = "PartialBeersChanged";
     public static const FULL_BEERS_CHANGED:String = "FullBeersChanged";
     public static const COASTER_RESERVE_CHANGED:String = "CoasterReserveChanged";
