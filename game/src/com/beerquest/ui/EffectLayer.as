@@ -69,9 +69,11 @@ public class EffectLayer extends Canvas {
                     break;
             }
             vfx.visible = true;
+            vfx.alpha = 0;
             vfx.scaleX = vfx.scaleY = 4;
             vfx.x = sx - vfx.width * vfx.scaleX / 2;
             vfx.y = sy - vfx.height * vfx.scaleY / 2;
+            TweenLite.to(vfx, 0.5, {alpha:1});
             TweenLite.to(vfx, 1, {x:dx, y:dy, scaleX:1, scaleY:1, ease:Quad.easeIn, onComplete:function():void {
                 vfx.visible = false;
                 _tokenEffectBuffer.push(vfx);
