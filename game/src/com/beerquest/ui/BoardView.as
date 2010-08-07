@@ -392,16 +392,17 @@ public class BoardView extends UIComponent {
                 destroyTokensOfType(token, true);
                 game.me.score += 150;
                 game.me.usedCapacity(Capacity.BIG_BANG);
-                Constants.STATS.capaLiquorUsed++;
             }
         } else if (_currentAction == "selectTokenToTransform") {
             token = getToken(x, y).type;
             if (token == TokenType.AMBER_BEER || token == TokenType.BLOND_BEER || token == TokenType.BROWN_BEER || TokenType.WATER
                     || token == TokenType.COASTER || token == TokenType.LIQUOR || token == TokenType.TOMATO_JUICE) {
                 transformTokensOfType(token, TokenType.FOOD);
+                createVomit();
+                createVomit();
+                createVomit();
                 game.me.score += 100;
                 game.me.usedCapacity(Capacity.BIG_PEANUTS);
-                Constants.STATS.capaFoodUsed++;
             }
         } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - _pissLevel) {
@@ -669,6 +670,8 @@ public class BoardView extends UIComponent {
                 game.me.multiplier = 1;
             }
             return true;
+        } else {
+            startAction("");
         }
         return false;
     }
@@ -894,7 +897,6 @@ public class BoardView extends UIComponent {
                 destroyTokensOfType(TokenType.VOMIT, false);
                 game.me.score += 75;
                 game.me.usedCapacity(capacity);
-                Constants.STATS.capaWaterUsed++;
                 break;
             case Capacity.BIG_BANG:
                 startAction("selectTokenToDestroy");
@@ -906,25 +908,21 @@ public class BoardView extends UIComponent {
                 game.me.fullBeers += destroyTokensOfType(TokenType.BLOND_BEER, false);
                 game.me.score += 75;
                 game.me.usedCapacity(capacity);
-                Constants.STATS.capaBlondUsed++;
                 break;
             case Capacity.BROWN_FURY_BAR:
                 game.me.fullBeers += destroyTokensOfType(TokenType.BROWN_BEER, false);
                 game.me.score += 75;
                 game.me.usedCapacity(capacity);
-                Constants.STATS.capaBrownUsed++;
                 break;
             case Capacity.AMBER_FURY_BAR:
                 game.me.fullBeers += destroyTokensOfType(TokenType.AMBER_BEER, false);
                 game.me.score += 75;
                 game.me.usedCapacity(capacity);
-                Constants.STATS.capaAmberUsed++;
                 break;
             case Capacity.TCHIN_TCHIN:
                 stealPartialBeers();
                 game.me.score += 150;
                 game.me.usedCapacity(capacity);
-                Constants.STATS.capaCoasterUsed++;
                 break;
             case Capacity.BLOODY_MARY:
                 game.me.score += 150;
@@ -933,7 +931,6 @@ public class BoardView extends UIComponent {
                 createVomit();
                 createVomit();
                 game.me.usedCapacity(capacity);
-                Constants.STATS.capaTomatoUsed++;
                 break;
         }
     }

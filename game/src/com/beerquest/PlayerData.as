@@ -115,7 +115,30 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function usedCapacity(c:Capacity):Boolean {
-        for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
+        switch (c) {
+            case Capacity.AMBER_FURY_BAR:
+                Constants.STATS.capaAmberUsed++;
+                break;
+            case Capacity.BIG_BANG:
+                Constants.STATS.capaLiquorUsed++;
+                break;
+            case Capacity.BIG_PEANUTS:
+                Constants.STATS.capaFoodUsed++;
+                break;
+            case Capacity.BLOND_FURY_BAR:
+                Constants.STATS.capaBlondUsed++;
+                break;
+            case Capacity.BLOODY_MARY:
+                Constants.STATS.capaTomatoUsed++;
+                break;
+            case Capacity.BROWN_FURY_BAR:
+                Constants.STATS.capaBrownUsed++;
+                break;
+            case Capacity.TCHIN_TCHIN:
+                Constants.STATS.capaCoasterUsed++;
+                break;
+        }
+        for (var i:int = Constants.MAX_CAPACITIES - 1; i >= 0; i--) {
             if (_capacities.getItemAt(i) == c) {
                 _capacities.setItemAt(Capacity.NONE, i);
                 return true;
