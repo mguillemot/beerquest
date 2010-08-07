@@ -1,4 +1,8 @@
 package com.beerquest.ui {
+import com.greensock.TweenLite;
+
+import com.greensock.easing.Quad;
+
 import flash.display.GradientType;
 import flash.display.Sprite;
 import flash.events.Event;
@@ -10,24 +14,26 @@ import mx.core.UIComponent;
 public class ProgressBar extends UIComponent {
     public function ProgressBar() {
         super();
+
+        _bar = new Sprite();
+        addChild(_bar);
+
+        _frame = new Sprite();
+        addChild(_frame);
     }
 
     override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
         super.updateDisplayList(unscaledWidth, unscaledHeight);
 
+        graphics.clear();
         graphics.lineStyle(0, 0, 0);
         graphics.beginFill(emptyColor);
         graphics.drawRoundRect(0, 0, unscaledWidth, unscaledHeight, 10);
         graphics.endFill();
 
-        var m:Matrix = new Matrix();
-        m.createGradientBox(unscaledWidth, unscaledHeight, Math.PI / 2);
-        graphics.beginGradientFill(GradientType.LINEAR, [fullColorLight, fullColorDark], [1.0, 1.0], [0, 255], m);
-        graphics.drawRoundRect(0, 0, unscaledWidth * progress / 100, unscaledHeight, 10);
-        graphics.endFill();
-
-        graphics.lineStyle(1, 0x000000, 1.0, true);
-        graphics.drawRoundRect(0, 0, unscaledWidth, unscaledHeight, 10);
+        _frame.graphics.clear();
+        _frame.graphics.lineStyle(1, 0x000000, 1.0, true);
+        _frame.graphics.drawRoundRect(0, 0, unscaledWidth, unscaledHeight, 10);
     }
 
     [Bindable(event="progressChanged")]
@@ -38,13 +44,44 @@ public class ProgressBar extends UIComponent {
     public function set progress(value:Number):void {
         _progress = value;
         dispatchEvent(new Event("progressChanged"));
-        invalidateDisplayList();
+
+        var m:Matrix = new Matrix();
+        m.createGradientBox(width, height, Math.PI / 2);
+        _bar.graphics.clear();
+        _bar.graphics.beginGradientFill(GradientType.LINEAR, [fullColorLight, fullColorDark], [1.0, 1.0], [0, 255], m);
+        _bar.graphics.drawRoundRect(0, 0, width * progress / 100, height, 10);
+        _bar.graphics.endFill();
+
+        if (alert) {
+            if (_progress >= 80) {
+                if (_tween == null) {
+                    _tween = new TweenLite(_bar, 0.8 - (_progress - 80) / 20 / 4, {colorTransform:{tint:0xff0000, tintAmount:0.7}, ease:Quad.easeIn, delay:(1 - (_progress - 80) / 20), onComplete:function():void {
+                        _tween.reverse();
+                    }, onReverseComplete:function():void {
+                        _tween.restart(true);
+                    }});
+                } else {
+                    _tween.duration = 0.8 - (_progress - 80) / 20 / 4;
+                    _tween.delay = 1 - (_progress - 80) / 20;
+                }
+            } else {
+                if (_tween != null) {
+                    _tween.reverse();
+                    _tween.vars.onReverseComplete = null;
+                    _tween = null;
+                }
+            }
+        }
     }
 
+    public var alert:Boolean = false;
     public var emptyColor:uint = 0xffffff;
     public var fullColorLight:uint = 0xff0000;
     public var fullColorDark:uint = 0xff0000;
 
     private var _progress:Number = 0;
+    private var _bar:Sprite;
+    private var _frame:Sprite;
+    private var _tween:TweenLite;
 }
 }

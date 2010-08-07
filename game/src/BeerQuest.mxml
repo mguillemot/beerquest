@@ -70,12 +70,23 @@
         import com.beerquest.events.VomitEvent;
         import com.greensock.OverwriteManager;
 
+        import com.greensock.TweenLite;
+
+        import com.greensock.plugins.ColorTransformPlugin;
+        import com.greensock.plugins.TintPlugin;
+
+        import com.greensock.plugins.TweenPlugin;
+
         import mx.controls.Alert;
         import mx.core.FlexGlobals;
+        import mx.effects.Tween;
 
         private function init():void {
+            // Init TweenLite
             OverwriteManager.init();
+            TweenPlugin.activate([ColorTransformPlugin, TintPlugin]);
 
+            // Event listeners
             addEventListener(CapacityEvent.CAPACITY_GAINED, onGameEvent);
             addEventListener(PissEvent.PISS, onGameEvent);
             addEventListener(ScoreEvent.SCORE_GAINED, onCapsGained);
@@ -209,6 +220,7 @@
         }
 
         private function onGameOver(e:GameEvent):void {
+            TweenLite.to(gameover, 2, {y:0});
             if (!scoresSent && game.me.id > 0) {
                 // Transmit score & stats to the server
                 var data:URLVariables = Constants.STATS.getForSerialization();
@@ -347,7 +359,7 @@
     <mx:Label text="Sous-bocks: {game.me.coasterReserve}" x="10" y="50" visible="{Constants.DEBUG}"/>
     <mx:Canvas x="220" y="110" width="320" height="320">
         <ui:BoardView id="boardView" width="100%" height="100%" game="{game}" playable="{game.gameOver}"/>
-        <mx:Canvas width="100%" height="100%" backgroundColor="black" alpha="0.8" visible="{game.gameOver}">
+        <mx:Canvas id="gameover" width="100%" height="100%" backgroundColor="black" y="{-boardView.height}">
             <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>
         </mx:Canvas>
     </mx:Canvas>

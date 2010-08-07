@@ -103,7 +103,7 @@
     <mx:Canvas width="100%"
                toolTip="Attention, à 100% : vomito (bloque 5 cases) ! Mangez des Cahouètes ou buvez de l'eau.">
         <ui:ProgressBar y="2" width="100%" height="16" progress="{player.vomit}" emptyColor="0x619f00"
-                        fullColorLight="0xbbf900" fullColorDark="0x82d500"/>
+                        fullColorLight="0xbbf900" fullColorDark="0x82d500" alert="true"/>
     </mx:Canvas>
 
     <mx:Spacer height="5"/>
