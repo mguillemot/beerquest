@@ -4,6 +4,7 @@ import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.ScoreEvent;
+import com.beerquest.events.TokenEvent;
 import com.greensock.TweenLite;
 import com.greensock.easing.Expo;
 import com.greensock.easing.Linear;
@@ -561,9 +562,11 @@ public class BoardView extends UIComponent {
             }
             var partialBeersCollected:Array = new Array();
             for each (var group:Object in state.computeGroups()) {
+                var collectedToken:TokenType = null;
                 if (group.length == 3) {
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(group.token);
+                        collectedToken = group.token;
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve++;
                     }
@@ -571,6 +574,7 @@ public class BoardView extends UIComponent {
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(TokenType.TRIPLE);
+                        collectedToken = TokenType.TRIPLE;
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve += 2;
                     }
@@ -579,6 +583,7 @@ public class BoardView extends UIComponent {
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(TokenType.TRIPLE);
                         partialBeersCollected.push(TokenType.TRIPLE);
+                        collectedToken = TokenType.TRIPLE;
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve += 3;
                     }
@@ -611,7 +616,7 @@ public class BoardView extends UIComponent {
                     maxGroup = group.length;
                 }
 
-                // Dispatch event for vfx display
+                // Dispatch events for vfx display
                 var scoreGain:int = group.token.score * group.length * combo;
                 var token:Token = getToken(group.startX, group.startY);
                 var local:Point = new Point(token.x, token.y);
@@ -626,6 +631,9 @@ public class BoardView extends UIComponent {
                 var now:Date = new Date();
                 trace("event " + scoreGain + " raised at " + now.seconds + "." + now.milliseconds);
                 dispatchEvent(new ScoreEvent(scoreGain, scoreCoords.x, scoreCoords.y));
+                if (collectedToken != null) {
+                    dispatchEvent(new TokenEvent(collectedToken, scoreCoords.x, scoreCoords.y));
+                }
 
                 game.me.score += scoreGain;
                 trace("Collected group of " + group.token + " of size " + group.length);

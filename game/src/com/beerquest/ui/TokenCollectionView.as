@@ -4,6 +4,7 @@ import com.beerquest.events.BeerCollectedEvent;
 import com.greensock.TweenLite;
 
 import flash.events.TimerEvent;
+import flash.geom.Point;
 import flash.media.Sound;
 import flash.utils.Timer;
 
@@ -14,7 +15,7 @@ import mx.events.CollectionEvent;
 public class TokenCollectionView extends UIComponent {
 
     private static const OPERATION_TIME_MS:Number = 200;
-    private static const MAX_STACK:int = 15;
+    public static const MAX_STACK:int = 15;
 
     public function TokenCollectionView() {
         width = 170;
@@ -34,7 +35,7 @@ public class TokenCollectionView extends UIComponent {
         _player.partialBeers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onCollectionChange);
     }
 
-    private function pushTokenIntoStack(token:TokenType):void {
+    public function pushTokenIntoStack(token:TokenType):void {
         if (_currentAction != "") {
             trace("TokenView PENDING " + token);
             _pendingActions.push(token);
@@ -162,6 +163,10 @@ public class TokenCollectionView extends UIComponent {
             _player.partialBeers.removeItemAt(0);
             Constants.STATS.stackEjected++;
         }
+    }
+
+    public function get stageEntryPoint():Point {
+        return localToGlobal(new Point(2 + MAX_STACK * 11, 0));
     }
 
     private static function createSprite(token:TokenType):BitmapAsset {

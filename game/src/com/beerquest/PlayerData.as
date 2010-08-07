@@ -1,8 +1,13 @@
 package com.beerquest {
 import com.beerquest.events.GameEvent;
 
+import com.beerquest.ui.TokenCollectionView;
+
 import flash.events.EventDispatcher;
+import flash.events.TimerEvent;
 import flash.media.Sound;
+
+import flash.utils.Timer;
 
 import mx.collections.ArrayCollection;
 import mx.events.CollectionEvent;
@@ -182,10 +187,14 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function addPartialBeer(type:TokenType):void {
-        if (_partialBeers.length == 45) {
-            _partialBeers.removeItemAt(0);
-        }
-        _partialBeers.addItem(type);
+        var timer:Timer = new Timer(1000, 1);
+        timer.addEventListener(TimerEvent.TIMER, function():void {
+            if (_partialBeers.length == TokenCollectionView.MAX_STACK) {
+                _partialBeers.removeItemAt(0);
+            }
+            _partialBeers.addItem(type);
+        });
+        timer.start();
     }
 
     public function doPiss():void {

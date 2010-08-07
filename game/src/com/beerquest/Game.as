@@ -29,13 +29,6 @@ public class Game extends EventDispatcher {
 
     public function handleEvent(e:GameEvent):void {
         switch (e.type) {
-            case GemsSwappedEvent.GEMS_SWAPPED:
-                //newTurn();
-                break;
-            case VomitEvent.VOMIT:
-                //e.player.doVomit();
-                //currentTurn++;
-                break;
             case PissEvent.PISS:
                 e.player.doPiss();
                 newTurn();

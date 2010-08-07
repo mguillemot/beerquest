@@ -44,6 +44,10 @@
         [Bindable]
         public var clickable:Boolean = true;
 
+        public function get tokenEntryPoint():Point {
+            return stack.stageEntryPoint; 
+        }
+
         private function init():void {
             addEventListener(BeerCollectedEvent.BEER_COLLECTED, onBeerCollected);
         }
@@ -129,7 +133,7 @@
         </mx:Canvas>
         <mx:Canvas x="3" y="57" width="170" height="11" backgroundColor="0x000000" backgroundAlpha="0"
                    toolTip="Collecte 3 jetons de la même couleur pour gagner 5 bouteilles supplémentaires !">
-            <ui:TokenCollectionView player="{player}"/>
+            <ui:TokenCollectionView id="stack" player="{player}"/>
         </mx:Canvas>
         <ui:FullBeerFx id="vfx" x="{-vfx.width / 2 + 140}" y="{-vfx.height / 2 + 30}" alpha="0" value="5"/>
     </mx:Canvas>
