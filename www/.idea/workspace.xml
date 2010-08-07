@@ -88,16 +88,16 @@
       <file leaf-file-name="scores_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/scores_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="64" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
+            <state line="5" column="40" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="replay.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="replay.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/replay.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="102" selection-end="102" vertical-scroll-proportion="0.14143094">
+            <state line="5" column="0" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -112,10 +112,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="home_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="80" selection-start="834" selection-end="834" vertical-scroll-proportion="0.0">
+            <state line="2" column="30" selection-start="82" selection-end="82" vertical-scroll-proportion="0.056572378">
               <folding />
             </state>
           </provider>
@@ -169,11 +169,11 @@
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/facebook/index.html.haml" />
         <option value="$PROJECT_DIR$/app/controllers/facebook_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/scores_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20100807055536_beta_score_to_replay.rb" />
         <option value="$PROJECT_DIR$/Rakefile" />
         <option value="$PROJECT_DIR$/app/models/replay.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
       </list>
     </option>
   </component>
@@ -822,13 +822,6 @@
         <state line="6" column="44" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="80" selection-start="834" selection-end="834" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Rakefile">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="0" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
@@ -843,16 +836,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/scores_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/replay.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="64" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
+        <state line="5" column="0" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/replay.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/scores_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="102" selection-end="102" vertical-scroll-proportion="0.14143094">
+        <state line="5" column="40" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="30" selection-start="82" selection-end="82" vertical-scroll-proportion="0.056572378">
           <folding />
         </state>
       </provider>
