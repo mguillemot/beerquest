@@ -169,7 +169,7 @@ public class BoardView extends UIComponent {
                 break;
             case 79: // o
                 if (Constants.DEBUG) {
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.DIVINE_PEANUTS));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
                 }
                 break;
             case 86: // v
@@ -383,10 +383,12 @@ public class BoardView extends UIComponent {
         if (_currentAction == "selectTokenToDestroy") {
             token = getToken(x, y).type;
             if (token.collectible) {
-                dispatchEvent(new ScoreEvent(150, 0, null, null, Capacity.BIG_BANG));
+                var count:int = getCurrentState().count(token);
+                var score:int = 150 + count * token.score;
+                dispatchEvent(new ScoreEvent(score, 0, null, null, Capacity.BIG_BANG));
                 game.me.usedCapacity(Capacity.BIG_BANG);
-                game.me.score += 150;
-                destroyTokensOfType(token, true);
+                destroyTokensOfType(token);
+                game.me.score += score;
             }
         } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - _pissLevel) {
@@ -883,7 +885,7 @@ public class BoardView extends UIComponent {
                 dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
-                destroyTokensOfType(TokenType.VOMIT, false);
+                destroyTokensOfType(TokenType.VOMIT);
                 break;
             case Capacity.BIG_BANG:
                 startAction("selectTokenToDestroy");
@@ -893,7 +895,7 @@ public class BoardView extends UIComponent {
                 break;
             case Capacity.BLOND_FURY_BAR:
                 score = 75;
-                beers = destroyTokensOfType(TokenType.BLOND_BEER, false);
+                beers = destroyTokensOfType(TokenType.BLOND_BEER);
                 dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
@@ -901,7 +903,7 @@ public class BoardView extends UIComponent {
                 break;
             case Capacity.BROWN_FURY_BAR:
                 score = 75;
-                beers = destroyTokensOfType(TokenType.BROWN_BEER, false);
+                beers = destroyTokensOfType(TokenType.BROWN_BEER);
                 dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
@@ -909,7 +911,7 @@ public class BoardView extends UIComponent {
                 break;
             case Capacity.AMBER_FURY_BAR:
                 score = 75;
-                beers = destroyTokensOfType(TokenType.AMBER_BEER, false);
+                beers = destroyTokensOfType(TokenType.AMBER_BEER);
                 dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
@@ -942,7 +944,7 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function destroyTokensOfType(targetType:TokenType, score:Boolean):int {
+    private function destroyTokensOfType(targetType:TokenType):int {
         if (_destroyCursor != 0) {
             CursorManager.removeCursor(_destroyCursor);
             _destroyCursor = 0;
@@ -954,9 +956,6 @@ public class BoardView extends UIComponent {
                 var token:Token = getToken(i, j);
                 if (token.type == targetType) {
                     token.mark = true;
-                    if (score) {
-                        game.me.score += targetType.score;
-                    }
                     count++;
                 }
             }
