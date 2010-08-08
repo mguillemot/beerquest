@@ -1,8 +1,10 @@
 package com.beerquest {
+
 public class BoardState {
     public function BoardState() {
-        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+        for (var i:int = 0; i < Constants.BOARD_SIZE * Constants.BOARD_SIZE; i++) {
             _state.push(TokenType.NONE);
+            _supers.push(false);
         }
     }
 
@@ -13,17 +15,25 @@ public class BoardState {
         return _state[x * Constants.BOARD_SIZE + y];
     }
 
-    public function setCell(x:int, y:int, value:TokenType):void {
+    public function getSuper(x:int, y:int):Boolean {
+        if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
+            throw "invalid cell: " + x + ":" + y;
+        }
+        return _supers[x * Constants.BOARD_SIZE + y];
+    }
+
+    public function setCell(x:int, y:int, value:TokenType, superToken:Boolean):void {
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid cell: " + x + ":" + y;
         }
         _state[x * Constants.BOARD_SIZE + y] = value;
+        _supers[x * Constants.BOARD_SIZE + y] = superToken;
     }
 
-    public function setAll(cells:Array):void {
+    public function setAllCells(cells:Array, allSupers:Boolean):void {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                setCell(i, j, cells[j][i]);
+                setCell(i, j, cells[j][i], allSupers);
             }
         }
     }
@@ -33,6 +43,8 @@ public class BoardState {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                 repr += getCell(i, j).value.toString();
+                repr += (getSuper(i, j)) ? "S" : "-";
+                repr += "|";
             }
             repr += "\n";
         }
@@ -42,7 +54,7 @@ public class BoardState {
     public function generateFullRandom():void {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                setCell(i, j, generateNewCell());
+                setCell(i, j, generateNewCell(), false);
             }
         }
     }
@@ -54,21 +66,29 @@ public class BoardState {
         } while (computeMoves().length == 0);
     }
 
-    public function getRandomNonVomitCell():Object {
-        if (count(TokenType.VOMIT) == Constants.BOARD_SIZE * Constants.BOARD_SIZE) {
+    public function getRandomNonVomitNonSuperCell():Object {
+        var count:int = 0;
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                if (getCell(i, j) == TokenType.VOMIT || getSuper(i, j)) {
+                    count++;
+                }
+            }
+        }
+        if (count == Constants.BOARD_SIZE * Constants.BOARD_SIZE) {
             return null;
         }
         while (true) {
-            var x:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
-            var y:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
+            var x:int = RAND.nextInt(0, Constants.BOARD_SIZE - 1);
+            var y:int = RAND.nextInt(0, Constants.BOARD_SIZE - 1);
             var token:TokenType = getCell(x, y);
-            if (token != TokenType.VOMIT) {
+            if (token != TokenType.VOMIT && !getSuper(x, y)) {
                 return {x:x, y:y};
             }
         }
         return null;
     }
-    
+
     public function count(token:TokenType):int {
         var count:int = 0;
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
@@ -90,19 +110,23 @@ public class BoardState {
 
     public function computeGroups():Array {
         var groups:Array = new Array();
-        var i:int, j:int, token:TokenType;
+        var i:int, j:int, supers:int, token:TokenType;
 
         // Check for horizontal groups
         for (j = 0; j < Constants.BOARD_SIZE; j++) {
             for (i = 0; i < Constants.BOARD_SIZE - 2; i++) {
                 token = getCell(i, j);
                 if (token.collectible) {
-                    var di:int = 1;
+                    var di:int = 0;
+                    supers = 0;
                     while ((i + di) < Constants.BOARD_SIZE && getCell(i + di, j) == token) {
+                        if (getSuper(i + di, j)) {
+                            supers++;
+                        }
                         di++;
                     }
                     if (di >= 3) {
-                        groups.push({type:"horizontal", startX:i, startY:j, length:di, token:token});
+                        groups.push({type:"horizontal", startX:i, startY:j, midX:(i + Math.floor(di / 2)), midY:j, length:di, token:token, supers:supers});
                     }
                     i += (di - 1);
                 }
@@ -115,11 +139,15 @@ public class BoardState {
                 token = getCell(i, j);
                 if (token.collectible) {
                     var dj:int = 1;
+                    supers = 0;
                     while ((j + dj) < Constants.BOARD_SIZE && getCell(i, j + dj) == token) {
+                        if (getSuper(i, j + dj)) {
+                            supers++;
+                        }
                         dj++;
                     }
                     if (dj >= 3) {
-                        groups.push({type:"vertical", startX:i, startY:j, length:dj, token:token});
+                        groups.push({type:"vertical", startX:i, startY:j, midX:i, midY:(j + Math.floor(dj / 2)), length:dj, token:token, supers:supers});
                     }
                     j += (dj - 1);
                 }
@@ -169,50 +197,55 @@ public class BoardState {
         return false;
     }
 
-    public function computeMoves():Array {
+    public function computeMoves(piss:Boolean = true):Array {
         normalize();
         var moves:Array = new Array();
         var i:int, j:int;
+        var movePissLevel:int = (piss) ? pissLevel : 0;
 
         // Check for horizontal moves
-        for (j = 0; j < Constants.BOARD_SIZE - _pissLevel; j++) {
+        for (j = 0; j < Constants.BOARD_SIZE - movePissLevel; j++) {
             for (i = 0; i < Constants.BOARD_SIZE - 1; i++) {
                 var leftCell:TokenType = getCell(i, j);
+                var leftSuper:Boolean = getSuper(i, j);
                 var rightCell:TokenType = getCell(i + 1, j);
-                setCell(i, j, rightCell);
-                setCell(i + 1, j, TokenType.NONE);
+                var rightSuper:Boolean = getSuper(i + 1, j);
+                setCell(i, j, rightCell, rightSuper);
+                setCell(i + 1, j, TokenType.NONE, false);
                 if (hasGroups) {
                     moves.push({type:"horizontal", startX:i, startY:j, endX:(i + 1), endY:j, hintX:(i + 1), hintY:j});
                 } else {
-                    setCell(i, j, TokenType.NONE);
-                    setCell(i + 1, j, leftCell);
+                    setCell(i, j, TokenType.NONE, false);
+                    setCell(i + 1, j, leftCell, leftSuper);
                     if (hasGroups) {
                         moves.push({type:"horizontal", startX:i, startY:j, endX:(i + 1), endY:j, hintX:i, hintY:j});
                     }
                 }
-                setCell(i, j, leftCell);
-                setCell(i + 1, j, rightCell);
+                setCell(i, j, leftCell, leftSuper);
+                setCell(i + 1, j, rightCell, rightSuper);
             }
         }
 
         // Check for vertical moves
-        for (j = 0; j < Constants.BOARD_SIZE - 1 - _pissLevel; j++) {
+        for (j = 0; j < Constants.BOARD_SIZE - 1 - movePissLevel; j++) {
             for (i = 0; i < Constants.BOARD_SIZE; i++) {
                 var topCell:TokenType = getCell(i, j);
+                var topSuper:Boolean = getSuper(i, j);
                 var bottomCell:TokenType = getCell(i, j + 1);
-                setCell(i, j, bottomCell);
-                setCell(i, j + 1, TokenType.NONE);
+                var bottomSuper:Boolean = getSuper(i, j + 1);
+                setCell(i, j, bottomCell, bottomSuper);
+                setCell(i, j + 1, TokenType.NONE, false);
                 if (hasGroups) {
                     moves.push({type:"vertical", startX:i, startY:j, endX:i, endY:(j + 1), hintX:i, hintY:(j + 1)});
                 } else {
-                    setCell(i, j, TokenType.NONE);
-                    setCell(i, j + 1, topCell);
+                    setCell(i, j, TokenType.NONE, false);
+                    setCell(i, j + 1, topCell, topSuper);
                     if (hasGroups) {
                         moves.push({type:"vertical", startX:i, startY:j, endX:i, endY:(j + 1), hintX:i, hintY:j});
                     }
                 }
-                setCell(i, j, topCell);
-                setCell(i, j + 1, bottomCell);
+                setCell(i, j, topCell, topSuper);
+                setCell(i, j + 1, bottomCell, bottomSuper);
             }
         }
 
@@ -233,11 +266,11 @@ public class BoardState {
         for each (var group:Object in computeGroups()) {
             if (group.type == "horizontal") {
                 for (var di:int = 0; di < group.length; di++) {
-                    setCell(group.startX + di, group.startY, TokenType.NONE);
+                    setCell(group.startX + di, group.startY, TokenType.NONE, false);
                 }
             } else {
                 for (var dj:int = 0; dj < group.length; dj++) {
-                    setCell(group.startX, group.startY + dj, TokenType.NONE);
+                    setCell(group.startX, group.startY + dj, TokenType.NONE, false);
                 }
             }
         }
@@ -250,22 +283,22 @@ public class BoardState {
             for (var j:int = Constants.BOARD_SIZE - 1; j >= 1; j--) {
                 for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                     if (getCell(i, j) == TokenType.NONE) {
-                        setCell(i, j, getCell(i, j - 1));
-                        setCell(i, j - 1, TokenType.NONE);
+                        setCell(i, j, getCell(i, j - 1), getSuper(i, j - 1));
+                        setCell(i, j - 1, TokenType.NONE, false);
                         compacted = true;
                     }
                 }
             }
             for (var ii:int = 0; ii < Constants.BOARD_SIZE; ii++) {
                 if (getCell(ii, 0) == TokenType.NONE) {
-                    setCell(ii, 0, generateNewCell());
+                    setCell(ii, 0, generateNewCell(), false);
                 }
             }
         }
     }
 
     public static function generateNewCell():TokenType {
-        var r:int = _rand.nextInt(1, 17);
+        var r:int = RAND.nextInt(1, 17);
         if (r <= 3) {
             return TokenType.BLOND_BEER;
         } else if (r <= 6) {
@@ -291,22 +324,11 @@ public class BoardState {
         _pissLevel = pissLevel;
     }
 
-    public function get vomitCount():Number {
-        var count:int = 0;
-        for (var j:int = Constants.BOARD_SIZE - 1; j >= 1; j--) {
-            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                if (getCell(i, j) == TokenType.VOMIT) {
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
+    private static var RAND:MersenneTwister = new MersenneTwister(Math.floor(Math.random() * int.MAX_VALUE));
 
     private var _state:Array = new Array();
+    private var _supers:Array = new Array();
     private var _pissLevel:int = 0;
-    private static var _rand:MersenneTwister = new MersenneTwister(Math.floor(Math.random() * int.MAX_VALUE));
 
 }
 }

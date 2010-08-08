@@ -1,4 +1,5 @@
 package com.beerquest {
+import com.beerquest.TokenType;
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
@@ -146,7 +147,7 @@ public class Game extends EventDispatcher {
         if (remainingTurns <= 0) {
             gameOver = true;
         }
-        Constants.STATS.startTurn(board.pissLevel, board.vomitCount);
+        Constants.STATS.startTurn(board.pissLevel, board.count(TokenType.VOMIT));
     }
 
     private function getFormattedTime(hour:int, minute:int):String {

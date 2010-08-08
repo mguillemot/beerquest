@@ -27,6 +27,7 @@ import mx.managers.CursorManagerPriority;
 public class BoardView extends UIComponent {
 
     private static const EXPLODE_DURATION_MS:int = 250;
+    private static const GROUP5_COMPACTION_DURATION_MS:int = 1000;
     private static const SWAP_TIME_MS:Number = 400;
     private static const FALL_TIME_MS:Number = 200;
     private static const PISS_RAISE_TIME_MS:Number = 500;
@@ -170,6 +171,7 @@ public class BoardView extends UIComponent {
             case 79: // o
                 if (Constants.DEBUG) {
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_FURY_BAR));
                 }
                 break;
             case 86: // v
@@ -270,7 +272,7 @@ public class BoardView extends UIComponent {
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
                 if (getToken(i, j) == null) {
-                    token = generateToken(state.getCell(i, j));
+                    token = generateToken(state.getCell(i, j), state.getSuper(i, j));
                     addToken(token);
                     setToken(i, j, token);
                     TweenLite.from(token, 0.7, {x:token.x, y:-height / Constants.BOARD_SIZE, delay:(Constants.BOARD_SIZE - j) * 0.075});
@@ -290,29 +292,20 @@ public class BoardView extends UIComponent {
         removeAllTokens();
         var i:int, j:int, token:Token;
         var state:BoardState = new BoardState();
-        /*state.setAll([
-         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER],
-         [TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD],
-         [TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER,TokenType.FOOD,TokenType.WATER]
-         ]);*/
-        state.setAll([
+        state.setAllCells([
+            [TokenType.LIQUOR,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.BROWN_BEER]
-        ]);
+            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.BROWN_BEER]
+        ], false);
+        state.setCell(0, 0, TokenType.BLOND_BEER, true);
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
-                token = generateToken(state.getCell(i, j));
+                token = generateToken(state.getCell(i, j), state.getSuper(i, j));
                 addToken(token);
                 setToken(i, j, token);
             }
@@ -326,10 +319,10 @@ public class BoardView extends UIComponent {
     }
 
     public function createVomit():void {
-        var cell:Object = getCurrentState().getRandomNonVomitCell();
+        var cell:Object = getCurrentState().getRandomNonVomitNonSuperCell();
         if (cell != null) {
             trace("Creating vomit on " + cell.x + ":" + cell.y);
-            var token:Token = generateToken(TokenType.VOMIT);
+            var token:Token = generateToken(TokenType.VOMIT, false);
             removeToken(getToken(cell.x, cell.y));
             addToken(token);
             setToken(cell.x, cell.y, token);
@@ -344,7 +337,7 @@ public class BoardView extends UIComponent {
         var token:Token;
         while (_gemsLayer.numChildren > 0) {
             token = _gemsLayer.removeChildAt(0) as Token;
-            if (exceptNonMarkedVomit && token.type == TokenType.VOMIT && !token.mark) {
+            if (exceptNonMarkedVomit && token.type == TokenType.VOMIT && token.mark == null) {
                 toKeep.push(token);
             }
         }
@@ -363,11 +356,11 @@ public class BoardView extends UIComponent {
         removeAllTokens(true);
     }
 
-    private function generateToken(type:TokenType = null):Token {
+    private function generateToken(type:TokenType, superToken:Boolean):Token {
         if (type == null) {
             type = BoardState.generateNewCell();
         }
-        var token:Token = new Token(type);
+        var token:Token = new Token(type, superToken);
         token.width = width / Constants.BOARD_SIZE;
         token.height = height / Constants.BOARD_SIZE;
         return token;
@@ -377,7 +370,11 @@ public class BoardView extends UIComponent {
         var state:BoardState = new BoardState();
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
-                state.setCell(i, j, getToken(i, j).type);
+                var token:Token = getToken(i, j);
+                if (token.superToken) {
+                    trace("Found super-token at " + i + ":" + j);
+                }
+                state.setCell(i, j, token.type, token.superToken);
             }
         }
         state.pissLevel = pissLevel;
@@ -523,7 +520,15 @@ public class BoardView extends UIComponent {
                 } else {
                     y += k;
                 }
-                getToken(x, y).mark = true;
+                if (group.length >= 5) {
+                    if (x == group.midX && y == group.midY) {
+                        getToken(x, y).mark = "BOMB";
+                    } else {
+                        getToken(x, y).mark = new Point(group.midX, group.midY);
+                    }
+                } else {
+                    getToken(x, y).mark = true;
+                }
             }
         }
         invalidateDisplayList();
@@ -532,16 +537,34 @@ public class BoardView extends UIComponent {
 
     private function destroyMarked():void {
         startAction("exploding");
+        var duration:Number = EXPLODE_DURATION_MS;
+        var bombs:Array = new Array();
         for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                 var token:Token = getToken(i, j);
-                if (token.mark) {
-                    token.explode();
+                if (token.mark != null) {
+                    if (token.mark === true) {
+                        TweenLite.to(token, EXPLODE_DURATION_MS / 1000, {alpha:0});
+                    } else if (token.mark is Point) {
+                        var focus:Point = token.mark as Point;
+                        var dx:Number = (focus.x - i) * width / Constants.BOARD_SIZE;
+                        var dy:Number = (focus.y - j) * height / Constants.BOARD_SIZE;
+                        TweenLite.to(token, GROUP5_COMPACTION_DURATION_MS / 1000, {x:dx.toString(), y:dy.toString()});
+                        duration = GROUP5_COMPACTION_DURATION_MS;
+                    } else if (token.mark == "BOMB") {
+                        bombs.push({x:i, y:j, type:token.type});
+                    }
                 }
             }
         }
-        var timer:Timer = new Timer(EXPLODE_DURATION_MS, 1);
+        var timer:Timer = new Timer(duration, 1);
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+            for each (var bomb:Object in bombs) {
+                removeToken(getToken(bomb.x, bomb.y));
+                var btoken:Token = generateToken(bomb.type, true);
+                addToken(btoken);
+                setToken(bomb.x, bomb.y, btoken);
+            }
             endDestroySeries();
         });
         timer.start();
@@ -583,7 +606,6 @@ public class BoardView extends UIComponent {
                     dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(TokenType.TRIPLE);
-                        partialBeersCollected.push(TokenType.TRIPLE);
                         collectedToken = TokenType.TRIPLE;
                     } else if (group.token == TokenType.COASTER) {
                         player.coasterReserve += 3;
@@ -614,10 +636,10 @@ public class BoardView extends UIComponent {
                 }
 
                 var scoreGain:int = group.token.score * group.length * combo;
-                var beerGain:int = 0;
+                var beerGain:int = group.supers * Constants.SUPER_TOKEN_VALUE;
                 var fx:Sound;
                 if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                    beerGain = group.length;
+                    beerGain += group.length;
                     player.piss += 3 * group.length;
                     player.vomit += 3 * group.length;
                     if (Constants.SOUND_ENABLED) {
@@ -694,7 +716,7 @@ public class BoardView extends UIComponent {
                         if (jj >= 0) {
                             upToken = getToken(i, jj);
                         } else {
-                            upToken = generateToken();
+                            upToken = generateToken(null, false);
                             addToken(upToken);
                             setToken(i, jj, upToken);
                         }
@@ -776,7 +798,7 @@ public class BoardView extends UIComponent {
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 var token:Token = getToken(i, j);
-                token.mark = false;
+                token.mark = null;
             }
         }
     }
@@ -922,7 +944,8 @@ public class BoardView extends UIComponent {
                 break;
             case Capacity.BLOND_FURY_BAR:
                 score = 75;
-                beers = destroyTokensOfType(TokenType.BLOND_BEER);
+                var blonds:Point = destroyTokensOfType(TokenType.BLOND_BEER);
+                beers = blonds.x + Constants.SUPER_TOKEN_VALUE * blonds.y;
                 dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
@@ -934,7 +957,8 @@ public class BoardView extends UIComponent {
                 break;
             case Capacity.BROWN_FURY_BAR:
                 score = 75;
-                beers = destroyTokensOfType(TokenType.BROWN_BEER);
+                var browns:Point = destroyTokensOfType(TokenType.BROWN_BEER);
+                beers = browns.x + Constants.SUPER_TOKEN_VALUE * browns.y;
                 dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
@@ -946,7 +970,8 @@ public class BoardView extends UIComponent {
                 break;
             case Capacity.AMBER_FURY_BAR:
                 score = 75;
-                beers = destroyTokensOfType(TokenType.AMBER_BEER);
+                var ambers:Point = destroyTokensOfType(TokenType.AMBER_BEER);
+                beers = ambers.x + Constants.SUPER_TOKEN_VALUE * ambers.y;
                 dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
                 game.me.usedCapacity(capacity);
                 game.me.score += score;
@@ -991,26 +1016,29 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function destroyTokensOfType(targetType:TokenType):int {
+    private function destroyTokensOfType(targetType:TokenType):Point {
         if (_destroyCursor != 0) {
             CursorManager.removeCursor(_destroyCursor);
             _destroyCursor = 0;
         }
         startAction("destroyTokensOfType");
-        var count:int = 0;
+        var count:int = 0, supers:int = 0;
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 var token:Token = getToken(i, j);
                 if (token.type == targetType) {
                     token.mark = true;
                     count++;
+                    if (token.superToken) {
+                        supers++;
+                    }
                 }
             }
         }
         _resolvingCapacity = true;
         destroyMarked();
         _resolvingCapacity = false;
-        return count;
+        return new Point(count, supers);
     }
 
     private function transformTokensOfType(source:TokenType, target:TokenType):int {
@@ -1021,7 +1049,7 @@ public class BoardView extends UIComponent {
                 var token:Token = getToken(i, j);
                 if (token.type == source) {
                     removeToken(token);
-                    token = generateToken(target);
+                    token = generateToken(target, token.superToken);
                     addToken(token);
                     setToken(i, j, token);
                     count++;

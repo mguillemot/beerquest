@@ -24,7 +24,7 @@
             _capacity = value;
             if (value.enabled) {
                 background.source = new CapacityEnabled();
-                var token:Token = new Token(value.correspondingToken);
+                var token:Token = new Token(value.correspondingToken, false);
                 token.width = capaIcon.width;
                 token.height = capaIcon.height;
                 while (capaIcon.rawChildren.numChildren > 0) {

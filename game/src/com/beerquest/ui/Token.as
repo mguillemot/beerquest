@@ -9,11 +9,13 @@ import mx.core.BitmapAsset;
 public class Token extends Sprite {
 
     private static const HINT_CYCLE_MS:Number = 800;
+    private static const SUPER_CYCLE_MS:Number = 1000;
 
-    public function Token(type:TokenType) {
+    public function Token(type:TokenType, superToken:Boolean) {
         super();
 
         _id = nextId++;
+        _superToken = superToken;
 
         var hit:Sprite = new Sprite();
         hit.graphics.drawRect(0, 0, 100, 100);
@@ -30,6 +32,7 @@ public class Token extends Sprite {
             case TokenType.AMBER_BEER:
                 _icon = new WhiteBeerIcon();
                 break;
+            case TokenType.BOMB: // TODO icône différente
             case TokenType.COASTER:
                 _icon = new CoasterIcon();
                 break;
@@ -69,6 +72,14 @@ public class Token extends Sprite {
         }
         addChild(_icon);
 
+        if (superToken) {
+            _superTween = new TweenLite(this, SUPER_CYCLE_MS / 2 / 1000, {colorTransform:{tint:0xff0000, tintAmount:0.7}, onComplete:function():void {
+                _superTween.reverse();
+            }, onReverseComplete:function():void {
+                _superTween.restart();
+            }});
+        }
+
         _type = type;
         _mark = false;
     }
@@ -78,19 +89,20 @@ public class Token extends Sprite {
      removeChild(_movieClip);
      _movieClip = null;
      }
-     }*/
+     }
 
-    public function explode():void {
-        /*if (_movieClip != null) {
-         _movieClip.gotoAndPlay("start_explode");
-         }*/
-        if (_icon != null) {
-            TweenLite.to(_icon, .25, {alpha: 0});
-        }
-    }
+     public function explode():void {
+     if (_movieClip != null) {
+     _movieClip.gotoAndPlay("start_explode");
+     }
+     }*/
 
     public function get type():TokenType {
         return _type;
+    }
+
+    public function get superToken():Boolean {
+        return _superToken;
     }
 
     public function get boardX():int {
@@ -117,11 +129,11 @@ public class Token extends Sprite {
         _falling = value;
     }
 
-    public function get mark():Boolean {
+    public function get mark():Object {
         return _mark;
     }
 
-    public function set mark(value:Boolean):void {
+    public function set mark(value:Object):void {
         _mark = value;
     }
 
@@ -155,11 +167,13 @@ public class Token extends Sprite {
     private var _icon:BitmapAsset;
     //private var _movieClip:MovieClipAsset;
     private var _type:TokenType;
+    private var _superToken:Boolean = false;
     private var _boardX:int = int.MIN_VALUE;
     private var _boardY:int = int.MIN_VALUE;
-    private var _mark:Boolean;
+    private var _mark:Object = null;
     private var _hint:Boolean = false;
     private var _hintTween:TweenLite;
+    private var _superTween:TweenLite;
     private var _falling:Boolean = false;
 
 
