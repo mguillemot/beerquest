@@ -6,21 +6,21 @@ import flash.events.Event;
 public class ScoreEvent extends Event {
     public static const SCORE_GAINED:String = "ScoreGained";
 
-    public function ScoreEvent(caps:int, beers:int, stageX:Number = NaN, stageY:Number = NaN, capacity:Capacity = null) {
+    public function ScoreEvent(beers:int, turns:int, stageX:Number = NaN, stageY:Number = NaN, capacity:Capacity = null) {
         super(SCORE_GAINED, true);
-        _caps = caps;
         _beers = beers;
+        _turns = turns;
         _stageX = stageX;
         _stageY = stageY;
         _capacity = capacity;
     }
 
-    public function get caps():int {
-        return _caps;
-    }
-
     public function get beers():int {
         return _beers;
+    }
+
+    public function get turns():int {
+        return _turns;
     }
 
     public function get stageX():Number {
@@ -35,8 +35,8 @@ public class ScoreEvent extends Event {
         return _capacity;
     }
 
-    private var _caps:int;
     private var _beers:int;
+    private var _turns:int;
     private var _stageX:Number;
     private var _stageY:Number;
     private var _capacity:Capacity;

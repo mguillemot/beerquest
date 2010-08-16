@@ -1,4 +1,7 @@
 package com.beerquest {
+import com.adobe.serialization.json.JSON;
+import com.beerquest.BoardState;
+
 import flash.net.URLVariables;
 
 public class GameStats {
@@ -12,21 +15,92 @@ public class GameStats {
         return (now.valueOf() - startTime);
     }
 
-    public function startTurn(pissLevel:Number, vomitCount:Number):void {
+    public function startTurn(game:Game):void {
         var now:Date = new Date();
         if (turnStart != 0) {
             timePerTurns.push(now.valueOf() - turnStart);
         }
         turnStart = now.valueOf();
-        if (pissLevel > maxPissLevel) {
-            maxPissLevel = pissLevel;
+        if (game.board.pissLevel > maxPissLevel) {
+            maxPissLevel = game.board.pissLevel;
         }
-        pissLevels.push(pissLevel);
-        if (vomitCount > maxVomitOnBoard) {
-            maxVomitOnBoard = vomitCount;
+        pissLevels.push(game.board.pissLevel);
+        var vc:int = game.board.count(TokenType.VOMIT);
+        if (vc > maxVomitOnBoard) {
+            maxVomitOnBoard = vc;
         }
-        vomitsOnBoard.push(vomitCount);
         totalTurns++;
+        vomitsOnBoard.push(vc);
+        replay.push({
+            type: "status",
+            turn: totalTurns,
+            time: elapsedTime,
+            board: game.board.encodedState(),
+            piss: game.me.piss,
+            vomit: game.me.vomit,
+            capa1: game.me.capacities.getItemAt(0).encodedState(),
+            capa2: game.me.capacities.getItemAt(1).encodedState(),
+            stack: game.me.partialBeersEncodedState()
+        });
+    }
+
+    public function boardReset():void {
+        resetCount++;
+        replay.push({
+            type: "reset",
+            turn: totalTurns,
+            time: elapsedTime
+        });
+    }
+
+    public function gemsSwapped(sx:int, sy:int, dx:int, dy:int):void {
+        replay.push({
+            type: "swap",
+            turn: totalTurns,
+            time: elapsedTime,
+            sx: sx,
+            sy: sy,
+            dx: dx,
+            dy: dy
+        });
+    }
+
+    public function capacityUsed(c:Capacity):void {
+        switch (c) {
+            case Capacity.AMBER_FURY_BAR:
+                capaAmberUsed++;
+                break;
+            case Capacity.BIG_BANG:
+                capaLiquorUsed++;
+                break;
+            case Capacity.DIVINE_PEANUTS:
+                capaFoodUsed++;
+                break;
+            case Capacity.BLOND_FURY_BAR:
+                capaBlondUsed++;
+                break;
+            case Capacity.BLOODY_MARY:
+                capaTomatoUsed++;
+                break;
+            case Capacity.BROWN_FURY_BAR:
+                capaBrownUsed++;
+                break;
+        }
+        replay.push({
+            type: "capacity",
+            turn: totalTurns,
+            time: elapsedTime,
+            capacity: c.encodedState()
+        });
+    }
+
+    public function pissed():void {
+        pissCount++;
+        replay.push({
+            type: "piss",
+            turn: totalTurns,
+            time: elapsedTime
+        });
     }
 
     public function avg(a:Array):Number {
@@ -86,12 +160,6 @@ public class GameStats {
                     capaLiquorGained++;
                 }
                 break;
-            case TokenType.COASTER:
-                collectedCoaster += size;
-                if (size >= 4) {
-                    capaCoasterGained++;
-                }
-                break;
             case TokenType.TOMATO_JUICE:
                 collectedTomato += size;
                 if (size >= 4) {
@@ -99,13 +167,6 @@ public class GameStats {
                 }
                 break;
         }
-    }
-
-    public function addMultiplier(m:Number):void {
-        if (m > maxMultiplier) {
-            maxMultiplier = m;
-        }
-        multiplierCount++;
     }
 
     public function addCombo(size:Number):void {
@@ -120,20 +181,18 @@ public class GameStats {
         result.play_time = elapsedTime;
         result.avg_time_per_turn = avg(timePerTurns);
         result.total_turns = totalTurns;
+        result.replay = JSON.encode(replay);
         result.collected_blond = collectedBlond;
         result.collected_brown = collectedBrown;
         result.collected_amber = collectedAmber;
         result.collected_food = collectedFood;
         result.collected_water = collectedWater;
         result.collected_liquor = collectedLiquor;
-        result.collected_coaster = collectedCoaster;
         result.collected_tomato = collectedTomato;
         result.max_group_size = maxGroupSize;
         result.groups_3 = groups3;
         result.groups_4 = groups4;
         result.groups_5 = groups5;
-        result.multiplier_count = multiplierCount;
-        result.max_multiplier = maxMultiplier;
         result.max_combo = maxCombo;
         result.avg_combo = avg(combos);
         result.capa_blond_gained = capaBlondGained;
@@ -150,8 +209,6 @@ public class GameStats {
         result.capa_liquor_used = capaLiquorUsed;
         result.capa_tomato_gained = capaTomatoGained;
         result.capa_tomato_used = capaTomatoUsed;
-        result.capa_coaster_gained = capaCoasterGained;
-        result.capa_coaster_used = capaCoasterUsed;
         result.piss_count = pissCount;
         result.vomit_count = vomitCount;
         result.reset_count = resetCount;
@@ -162,6 +219,7 @@ public class GameStats {
         result.invalid_moves = invalidMoves;
         result.stack_ejected = stackEjected;
         result.stack_collected = stackCollected;
+        result.game_over = gameOver;
         return result;
     }
 
@@ -169,14 +227,13 @@ public class GameStats {
     public var turnStart:Number = 0;
     public var timePerTurns:Array = new Array();
     public var totalTurns:Number = 0;
-    // TODO Replay
+    public var replay:Array = new Array();
     public var collectedBlond:Number = 0;
     public var collectedBrown:Number = 0;
     public var collectedAmber:Number = 0;
     public var collectedFood:Number = 0;
     public var collectedWater:Number = 0;
     public var collectedLiquor:Number = 0;
-    public var collectedCoaster:Number = 0;
     public var collectedTomato:Number = 0;
     public var groupsPerTurn:Array = new Array();
     public var maxGroupsPerTurn:Number = 0;
@@ -184,8 +241,6 @@ public class GameStats {
     public var groups4:Number = 0;
     public var groups5:Number = 0;
     public var maxGroupSize:Number = 0;
-    public var multiplierCount:Number = 0;
-    public var maxMultiplier:Number = 0;
     public var maxCombo:Number = 0;
     public var combos:Array = new Array();
     public var capaBlondGained:Number = 0;
@@ -200,8 +255,6 @@ public class GameStats {
     public var capaWaterUsed:Number = 0;
     public var capaLiquorGained:Number = 0;
     public var capaLiquorUsed:Number = 0;
-    public var capaCoasterGained:Number = 0;
-    public var capaCoasterUsed:Number = 0;
     public var capaTomatoGained:Number = 0;
     public var capaTomatoUsed:Number = 0;
     public var pissCount:Number = 0;
@@ -214,6 +267,7 @@ public class GameStats {
     public var invalidMoves:Number = 0;
     public var stackEjected:Number = 0;
     public var stackCollected:Number = 0;
+    public var gameOver:Boolean = false;
 
 }
 }

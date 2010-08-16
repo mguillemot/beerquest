@@ -32,10 +32,6 @@ public class Token extends Sprite {
             case TokenType.AMBER_BEER:
                 _icon = new WhiteBeerIcon();
                 break;
-            case TokenType.BOMB: // TODO icône différente
-            case TokenType.COASTER:
-                _icon = new CoasterIcon();
-                break;
             case TokenType.FOOD:
                 _icon = new FoodIcon();
                 break;
@@ -188,9 +184,6 @@ public class Token extends Sprite {
 
     [Embed(source="../../../cahouet.png")]
     private static var FoodIcon:Class;
-
-    [Embed(source="../../../sous-bock.png")]
-    private static var CoasterIcon:Class;
 
     [Embed(source="../../../digestif.png")]
     private static var LiquorIcon:Class;

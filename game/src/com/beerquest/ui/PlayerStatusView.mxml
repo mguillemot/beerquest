@@ -41,9 +41,6 @@
             _player.addEventListener(GameEvent.FULL_BEERS_CHANGED, onFullBeersChanged);
         }
 
-        [Bindable]
-        public var clickable:Boolean = true;
-
         public function get tokenEntryPoint():Point {
             return stack.stageEntryPoint;
         }
@@ -117,12 +114,12 @@
     <mx:Spacer height="5"/>
 
     <mx:Canvas width="100%"
-               toolTip="Attention, à partir de 80% : innondation  (bloque les lignes du fond) ! Allez aux WC ou mangez des Cahouètes. ">
+               toolTip="Attention, à partir de 80% : innondation (bloque les lignes du fond) !">
         <ui:ProgressBar y="9" width="100%" height="16" progress="{player.piss}" emptyColor="0x9f9600"
                         fullColorLight="0xfbe400" fullColorDark="0xcd1be00"/>
         <mx:Image x="15" id="wcButton" source="{WcIcon}" mouseOver="onMouseOverPiss(event)"
                   mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
-                  visible="{and(clickable, player.piss >= 80)}"/>
+                  visible="{player.piss >= 80}"/>
     </mx:Canvas>
 
     <mx:Spacer height="20"/>
@@ -149,8 +146,8 @@
     <mx:Spacer height="25"/>
 
     <ui:CapacityView id="capa0" player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"
-                     clickable="{and(clickable, !game.gameOver)}"/>
+                     clickable="{!game.gameOver}"/>
     <mx:Spacer height="10"/>
     <ui:CapacityView id="capa1" player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"
-                     clickable="{and(clickable, !game.gameOver)}"/>
+                     clickable="{!game.gameOver}"/>
 </mx:VBox>

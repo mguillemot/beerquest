@@ -15,8 +15,8 @@ public class EffectLayer extends Canvas {
     public static const SCORE_EFFECT_TIME_MS:int = 1800;
     public static const TOKEN_EFFECT_TIME_MS:int = 800;
 
-    private static const NUM_SCORE_EFFECTS:int = 8;
-    private static const NUM_TOKEN_EFFECTS:int = 4;
+    private static const NUM_SCORE_EFFECTS:int = 10;
+    private static const NUM_TOKEN_EFFECTS:int = 6;
 
     public function EffectLayer() {
         super();
@@ -36,13 +36,13 @@ public class EffectLayer extends Canvas {
         }
     }
 
-    public function addScoreEffect(caps:int, beers:int, x:Number, y:Number):void {
+    public function addScoreEffect(beers:int, turns:int, x:Number, y:Number):void {
         if (_scoreEffectBuffer.length > 0) {
             var vfx:ScoreFx = _scoreEffectBuffer.pop();
             vfx.visible = true;
             vfx.alpha = 1;
-            vfx.caps = caps;
             vfx.beers = beers;
+            vfx.turns = turns;
             vfx.x = x - vfx.width / 2;
             vfx.y = y - vfx.height / 2;
             TweenLite.to(vfx, SCORE_EFFECT_TIME_MS / 2 / 1000, {alpha:0, delay:SCORE_EFFECT_TIME_MS / 2 / 1000});

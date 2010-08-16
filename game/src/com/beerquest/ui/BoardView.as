@@ -82,10 +82,6 @@ public class BoardView extends UIComponent {
             rect.graphics.drawRect(0 - 1, 0 - 1, width + 2, height + 2);
             addChild(rect);
             mask = rect;
-
-            regenBoard(false);
-            _initialized = true;
-            refreshStats();
         });
         addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
         addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -170,8 +166,7 @@ public class BoardView extends UIComponent {
                 break;
             case 79: // o
                 if (Constants.DEBUG) {
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BIG_BANG));
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOND_FURY_BAR));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.BLOODY_MARY));
                 }
                 break;
             case 86: // v
@@ -257,7 +252,7 @@ public class BoardView extends UIComponent {
                 var fx:Sound = new BoardResetFX();
                 fx.play();
             }
-            Constants.STATS.resetCount++;
+            Constants.STATS.boardReset();
         } else {
             regenBoard2();
         }
@@ -266,7 +261,7 @@ public class BoardView extends UIComponent {
     private function regenBoard2():void {
         startAction("regenBoard2");
         removeAllTokensExceptNonMarkedVomit();
-        var state:BoardState = new BoardState();
+        var state:BoardState = new BoardState(game.rand);
         state.generateRandomWithoutGroups();
         var i:int, j:int, token:Token;
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
@@ -284,7 +279,13 @@ public class BoardView extends UIComponent {
             startAction("");
         });
         timer.start();
-        game.board = getCurrentState();
+        updateGameBoard();
+    }
+
+    private function updateGameBoard():void {
+        if (game != null) {
+            game.board.updateTo(getCurrentState());
+        }
     }
 
     private function resetToTestBoard():void {
@@ -293,8 +294,8 @@ public class BoardView extends UIComponent {
         var i:int, j:int, token:Token;
         var state:BoardState = new BoardState();
         state.setAllCells([
-            [TokenType.LIQUOR,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.LIQUOR,TokenType.TOMATO_JUICE,TokenType.TOMATO_JUICE,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.TOMATO_JUICE,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
@@ -358,7 +359,7 @@ public class BoardView extends UIComponent {
 
     private function generateToken(type:TokenType, superToken:Boolean):Token {
         if (type == null) {
-            type = BoardState.generateNewCell();
+            type = game.board.generateNewCell();
         }
         var token:Token = new Token(type, superToken);
         token.width = width / Constants.BOARD_SIZE;
@@ -387,11 +388,8 @@ public class BoardView extends UIComponent {
             token = getToken(x, y).type;
             if (token.collectible) {
                 var count:int = getCurrentState().count(token);
-                var score:int = 150 + count * token.score;
-                dispatchEvent(new ScoreEvent(score, 0, null, null, Capacity.BIG_BANG));
                 game.me.usedCapacity(Capacity.BIG_BANG);
                 destroyTokensOfType(token);
-                game.me.score += score;
                 if (Constants.SOUND_ENABLED) {
                     var fx:Sound = new BigBangFX();
                     fx.play();
@@ -447,9 +445,9 @@ public class BoardView extends UIComponent {
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
             if (valid) {
                 dispatchEvent(new GemsSwappedEvent(game.me, sx, sy, x, y));
+                Constants.STATS.gemsSwapped(sx, sy, x, y);
                 setToken(x, y, src);
                 setToken(sx, sy, dst);
-                startScoring();
                 startAction("");
                 destroySeries();
             } else {
@@ -574,16 +572,10 @@ public class BoardView extends UIComponent {
         // One phase of a turn
         var series:int = checkSeries();
         if (series > 0) {
-            combo += series;
             destroyMarked();
 
             var state:BoardState = getCurrentState();
-            var player:PlayerData = game.me;
             var maxGroup:int = 0;
-            if (game.me.coasterReserve > 0) {
-                player = game.opponent;
-                game.me.coasterReserve--;
-            }
             var partialBeersCollected:Array = new Array();
             for each (var group:Object in state.computeGroups()) {
                 var collectedToken:TokenType = null;
@@ -591,43 +583,37 @@ public class BoardView extends UIComponent {
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(group.token);
                         collectedToken = group.token;
-                    } else if (group.token == TokenType.COASTER) {
-                        player.coasterReserve++;
                     }
                 } else if (group.length == 4) {
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(TokenType.TRIPLE);
                         collectedToken = TokenType.TRIPLE;
-                    } else if (group.token == TokenType.COASTER) {
-                        player.coasterReserve += 2;
                     }
                 } else if (group.length >= 5) {
-                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, player, Capacity.fromToken(group.token)));
+                    dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, game.me, Capacity.fromToken(group.token)));
                     if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
                         partialBeersCollected.push(TokenType.TRIPLE);
                         collectedToken = TokenType.TRIPLE;
-                    } else if (group.token == TokenType.COASTER) {
-                        player.coasterReserve += 3;
                     }
                 }
 
                 // Reorder collected partial beers during the phase to favorize stack groups
                 while (partialBeersCollected.length > 0) {
-                    var preferred:TokenType = player.preferredPartialBeer;
+                    var preferred:TokenType = game.me.preferredPartialBeer;
                     if (preferred == TokenType.NONE || preferred == TokenType.TRIPLE) {
-                        player.addPartialBeer(partialBeersCollected.pop());
+                        game.me.addPartialBeer(partialBeersCollected.pop());
                     } else {
                         var found:Boolean = false;
                         for (var i:int = 0; i < partialBeersCollected.length; i++) {
                             if (TokenType.isCompatible(partialBeersCollected[i], preferred)) {
-                                player.addPartialBeer(partialBeersCollected[i]);
+                                game.me.addPartialBeer(partialBeersCollected[i]);
                                 partialBeersCollected.splice(i, 1);
                                 found = true;
                             }
                         }
                         if (!found) {
-                            player.addPartialBeer(partialBeersCollected.pop());
+                            game.me.addPartialBeer(partialBeersCollected.pop());
                         }
                     }
                 }
@@ -635,46 +621,49 @@ public class BoardView extends UIComponent {
                     maxGroup = group.length;
                 }
 
-                var scoreGain:int = group.token.score * group.length * combo;
                 var beerGain:int = group.supers * Constants.SUPER_TOKEN_VALUE;
+                var turnsGain:int = 0;
                 var fx:Sound;
-                if (group.token == TokenType.BLOND_BEER || group.token == TokenType.BROWN_BEER || group.token == TokenType.AMBER_BEER) {
-                    beerGain += group.length;
-                    player.piss += 3 * group.length;
-                    player.vomit += 3 * group.length;
-                    if (Constants.SOUND_ENABLED) {
-                        fx = new BeerFX();
-                        fx.play();
-                    }
-                } else if (group.token == TokenType.WATER) {
-                    player.piss += 3 * group.length;
-                    player.vomit -= 3 * group.length;
-                    if (Constants.SOUND_ENABLED) {
-                        fx = new WaterFX();
-                        fx.play();
-                    }
-                } else if (group.token == TokenType.LIQUOR) {
-                    player.vomit += 6 * group.length;
-                    if (Constants.SOUND_ENABLED) {
-                        fx = new LiquorFX();
-                        fx.play();
-                    }
-                } else if (group.token == TokenType.FOOD) {
-                    player.vomit -= 7 * group.length;
-                    if (Constants.SOUND_ENABLED) {
-                        fx = new FoodFX();
-                        fx.play();
-                    }
-                } else if (group.token == TokenType.TOMATO_JUICE) {
-                    player.piss += 2 * group.length;
-                    player.vomit -= 4 * group.length;
-                    if (Constants.SOUND_ENABLED) {
-                        fx = new TomatoFX();
-                        fx.play();
-                    }
+                switch (group.token) {
+                    case TokenType.BLOND_BEER:
+                    case TokenType.BROWN_BEER:
+                    case TokenType.AMBER_BEER:
+                        beerGain += group.length;
+                        if (Constants.SOUND_ENABLED) {
+                            fx = new BeerFX();
+                            fx.play();
+                        }
+                        break;
+                    case TokenType.WATER:
+                        if (Constants.SOUND_ENABLED) {
+                            fx = new WaterFX();
+                            fx.play();
+                        }
+                        break;
+                    case TokenType.LIQUOR:
+                        if (Constants.SOUND_ENABLED) {
+                            fx = new LiquorFX();
+                            fx.play();
+                        }
+                        break;
+                    case TokenType.FOOD:
+                        if (Constants.SOUND_ENABLED) {
+                            fx = new FoodFX();
+                            fx.play();
+                        }
+                        break;
+                    case TokenType.TOMATO_JUICE:
+                        turnsGain += 1;
+                        if (Constants.SOUND_ENABLED) {
+                            fx = new TomatoFX();
+                            fx.play();
+                        }
+                        break;
                 }
-                game.me.score += scoreGain;
+                game.me.piss += group.token.piss * group.length;
+                game.me.vomit += group.token.vomit * group.length;
                 game.me.fullBeers += beerGain;
+                game.gainAdditionalTurns(turnsGain);
                 Constants.STATS.addCollectedGroup(group.token, group.length);
 
                 // Dispatch events for vfx display
@@ -689,7 +678,7 @@ public class BoardView extends UIComponent {
                 }
                 var scoreCoords:Point = localToGlobal(local);
                 var now:Date = new Date();
-                dispatchEvent(new ScoreEvent(scoreGain, beerGain, scoreCoords.x, scoreCoords.y));
+                dispatchEvent(new ScoreEvent(beerGain, turnsGain, scoreCoords.x, scoreCoords.y));
                 if (collectedToken != null) {
                     dispatchEvent(new TokenEvent(collectedToken, scoreCoords.x, scoreCoords.y));
                 }
@@ -741,16 +730,6 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function startScoring():void {
-        _scoring = true;
-        combo = 0;
-    }
-
-    private function endScoring():void {
-        _scoring = false;
-        Constants.STATS.addCombo(combo);
-    }
-
     private function dumpBoard():void {
         trace(getCurrentState());
     }
@@ -784,8 +763,7 @@ public class BoardView extends UIComponent {
         startAction("endFalling");
         resetFalling();
         if (!destroySeries()) {
-            endScoring();
-            game.board = getCurrentState();
+            updateGameBoard();
             if (!_resolvingCapacity) {
                 game.newTurn();
             }
@@ -911,14 +889,12 @@ public class BoardView extends UIComponent {
             trace("ERROR: unable to execute capacity because an action is already in progress");
             return;
         }
-        var score:int, beers:int;
+        var beers:int = 0, turns:int = 0;
         var fx:Sound;
         switch (capacity) {
             case Capacity.DIVINE_PEANUTS:
-                score = 100;
-                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
+                dispatchEvent(new ScoreEvent(beers, turns, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += score;
                 transformTokensOfType(TokenType.LIQUOR, TokenType.WATER);
                 if (Constants.SOUND_ENABLED) {
                     fx = new GenericCapaFX();
@@ -926,10 +902,8 @@ public class BoardView extends UIComponent {
                 }
                 break;
             case Capacity.WATERFALL:
-                score = 75;
-                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
+                dispatchEvent(new ScoreEvent(beers, turns, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += score;
                 destroyTokensOfType(TokenType.VOMIT);
                 if (Constants.SOUND_ENABLED) {
                     fx = new GenericCapaFX();
@@ -943,12 +917,10 @@ public class BoardView extends UIComponent {
                 }
                 break;
             case Capacity.BLOND_FURY_BAR:
-                score = 75;
                 var blonds:Point = destroyTokensOfType(TokenType.BLOND_BEER);
                 beers = blonds.x + Constants.SUPER_TOKEN_VALUE * blonds.y;
-                dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
+                dispatchEvent(new ScoreEvent(beers, turns, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += score;
                 game.me.fullBeers += beers;
                 if (Constants.SOUND_ENABLED) {
                     fx = new GenericCapaFX();
@@ -956,12 +928,10 @@ public class BoardView extends UIComponent {
                 }
                 break;
             case Capacity.BROWN_FURY_BAR:
-                score = 75;
                 var browns:Point = destroyTokensOfType(TokenType.BROWN_BEER);
                 beers = browns.x + Constants.SUPER_TOKEN_VALUE * browns.y;
-                dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
+                dispatchEvent(new ScoreEvent(beers, turns, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += score;
                 game.me.fullBeers += beers;
                 if (Constants.SOUND_ENABLED) {
                     fx = new GenericCapaFX();
@@ -969,35 +939,21 @@ public class BoardView extends UIComponent {
                 }
                 break;
             case Capacity.AMBER_FURY_BAR:
-                score = 75;
                 var ambers:Point = destroyTokensOfType(TokenType.AMBER_BEER);
                 beers = ambers.x + Constants.SUPER_TOKEN_VALUE * ambers.y;
-                dispatchEvent(new ScoreEvent(score, beers, null, null, capacity));
+                dispatchEvent(new ScoreEvent(beers, turns, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += score;
                 game.me.fullBeers += beers;
                 if (Constants.SOUND_ENABLED) {
                     fx = new GenericCapaFX();
                     fx.play();
                 }
                 break;
-            case Capacity.TCHIN_TCHIN:
-                score = 150;
-                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
-                game.me.usedCapacity(capacity);
-                game.me.score += score;
-                stealPartialBeers();
-                if (Constants.SOUND_ENABLED) {
-                    fx = new GenericCapaFX();
-                    fx.play();
-                }
-                break;
             case Capacity.BLOODY_MARY:
-                score = 150;
-                dispatchEvent(new ScoreEvent(score, 0, null, null, capacity));
+                turns = 6;
+                dispatchEvent(new ScoreEvent(beers, turns, null, null, capacity));
                 game.me.usedCapacity(capacity);
-                game.me.score += score;
-                game.gainAdditionalTurns(6);
+                game.gainAdditionalTurns(turns);
                 createVomit();
                 createVomit();
                 createVomit();
@@ -1006,13 +962,6 @@ public class BoardView extends UIComponent {
                     fx.play();
                 }
                 break;
-        }
-    }
-
-    private function stealPartialBeers():void {
-        while (game.opponent.partialBeers.length > 0) {
-            var token:TokenType = game.opponent.partialBeers.removeItemAt(0) as TokenType;
-            game.me.addPartialBeer(token);
         }
     }
 
@@ -1072,26 +1021,26 @@ public class BoardView extends UIComponent {
         dispatchEvent(new Event("availableMovesChanged"));
     }
 
-    [Bindable(event="comboChanged")]
-    public function get combo():Number {
-        return _combo;
-    }
-
-    public function set combo(value:Number):void {
-        _combo = value;
-        dispatchEvent(new Event("comboChanged"));
-    }
-
     public function get game():Game {
         return _game;
     }
 
     public function set game(value:Game):void {
+        if (_game != null) {
+            throw "unable to init BoardView with a game twice";
+        }
         _game = value;
+
+        // Listeners
         _game.me.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
         _game.me.addEventListener(GameEvent.VOMIT_CHANGED, onVomitChanged);
-        _game.me.addEventListener(GameEvent.COASTER_RESERVE_CHANGED, onCoasterReserveChanged);
         _game.me.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
+
+        // Start stats collection
+        regenBoard(false);
+        Constants.STATS.startTurn(_game);
+        _initialized = true;
+        refreshStats();
     }
 
     private function onPissChanged(e:GameEvent):void {
@@ -1113,23 +1062,12 @@ public class BoardView extends UIComponent {
             createVomit();
             createVomit();
             createVomit();
-            game.me.vomit = 50;
+            game.me.vomit = 30;
             if (Constants.SOUND_ENABLED) {
                 var fx:Sound = new VomitFX();
                 fx.play();
             }
             Constants.STATS.vomitCount++;
-        }
-    }
-
-    private function onCoasterReserveChanged(e:GameEvent):void {
-        if (game.me.coasterReserve > 0) {
-            if (_coasterCursor == 0) {
-                _coasterCursor = CursorManager.setCursor(CoasterCursor, CursorManagerPriority.MEDIUM);
-            }
-        } else if (_coasterCursor != 0) {
-            CursorManager.removeCursor(_coasterCursor);
-            _coasterCursor = 0;
         }
     }
 
@@ -1164,14 +1102,11 @@ public class BoardView extends UIComponent {
     private var _currentAction:String = "";
     private var _currentActionStart:int = 0;
     private var _availableMoves:int;
-    private var _scoring:Boolean = false;
-    private var _combo:Number = 0;
     private var _gemsLayer:DisplayObjectContainer;
     private var _pissLayer:DisplayObjectContainer;
     private var _hint:Token = null;
     private var _pissLevel:int = 0;
     private var _destroyCursor:int = 0;
-    private var _coasterCursor:int = 0;
     private var _playable:Boolean = true;
     private var _resolvingCapacity:Boolean = false;
 
@@ -1183,9 +1118,6 @@ public class BoardView extends UIComponent {
 
     [Embed(source="../../../curseur-bigbang.png")]
     private static var DestroyCursor:Class;
-
-    [Embed(source="../../../sous-bock.png")]
-    private static var CoasterCursor:Class;
 
     [Embed(source="../../../son-montee-pisse.mp3")]
     private static var PissRaiseFX:Class;

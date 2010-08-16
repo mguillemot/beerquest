@@ -81,8 +81,8 @@ public class TokenCollectionView extends UIComponent {
                 timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                     // Collect!
                     startAction("collecting");
-                    dispatchEvent(new BeerCollectedEvent(player));
                     Constants.STATS.stackCollected++;
+                    dispatchEvent(new BeerCollectedEvent(player));
                     if (Constants.SOUND_ENABLED) {
                         var fx:Sound = new StackFX();
                         fx.play();

@@ -33,10 +33,10 @@ class FacebookController < ApplicationController
 #		logger.debug @fb_info
 #
 #		if MiniFB.verify_cookie_signature(BeerQuest::FB_APP_ID, BeerQuest::FB_SECRET, cookies)
-			# And here you would create the user if it doesn't already exist, then redirect them to wherever you want.
+	# And here you would create the user if it doesn't already exist, then redirect them to wherever you want.
 #			redirect_to BeerQuest::FB_APP_URL
 #		else
-			# The cookies may have been modified as the signature does not match
+	# The cookies may have been modified as the signature does not match
 #			render :text => "BIG ERROR"
 #		end
 #	end
@@ -83,15 +83,20 @@ class FacebookController < ApplicationController
 
 		logger.debug "Asking FB for info about user account"
 		@me = MiniFB.get(@access_token, "me", :type => nil)
-		logger.debug @me[:id]
-		logger.debug @me[:email] # demandé avec les droits supplémentantes
-		logger.debug @me[:first_name]
-		logger.debug @me[:last_name]
-		logger.debug @me[:name] # = first + last
-		logger.debug @me[:gender]
-		logger.debug @me[:locale] # ex: fr_FR
-		logger.debug @me[:timezone] # 9
-		logger.debug @me[:updated_time] # useless for us?
+		begin
+			@account = Account.find_by_facebook_id(@me[:id])
+		rescue ActiveRecord::RecordNotFound
+			@account = Account.new
+		end
+		@account.email = @me[:email] # demandé avec les droits supplémentantes
+		@account.first_name = @me[:first_name]
+		@account.last_name = @me[:last_name]
+		@account.gender = @me[:gender]
+		@account.locale = @me[:locale] # ex: fr_FR
+		@account.timezone = @me[:timezone] # 9
+		@account.login_count += 1
+		@account.last_login = DateTime.now
+		@account.save!
 
 		logger.debug "Asking FB for info about user friends"
 		@friends = MiniFB.get(@access_token, "me", :type => "friends")

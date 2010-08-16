@@ -14,8 +14,9 @@ BeerQuest::Application.routes.draw do |map|
   get "play(/:id)", :to => "home#play"
 
 	# Game integration
-	get "getscores(/:id)", :to => "scores#getscores"
-	post "postscore/:id", :to => "scores#postscore"
+	get "start", :to => "scores#start"
+	#get "getscores(/:id)", :to => "scores#getscores"
+	post "postscore", :to => "scores#postscore"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

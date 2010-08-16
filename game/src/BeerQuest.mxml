@@ -92,159 +92,107 @@
             addEventListener(ScoreEvent.SCORE_GAINED, onScoreGained);
             addEventListener(TokenEvent.TOKEN_GAINED, onTokenGained);
 
-            /*try {
-             ExternalInterface.addCallback("testJs", testJs);
-             } catch (e:Error) {
-             trace("Impossible to connect to ExternalInterface.")
-             } */
-
-            var freezeGame:Boolean = false;
+            // Parameters passed to game
+            _allowStart = true;
             var requiredVersion:Number = FlexGlobals.topLevelApplication.parameters.requiredVersion;
             if (requiredVersion > 0) {
                 if (requiredVersion > Constants.VERSION) {
-                    freezeGame = true;
+                    _allowStart = false;
                     Alert.show("Current: " + Constants.VERSION + "\nRequired: " + requiredVersion + "\n\nPlease empty your cache and reload this page.", "Wrong version");
                 }
             } else {
                 trace("WARN: No 'requiredVersion' found");
-                if (!Constants.DEBUG) {
-                    freezeGame = true;
-                }
             }
 
-            var mode:String = FlexGlobals.topLevelApplication.parameters.mode;
-            if (mode == null || (mode != "vs" && mode != "solo")) {
+            _mode = FlexGlobals.topLevelApplication.parameters.mode;
+            if (_mode != "vs" && _mode != "solo") {
                 trace("WARN: No proper 'mode' found");
-                mode = "solo";
-                if (!Constants.DEBUG) {
-                    freezeGame = true;
+                _mode = "solo";
+                _allowStart = false;
+            }
+            trace("Starting in mode: " + _mode);
+            modeHeader.source = (_mode == "solo") ? MurgeSolo : BattleBiture;
+
+            _token = FlexGlobals.topLevelApplication.parameters.token;
+            if (_token == null) {
+                trace("WARN: No 'token' found");
+                _token = "none";
+                _allowStart = false;
+                startGame(new Game(_mode, new PlayerData(), Math.random()));
+            }
+            trace("Using the following token: " + _token);
+
+            // Retrieve game info from server using token
+            if (game == null) {
+                var request:URLRequest = new URLRequest("/start?token=" + _token);
+                request.method = URLRequestMethod.GET;
+                _tokenLoader = new URLLoader();
+                _tokenLoader.addEventListener(Event.COMPLETE, onStartInfoReceived);
+                try {
+                    _tokenLoader.load(request);
+                    trace("Load game infos requested.");
+                } catch (e:ArgumentError) {
+                    trace("Load game infos: an ArgumentError has occurred.");
+                } catch (e:SecurityError) {
+                    trace("Load game infos: a SecurityError has occurred.");
                 }
             }
+        }
 
-            serverUrl = FlexGlobals.topLevelApplication.parameters.serverUrl;
-            if (serverUrl == null) {
-                trace("WARN: No 'serverUrl' found");
-                serverUrl = "http://localhost:81/postscore";
-                if (!Constants.DEBUG) {
-                    freezeGame = true;
-                }
-            }
-            trace("Using the following server URL: " + serverUrl);
+        private function onStartInfoReceived(e:Event):void {
+            trace("Game infos received.");
+            var data:Object = JSON.decode(_tokenLoader.data);
+            trace("Seed is " + data.seed);
+            _tokenLoader.removeEventListener(Event.COMPLETE, onStartInfoReceived);
+            _tokenLoader = null;
+            startGame(new Game(_mode, new PlayerData(), data.seed));
+        }
 
-            var meData:PlayerData;
-            var meParam:String = FlexGlobals.topLevelApplication.parameters.me;
-            if (meParam != null) {
-                var me:Object = JSON.decode(meParam);
-                meData = new PlayerData(me.id, me.name, me.title, me.avatar, me.level, me.total_beers, me.total_caps);
-            } else {
-                trace("WARN: No 'me' found");
-                meData = new PlayerData(0, "Mattiou Guillegay", "Le Saint-Bernard", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 42, 12345, 1000042);
-                if (!Constants.DEBUG) {
-                    freezeGame = true;
-                }
-            }
-
-            var opponentData:PlayerData = null;
-            if (mode == "vs") {
-                var opponentParam:String = FlexGlobals.topLevelApplication.parameters.opponent;
-                if (opponentParam != null) {
-                    var opponent:Object = JSON.decode(opponentParam);
-                    opponentData = new PlayerData(opponent.id, opponent.name, opponent.title, opponent.avatar, opponent.level, opponent.total_beers, opponent.total_caps);
-                } else {
-                    trace("WARN: No 'opponent' found");
-                    opponentData = new PlayerData(0, "Jeano Babouin", "Le bois-sans-soif", "http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", 89, 555, 100000);
-                    if (!Constants.DEBUG) {
-                        freezeGame = true;
-                    }
-                }
-            }
-
-            var barName:String, barLocation:String, barBanner:String, barOpen:String, barClose:String;
-            var barParam:String = FlexGlobals.topLevelApplication.parameters.bar;
-            if (barParam != null) {
-                var bar:Object = JSON.decode(barParam);
-                barName = bar.name;
-                barLocation = bar.location;
-                barBanner = bar.banner;
-                barOpen = bar.open;
-                barClose = bar.close;
-            } else {
-                trace("WARN: No 'bar' found, initializing game with default value");
-                barName = "Le Des-Murges Bar";
-                barLocation = "Paris - France";
-                barBanner = "http://erhune.iobb.net/images/banner.jpg";
-                barOpen = "21:00";
-                barClose = "2:00";
-                if (!Constants.DEBUG) {
-                    freezeGame = true;
-                }
-            }
-
-            var highScores:Array = new Array();
-            var highScoresParam:String = FlexGlobals.topLevelApplication.parameters.highScores;
-            if (highScoresParam != null) {
-                var highScoresJson:Array = JSON.decode(highScoresParam) as Array;
-                for each (var highScoreJson:Object in highScoresJson) {
-                    highScores.push({firstName:highScoreJson.firstName, lastName:highScoreJson.lastName, avatar:highScoreJson.avatar, score:highScoreJson.score, rank:highScoreJson.rank, me:highScoreJson.me});
-                }
-            } else {
-                trace("WARN: No 'highScores' found, initializing game with default value");
-                highScores.push({firstName:"Dark", lastName:"Vador", avatar:"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", score:199, rank:1, me:false});
-                highScores.push({firstName:"Matthieu", lastName:"Guillemot", avatar:"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", score:60, rank:2, me:true});
-                highScores.push({firstName:"Pierre-Olivier", lastName:"Ducoing", avatar:"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", score:55, rank:3, me:false});
-                highScores.push({firstName:"Hakurei", lastName:"Reimu", avatar:"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", score:52, rank:4, me:false});
-                highScores.push({firstName:"Kirisame", lastName:"Marisa", avatar:"http://profile.ak.fbcdn.net/v227/369/75/q1308311126_5056.jpg", score:42, rank:5, me:false});
-                if (!Constants.DEBUG) {
-                    freezeGame = true;
-                }
-            }
-
-            game = new Game(mode, meData, opponentData, barName, barLocation, barOpen, barClose, highScores);
-            if (freezeGame) {
+        private function startGame(game:Game):void {
+            this.game = game;
+            if (!_allowStart && !Constants.DEBUG) {
                 game.gameOver = true;
             }
+            game.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onCurrentTurnChanged);
             game.addEventListener(GameEvent.GAME_OVER, onGameOver);
-            if (game.mode == "solo") {
-                modeHeader.source = MurgeSolo;
-            } else if (game.mode == "vs") {
-                modeHeader.source = BattleBiture;
-            }
-
-            var loader:Loader = new Loader();
-            banner.addChild(loader);
-            loader.load(new URLRequest(barBanner));
         }
 
         private function onGameEvent(e:GameEvent):void {
             game.handleEvent(e);
         }
 
+        private function onCurrentTurnChanged(e:GameEvent):void {
+            uploadScore();
+        }
+        
         private function onGameOver(e:GameEvent):void {
             TweenLite.to(gameover, 2, {y:0});
-            if (!scoresSent && game.me.id > 0) {
-                // Transmit score & stats to the server
-                var data:URLVariables = Constants.STATS.getForSerialization();
-                data.mode = game.mode;
-                data.game_version = Constants.VERSION.toString();
-                data.score = game.me.fullBeers;
-                data.caps = game.me.score;
-                data.flash_version = Capabilities.version;
+            if (!_scoresSent) {
+                uploadScore();
+                _scoresSent = true;
+            }
+        }
 
-                var request:URLRequest = new URLRequest(serverUrl);
-                request.method = URLRequestMethod.POST;
-                request.data = data;
-                var loader:URLLoader = new URLLoader();
-                loader.addEventListener(Event.COMPLETE, onScorePosted);
-                try {
-                    loader.load(request);
-                    trace("Score posted.");
-                } catch (e:ArgumentError) {
-                    trace("Post score: an ArgumentError has occurred.");
-                } catch (e:SecurityError) {
-                    trace("Post score: a SecurityError has occurred.");
-                }
+        private function uploadScore():void {
+            var data:URLVariables = Constants.STATS.getForSerialization();
+            data.mode = game.mode;
+            data.token = _token;
+            data.game_version = Constants.VERSION.toString();
+            data.score = game.me.fullBeers;
+            data.flash_version = Capabilities.version;
 
-                scoresSent = true;
+            var request:URLRequest = new URLRequest("/postscore");
+            request.method = URLRequestMethod.POST;
+            request.data = data;
+            var loader:URLLoader = new URLLoader();
+            loader.addEventListener(Event.COMPLETE, onScorePosted);
+            try {
+                loader.load(request);
+                trace("Score posted.");
+            } catch (e:ArgumentError) {
+                trace("Post score: an ArgumentError has occurred.");
+            } catch (e:SecurityError) {
+                trace("Post score: a SecurityError has occurred.");
             }
         }
 
@@ -258,7 +206,7 @@
                 x = e.stageX;
                 y = e.stageY;
             }
-            vfxLayer.addScoreEffect(e.caps, e.beers, x, y);
+            vfxLayer.addScoreEffect(e.beers, e.turns, x, y);
         }
 
         private function onTokenGained(e:TokenEvent):void {
@@ -267,51 +215,17 @@
         }
 
         private function onScorePosted(e:Event):void {
-            Alert.show("Score uploaded.");
+            //Alert.show("Score uploaded.");
         }
-
-        /*public function testJs():void {
-         Alert.show("coucou de la part du JS!!");
-         }
-
-         private function sendAjax():void {
-         var request:URLRequest = new URLRequest("/account");
-         //            request.contentType = "text/xml";
-         //            request.data = dataXML.toXMLString();
-         //            request.method = URLRequestMethod.POST;
-         var loader:URLLoader = new URLLoader();
-         loader.addEventListener(Event.COMPLETE, completeHandler);
-         try {
-         loader.load(request);
-         trace("Request sent.");
-         } catch (e:ArgumentError) {
-         trace("An ArgumentError has occurred.");
-         } catch (e:SecurityError) {
-         trace("A SecurityError has occurred.");
-         }
-         }
-
-         /private function completeHandler(event:Event):void
-         {
-         trace("Request completed.");
-         var loader:URLLoader = URLLoader(event.target);
-         var variables:URLVariables = new URLVariables(loader.data);
-         Alert.show("toto=" + variables.toto);
-         }
-
-         private function callJs():void {
-         try {
-         ExternalInterface.call("callFromFlex", "plup");
-         } catch (e:Error) {
-         trace("Impossible to connect to ExternalInterface.")
-         }
-         } */
 
         [Bindable]
         public var game:Game;
 
-        private var serverUrl:String;
-        private var scoresSent:Boolean = false;
+        private var _token:String;
+        private var _tokenLoader:URLLoader;
+        private var _mode:String;
+        private var _allowStart:Boolean;
+        private var _scoresSent:Boolean = false;
 
         [Embed(source="battle-biture.png")]
         private static var BattleBiture:Class;
@@ -328,73 +242,20 @@
             <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
         </mx:filters>
     </mx:Label>
-    <ui:PlayerDataView x="20" y="20" player="{game.me}"/>
-    <ui:PlayerDataView x="435" y="55" player="{game.opponent}" mirror="true" visible="{game.mode == 'vs'}"/>
     <mx:VBox x="220" y="25" width="320" horizontalAlign="center" verticalGap="0">
         <mx:Image id="modeHeader"/>
-        <mx:Spacer height="15"/>
-        <mx:Image source="@Embed(source='vs.png')" visible="{game.mode == 'vs'}"/>
-        <mx:HBox verticalAlign="middle" horizontalGap="2" visible="{game.mode == 'vs'}">
-            <mx:Label text="Duel" styleName="game-type"/>
-            <mx:Image source="@Embed(source='collected-beer-small.png')"/>
-            <mx:Label text="152" styleName="game-type"/>
-        </mx:HBox>
     </mx:VBox>
     <ui:PlayerStatusView id="myStatus" x="25" y="135" game="{game}" player="{game.me}"/>
-    <ui:PlayerStatusView x="560" y="165" game="{game}" player="{game.opponent}" clickable="false"
-                         visible="{game.mode == 'vs'}"/>
-    <mx:VBox x="545" y="20" width="196" horizontalAlign="center" verticalGap="8" visible="{game.mode == 'solo'}">
-        <mx:Image source="@Embed(source='bar-scrores.png')"/>
-        <mx:Spacer height="5"/>
-        <ui:ScoreView personal="{game.highScores[0].me}" firstName="{game.highScores[0].firstName}"
-                      lastName="{game.highScores[0].lastName}" avatarUrl="{game.highScores[0].avatar}"
-                      score="{game.highScores[0].score}" rank="{game.highScores[0].rank}"/>
-        <ui:ScoreView personal="{game.highScores[1].me}" firstName="{game.highScores[1].firstName}"
-                      lastName="{game.highScores[1].lastName}" avatarUrl="{game.highScores[1].avatar}"
-                      score="{game.highScores[1].score}" rank="{game.highScores[1].rank}"/>
-        <ui:ScoreView personal="{game.highScores[2].me}" firstName="{game.highScores[2].firstName}"
-                      lastName="{game.highScores[2].lastName}" avatarUrl="{game.highScores[2].avatar}"
-                      score="{game.highScores[2].score}" rank="{game.highScores[2].rank}"/>
-        <ui:ScoreView personal="{game.highScores[3].me}" firstName="{game.highScores[3].firstName}"
-                      lastName="{game.highScores[3].lastName}" avatarUrl="{game.highScores[3].avatar}"
-                      score="{game.highScores[3].score}" rank="{game.highScores[3].rank}"/>
-        <ui:ScoreView personal="{game.highScores[4].me}" firstName="{game.highScores[4].firstName}"
-                      lastName="{game.highScores[4].lastName}" avatarUrl="{game.highScores[4].avatar}"
-                      score="{game.highScores[4].score}" rank="{game.highScores[4].rank}"/>
-    </mx:VBox>
     <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10" visible="{Constants.DEBUG}"/>
-    <mx:Label text="Combo: {boardView.combo}" x="10" y="30" visible="{Constants.DEBUG}"/>
-    <mx:Label text="Sous-bocks: {game.me.coasterReserve}" x="10" y="50" visible="{Constants.DEBUG}"/>
     <mx:Canvas x="220" y="110" width="320" height="320">
         <ui:BoardView id="boardView" width="100%" height="100%" game="{game}" playable="{game.gameOver}"/>
         <mx:Canvas id="gameover" width="100%" height="100%" backgroundColor="black" y="{-boardView.height}">
             <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>
         </mx:Canvas>
     </mx:Canvas>
-    <!--<mx:Label x="10" y="450" text="Token is {FlexGlobals.topLevelApplication.parameters.token}"/>-->
-    <!--<mx:Button x="200" y="450" label="AJAX" click="sendAjax()"/>-->
-    <!--<mx:Button x="300" y="450" label="Call JS" click="callJs()"/>-->
     <mx:Canvas x="300" y="435" width="160" height="50" backgroundColor="0x000000" backgroundAlpha="0"
                toolTip="Tours restants avant la fin de la partie.">
-        <ui:ClockView x="5" y="5" width="40" height="40" hour="{game.currentHour}" minutes="{game.currentMinute}"/>
-        <mx:Label x="50" y="-3" width="110" text="{game.currentTime}" styleName="currentTime"/>
         <mx:Label x="50" y="29" width="110" text="{game.remainingTurns} coups à boire" styleName="remainingTurns"/>
-    </mx:Canvas>
-    <mx:Canvas x="0" y="492">
-        <mx:Label x="445" y="10" width="300" color="white" text="{game.barName}" textAlign="center"
-                  fontSize="24"
-                  fontWeight="bold" fontStyle="italic">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
-        <mx:Label x="445" y="36" width="300" color="white" text="{game.barLocation} | {game.barOperationTime}"
-                  textAlign="center"
-                  fontWeight="bold" fontStyle="italic" fontSize="12">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
     </mx:Canvas>
     <ui:SoundButton x="20" y="500" on="true"/>
     <ui:QualityButton x="20" y="528" on="true"/>

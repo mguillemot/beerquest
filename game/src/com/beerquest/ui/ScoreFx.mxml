@@ -10,9 +10,6 @@
     </mx:Style>
     <mx:Script><![CDATA[
         [Bindable]
-        public var caps:int;
-
-        [Bindable]
         public function get beers():int {
             return _beers;
         }
@@ -22,25 +19,36 @@
             _beers = value;
         }
 
+        [Bindable]
+        public function get turns():int {
+            return _turns;
+        }
+
+        [Bindable]
+        public function set turns(value:int):void {
+            _turns = value;
+        }
+
         private var _beers:int;
+        private var _turns:int;
 
         ]]></mx:Script>
     <mx:HBox height="100%" verticalAlign="middle" horizontalGap="0">
-        <mx:HBox id="capsScore" height="100%" verticalAlign="middle" horizontalGap="0">
-            <mx:Label text="+{caps}" styleName="score-fx">
-                <mx:filters>
-                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-                </mx:filters>
-            </mx:Label>
-            <mx:Image source="@Embed('../../../caps.png')"/>
-        </mx:HBox>
-        <mx:HBox id="beerScore" height="100%" verticalAlign="middle" horizontalGap="0" width="{(beers > 0) ? NaN : 0}">
+        <mx:HBox height="100%" verticalAlign="middle" horizontalGap="0" width="{(beers > 0) ? NaN : 0}">
             <mx:Label text="+{beers}" styleName="score-fx">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
             <mx:Image source="@Embed('../../../collected-beer-small.png')"/>
+        </mx:HBox>
+        <mx:HBox height="100%" verticalAlign="middle" horizontalGap="0" width="{(turns > 0) ? NaN : 0}">
+            <mx:Label text="+{turns}" styleName="score-fx">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+            <mx:Image source="@Embed('../../../caps.png')"/>
         </mx:HBox>
     </mx:HBox>
 </mx:VBox>

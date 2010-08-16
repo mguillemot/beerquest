@@ -14,7 +14,6 @@ public class Capacity extends EventDispatcher {
     public static const BIG_BANG:Capacity = new Capacity("Big Bang", "Choisis un type d'objets sur le plateau et détruis les tous.\n150 Caps + valeur des objets détruits", true, TokenType.LIQUOR);
     public static const WATERFALL:Capacity = new Capacity("Waterfall", "Nettoie tout le vomito du plateau.\n+75 Caps ", true, TokenType.WATER);
     public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", "Te fait gagner 6 tours supplémentaires au prix d'un peu de vomito. Burp !\n+150 Caps", true, TokenType.TOMATO_JUICE);
-    public static const TCHIN_TCHIN:Capacity = new Capacity("Tchin Tchin!", "", true, TokenType.COASTER);
 
     public static function fromToken(token:TokenType):Capacity {
         switch (token) {
@@ -30,8 +29,6 @@ public class Capacity extends EventDispatcher {
                 return BIG_BANG;
             case TokenType.WATER:
                 return WATERFALL;
-            case TokenType.COASTER:
-                return TCHIN_TCHIN;
             case TokenType.TOMATO_JUICE:
                 return BLOODY_MARY;
         }
@@ -60,6 +57,10 @@ public class Capacity extends EventDispatcher {
 
     public function get correspondingToken():TokenType {
         return _correspondingToken;
+    }
+
+    public function encodedState():String {
+        return (enabled) ? correspondingToken.repr : "";
     }
 
     private var _name:String;

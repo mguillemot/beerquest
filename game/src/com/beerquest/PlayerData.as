@@ -15,14 +15,7 @@ import mx.events.CollectionEvent;
 
 public class PlayerData extends EventDispatcher {
 
-    public function PlayerData(id:int, name:String, title:String, avatarUrl:String, level:Number, totalBeers:Number, totalCaps:Number) {
-        _id = id;
-        _name = name;
-        _title = title;
-        _avatarUrl = avatarUrl;
-        _level = level;
-        _totalBeers = totalBeers;
-        _totalCaps = totalCaps;
+    public function PlayerData() {
         _capacities = new ArrayCollection();
         for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
             _capacities.addItem(Capacity.NONE);
@@ -33,16 +26,6 @@ public class PlayerData extends EventDispatcher {
 
     private function onPartialBeerCollectionChanged(e:CollectionEvent):void {
         dispatchEvent(new GameEvent(GameEvent.PARTIAL_BEERS_CHANGED, this));
-    }
-
-    [Bindable(event="ScoreChanged")]
-    public function get score():Number {
-        return _score;
-    }
-
-    public function set score(value:Number):void {
-        _score = value;
-        dispatchEvent(new GameEvent(GameEvent.SCORE_CHANGED, this));
     }
 
     [Bindable(event="FullBeersChanged")]
@@ -85,21 +68,6 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new GameEvent(GameEvent.VOMIT_CHANGED, this));
     }
 
-    [Bindable(event="CoasterReserveChanged")]
-    public function get coasterReserve():Number {
-        return _coasterReserve;
-    }
-
-    public function set coasterReserve(value:Number):void {
-        _coasterReserve = value;
-        if (_coasterReserve < 0) {
-            _coasterReserve = 0;
-        } else if (_coasterReserve > 3) {
-            _coasterReserve = 3;
-        }
-        dispatchEvent(new GameEvent(GameEvent.COASTER_RESERVE_CHANGED, this));
-    }
-
     public function get capacities():ArrayCollection {
         return _capacities;
     }
@@ -111,29 +79,7 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function usedCapacity(c:Capacity):Boolean {
-        switch (c) {
-            case Capacity.AMBER_FURY_BAR:
-                Constants.STATS.capaAmberUsed++;
-                break;
-            case Capacity.BIG_BANG:
-                Constants.STATS.capaLiquorUsed++;
-                break;
-            case Capacity.DIVINE_PEANUTS:
-                Constants.STATS.capaFoodUsed++;
-                break;
-            case Capacity.BLOND_FURY_BAR:
-                Constants.STATS.capaBlondUsed++;
-                break;
-            case Capacity.BLOODY_MARY:
-                Constants.STATS.capaTomatoUsed++;
-                break;
-            case Capacity.BROWN_FURY_BAR:
-                Constants.STATS.capaBrownUsed++;
-                break;
-            case Capacity.TCHIN_TCHIN:
-                Constants.STATS.capaCoasterUsed++;
-                break;
-        }
+        Constants.STATS.capacityUsed(c);
         for (var i:int = Constants.MAX_CAPACITIES - 1; i >= 0; i--) {
             if (_capacities.getItemAt(i) == c) {
                 _capacities.setItemAt(Capacity.NONE, i);
@@ -145,6 +91,14 @@ public class PlayerData extends EventDispatcher {
 
     public function get partialBeers():ArrayCollection {
         return _partialBeers;
+    }
+
+    public function partialBeersEncodedState():String {
+        var res:String = "";
+        for each (var pb:TokenType in partialBeers) {
+            res += pb.repr;
+        }
+        return res;
     }
 
     public function get preferredPartialBeer():TokenType {
@@ -159,34 +113,6 @@ public class PlayerData extends EventDispatcher {
         }
     }
 
-    public function get id():int {
-        return _id;
-    }
-
-    public function get name():String {
-        return _name;
-    }
-
-    public function get title():String {
-        return _title;
-    }
-
-    public function get avatarUrl():String {
-        return _avatarUrl;
-    }
-
-    public function get level():Number {
-        return _level;
-    }
-
-    public function get totalBeers():Number {
-        return _totalBeers;
-    }
-
-    public function get totalCaps():Number {
-        return _totalCaps;
-    }
-
     public function addPartialBeer(type:TokenType):void {
         var timer:Timer = new Timer(EffectLayer.TOKEN_EFFECT_TIME_MS, 1);
         timer.addEventListener(TimerEvent.TIMER, function():void {
@@ -199,7 +125,7 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function doPiss():void {
-        piss /= 2;
+        piss *= 0.4;
         if (Constants.SOUND_ENABLED) {
             var fx:Sound = new PissFX();
             fx.play();
@@ -222,20 +148,11 @@ public class PlayerData extends EventDispatcher {
         return false;
     }
 
-    private var _id:int;
-    private var _name:String;
-    private var _title:String;
-    private var _avatarUrl:String;
-    private var _level:Number;
-    private var _totalBeers:Number;
-    private var _totalCaps:Number;
-    private var _score:Number = 0;
     private var _fullBeers:Number = 0;
     private var _piss:Number = 0;
     private var _vomit:Number = 0;
     private var _partialBeers:ArrayCollection;
     private var _capacities:ArrayCollection;
-    private var _coasterReserve:Number = 0;
 
     [Embed(source="../../pipi.mp3")]
     private static var PissFX:Class;

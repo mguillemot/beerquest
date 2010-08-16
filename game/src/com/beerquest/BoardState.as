@@ -1,7 +1,8 @@
 package com.beerquest {
 
 public class BoardState {
-    public function BoardState() {
+    public function BoardState(rand:MersenneTwister = null) {
+        _rand = (rand == null) ? MersenneTwister.generate() : rand;
         for (var i:int = 0; i < Constants.BOARD_SIZE * Constants.BOARD_SIZE; i++) {
             _state.push(TokenType.NONE);
             _supers.push(false);
@@ -38,6 +39,15 @@ public class BoardState {
         }
     }
 
+    public function updateTo(otherState:BoardState):void {
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                setCell(i, j, otherState.getCell(i, j), otherState.getSuper(i, j));
+            }
+        }
+        pissLevel = otherState.pissLevel;
+    }
+
     public function toString():String {
         var repr:String = "";
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
@@ -47,6 +57,17 @@ public class BoardState {
                 repr += "|";
             }
             repr += "\n";
+        }
+        return repr;
+    }
+
+    public function encodedState():String {
+        var repr:String = "";
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                var tr:String = getCell(i,j).repr;
+                repr += getSuper(i, j) ? tr.toUpperCase() : tr;
+            }
         }
         return repr;
     }
@@ -79,8 +100,8 @@ public class BoardState {
             return null;
         }
         while (true) {
-            var x:int = RAND.nextInt(0, Constants.BOARD_SIZE - 1);
-            var y:int = RAND.nextInt(0, Constants.BOARD_SIZE - 1);
+            var x:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
+            var y:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
             var token:TokenType = getCell(x, y);
             if (token != TokenType.VOMIT && !getSuper(x, y)) {
                 return {x:x, y:y};
@@ -297,8 +318,8 @@ public class BoardState {
         }
     }
 
-    public static function generateNewCell():TokenType {
-        var r:int = RAND.nextInt(1, 17);
+    public function generateNewCell():TokenType {
+        var r:int = _rand.nextInt(1, 17);
         if (r <= 3) {
             return TokenType.BLOND_BEER;
         } else if (r <= 6) {
@@ -324,11 +345,10 @@ public class BoardState {
         _pissLevel = pissLevel;
     }
 
-    private static var RAND:MersenneTwister = new MersenneTwister(Math.floor(Math.random() * int.MAX_VALUE));
-
     private var _state:Array = new Array();
     private var _supers:Array = new Array();
     private var _pissLevel:int = 0;
+    private var _rand:MersenneTwister;
 
 }
 }

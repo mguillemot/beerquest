@@ -1,7 +1,11 @@
 package com.beerquest {
 public class MersenneTwister {
+    public static function generate():MersenneTwister {
+        return new MersenneTwister(Math.random());
+    }
+
     public function MersenneTwister(seed:uint) {
-        _mt[0] = seed;
+        _mt[0] = _initialSeed = seed;
         for (var i:int = 1; i < 623; i++) {
             _mt[i] = (1812433253 * (_mt[i - 1] ^ (_mt[i - 1] >> 30)) + 1) & 0xFFFFFFFF
         }
@@ -18,6 +22,7 @@ public class MersenneTwister {
     }
 
     public function next():Number {
+        _count++;
         if (_z == 0) {
             generateNumbers();
         }
@@ -38,7 +43,19 @@ public class MersenneTwister {
         return min + Math.floor(next() % (max - min + 1));
     }
 
+    public function get initialSeed():uint {
+        return _initialSeed;
+    }
+
+    public function get generatedCount():Number {
+        return _count;
+    }
+
     private var _mt:Array = new Array();
     private var _y:Number, _z:uint = 0;
+
+    // Debug stats
+    private var _initialSeed:uint;
+    private var _count:Number = 0;
 }
 }
