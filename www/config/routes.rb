@@ -1,22 +1,24 @@
 BeerQuest::Application.routes.draw do |map|
 
-	# Facebook integration
-	get "fb", :to => "facebook#index"
-#	post "fb/authorize", :to => "facebook#authorize"
-#	post "fb/delete", :to => "facebook#delete"
-	get "fb/opensession", :to => "facebook#opensession"
-	get "fb/connect", :to => "facebook#connect"
+  # Home
+  #get "", :to => "home#index"
 
-	# Static pages
-	get "help", :to => "home#help"
+  # Facebook integration
+  get "fb", :to => "facebook#index"
+#  post "fb/authorize", :to => "facebook#authorize"
+#  post "fb/delete", :to => "facebook#delete"
+  get "fb/opensession", :to => "facebook#opensession"
+  get "fb/connect", :to => "facebook#connect"
+
+  # Static pages
+  get "help", :to => "home#help"
   get "privacy", :to => "home#privacy"
   get "tos", :to => "home#tos"
-  get "play(/:id)", :to => "home#play"
+  get "play(/:id)", :to => "home#play" # TODO temp
 
-	# Game integration
-	get "start", :to => "scores#start"
-	#get "getscores(/:id)", :to => "scores#getscores"
-	post "postscore", :to => "scores#postscore"
+  # Game integration
+  get "start", :to => "scores#start"
+  post "postscore", :to => "scores#postscore"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -31,8 +33,8 @@ BeerQuest::Application.routes.draw do |map|
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-#	resources :account
-#	resources :scores
+#  resources :account
+#  resources :scores
 
   # Sample resource route with options:
   #   resources :products do
@@ -69,7 +71,7 @@ BeerQuest::Application.routes.draw do |map|
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "facebook#index"
+  root :to => "home#index"
 
   # See how all your routes lay out with "rake routes"
 

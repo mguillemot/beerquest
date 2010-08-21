@@ -2,23 +2,23 @@
 %br
 %br
 #identity
-	You are logged as
-	%strong
-		= @full_name
+  You are logged as
+  %strong
+    = @full_name
 %br
 #game
 
 :javascript
-	$(function() {
-		$('#game').flash({
-			swf: "/swf/BeerQuest-#{@required_version}.swf",
-			width: 760,
-			height: 612,
-			hasVersion: 9,
-			flashvars: {
-				mode: "#{@mode}",
-				token: "#{@token}",
-				requiredVersion: #{@required_version}
-			}
-		});
-	});
+  $(function() {
+    $('#game').flash({
+      swf: "/swf/BeerQuest-#{@required_version}.swf",
+      width: 760,
+      height: 612,
+      hasVersion: 9,
+      flashvars: {
+        mode: "#{@mode}",
+        token: "#{@token}",
+        requiredVersion: #{@required_version}
+      }
+    });
+  });

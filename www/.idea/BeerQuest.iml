@@ -14,14 +14,7 @@
       <requirement>
         <dependency name="haml" version="0" bound="GREATER_OR_EQUAL" git="false" />
       </requirement>
-      <source manual="true" />
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="hashie" version="0" bound="GREATER_OR_EQUAL" git="false" />
-      </requirement>
-      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
@@ -31,22 +24,9 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="mime-types" version="0" bound="GREATER_OR_EQUAL" git="false" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="mini_fb" version="0" bound="GREATER_OR_EQUAL" git="false" />
       </requirement>
-      <source manual="true" />
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="mongrel" version="0" bound="GREATER_OR_EQUAL" git="false" />
-      </requirement>
-      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
@@ -60,12 +40,6 @@
         <dependency name="rails" version="3.0.0.rc" bound="EQUAL" git="false" />
       </requirement>
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rest-client" version="0" bound="GREATER_OR_EQUAL" git="false" />
-      </requirement>
-      <source manual="true" />
     </requirement>
   </component>
   <component name="NewModuleRootManager">
@@ -84,7 +58,6 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] mime-types (v1.16, C:/Ruby187/lib/ruby/gems/1.8/gems/mime-types-1.16)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rest-client (v1.6.0, C:/Ruby187/lib/ruby/gems/1.8/gems/rest-client-1.6.0)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] mime-types (v1.16, C:/Ruby187/lib/ruby/gems/1.8/gems/mime-types-1.16)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.0.beta4, C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-3.0.0.beta4)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] json (v1.4.3, C:/Ruby187/lib/ruby/gems/1.8/gems/json-1.4.3-x86-mingw32)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] i18n (v0.4.1, C:/Ruby187/lib/ruby/gems/1.8/gems/i18n-0.4.1)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] erubis (v2.6.6, C:/Ruby187/lib/ruby/gems/1.8/gems/erubis-2.6.6)" level="application" />

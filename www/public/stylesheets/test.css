@@ -1,0 +1,19 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+html {
+  height: 100%; }
+
+body {
+  background-color: #ffc0cb;
+  height: 100%; }
+
+#main {
+  width: 760px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  word-wrap: break-word; }

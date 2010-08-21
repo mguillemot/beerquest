@@ -2,4 +2,5 @@
 <cross-domain-policy>
   <allow-access-from domain="localhost" />
   <allow-access-from domain="erhune.iobb.net" />
+  <allow-access-from domain="www.bq-4.com" />
 </cross-domain-policy>

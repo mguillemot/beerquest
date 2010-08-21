@@ -1,28 +1,60 @@
 <!DOCTYPE html>
-%html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml"}
-	%head
-		%title Beer Quest
-		%meta{:charset => "utf-8"}
-		= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
-		= javascript_include_tag 'rails'
-		= javascript_include_tag 'jquery.json'
-		= javascript_include_tag 'jquery.swfobject.1-1-1.min'
-		= javascript_include_tag 'application'
-		<!--[if IE]>
-		= javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
-		<![endif]-->
-		= csrf_meta_tag
-		%style
-			article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
-		= stylesheet_link_tag :all
-	%body
-		.main
-			= yield
-		-#.fb-root
-		#FB_HiddenIFrameContainer{:style => "display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"}
-		= javascript_include_tag 'http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US'
-		:javascript
-			FB_RequireFeatures(["XFBML"], function() {
-				FB.init("#{BeerQuest::FB_API_KEY}", "/xd_receiver.htm");
-				FB.CanvasClient.startTimerToSizeToContent();
-			});
+%html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml", :lang => I18n.locale}
+  %head
+    %title Beer Quest
+    %meta{:charset => "utf-8"}
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
+    = javascript_include_tag 'http://cdn.jquerytools.org/1.2.4/tiny/jquery.tools.min.js'
+    = javascript_include_tag 'rails'
+    = javascript_include_tag 'jquery.json'
+    = javascript_include_tag 'jquery.swfobject.1-1-1.min'
+    = javascript_include_tag 'application'
+    <!--[if IE]>
+    = javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
+    <![endif]-->
+    = csrf_meta_tag
+    %style
+      article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+    -#= stylesheet_link_tag 'http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css'
+    = stylesheet_link_tag 'main'
+  %body
+    #fb-root
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({appId: "#{BeerQuest::FB_API_KEY}", status: true, cookie: true, xfbml: false});
+        FB.Canvas.setAutoResize();
+      };
+      (function() {
+        var e = document.createElement('script');
+        e.async = true;
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+      }());
+    #main
+      #header
+        #banner
+          = image_tag 'logo-BQ4.png', :alt => t('beerquest'), :class => 'logo'
+          %a.like-button{:href => '#'}
+            = image_tag 'bt-idrink.png', :alt => t('ilike')
+          .stats-container
+            .stats
+              = image_tag 'bierre-logo.png', :alt => t('beers'), :class => 'beer'
+              .total-beers= number_with_delimiter(2_456_003_234)
+              .challenge-header= t 'challenge.header', :goal => number_with_delimiter(2_500_000_000)
+              .challenge-value= t 'challenge.value'
+        #nav
+          %ul
+            %li.current
+              = link_to t('nav.home'), {:controller => 'home', :action => 'index'}
+            %li
+              %a{:href => '#'}= t 'nav.play'
+            %li
+              %a{:href => '#'}= t 'nav.challenge'
+            %li
+              %a{:href => '#'}= t 'nav.help'
+            %li.special
+              %a{:href => '#'}= t 'nav.support'
+            %li
+              %a{:href => '#'}= t 'nav.blog'
+      #content
+        = yield

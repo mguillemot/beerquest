@@ -1,29 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36cec4e9-0d20-42a8-b640-434ae12d528e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BeerQuest.mxml" afterPath="$PROJECT_DIR$/src/BeerQuest.mxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/TokenType.as" afterPath="$PROJECT_DIR$/src/com/beerquest/TokenType.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/events/ScoreEvent.as" afterPath="$PROJECT_DIR$/src/com/beerquest/events/ScoreEvent.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/PlayerData.as" afterPath="$PROJECT_DIR$/src/com/beerquest/PlayerData.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/Constants.as" afterPath="$PROJECT_DIR$/src/com/beerquest/Constants.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/Token.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/Token.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/Capacity.as" afterPath="$PROJECT_DIR$/src/com/beerquest/Capacity.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/TokenCollectionView.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/TokenCollectionView.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as" afterPath="$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/ScoreFx.mxml" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/ScoreFx.mxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/BoardState.as" afterPath="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\game\src\com\beerquest\ui\PlayerDataView.mxml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/GameStats.as" afterPath="$PROJECT_DIR$/src/com/beerquest/GameStats.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/EffectLayer.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/EffectLayer.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/Game.as" afterPath="$PROJECT_DIR$/src/com/beerquest/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/MersenneTwister.as" afterPath="$PROJECT_DIR$/src/com/beerquest/MersenneTwister.as" />
-    </list>
-    <ignored path=".idea/workspace.xml" />
+    <list default="true" id="36cec4e9-0d20-42a8-b640-434ae12d528e" name="Default" comment="" />
     <ignored path="BeerQuest.iws" />
+    <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,138 +74,33 @@
   <component name="FavoritesManager">
     <favorites_list name="BeerQuest" />
   </component>
-  <component name="FileColors" enabled="true" enabledForTabs="true" highlightNonProjectFiles="true" />
+  <component name="FileColors" enabled="true" enabledForTabs="true" highlightNonProjectFiles="true" nonProjectFilesColor="ffffe4" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="GameStats.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/GameStats.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="220" column="22" selection-start="6885" selection-end="6885" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TokenCollectionView.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/TokenCollectionView.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="49" selection-start="3818" selection-end="3818" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Game.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="28" selection-start="1310" selection-end="1310" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameEvent.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="20" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constants.as" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/Constants.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="45" selection-start="141" selection-end="141" vertical-scroll-proportion="0.121212125">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TokenType.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="43" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlayerData.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/PlayerData.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="30" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoardView.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="227" column="20" selection-start="8095" selection-end="8095" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoardState.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="20" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BeerQuest.mxml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/BeerQuest.mxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="168" column="0" selection-start="5892" selection-end="5892" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1281970131164" expanded="true" signature="272:278" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="650:780" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="801:895" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="915:1040" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="1063:1163" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="1189:1289" placeholder="{...}" />
-                <marker date="1281970131164" expanded="false" signature="1346:2247" placeholder="..." />
-                <marker date="1281970131164" expanded="true" signature="2286:4861" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="2942:3246" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="3001:3232" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="3252:3326" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="3818:4029" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="4178:4851" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="4470:4594" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="4619:4716" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="4741:4837" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="4922:5266" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="5319:5621" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="5401:5454" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="5678:5722" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="5788:5826" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="5890:6060" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="5968:6050" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="6106:7021" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="6701:6794" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="6819:6903" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="6928:7011" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="7081:7457" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="7155:7305" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="7311:7386" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="7517:7683" placeholder="{...}" />
-                <marker date="1281970131164" expanded="true" signature="7738:7794" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Branch.Configurations">
+    <option name="CURRENT" value="master" />
+    <option name="CONFIGURATIONS">
+      <array>
+        <BranchConfiguration>
+          <option name="IS_AUTO_DETECTED" value="true" />
+          <option name="NAME" value="master" />
+          <option name="BRANCHES">
+            <array>
+              <BranchInfo>
+                <option name="ROOT" value="$PROJECT_DIR$/.." />
+                <option name="REFERENCE" value="master" />
+              </BranchInfo>
+            </array>
+          </option>
+        </BranchConfiguration>
+      </array>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="GIT_EXECUTABLE" value="C:\Program Files (x86)\Git\bin\git.exe" />
@@ -308,7 +183,6 @@
       <pane id="PackagesPane">
         <subPane />
       </pane>
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -435,6 +309,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -511,14 +386,14 @@
         <option name="BuildArtifacts" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" browser_family="FIREFOX" class_name="" html_or_swf_file_path="" launcher_type="OSDefault" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" player_path="FlashPlayer.exe" port="0" run_mode="HtmlOrSwfFile" run_trusted="false" scope="Class" socket_policy_port="0" url_to_launch="http://">
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" browser_family="FIREFOX" class_name="" debugger_sdk="Module SDK" html_or_swf_file_path="" launcher_type="OSDefault" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" player_path="FlashPlayer.exe" port="0" run_mode="HtmlOrSwfFile" run_trusted="false" scope="Class" socket_policy_port="0" url_to_launch="http://">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" html_or_swf_file_path="" launcher_type="OSDefault" main_class_name="" module_name="" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="http://">
+    <configuration default="true" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" debugger_sdk="Module SDK" html_or_swf_file_path="" launcher_type="OSDefault" main_class_name="" module_name="" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="http://">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -629,14 +504,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="false" name="BeerQuest" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" html_or_swf_file_path="$PROJECT_DIR$/out/BeerQuest.swf" launcher_type="OSDefault" main_class_name="" module_name="BeerQuest" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="http://erhune.iobb.net/play/1">
+    <configuration default="false" name="BeerQuest" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" debugger_sdk="Module SDK" html_or_swf_file_path="$PROJECT_DIR$/out/BeerQuest.swf" launcher_type="OSDefault" main_class_name="" module_name="BeerQuest" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="http://erhune.iobb.net/play/1">
       <RunnerSettings RunnerId="FlexDebugRunner" />
       <RunnerSettings RunnerId="FlexRunner" />
       <ConfigurationWrapper RunnerId="FlexDebugRunner" />
       <ConfigurationWrapper RunnerId="FlexRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="BeerQuest wrapper" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" html_or_swf_file_path="E:\Boulot\beerquest\game\out\wrapper.html" launcher_type="OSDefault" main_class_name="" module_name="BeerQuest" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="">
+    <configuration default="false" name="BeerQuest wrapper" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" debugger_sdk="Module SDK" html_or_swf_file_path="E:\Boulot\beerquest\game\out\wrapper.html" launcher_type="OSDefault" main_class_name="" module_name="BeerQuest" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="">
       <RunnerSettings RunnerId="FlexDebugRunner" />
       <ConfigurationWrapper RunnerId="FlexDebugRunner" />
       <method />
@@ -674,20 +549,20 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853982" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853982" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16363636" sideWeight="0.67477876" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16363636" sideWeight="0.67477876" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25614974" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46238938" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994652" sideWeight="0.5927152" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32522124" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1973262" sideWeight="0.67477876" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853982" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32522124" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973261" sideWeight="0.58719647" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -778,9 +653,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="71" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="4" column="71" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/Capacity.as">
@@ -793,105 +666,64 @@
         <state line="25" column="63" selection-start="627" selection-end="627" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/GameStats.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="20" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="220" column="22" selection-start="6885" selection-end="6885" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/TokenCollectionView.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="49" selection-start="3818" selection-end="3818" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="28" selection-start="1310" selection-end="1310" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="20" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="43" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.0">
+        <state line="21" column="43" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.019428572">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/PlayerData.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="30" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.0">
+        <state line="56" column="30" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.019428572">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="227" column="20" selection-start="8095" selection-end="8095" vertical-scroll-proportion="0.0">
+        <state line="227" column="20" selection-start="8095" selection-end="8095" vertical-scroll-proportion="0.019428572">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as">
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="20" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0">
+        <state line="3" column="20" selection-start="71" selection-end="71" vertical-scroll-proportion="0.019428572">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BeerQuest.mxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="0" selection-start="5892" selection-end="5892" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1281970131164" expanded="true" signature="272:278" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="650:780" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="801:895" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="915:1040" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="1063:1163" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="1189:1289" placeholder="{...}" />
-            <marker date="1281970131164" expanded="false" signature="1346:2247" placeholder="..." />
-            <marker date="1281970131164" expanded="true" signature="2286:4861" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="2942:3246" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="3001:3232" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="3252:3326" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="3818:4029" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="4178:4851" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="4470:4594" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="4619:4716" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="4741:4837" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="4922:5266" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="5319:5621" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="5401:5454" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="5678:5722" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="5788:5826" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="5890:6060" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="5968:6050" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="6106:7021" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="6701:6794" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="6819:6903" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="6928:7011" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="7081:7457" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="7155:7305" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="7311:7386" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="7517:7683" placeholder="{...}" />
-            <marker date="1281970131164" expanded="true" signature="7738:7794" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="28" selection-start="1310" selection-end="1310" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/TokenCollectionView.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="49" selection-start="3818" selection-end="3818" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/GameStats.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="220" column="22" selection-start="6885" selection-end="6885" vertical-scroll-proportion="0.0">
+        <state line="168" column="0" selection-start="5892" selection-end="5892" vertical-scroll-proportion="0.019721577">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/Constants.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="45" selection-start="141" selection-end="141" vertical-scroll-proportion="0.121212125">
+        <state line="14" column="45" selection-start="459" selection-end="459" vertical-scroll-proportion="0.272">
           <folding />
         </state>
       </provider>

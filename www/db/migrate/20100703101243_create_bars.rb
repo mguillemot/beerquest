@@ -1,7 +1,7 @@
 class CreateBars < ActiveRecord::Migration
   def self.up
     create_table :bars do |t|
-			t.string 'name'
+      t.string 'name'
       t.timestamps
     end
   end

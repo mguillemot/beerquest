@@ -1,25 +1,387 @@
+/* LAYOUT */
+
 * {
-	border: 0;
-	margin: 0;
-	padding: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
-html {
-	/*width: 800px;*/
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 body {
-	/*width: 760px;*/
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
 }
 
-div.main {
-	width: 760px;
-	background: #ffc0cb;
-	word-wrap: break-word;
+.clear {
+  clear: both;
 }
 
-#game {
-	/*width: 760px;*/
-	/*height: 612px;*/
-	/*border: 1px solid black;*/
+@font-face {
+  font-family: "Kronika";
+  src: url("/fonts/KRONIKA_.eot"); /* IE */  
+  src: local("Kronika"), url("/fonts/KRONIKA_.ttf") format("truetype"); /* non-IE */
+}
+
+#main {
+  width: 760px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  word-wrap: break-word;
+}
+
+#banner {
+  position: relative;
+  background: url("/images/sous-logo-header.png") no-repeat;
+  width: 760px;
+  height: 84px;
+}
+
+#banner .logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#banner .like-button {
+  position: absolute;
+  top: 25px;
+  left: 270px;
+}
+
+#banner .stats-container {
+  position: absolute;
+  top: 10px;
+  left: 500px;
+  text-align: center;
+}
+
+#banner .stats {
+  position: relative;
+}
+
+#banner .stats .total-beers {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffd011;
+}
+
+#banner .stats .challenge-header {
+  color: #ffe88b;
+}
+
+#banner .stats .challenge-value {
+  color: #ffe88b;
+  text-decoration: underline;
+}
+
+#banner .stats img.beer {
+  position: absolute;
+  top: -5px;
+  right: -20px;
+}
+
+#nav {
+  position: relative;
+  left: 15px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+#nav li {
+  display: inline;
+  background: #eee6c4;
+  border: 1px solid black;
+  padding: 3px 15px;
+}
+
+#nav li.current {
+  background: #690000;
+}
+
+#nav li.current a {
+  color: white;
+}
+
+#nav li.special {
+  background: #ffe88b;
+}
+
+#content {
+  margin-top: 35px;
+}
+
+/* HOME */
+
+.cols {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.cols td {
+  vertical-align: top;
+  padding: 2px;
+  text-align: center;
+}
+
+.cols .left-col {
+  width: 345px;
+  border: 5px solid #ff8800;
+}
+
+.cols .separator {
+  width: 20px;
+}
+
+.cols .right-col {
+  width: 345px;
+  border: 5px solid #970000;
+}
+
+.col-title {
+  position: relative;
+  top: -15px;
+}
+
+.col-content {
+  text-align: left;
+}
+
+.player {
+  font-family: Kronika, cursive;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.player td {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.player td.portrait img.portrait {
+  position: relative;
+  border: 3px solid #c9700b;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+.player td.score-desc {
+  width: 140px;
+  padding-left: 10px;
+  color: #563333;
+}
+
+.player td.score-value {
+  padding-left: 10px;
+  color: #753e00;
+}
+
+.player .total {
+  font-size: 11px;
+}
+
+table.action {
+  width: 92%;
+  margin: 5px auto 30px;
+  background: #ffe88b;
+  border: 1px solid black;
+}
+
+table.action td {
+  font-size: 11px;
+}
+
+table.action td.description {
+  text-align: left;
+}
+
+table.action td.action {
+  text-align: center;
+  font-weight: bold;
+}
+
+table.action td.action a {
+  position: relative;
+  top: 6px;
+}
+
+table.action div.button {
+  width: 99px;
+  height: 42px;
+  background: url("/images/fond-bt-gros.png") no-repeat;
+}
+
+ul.tabs {
+  margin-left: 20px;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+ul.tabs li {
+  display: inline;
+  background: #eee6c4;
+  border-top: 1px solid #ff8800;
+  border-left: 1px solid #ff8800;
+  padding: 3px 15px;
+}
+
+ul.tabs li:last-of-type {
+  border-right: 1px solid #ff8800;
+}
+
+ul.tabs li.current {
+  background: #fff4c7;
+  border-bottom: 1px solid #fff4c7;
+}
+
+div.pane {
+  background: #fff4c7;
+  border: 1px solid #ff8800;
+  padding: 3px;
+}
+
+div.pane div.header div.search {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+div.pane div.header div.search div.description {
+  font-weight: bold;
+}
+
+div.pane div.header {
+  margin-top: 5px;
+  margin-bottom: 9px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div.pane div.header .pane-pages {
+  float: right;
+}
+
+div.pane div.header .pane-pages .page-link.current {
+  font-weight: bold;
+}
+
+.bar {
+  background: white;
+  border: 1px solid #eadbb3;
+  padding: 3px;
+  margin-bottom: 3px;
+}
+
+.bar .header {
+}
+
+.bar .name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #563333;
+}
+
+.bar .members {
+  float: right;
+}
+
+.bar img.banner {
+  width: 223px;
+  height: 74px;
+  border: 1px solid #9f857c;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.bar .score {
+  color: #563333;
+  font-weight: bold;
+  padding-top: 7px;
+}
+
+.bar .button {
+  width: 143px;
+  height: 24px;
+  background: url("/images/bt-entrer-bar.png") no-repeat;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.bar .button a {
+  position: relative;
+  left: 8px;
+  top: 4px;
+}
+
+table.challenge-grid {
+}
+
+table.challenge-grid td {
+  vertical-align: middle;
+}
+
+table.challenge-grid td.portrait {
+  width: 60px;
+  text-align: center;
+}
+
+table.challenge-grid td.portrait img.portrait {
+  border: 3px solid red;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+table.challenge-grid td.description {
+  width: auto;
+  text-align: left;
+  font-size: 11px;
+}
+
+table.challenge-grid td.description .name {
+  font-weight: bold;
+}
+
+table.challenge-grid td.score {
+  width: 55px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+table.challenge-grid td.action {
+  width: 76px;
+}
+
+table.challenge-grid td.action div.button {
+  width: 76px;
+  height: 24px;
+  background: url("/images/bt-battle.png") no-repeat;
+  text-align: center;
+}
+
+table.challenge-grid td.action div.button a {
+  position: relative;
+  top: 4px;
+  left: 12px;
+  font-weight: bold;
+}
+
+.battle-warning {
+  font-size: 11px;
 }

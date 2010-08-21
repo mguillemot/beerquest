@@ -1,0 +1,142 @@
+%table.cols
+  %tr
+    %td.left-col
+      = image_tag 'titre-mode-score.png', :alt => t('home.score.mode'), :class => 'col-title'
+      .col-content
+        %table.player
+          %tr
+            %td.portrait{:rowspan => 2}
+              = image_tag 'avatar1.png', :class => 'portrait'
+            %td.score-desc= t 'home.score.best_7d'
+            %td.score-value
+              = image_tag 'mini-biere.png', :alt => t('beers')
+              = number_with_delimiter(378)
+          %tr
+            %td.score-desc= t 'home.score.total_beers'
+            %td.score-value.total
+              = image_tag 'mini-biere.png', :alt => t('beers')
+              = number_with_delimiter(1_324_323)
+        %table.action
+          %tr
+            %td.description= t 'home.score.play_description_html'
+            %td.action
+              .button
+                %a{:href => '#'}= t 'home.score.button_html'
+        %ul.tabs
+          %li
+            %a{:href => '#'}= t 'home.score.tabs.favorites.title'
+          %li
+            %a{:href => '#'}= t 'home.score.tabs.bartners.title'
+          %li
+            %a{:href => '#'}= t 'home.score.tabs.search.title'
+        .panes
+          .pane#favorites
+            .header
+              %span.bar-count= t 'home.score.tabs.favorites.bar_count', :count => 22
+              %span.pane-pages
+                = t 'home.score.tabs.pages'
+                %a.page-link{:href => '#'} 1
+                %a.page-link{:href => '#'} 2
+                %span.page-link.current 3
+                %a.page-link{:href => '#'} 4
+                = "..."
+                %a.page-link{:href => '#'} 9
+            = render :partial => 'bar'
+            = render :partial => 'bar'
+            = render :partial => 'bar'
+          .pane#bartners
+            .header
+              %span.bar-count= t 'home.score.tabs.bartners.bar_count', :count => 1
+              %span.pane-pages
+                = t 'home.score.tabs.pages'
+                %a.page-link{:href => '#'} 1
+                %a.page-link{:href => '#'} 2
+                %span.page-link.current 3
+                %a.page-link{:href => '#'} 4
+                = "..."
+                %a.page-link{:href => '#'} 9
+            = render :partial => 'bar'
+          .pane#search
+            .header
+              .search
+                .description= t 'home.score.tabs.search.alphabetic_order'
+                .values
+                  %a.page-link{:href => '#'} 123
+                  - "A".ord.upto("Z".ord).each do |letter|
+                    - if letter == "M".ord
+                      %br
+                    %a.page-link{:href => '#'}= letter.chr
+              %span.bar-count= t 'home.score.tabs.search.results', :count => 3, :search => 'A'
+              %span.pane-pages
+                = t 'home.score.tabs.pages'
+                %a.page-link{:href => '#'} 1
+                %a.page-link{:href => '#'} 2
+                %span.page-link.current 3
+                %a.page-link{:href => '#'} 4
+                = "..."
+                %a.page-link{:href => '#'} 9
+            = render :partial => 'bar'
+            = render :partial => 'bar'
+            = render :partial => 'bar'
+
+    %td.separator
+
+    %td.right-col
+      = image_tag 'titre-mode-battle.png', :alt => t('home.battle.mode'), :class => 'col-title'
+      .col-content
+        %table.player
+          %tr
+            %td.portrait{:rowspan => 2}
+              = image_tag 'avatar1.png', :class => 'portrait'
+            %td.score-value= t 'home.battle.respect_points', :count => number_with_delimiter(3_450)
+          %tr
+            %td.score-value= t 'home.battle.shame_points', :count => number_with_delimiter(12)
+        %table.action
+          %tr
+            %td.description= t 'home.battle.play_description_html'
+            %td.action
+              .button
+                %a{:href => '#'}= t 'home.battle.button_html'
+        %ul.tabs
+          %li
+            %a{:href => '#'}= t 'home.battle.tabs.current.title'
+          %li
+            %a{:href => '#'}= t 'home.battle.tabs.received.title', :count => 12
+          %li
+            %a{:href => '#'}= t 'home.battle.tabs.sent.title', :count => 3
+        .panes
+          .pane#current
+            %table.challenge-grid
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+          .pane#received
+            %table.challenge-grid
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+          .pane#sent
+            %table.challenge-grid
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+              = render :partial => 'challenge'
+            .battle-warning Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés.
+
+:javascript
+  $(function() {
+    $("ul.tabs").tabs("div.panes > div.pane", {
+      tabs: 'li'
+    });
+  });
