@@ -9,14 +9,12 @@
     = javascript_include_tag 'jquery.json'
     = javascript_include_tag 'jquery.swfobject.1-1-1.min'
     = javascript_include_tag 'application'
-    <!--[if IE]>
-    = javascript_include_tag 'http://html5shiv.googlecode.com/svn/trunk/html5.js'
-    <![endif]-->
     = csrf_meta_tag
-    %style
-      article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
-    -#= stylesheet_link_tag 'http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css'
+    = stylesheet_link_tag 'http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css'
     = stylesheet_link_tag 'main'
+    <!--[if lte IE 6]>
+    = stylesheet_link_tag 'ie6.css'
+    <![endif]-->
   %body
     #fb-root
     :javascript
@@ -44,7 +42,7 @@
               .challenge-value= t 'challenge.value'
         #nav
           %ul
-            %li.current
+            %li.home
               = link_to t('nav.home'), {:controller => 'home', :action => 'index'}
             %li
               %a{:href => '#'}= t 'nav.play'
@@ -54,7 +52,7 @@
               %a{:href => '#'}= t 'nav.help'
             %li.special
               %a{:href => '#'}= t 'nav.support'
-            %li
+            %li.last
               %a{:href => '#'}= t 'nav.blog'
       #flash
         - if flash[:error]

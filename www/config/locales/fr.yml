@@ -31,7 +31,7 @@ fr:
             one: "1 bar partenaire"
             other: "%{count} bars partenaires"
         search:
-          title: "Search"
+          title: "Recherche"
           alphabetic_order: "Par ordre alphabétique"
           results:
             one: "1 Bar pour «%{search}»"

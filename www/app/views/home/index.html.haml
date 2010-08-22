@@ -1,5 +1,14 @@
 %table.cols
+  %tr{:class => 'small'}
+    %td{:class => 'small'}
+    %td
+    %td{:class => 'small'}
+    %td
+    %td{:class => 'small'}
+    %td
+    %td{:class => 'small'}
   %tr
+    %td{:class => 'small'}
     %td.left-col
       = image_tag 'titre-mode-score.png', :alt => t('home.score.mode'), :class => 'col-title'
       .col-content
@@ -27,60 +36,65 @@
             %a{:href => '#'}= t 'home.score.tabs.favorites.title'
           %li
             %a{:href => '#'}= t 'home.score.tabs.bartners.title'
-          %li
+          %li.last
             %a{:href => '#'}= t 'home.score.tabs.search.title'
         .panes
           .pane#favorites
-            .header
-              %span.bar-count= t 'home.score.tabs.favorites.bar_count', :count => 22
-              %span.pane-pages
-                = t 'home.score.tabs.pages'
-                %a.page-link{:href => '#'} 1
-                %a.page-link{:href => '#'} 2
-                %span.page-link.current 3
-                %a.page-link{:href => '#'} 4
-                = "..."
-                %a.page-link{:href => '#'} 9
+            %table.header
+              %tr
+                %td.bar-count= t 'home.score.tabs.favorites.bar_count', :count => 22
+                %td.pane-pages
+                  = t 'home.score.tabs.pages'
+                  %a.page-link{:href => '#'} 1
+                  %a.page-link{:href => '#'} 2
+                  %span.page-link.current 3
+                  %a.page-link{:href => '#'} 4
+                  = "..."
+                  %a.page-link{:href => '#'} 9
             = render :partial => 'bar'
             = render :partial => 'bar'
             = render :partial => 'bar'
           .pane#bartners
-            .header
-              %span.bar-count= t 'home.score.tabs.bartners.bar_count', :count => 1
-              %span.pane-pages
-                = t 'home.score.tabs.pages'
-                %a.page-link{:href => '#'} 1
-                %a.page-link{:href => '#'} 2
-                %span.page-link.current 3
-                %a.page-link{:href => '#'} 4
-                = "..."
-                %a.page-link{:href => '#'} 9
+            %table.header
+              %tr
+                %td.bar-count= t 'home.score.tabs.bartners.bar_count', :count => 1
+                %td.pane-pages
+                  = t 'home.score.tabs.pages'
+                  %a.page-link{:href => '#'} 1
+                  %a.page-link{:href => '#'} 2
+                  %span.page-link.current 3
+                  %a.page-link{:href => '#'} 4
+                  = "..."
+                  %a.page-link{:href => '#'} 9
             = render :partial => 'bar'
           .pane#search
-            .header
-              .search
-                .description= t 'home.score.tabs.search.alphabetic_order'
-                .values
-                  %a.page-link{:href => '#'} 123
-                  - "A".ord.upto("Z".ord).each do |letter|
-                    - if letter == "M".ord
-                      %br
-                    %a.page-link{:href => '#'}= letter.chr
-              %span.bar-count= t 'home.score.tabs.search.results', :count => 3, :search => 'A'
-              %span.pane-pages
-                = t 'home.score.tabs.pages'
-                %a.page-link{:href => '#'} 1
-                %a.page-link{:href => '#'} 2
-                %span.page-link.current 3
-                %a.page-link{:href => '#'} 4
-                = "..."
-                %a.page-link{:href => '#'} 9
+            .search
+              .description= t 'home.score.tabs.search.alphabetic_order'
+              .values
+                %a.page-link{:href => '#'} 123
+                - "A".ord.upto("Z".ord).each do |letter|
+                  - if letter == "M".ord
+                    %br
+                  %a.page-link{:href => '#'}= letter.chr
+            %table.header
+              %tr
+                %td.bar-count= t 'home.score.tabs.search.results', :count => 3, :search => 'A'
+                %td.pane-pages
+                  = t 'home.score.tabs.pages'
+                  %a.page-link{:href => '#'} 1
+                  %a.page-link{:href => '#'} 2
+                  %span.page-link.current 3
+                  %a.page-link{:href => '#'} 4
+                  = "..."
+                  %a.page-link{:href => '#'} 9
             = render :partial => 'bar'
             = render :partial => 'bar'
             = render :partial => 'bar'
+    %td{:class => 'small shadow'}
 
     %td.separator
 
+    %td{:class => 'small'}
     %td.right-col
       = image_tag 'titre-mode-battle.png', :alt => t('home.battle.mode'), :class => 'col-title'
       .col-content
@@ -88,9 +102,9 @@
           %tr
             %td.portrait{:rowspan => 2}
               = image_tag @account.profile_picture, :alt => @account.full_name, :class => 'portrait'
-            %td.score-value= t 'home.battle.respect_points', :count => number_with_delimiter(3_450)
+            %td.score-desc= t 'home.battle.respect_points', :count => number_with_delimiter(3_450)
           %tr
-            %td.score-value= t 'home.battle.shame_points', :count => number_with_delimiter(12)
+            %td.score-desc= t 'home.battle.shame_points', :count => number_with_delimiter(12)
         %table.action
           %tr
             %td.description= t 'home.battle.play_description_html'
@@ -102,7 +116,7 @@
             %a{:href => '#'}= t 'home.battle.tabs.current.title'
           %li
             %a{:href => '#'}= t 'home.battle.tabs.received.title', :count => 12
-          %li
+          %li.last
             %a{:href => '#'}= t 'home.battle.tabs.sent.title', :count => 3
         .panes
           .pane#current
@@ -133,6 +147,15 @@
               = render :partial => 'challenge'
               = render :partial => 'challenge'
             .battle-warning Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés.
+    %td{:class => 'small shadow'}
+  %tr{:class => 'small'}
+    %td{:class => 'small'}
+    %td{:class => 'shadow'}
+    %td{:class => 'small shadow'}
+    %td
+    %td{:class => 'small'}
+    %td{:class => 'shadow'}
+    %td{:class => 'small shadow'}
 
 :javascript
   $(function() {

@@ -1,21 +1,25 @@
 .bar
-  .header
-    %span.name
-      TechCrunch's BAR
-    %span.members
-      = t 'home.score.bar.member_count', :count => 23_810
-  = image_tag 'logo-bar3.png', :alt => "TechCrunch's BAR", :class => 'banner'
-  .score
-    = t 'home.score.bar.score_7d'
-    %br
-    = image_tag 'mini-biere.png', :alt => t('beers')
-    234
-  .score
-    = t 'home.score.bar.best_score'
-    %br
-    = image_tag 'mini-biere.png', :alt => t('beers')
-    520
-  .clear
+  %table.bar-header
+    %tr
+      %td.name
+        TechCrunch's BAR
+      %td.members
+        = t 'home.score.bar.member_count', :count => number_with_delimiter(23_810)
+  %table.bar-content
+    %tr
+      %td.banner
+        = image_tag 'logo-bar3.png', :alt => "TechCrunch's BAR", :class => 'banner'
+      %td.scores
+        .score
+          = t 'home.score.bar.score_7d'
+          %br
+          = image_tag 'mini-biere.png', :alt => t('beers')
+          234
+        .score
+          = t 'home.score.bar.best_score'
+          %br
+          = image_tag 'mini-biere.png', :alt => t('beers')
+          520
   .button
     %a{:href => '#'}
       = t 'home.score.bar.enter_button'

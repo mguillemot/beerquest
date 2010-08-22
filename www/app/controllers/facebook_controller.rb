@@ -17,6 +17,13 @@ class FacebookController < ApplicationController
   private
 
   def user_details
+    # For testing purposes (out of Facebook)
+    if params[:virtual_user]
+      session[:user_id] = 42
+      session[:access_token] = "plup"
+      session[:account_id] = 1
+    end
+
     # Facebook user
     if params[:signed_request]
       data = facebook_signed_request?(params[:signed_request], BeerQuest::FB_SECRET)

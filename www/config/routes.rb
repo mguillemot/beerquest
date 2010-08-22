@@ -2,6 +2,7 @@ BeerQuest::Application.routes.draw do |map|
 
   # Facebook integration
   get "fb", :to => "home#index" # Canvas page
+  get "test", :to => "home#index", :virtual_user => true
   get "fb/session_login", :to => "facebook#session_login"
   get "fb/session_logout", :to => "facebook#session_logout"
 
