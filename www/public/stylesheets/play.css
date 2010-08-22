@@ -86,7 +86,8 @@ td.bar-name a {
 #game {
   width: 520px;
   height: 320px;
-  background: red;
+  overflow: none;
+  /*background: red;*/
 }
 
 ul.rss li {
@@ -212,8 +213,8 @@ tr.bottom ul.tabs li.last {
 }
 
 tr.bottom ul.tabs li.current {
-  background: #f6f6f6;
-  border-top: 1px solid #f6f6f6;
+  background: #fff4c7;
+  border-top: 1px solid #fff4c7;
 }
 
 tr.bottom ul.tabs li a {
