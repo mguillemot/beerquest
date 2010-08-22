@@ -82,6 +82,10 @@ public class BoardView extends UIComponent {
             rect.graphics.drawRect(0 - 1, 0 - 1, width + 2, height + 2);
             addChild(rect);
             mask = rect;
+
+            // Start game
+            _initialized = true;
+            startGame();
         });
         addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
         addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -1030,17 +1034,21 @@ public class BoardView extends UIComponent {
             throw "unable to init BoardView with a game twice";
         }
         _game = value;
+        startGame();
+    }
 
-        // Listeners
-        _game.me.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
-        _game.me.addEventListener(GameEvent.VOMIT_CHANGED, onVomitChanged);
-        _game.me.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
+    private function startGame():void {
+        if (_initialized && game != null) {
+            // Listeners
+            game.me.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
+            game.me.addEventListener(GameEvent.VOMIT_CHANGED, onVomitChanged);
+            game.me.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
 
-        // Start stats collection
-        regenBoard(false);
-        Constants.STATS.startTurn(_game);
-        _initialized = true;
-        refreshStats();
+            // Start stats collection
+            regenBoard(false);
+            Constants.STATS.startTurn(game);
+            refreshStats();
+        }
     }
 
     private function onPissChanged(e:GameEvent):void {

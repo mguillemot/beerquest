@@ -4,7 +4,7 @@
                xmlns:mx="library://ns.adobe.com/flex/mx"
                xmlns:ui="com.beerquest.ui.*"
                creationComplete="init()"
-               width="760" height="612">
+               width="520" height="320">
     <fx:Style>
         @namespace
         mx
@@ -111,7 +111,6 @@
                 _allowStart = false;
             }
             trace("Starting in mode: " + _mode);
-            modeHeader.source = (_mode == "solo") ? MurgeSolo : BattleBiture;
 
             _token = FlexGlobals.topLevelApplication.parameters.token;
             if (_token == null) {
@@ -149,12 +148,13 @@
         }
 
         private function startGame(game:Game):void {
-            this.game = game;
             if (!_allowStart && !Constants.DEBUG) {
                 game.gameOver = true;
             }
             game.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onCurrentTurnChanged);
             game.addEventListener(GameEvent.GAME_OVER, onGameOver);
+            this.game = game;
+            boardView.game = game;
         }
 
         private function onGameEvent(e:GameEvent):void {
@@ -227,37 +227,30 @@
         private var _allowStart:Boolean;
         private var _scoresSent:Boolean = false;
 
-        [Embed(source="battle-biture.png")]
-        private static var BattleBiture:Class;
-
-        [Embed(source="murge-solitaire.png")]
-        private static var MurgeSolo:Class;
-
         ]]></fx:Script>
-    <mx:Image id="banner" x="0" y="492" width="771" height="144"/>
-    <mx:Image source="@Embed(source='fond-jeu.png')"/>
-    <mx:Label x="600" y="0" text="Version {Constants.VERSION} - DEBUG" color="0xff0000" fontWeight="bold" fontSize="14"
-              visible="{Constants.DEBUG}">
-        <mx:filters>
-            <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-        </mx:filters>
-    </mx:Label>
-    <mx:VBox x="220" y="25" width="320" horizontalAlign="center" verticalGap="0">
-        <mx:Image id="modeHeader"/>
-    </mx:VBox>
-    <ui:PlayerStatusView id="myStatus" x="25" y="135" game="{game}" player="{game.me}"/>
-    <mx:Label text="Available moves: {boardView.availableMoves}" x="10" y="10" visible="{Constants.DEBUG}"/>
-    <mx:Canvas x="220" y="110" width="320" height="320">
-        <ui:BoardView id="boardView" width="100%" height="100%" game="{game}" playable="{game.gameOver}"/>
+
+    <!-- board -->
+    <mx:Canvas x="200" y="0" width="320" height="320">
+        <ui:BoardView id="boardView" width="100%" height="100%"/>
         <mx:Canvas id="gameover" width="100%" height="100%" backgroundColor="black" y="{-boardView.height}">
             <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>
         </mx:Canvas>
     </mx:Canvas>
-    <mx:Canvas x="300" y="435" width="160" height="50" backgroundColor="0x000000" backgroundAlpha="0"
+
+    <!-- status bar -->
+    <ui:PlayerStatusView id="myStatus" x="12" y="40" game="{game}" player="{game.me}"/>
+    <mx:Canvas x="0" y="10" width="200" backgroundColor="0x000000" backgroundAlpha="0"
                toolTip="Tours restants avant la fin de la partie.">
-        <mx:Label x="50" y="29" width="110" text="{game.remainingTurns} coups à boire" styleName="remainingTurns"/>
+        <mx:Label width="100%" text="{game.remainingTurns} coups à boire" styleName="remainingTurns"/>
     </mx:Canvas>
-    <ui:SoundButton x="20" y="500" on="true"/>
-    <ui:QualityButton x="20" y="528" on="true"/>
+    <ui:SoundButton x="0" y="250" on="true"/>
+    <ui:QualityButton x="0" y="280" on="true"/>
+
+    <!-- vfx layer -->
     <ui:EffectLayer id="vfxLayer" width="100%" height="100%"/>
+
+    <!-- debug -->
+    <mx:Label text="Available moves: {boardView.availableMoves}" x="0" y="0" visible="{Constants.DEBUG}"/>
+    <mx:Label x="0" y="300" text="Version {Constants.VERSION} - DEBUG" color="0xff0000" fontWeight="bold" fontSize="14"
+              visible="{Constants.DEBUG}"/>
 </s:Application>

@@ -6,7 +6,6 @@
     = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
     = javascript_include_tag 'http://cdn.jquerytools.org/1.2.4/tiny/jquery.tools.min.js'
     = javascript_include_tag 'rails'
-    = javascript_include_tag 'jquery.json'
     = javascript_include_tag 'jquery.swfobject.1-1-1.min'
     = javascript_include_tag 'application'
     = csrf_meta_tag
@@ -45,7 +44,7 @@
             %li.home
               = link_to t('nav.home'), {:controller => 'home', :action => 'index'}
             %li
-              %a{:href => '#'}= t 'nav.play'
+              = link_to t('nav.play'), {:controller => 'home', :action => 'play'}
             %li
               %a{:href => '#'}= t 'nav.challenge'
             %li

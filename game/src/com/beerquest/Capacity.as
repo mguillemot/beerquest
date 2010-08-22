@@ -5,15 +5,15 @@ public class Capacity extends EventDispatcher {
 
     public static const NONE:Capacity = new Capacity("?");
     public static const BLOND_STACK_ORDER:Capacity = new Capacity("Stack Order", "", true, TokenType.BLOND_BEER);
-    public static const BLOND_FURY_BAR:Capacity = new Capacity("Fury Bar", "Récolte toutes les bières blondes du plateau, et les ajoute à ton score.\n+75 Caps", true, TokenType.BLOND_BEER);
+    public static const BLOND_FURY_BAR:Capacity = new Capacity("Fury Bar", "Récolte toutes les bières blondes du plateau, et les ajoute à ton score.", true, TokenType.BLOND_BEER);
     public static const BROWN_STACK_ORDER:Capacity = new Capacity("Stack Order", "", true, TokenType.BROWN_BEER);
-    public static const BROWN_FURY_BAR:Capacity = new Capacity("Fury Bar", "Récolte toutes les bières brunes du plateau, et les ajoute à ton score.\n+75 Caps", true, TokenType.BROWN_BEER);
+    public static const BROWN_FURY_BAR:Capacity = new Capacity("Fury Bar", "Récolte toutes les bières brunes du plateau, et les ajoute à ton score.", true, TokenType.BROWN_BEER);
     public static const AMBER_STACK_ORDER:Capacity = new Capacity("Stack Order", "", true, TokenType.AMBER_BEER);
-    public static const AMBER_FURY_BAR:Capacity = new Capacity("Fury Bar", "Récolte toutes les bières ambrées du plateau, et les ajoute à ton score.\n+75 Caps", true, TokenType.AMBER_BEER);
-    public static const DIVINE_PEANUTS:Capacity = new Capacity("Divine Peanuts", "Transforme la liqueur en eau.\n+100 Caps ", true, TokenType.FOOD);
-    public static const BIG_BANG:Capacity = new Capacity("Big Bang", "Choisis un type d'objets sur le plateau et détruis les tous.\n150 Caps + valeur des objets détruits", true, TokenType.LIQUOR);
-    public static const WATERFALL:Capacity = new Capacity("Waterfall", "Nettoie tout le vomito du plateau.\n+75 Caps ", true, TokenType.WATER);
-    public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", "Te fait gagner 6 tours supplémentaires au prix d'un peu de vomito. Burp !\n+150 Caps", true, TokenType.TOMATO_JUICE);
+    public static const AMBER_FURY_BAR:Capacity = new Capacity("Fury Bar", "Récolte toutes les bières ambrées du plateau, et les ajoute à ton score.", true, TokenType.AMBER_BEER);
+    public static const DIVINE_PEANUTS:Capacity = new Capacity("Divine Peanuts", "Transforme la liqueur en eau.", true, TokenType.FOOD);
+    public static const BIG_BANG:Capacity = new Capacity("Big Bang", "Choisis un type d'objets sur le plateau et détruis les tous.", true, TokenType.LIQUOR);
+    public static const WATERFALL:Capacity = new Capacity("Waterfall", "Nettoie tout le vomito du plateau.", true, TokenType.WATER);
+    public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", "Te fait gagner 6 tours supplémentaires au prix d'un peu de vomito. Burp !", true, TokenType.TOMATO_JUICE);
 
     public static function fromToken(token:TokenType):Capacity {
         switch (token) {

@@ -1,14 +1,14 @@
 %table.cols
-  %tr{:class => 'small'}
-    %td{:class => 'small'}
+  %tr.small
+    %td.small
     %td
-    %td{:class => 'small'}
+    %td.small
     %td
-    %td{:class => 'small'}
+    %td.small
     %td
-    %td{:class => 'small'}
+    %td.small
   %tr
-    %td{:class => 'small'}
+    %td.small
     %td.left-col
       = image_tag 'titre-mode-score.png', :alt => t('home.score.mode'), :class => 'col-title'
       .col-content
@@ -90,11 +90,11 @@
             = render :partial => 'bar'
             = render :partial => 'bar'
             = render :partial => 'bar'
-    %td{:class => 'small shadow'}
+    %td.small
 
     %td.separator
 
-    %td{:class => 'small'}
+    %td.small
     %td.right-col
       = image_tag 'titre-mode-battle.png', :alt => t('home.battle.mode'), :class => 'col-title'
       .col-content
@@ -147,15 +147,15 @@
               = render :partial => 'challenge'
               = render :partial => 'challenge'
             .battle-warning Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés.
-    %td{:class => 'small shadow'}
-  %tr{:class => 'small'}
-    %td{:class => 'small'}
-    %td{:class => 'shadow'}
-    %td{:class => 'small shadow'}
+    %td.small.shadow
+  %tr.small
+    %td.small
+    %td.shadow
+    %td.small.shadow
     %td
-    %td{:class => 'small'}
-    %td{:class => 'shadow'}
-    %td{:class => 'small shadow'}
+    %td.small
+    %td.shadow
+    %td.small.shadow
 
 :javascript
   $(function() {

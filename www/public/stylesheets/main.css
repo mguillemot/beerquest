@@ -173,6 +173,7 @@ body {
 .cols .left-col {
   width: 350px;
   border: 5px solid #ff8800;
+  background: #fff9e1;
 }
 
 .cols tr.small {
@@ -196,6 +197,7 @@ body {
 .cols .right-col {
   width: 350px;
   border: 5px solid #970000;
+  background: #fff9e1;
 }
 
 .col-title {
@@ -204,7 +206,6 @@ body {
 }
 
 .col-content {
-  background: #fff9e1;
   text-align: left;
 }
 
@@ -501,4 +502,155 @@ table.challenge-grid td.action div.button a {
 
 .battle-warning {
   font-size: 11px;
+}
+
+/* BAR PAGE */
+
+.cols .unique-col {
+  width: 730px;
+  border: 5px solid #ff8800;
+  background: #fff9e1;
+}
+
+table.bar-area {
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 4px;
+}
+
+table.bar-area td {
+  padding: 0;
+  text-align: left;
+}
+
+table.bar-area tr.bottom td.bar-scores {
+  width: 260px;
+  background: #fff4c7;
+  border: 1px solid #330000;
+  padding: 4px;
+}
+
+table.bar-area tr.bottom td.friends-scores {
+  width: 260px;
+  background: #fff4c7;
+  border: 1px solid #330000;
+  padding: 4px;
+}
+
+table.bar-area tr.bottom td.bar-stats {
+  width: 223px;
+  background: #fff4c7;
+  border: 1px solid #330000;
+  padding: 4px;
+}
+
+table.bar-area tr.bottom td div.header {
+  font-weight: bold;
+  font-size: 12px;
+  color: #ce0000;
+  margin-bottom: 5px;
+}
+
+table.bar-area tr.bottom td.bar-stats img.portrait {
+  float: left;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #c9700b;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  margin-right: 4px;
+}
+
+table.bar-area tr.bottom td.bar-stats div.stat {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+table.bar-area tr.bottom td.bar-stats div.section {
+  font-weight: bold;
+  font-size: 10px;
+}
+
+table.bar-area tr.bottom td.bar-stats div.value {
+  font-size: 10px;
+  padding-left: 10px;
+}
+
+table.bar-area img.bar-banner {
+  width: 194px;
+  height: 74px;
+  border: 1px solid #9f857c;
+}
+
+td.bar-name {
+  font-size: 14px;
+}
+
+td.bar-name h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+td.bar-name a {
+  color: #0024fe;
+  text-decoration: underline;
+}
+
+#game {
+  width: 520px;
+  height: 320px;
+  background: red;
+}
+
+ul.rss li {
+  list-style: circle;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+table.barscore-grid {
+}
+
+table.barscore-grid td {
+  border: none;
+  vertical-align: middle;
+  padding: 2px;
+}
+
+table.barscore-grid td.portrait {
+  width: 55px;
+  text-align: center;
+}
+
+table.barscore-grid td.portrait img {
+  width: 50px;
+  height: 50px;
+  border: 3px solid red;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+table.barscore-grid td.description {
+  width: auto;
+  text-align: left;
+}
+
+table.barscore-grid td.description .rank {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+table.barscore-grid td.description .name {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+table.barscore-grid td.description .score {
+  font-size: 12px;
+}
+
+table.barscore-grid td.description .score .value {
+  font-weight: bold;
 }
