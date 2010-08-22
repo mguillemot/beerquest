@@ -1,3 +1,4 @@
+- @css = 'home'
 %table.cols
   %tr.small
     %td.small
@@ -90,7 +91,7 @@
             = render :partial => 'bar'
             = render :partial => 'bar'
             = render :partial => 'bar'
-    %td.small
+    %td.small.shadow
 
     %td.separator
 
@@ -156,10 +157,3 @@
     %td.small
     %td.shadow
     %td.small.shadow
-
-:javascript
-  $(function() {
-    $("ul.tabs").tabs("div.panes > div.pane", {
-      tabs: 'li'
-    });
-  });

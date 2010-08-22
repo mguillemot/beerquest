@@ -86,7 +86,7 @@
       <file leaf-file-name="BeerQuest.mxml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BeerQuest.mxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="32" selection-start="2350" selection-end="2350" vertical-scroll-proportion="1.8556339">
+            <state line="27" column="37" selection-start="706" selection-end="706" vertical-scroll-proportion="0.8080986">
               <folding>
                 <marker date="1282460839005" expanded="true" signature="272:278" placeholder="{...}" />
                 <marker date="1282460839005" expanded="true" signature="650:780" placeholder="{...}" />
@@ -790,7 +790,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BeerQuest.mxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="32" selection-start="2350" selection-end="2350" vertical-scroll-proportion="1.8556339">
+        <state line="27" column="37" selection-start="706" selection-end="706" vertical-scroll-proportion="0.8080986">
           <folding>
             <marker date="1282460839005" expanded="true" signature="272:278" placeholder="{...}" />
             <marker date="1282460839005" expanded="true" signature="650:780" placeholder="{...}" />

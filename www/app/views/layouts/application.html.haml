@@ -11,6 +11,8 @@
     = csrf_meta_tag
     = stylesheet_link_tag 'http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css'
     = stylesheet_link_tag 'main'
+    - if @css
+      = stylesheet_link_tag @css
     <!--[if lte IE 6]>
     = stylesheet_link_tag 'ie6.css'
     <![endif]-->

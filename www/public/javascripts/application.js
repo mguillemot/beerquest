@@ -1,2 +1,9 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+$(function() {
+  $("ul.tabs").tabs("div.panes > div.pane", {
+    tabs: 'li'
+  });
+  $("#subtabs1").tabs("#subpanes1 > div.subpane");
+  $("#subtabs2").tabs("#subpanes2 > div.subpane");
+  $("#subtabs3").tabs("#subpanes3 > div.subpane");
+  $("#subtabs4").tabs("#subpanes4 > div.subpane");
+});

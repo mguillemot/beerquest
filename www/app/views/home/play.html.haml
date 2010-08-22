@@ -1,3 +1,4 @@
+- @css = 'play'
 %table.cols
   %tr.small
     %td.small
@@ -18,42 +19,119 @@
           %td.play-field{:colspan => 2}
             #game
           %td.sidebar
-            %ul.rss
+            %ul.tabs
               %li
-                %a{:href => '#'} La fable du blogueur qui aurait mangé un journaliste
-              %li
-                %a{:href => '#'} 10 plugins pour mieux sécuriser votre blog sous Wordpress
-              %li
-                %a{:href => '#'} Twitter : 10 façons d’augmenter votre nombre de followers
-              %li
-                %a{:href => '#'} Les bureaux des blogueurs du Top 20 Wikio
-              %li
-                %a{:href => '#'} Shazam, une application pour iPhone époustouflante
-              %li
-                %a{:href => '#'} Twitter : 10 façons d’augmenter votre nombre de followers
-              %li
-                %a{:href => '#'} Les bureaux des blogueurs du Top 20 Wikio
-              %li
-                %a{:href => '#'} Shazam, une application pour iPhone époustouflante
-        %tr.bottom
+                %a{:href => '#'} News Bar
+              %li.last
+                %a{:href => '#'} Messages
+            .panes
+              .pane#rss
+                %ul.rss
+                  %li
+                    %a{:href => '#'} La fable du blogueur qui aurait mangé un journaliste
+                  %li
+                    %a{:href => '#'} 10 plugins pour mieux sécuriser votre blog sous Wordpress
+                  %li
+                    %a{:href => '#'} Twitter : 10 façons d’augmenter votre nombre de followers
+                  %li
+                    %a{:href => '#'} Les bureaux des blogueurs du Top 20 Wikio
+                  %li
+                    %a{:href => '#'} Shazam, une application pour iPhone époustouflante
+                  %li
+                    %a{:href => '#'} Twitter : 10 façons d’augmenter votre nombre de followers
+                  %li
+                    %a{:href => '#'} Les bureaux des blogueurs du Top 20 Wikio
+                  %li
+                    %a{:href => '#'} Shazam, une application pour iPhone époustouflante
+              .pane#messages
+                messages
+        %tr.bottom                    
           %td.bar-scores
-            .header
-              Scores du bar
-            %table.barscore-grid
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
+            .panes
+              .pane#barscore-7j
+                %table
+                  %tr
+                    %td.header Scores du bar
+                    %td.subnav#subtabs1
+                      %a{:href => '#'} Tous
+                      = "-"
+                      %a{:href => '#'} Moi
+                .subpanes#subpanes1
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+              .pane#barscore-always
+                %table
+                  %tr
+                    %td.header Scores du bar
+                    %td.subnav#subtabs2
+                      %a{:href => '#'} Tous
+                      = "-"
+                      %a{:href => '#'} Moi
+                .subpanes#subpanes2
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+            %ul.tabs
+              %li
+                %a{:href => '#'} 7 jours
+              %li.last
+                %a{:href => '#'} Toujours
           %td.friends-scores
-            .header
-              Scores de vos amis
-            %table.barscore-grid
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
-              = render :partial => 'barscore'
+            .panes
+              .pane#friendsscore-7j
+                %table
+                  %tr
+                    %td.header Scores de vos amis
+                    %td.subnav#subtabs3
+                      %a{:href => '#'} Tous
+                      = "-"
+                      %a{:href => '#'} Moi
+                .subpanes#subpanes3
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+              .pane#friendsscore-always
+                %table
+                  %tr
+                    %td.header Scores de vos amis
+                    %td.subnav#subtabs4
+                      %a{:href => '#'} Tous
+                      = "-"
+                      %a{:href => '#'} Moi
+                .subpanes#subpanes4
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                      = render :partial => 'barscore'
+                  .subpane
+                    %table.barscore-grid
+                      = render :partial => 'barscore'
+            %ul.tabs
+              %li
+                %a{:href => '#'} 7 jours
+              %li.last
+                %a{:href => '#'} Toujours
           %td.bar-stats
             .header
               Statistiques du bar
@@ -73,11 +151,13 @@
               .section
                 Bières sur 7 jours
               .value
+                = image_tag 'mini-biere.png', :alt => t('beers')
                 1.223.912
             .stat
               .section
                 Bières au total
               .value
+                = image_tag 'mini-biere.png', :alt => t('beers')
                 52.100.654
             %br
             .header
@@ -88,11 +168,13 @@
               .section
                 Bières sur 7 jours
               .value
+                = image_tag 'mini-biere.png', :alt => t('beers')
                 43.000
             .stat
               .section
                 Bières au total
               .value
+                = image_tag 'mini-biere.png', :alt => t('beers')
                 1.230.190
             .clear
             .stat
