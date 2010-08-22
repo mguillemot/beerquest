@@ -1,5 +1,7 @@
-class HomeController < ApplicationController
+class HomeController < FacebookController
   def index
+    @me = MiniFB.get(@access_token, 'me', :type => '&metadata=1')
+		@friends = MiniFB.get(@access_token, 'me', :type => 'friends')
   end
 
   def play

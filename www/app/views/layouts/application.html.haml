@@ -56,5 +56,10 @@
               %a{:href => '#'}= t 'nav.support'
             %li
               %a{:href => '#'}= t 'nav.blog'
+      #flash
+        - if flash[:error]
+          .error= flash[:error]
+        - if flash[:notice]
+          .notice= flash[:notice]
       #content
         = yield

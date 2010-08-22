@@ -117,6 +117,26 @@ body {
   background: #ffe88b;
 }
 
+#flash {
+  margin-top: 15px;
+}
+
+#flash div {
+  width: 80%;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px dotted black;
+}
+
+#flash div.error {
+  color: red;
+}
+
+#flash div.notice {
+  color: green;
+}
+
 #content {
   margin-top: 35px;
 }

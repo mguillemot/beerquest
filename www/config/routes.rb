@@ -1,14 +1,9 @@
 BeerQuest::Application.routes.draw do |map|
 
-  # Home
-  #get "", :to => "home#index"
-
   # Facebook integration
-  get "fb", :to => "facebook#index"
-#  post "fb/authorize", :to => "facebook#authorize"
-#  post "fb/delete", :to => "facebook#delete"
-  get "fb/opensession", :to => "facebook#opensession"
-  get "fb/connect", :to => "facebook#connect"
+  get "fb", :to => "home#index" # Canvas page
+  get "fb/session_login", :to => "facebook#session_login"
+  get "fb/session_logout", :to => "facebook#session_logout"
 
   # Static pages
   get "help", :to => "home#help"

@@ -2,62 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f48027e-07ce-4b9f-9c55-b89931362e9f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/bar.rb" afterPath="$PROJECT_DIR$/app/models/bar.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\stylesheets\scaffold.css" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/account.rb" afterPath="$PROJECT_DIR$/app/models/account.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/application.rb" afterPath="$PROJECT_DIR$/config/application.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\wrapper\playerProductInstall.swf" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/play.html.haml" afterPath="$PROJECT_DIR$/app/views/home/play.html.haml" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\config\locales\en.yml" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/sass/test.sass" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\stylesheets\main.css" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100809133532_create_friendships.rb" afterPath="$PROJECT_DIR$/db/migrate/20100809133532_create_friendships.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100809134950_add_index_to_replays.rb" afterPath="$PROJECT_DIR$/db/migrate/20100809134950_add_index_to_replays.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/KRONIKA_.eot" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\wrapper\history\historyFrame.html" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/locales/fr.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/crossdomain.xml" afterPath="$PROJECT_DIR$/public/crossdomain.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/friendship.rb" afterPath="$PROJECT_DIR$/app/models/friendship.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/home/index.html.haml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100728151610_add_title_and_level_to_account.rb" afterPath="$PROJECT_DIR$/db/migrate/20100728151610_add_title_and_level_to_account.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\wrapper\BeerQuest.swf" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/home/_challenge.html.haml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/barship.rb" afterPath="$PROJECT_DIR$/app/models/barship.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/facebook/index.html.haml" afterPath="$PROJECT_DIR$/app/views/facebook/index.html.haml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100809134358_remove_scores.rb" afterPath="$PROJECT_DIR$/db/migrate/20100809134358_remove_scores.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100703101243_create_bars.rb" afterPath="$PROJECT_DIR$/db/migrate/20100703101243_create_bars.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100809134117_create_barships.rb" afterPath="$PROJECT_DIR$/db/migrate/20100809134117_create_barships.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100807055536_beta_score_to_replay.rb" afterPath="$PROJECT_DIR$/db/migrate/20100807055536_beta_score_to_replay.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/facebook_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/facebook_controller.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/home/_bar.html.haml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100726152040_add_debug_into_to_beta_scores.rb" afterPath="$PROJECT_DIR$/db/migrate/20100726152040_add_debug_into_to_beta_scores.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/development.rb" afterPath="$PROJECT_DIR$/config/environments/development.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/scores_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/scores_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100731053242_add_stats_about_stack.rb" afterPath="$PROJECT_DIR$/db/migrate/20100731053242_add_stats_about_stack.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100726151753_add_name_to_account.rb" afterPath="$PROJECT_DIR$/db/migrate/20100726151753_add_name_to_account.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100809132200_facebook_account_info.rb" afterPath="$PROJECT_DIR$/db/migrate/20100809132200_facebook_account_info.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100815122318_add_seed.rb" afterPath="$PROJECT_DIR$/db/migrate/20100815122318_add_seed.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100816144742_add_game_over_to_replays.rb" afterPath="$PROJECT_DIR$/db/migrate/20100816144742_add_game_over_to_replays.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/BeerQuest.iml" afterPath="$PROJECT_DIR$/.idea/BeerQuest.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.haml" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100809131638_more_bar_info.rb" afterPath="$PROJECT_DIR$/db/migrate/20100809131638_more_bar_info.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\wrapper\history\history.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\wrapper\wrapper.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100701150015_create_accounts.rb" afterPath="$PROJECT_DIR$/db/migrate/20100701150015_create_accounts.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100816145011_remove_caps_from_replays.rb" afterPath="$PROJECT_DIR$/db/migrate/20100816145011_remove_caps_from_replays.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100729142902_correct_stats.rb" afterPath="$PROJECT_DIR$/db/migrate/20100729142902_correct_stats.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100726151230_create_beta_scores.rb" afterPath="$PROJECT_DIR$/db/migrate/20100726151230_create_beta_scores.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\wrapper\history\history.css" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100815115709_add_token_to_replays.rb" afterPath="$PROJECT_DIR$/db/migrate/20100815115709_add_token_to_replays.rb" />
-      <change type="DELETED" beforePath="E:\Boulot\beerquest\www\public\wrapper\swfobject.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/fr.yml" afterPath="$PROJECT_DIR$/config/locales/fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/friendship.rb" afterPath="$PROJECT_DIR$/app/models/friendship.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100728151610_add_title_and_level_to_account.rb" afterPath="$PROJECT_DIR$/db/migrate/20100728151610_add_title_and_level_to_account.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/facebook.rb" afterPath="$PROJECT_DIR$/config/initializers/facebook.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/replay.rb" afterPath="$PROJECT_DIR$/app/models/replay.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.haml" afterPath="$PROJECT_DIR$/app/views/home/index.html.haml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100726151753_add_name_to_account.rb" afterPath="$PROJECT_DIR$/db/migrate/20100726151753_add_name_to_account.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/facebook/index.html.haml" afterPath="$PROJECT_DIR$/app/views/facebook/index.html.haml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/main.css" afterPath="$PROJECT_DIR$/public/stylesheets/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.haml" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20100726153120_link_between_account_and_beta_score.rb" afterPath="$PROJECT_DIR$/db/migrate/20100726153120_link_between_account_and_beta_score.rb" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="BeerQuest.iws" />
@@ -120,61 +79,25 @@
       <file leaf-file-name="index.html.haml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="84" selection-start="4259" selection-end="4259" vertical-scroll-proportion="0.0">
+            <state line="95" column="29" selection-start="3794" selection-end="3794" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_challenge.html.haml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/home/_challenge.html.haml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="40" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.html.haml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="44" selection-start="1299" selection-end="1299" vertical-scroll-proportion="0.43396226">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fr.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/locales/fr.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="82" selection-start="1705" selection-end="1705" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/stylesheets/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="28" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="facebook_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="facebook_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="36" selection-start="3150" selection-end="3150" vertical-scroll-proportion="0.0">
+            <state line="99" column="58" selection-start="3874" selection-end="3874" vertical-scroll-proportion="0.13492064">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mini_fb.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Ruby187/lib/ruby/gems/1.8/gems/mini_fb-1.1.3/lib/mini_fb.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="454" column="13" selection-start="15691" selection-end="15691" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -218,22 +141,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/db/migrate/20100816145011_remove_caps_from_replays.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/scores_controller.rb" />
-        <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/public/crossdomain.xml" />
-        <option value="$PROJECT_DIR$/config/locales/en.yml" />
-        <option value="$PROJECT_DIR$/config/application.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/main.sass" />
-        <option value="$PROJECT_DIR$/app/views/home/_bar.html.haml" />
-        <option value="$PROJECT_DIR$/config/locales/fr.yml" />
-        <option value="$PROJECT_DIR$/app/views/home/_challenge.html.haml" />
-        <option value="$PROJECT_DIR$/app/controllers/facebook_controller.rb" />
-        <option value="$PROJECT_DIR$/public/stylesheets/main.css" />
+        <option value="$PROJECT_DIR$/app/views/facebook/index.html.haml" />
+        <option value="$PROJECT_DIR$/config/initializers/facebook.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20100821130057_facebook_id_to_bigint.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20100821144019_facebook_id_bigint.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20100821150759_accounts_nullable.rb" />
+        <option value="$PROJECT_DIR$/db/schema.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20100726151753_add_name_to_account.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20100728151610_add_title_and_level_to_account.rb" />
+        <option value="$PROJECT_DIR$/app/models/friendship.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20100821152053_remove_title_from_account.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
+        <option value="$PROJECT_DIR$/public/stylesheets/main.css" />
+        <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.haml" />
+        <option value="$PROJECT_DIR$/app/controllers/facebook_controller.rb" />
       </list>
     </option>
   </component>
@@ -279,6 +202,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -362,6 +287,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="fonts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="migrate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -538,21 +495,19 @@
         </subPane>
       </pane>
       <pane id="RailsProjectView" />
-      <pane id="Favorites" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
+    <property name="recentsLimit" value="5" />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -561,7 +516,7 @@
       <recent name="E:\Boulot\beerquest\www\config\locales" />
     </key>
   </component>
-  <component name="RunManager" selected="Rails.Development: BeerQuest">
+  <component name="RunManager" selected="Rake.db:migrate">
     <configuration default="false" name="db:create:all" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
       <module name="BeerQuest" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e STDOUT.sync=true;STDERR.sync=true;load($0=ARGV.shift)" />
@@ -650,6 +605,13 @@
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -670,13 +632,6 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
@@ -840,15 +795,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24657534" sideWeight="0.6710671" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24657534" sideWeight="0.66446644" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933994" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33553356" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -856,8 +809,10 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -901,114 +856,84 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20100821144019_facebook_id_bigint.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="20" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="9" column="0" selection-start="200" selection-end="200" vertical-scroll-proportion="0.26516464" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/application.rb">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20100701150015_create_accounts.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="46" selection-start="1682" selection-end="1682" vertical-scroll-proportion="0.4874759">
-          <folding />
-        </state>
+        <state line="3" column="29" selection-start="124" selection-end="124" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20100726151753_add_name_to_account.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="33" selection-start="397" selection-end="397" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="4" column="45" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.ru">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20100728151610_add_title_and_level_to_account.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="2" column="41" selection-start="113" selection-end="113" vertical-scroll-proportion="0.058925476" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
+    <entry file="file://$PROJECT_DIR$/app/models/friendship.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="26" selection-start="257" selection-end="257" vertical-scroll-proportion="0.58925474">
-          <folding />
-        </state>
+        <state line="2" column="17" selection-start="77" selection-end="77" vertical-scroll-proportion="0.058925476" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/test.css">
+    <entry file="file://$PROJECT_DIR$/db/schema.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="23" column="4" selection-start="1077" selection-end="1077" vertical-scroll-proportion="0.33275563" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/test.sass">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20100821152053_remove_title_from_account.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="33" selection-start="0" selection-end="231" vertical-scroll-proportion="0.46655232">
-          <folding />
-        </state>
+        <state line="8" column="0" selection-start="138" selection-end="138" vertical-scroll-proportion="0.2357019" />
       </provider>
     </entry>
-    <entry file="file://C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-3.0.0.rc/lib/active_support/locale/en.yml">
+    <entry file="file://$PROJECT_DIR$/app/helpers/home_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/_bar.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="43" selection-start="512" selection-end="512" vertical-scroll-proportion="0.5831904">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/locales/fr.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="82" selection-start="1705" selection-end="1705" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="36" selection-start="3150" selection-end="3150" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="28" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/_challenge.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="40" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="84" selection-start="4259" selection-end="4259" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="44" selection-start="1299" selection-end="1299" vertical-scroll-proportion="0.43396226">
+        <state line="62" column="17" selection-start="2546" selection-end="2546" vertical-scroll-proportion="0.88214904" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="27" selection-start="629" selection-end="629" vertical-scroll-proportion="0.58925474" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="27" selection-start="1757" selection-end="1757" vertical-scroll-proportion="0.6169844" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/account.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="103" selection-end="103" vertical-scroll-proportion="0.11785095" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="29" selection-start="3794" selection-end="3794" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://C:/Ruby187/lib/ruby/gems/1.8/gems/mini_fb-1.1.3/lib/mini_fb.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="454" column="13" selection-start="15691" selection-end="15691" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="58" selection-start="3874" selection-end="3874" vertical-scroll-proportion="0.13492064">
           <folding />
         </state>
       </provider>

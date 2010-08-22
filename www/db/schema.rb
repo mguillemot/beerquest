@@ -10,26 +10,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100816145011) do
+ActiveRecord::Schema.define(:version => 20100821152053) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",              :limit => 128
-    t.string   "first_name",                                       :null => false
-    t.string   "last_name",                                        :null => false
-    t.string   "title",                                            :null => false
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "profile_picture"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "facebook_id"
     t.string   "gender"
     t.string   "locale"
     t.integer  "timezone"
     t.integer  "login_count",                       :default => 0, :null => false
     t.datetime "last_login"
     t.integer  "discovered_through"
+    t.integer  "facebook_id",        :limit => 8
   end
-
-  add_index "accounts", ["facebook_id"], :name => "index_accounts_on_facebook_id"
 
   create_table "bars", :force => true do |t|
     t.string   "name"

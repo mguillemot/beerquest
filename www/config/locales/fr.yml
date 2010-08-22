@@ -3,7 +3,7 @@ fr:
   ilike: "I Drink"
   beers: "Bières"
   challenge:
-    header: "Vite, à {{goal}}..."
+    header: "Vite, à %{goal}..."
     value: "on relance la chasse à la baleine !"
   nav:
     home: "Accueil"
@@ -24,39 +24,39 @@ fr:
           title: "Favoris"
           bar_count:
             one: "1 bar favori"
-            other: "{{count}} bars favoris"
+            other: "%{count} bars favoris"
         bartners:
           title: "Bartners"
           bar_count:
             one: "1 bar partenaire"
-            other: "{{count}} bars partenaires"
+            other: "%{count} bars partenaires"
         search:
           title: "Search"
           alphabetic_order: "Par ordre alphabétique"
           results:
-            one: "1 Bar pour «{{search}}»"
-            other: "{{count}} Bars pour «{{search}}»"
+            one: "1 Bar pour «%{search}»"
+            other: "%{count} Bars pour «%{search}»"
         pages: "Pages :"
       bar:
         member_count:
           one: "1 Membre"
-          other: "{{count}} Membres"
+          other: "%{count} Membres"
         score_7d: "Score 7j."
         best_score: "Best score"
         enter_button: "Entrer dans ce Bar"
     battle: 
       mode: "Mode Battle"
-      respect_points: "{{count}} Points de respect"
-      shame_points: "{{count}} Points de la loose"
+      respect_points: "%{count} Points de respect"
+      shame_points: "%{count} Points de la loose"
       play_description_html: "<strong>Défiez vos amis</strong> et faites vous respecter pour votre descente !"
       button_html: "Défier mes<br/>Amis"
       tabs:
         current:
           title: "En cours"
         received:
-          title: "Reçus ({{count}})"
+          title: "Reçus (%{count})"
         sent:
-          title: "Envoyés ({{count}})"
+          title: "Envoyés (%{count})"
 
   # http://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/fr.yml
   # WARNING: some changes below (tagged Erhune)

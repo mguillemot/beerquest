@@ -1,14 +1,13 @@
-%h1 Beer Quest IV: Challenge of the Bartender
+%h1 Facebook integration test page
 
-- if @access_token
-  Access token: #{@access_token}
-- else
-  No access token yet
+%h2 access token
+= @access_token
 
-%h2 Play
-= link_to "Play", :controller => 'home', :action => 'play'
+%h2 user id
+= @user_id
 
-%h2 Server auth
-%p
-  Your e-mail is
-  = @me ? @me[:email] : "NO AUTH"
+%h2 me
+= debug @me
+
+%h2 friends
+= debug @friends

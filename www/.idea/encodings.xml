@@ -7,8 +7,6 @@
     <file url="file://$PROJECT_DIR$/app/views/home/index.html.haml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/home/play.html.haml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/layouts/application.html.haml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/config/locales/en.yml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/config/locales/fr.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config/locales/fr.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/stylesheets/sass/test.sass" charset="UTF-8" />
   </component>

@@ -6,7 +6,7 @@
         %table.player
           %tr
             %td.portrait{:rowspan => 2}
-              = image_tag 'avatar1.png', :class => 'portrait'
+              = image_tag @account.profile_picture, :alt => @account.full_name, :class => 'portrait'
             %td.score-desc= t 'home.score.best_7d'
             %td.score-value
               = image_tag 'mini-biere.png', :alt => t('beers')
@@ -87,7 +87,7 @@
         %table.player
           %tr
             %td.portrait{:rowspan => 2}
-              = image_tag 'avatar1.png', :class => 'portrait'
+              = image_tag @account.profile_picture, :alt => @account.full_name, :class => 'portrait'
             %td.score-value= t 'home.battle.respect_points', :count => number_with_delimiter(3_450)
           %tr
             %td.score-value= t 'home.battle.shame_points', :count => number_with_delimiter(12)
