@@ -1,20 +1,22 @@
-BeerQuest::Application.routes.draw do |map|
+BeerQuest::Application.routes.draw do
 
   # Facebook integration
-  get "fb", :to => "home#index" # Canvas page
-  get "test", :to => "home#index", :virtual_user => true
-  get "fb/session_login", :to => "facebook#session_login"
-  get "fb/session_logout", :to => "facebook#session_logout"
+  get "session_login", :to => "facebook#session_login", :as => 'login'
+  get "session_logout", :to => "facebook#session_logout", :as => 'logout'
+  get "play/:id", :to => "facebook#hack_login" # TODO virer quand vraie intégration FB
+
+  # Game pages
+  root :to => "home#index", :as => 'home'
+  get "bar/:id", :to => "home#bar", :as => 'bar'
 
   # Static pages
-  get "help", :to => "home#help"
-  get "privacy", :to => "home#privacy"
-  get "tos", :to => "home#tos"
-  get "play(/:id)", :to => "home#play" # TODO temp
+  get "help", :to => "home#help", :as => 'help'
+  get "privacy", :to => "home#privacy", :as => 'privacy'
+  get "tos", :to => "home#tos", :as => 'tos'
 
   # Game integration
-  get "start", :to => "scores#start"
-  post "postscore", :to => "scores#postscore"
+  get "start", :to => "scores#start", :as => 'game_start'
+  post "postscore", :to => "scores#postscore", :as => 'post_score'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -64,10 +66,6 @@ BeerQuest::Application.routes.draw do |map|
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => "home#index"
 
   # See how all your routes lay out with "rake routes"
 

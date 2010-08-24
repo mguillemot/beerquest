@@ -31,7 +31,7 @@
             %td.description= t 'home.score.play_description_html'
             %td.action
               .button
-                %a{:href => '#'}= t 'home.score.button_html'
+                %a{:href => bar_url(@account.last_bar)}= t 'home.score.button_html'
         %ul.tabs
           %li
             %a{:href => '#'}= t 'home.score.tabs.favorites.title'

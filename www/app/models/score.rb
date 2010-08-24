@@ -1,2 +1,1 @@
-class Score < ActiveRecord::Base
-end
+Score = Struct.new(:bar_id, :rank, :account_id, :score)

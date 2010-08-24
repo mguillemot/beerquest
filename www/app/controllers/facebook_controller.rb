@@ -1,29 +1,38 @@
 class FacebookController < ApplicationController
-  before_filter :user_details, :except => [:session_login, :session_logout]
+  before_filter :user_details, :except => [:session_login, :session_logout, :hack_login]
 
   def session_login
     reset_session
-    session[:access_token] = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, url_for(:controller => 'facebook', :action => 'session_login'), BeerQuest::FB_SECRET, params[:code])['access_token']
+    session[:access_token] = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, login_url, BeerQuest::FB_SECRET, params[:code])['access_token']
     session[:user_id] = MiniFB.get(session[:access_token], 'me').id
-    bust_iframe(BeerQuest::FB_APP_URL)
+    #bust_iframe(BeerQuest::FB_APP_URL)
+    # TODO tester et voir si ça convient
+    redirect_to home_url
   end
 
   def session_logout
     session[:access_token] = nil
     session[:user_id] = nil
     session[:account_id] = nil
+    redirect_to home_url
+  end
+
+  # For testing purposes (out of Facebook)
+  def hack_login
+    account = Account.get(params[:id])
+    account.last_login = DateTime.now
+    account.login_count += 1
+    account.save
+
+    session[:user_id] = params[:id]
+    session[:access_token] = "none"
+    session[:account_id] = params[:id]
+    redirect_to home_url
   end
 
   private
 
   def user_details
-    # For testing purposes (out of Facebook)
-    if params[:virtual_user]
-      session[:user_id] = 42
-      session[:access_token] = "plup"
-      session[:account_id] = 1
-    end
-
     # Facebook user
     if params[:signed_request]
       data = facebook_signed_request?(params[:signed_request], BeerQuest::FB_SECRET)
@@ -35,17 +44,18 @@ class FacebookController < ApplicationController
     @access_token = session[:access_token]
     @user_id = session[:user_id]
     if session[:access_token].nil?
-      bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, url_for(:controller => 'facebook', :action => 'session_login'), :scope => "")
+      bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
       return false
     end
 
     # App user
     if session[:account_id]
-      @account = Account.find session[:account_id]
+      logger.debug "Account was stored in session: #{session[:account_id]}"
+      @account = Account.get(session[:account_id])
     else
       flash.now[:notice] = "Retrieve account info from FB"
       logger.debug "Trying to retrieve user #{@user_id} from DB"
-      @account = Account.find_by_facebook_id(@user_id)
+      @account = Account.first(:facebook_id => @user_id)
       unless @account
         logger.debug "Account didn't exist, create one"
         @account = Account.new(:facebook_id => @user_id)
@@ -61,42 +71,52 @@ class FacebookController < ApplicationController
       @account.profile_picture = "http://graph.facebook.com/#{@user_id}/picture"
       @account.login_count += 1
       @account.last_login = DateTime.now
-      @account.save!
+      @account.save
       session[:account_id] = @account.id
 
       # Friends
-      logger.debug "Current friends (before updating):"
-      @account.friends.each do |f|
-        logger.debug "== fbid: #{f.facebook_id}"
-      end
+#      logger.debug "Current friends (before updating):"
+#      @account.friends.each do |f|
+#        logger.debug "== fbid: #{f.facebook_id}"
+#      end
+#
+#      current_friends = @account.friendships.map { |fs| fs.friend_id }
+#      logger.debug "Asking FB for info about user friends"
+#      fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
+#      fb_friends[:data].each do |f|
+#        logger.debug "friend: #{f[:id]} #{f[:name]}"
+#        friend_account = Account.find_by_facebook_id f[:id]
+#        unless friend_account
+#          logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
+#          friend_account = @account.friends.new
+#          friend_account.facebook_id = f[:id]
+#          friend_account.discovered_through = @account.id
+#          if f[:name]
+#            friend_name = f[:name].split(' ', 2)
+#            friend_account.first_name = friend_name[0]
+#            friend_account.last_name = friend_name[1]
+#          end
+#          friend_account.profile_picture = "http://graph.facebook.com/#{f[:id]}/picture"
+#          friend_account.save!
+#        else
+#          unless current_friends.reject! f[:id]
+#            logger.debug "Friend #{f[:id]} was already existing but not registered as friend yet"
+#            @account.friends << friend_account
+#          else
+#            logger.debug "Friend #{f[:id]} was already existing and registered as friend"
+#          end
+#        end
+#      end
+      # Remove no-more friends
+#      current_friends.each do |f_id|
+#        logger.debug "Friend #{f_id} is no more a friend: removing him"
+#        @account.friends.delete @account.friends.find_by_id(f_id)
+#      end
+    end
 
-      logger.debug "Asking FB for info about user friends"
-      @friends = MiniFB.get(@access_token, "me", :type => "friends")
-      @friends[:data].each do |friend|
-        logger.debug "friend: #{friend[:id]} #{friend[:name]}"
-        friend_account = Account.find_by_facebook_id(friend[:id])
-        unless friend_account
-          logger.debug "Friend #{friend[:id]} didn't exist in DB: create it"
-          friend_account = @account.friends.new
-          friend_account.facebook_id = friend[:id]
-          friend_account.discovered_through = @account.id
-          if friend[:name]
-            friend_name = friend[:name].split(' ', 2)
-            friend_account.first_name = friend_name[0]
-            friend_account.last_name = friend_name[1]
-          end
-          friend_account.profile_picture = "http://graph.facebook.com/#{friend[:id]}/picture"
-          friend_account.save!
-        else
-          existing_friend = @account.friends.find_by_facebook_id friend[:id]
-          unless existing_friend
-            logger.debug "Friend #{friend[:id]} was already existing but not registered as friend yet"
-            @account.friends << friend_account
-          else
-            logger.debug "Friend #{friend[:id]} was already existing and registered as friend"
-          end
-        end
-      end
+    # (facultative) add default bar
+    if @account.barships.empty?
+      @account.barships.create(:bar_id => 1)
     end
 
     true

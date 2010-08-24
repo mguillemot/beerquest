@@ -1,9 +1,25 @@
-class Account < ActiveRecord::Base
-  has_many :friendships
-  has_many :friends, :through => :friendships
-  has_many :replays
-  has_many :barships
-  has_many :bars, :through => :barships
+class Account
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :first_name, String
+  property :last_name, String
+  property :profile_picture, String
+  property :gender, String
+  property :locale, String
+  property :timezone, Integer
+  property :discovered_through, Integer
+  property :facebook_id, Integer, :min => 0, :max => 2**64-1
+  property :login_count, Integer, :required => true, :default => 0
+  property :last_login, DateTime, :default => 0
+  property :created_at, DateTime
+  property :updated_at, DateTime
+
+  has n, :friendships
+  has n, :friends, :model => Account, :through => :friendships, :via => :friend
+  has n, :barships
+  has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
+  has n, :replays
 
   def full_name
     "#{first_name} #{last_name}"
@@ -19,5 +35,9 @@ class Account < ActiveRecord::Base
 
   def play_count
     barships.sum(:play_count)
+  end
+
+  def last_bar
+    barships.first(:order => :updated_at.desc).bar
   end
 end

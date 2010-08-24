@@ -1,11 +1,10 @@
 %tr.barscore
   %td.portrait
-    = image_tag 'avatar2.png', :class => 'portrait'
+    = image_tag barscore.account.profile_picture, :alt => barscore.account.full_name, :class => 'portrait'
   %td.description
-    .rank= "#1"
-    .name Eric Phelippeau
+    .rank= "##{barscore.rank}"
+    .name= barscore.account.full_name
     .score
       Score :
       = image_tag 'mini-biere.png', :alt => t('beers')
-      %span.value
-        234
+      %span.value= barscore.score
