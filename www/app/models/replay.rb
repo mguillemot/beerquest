@@ -2,6 +2,8 @@ class Replay
   include DataMapper::Resource
 
   property :id, Serial
+  property :account_id, Integer, :min => 1 # Note: required declaration to have NULLable FK
+  property :bar_id, Integer, :min => 1     # Note: required declaration to have NULLable FK
   property :score, Integer
   property :mode, String
   property :game_version, String

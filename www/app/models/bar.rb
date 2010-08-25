@@ -18,7 +18,7 @@ class Bar
   property :updated_at, DateTime
 
   has n, :barships, :constraint => :destroy
-  has n, :replays, :constraint => :destroy
+  has n, :replays, :constraint => :set_nil
 
   def weekly_scores
     []
