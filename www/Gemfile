@@ -12,8 +12,8 @@ gem 'actionmailer',         RAILS_VERSION
 gem 'railties',             RAILS_VERSION
 
 gem 'dm-rails',             '~> 1.0.3'
-gem 'dm-sqlite-adapter',     DM_VERSION
-#gem 'dm-mysql-adapter',     DM_VERSION
+gem 'dm-sqlite-adapter',    DM_VERSION, :group => [:development, :test]
+gem 'dm-mysql-adapter',     DM_VERSION, :group => :production
 gem 'dm-migrations',        DM_VERSION
 gem 'dm-types',             DM_VERSION
 gem 'dm-validations',       DM_VERSION

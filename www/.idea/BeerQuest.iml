@@ -87,6 +87,12 @@
     </requirement>
     <requirement>
       <requirement>
+        <dependency name="dm-mysql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
         <dependency name="dm-observer" version="0" bound="GREATER_OR_EQUAL" git="false" />
       </requirement>
       <source from="Gemfile" />
