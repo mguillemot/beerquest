@@ -1,26 +1,26 @@
 defaults: &defaults
-  adapter: sqlite
-#  adapter: mysql
   encoding: utf8
   reconnect: false
   pool: 5
 
 development:
+  adapter: sqlite
   database: beerquest_development.db
-#  database: beerquest_development
   username: root
   password:
   host: localhost
   <<: *defaults
 
 test:
-  database: beerquest_test
+  adapter: sqlite
+  database: beerquest_test.db
   username: root
   password:
   host: localhost
   <<: *defaults
 
 production:
+  adapter: mysql
   database: beerquest_production
   username: beerquest
   password: glouglou
