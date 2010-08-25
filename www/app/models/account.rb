@@ -15,11 +15,11 @@ class Account
   property :created_at, DateTime
   property :updated_at, DateTime
 
-  has n, :friendships
+  has n, :friendships, :constraint => :destroy
   has n, :friends, :model => Account, :through => :friendships, :via => :friend
-  has n, :barships
+  has n, :barships, :constraint => :destroy
   has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
-  has n, :replays
+  has n, :replays, :constraint => :destroy
 
   def full_name
     "#{first_name} #{last_name}"
