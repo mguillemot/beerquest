@@ -2,11 +2,11 @@ class Bar
   include DataMapper::Resource
 
   property :id, Serial
-  property :name, String, :required => true
-  property :url, String, :required => true
-  property :rss, String
-  property :banner, String, :required => true
-  property :contact, String
+  property :name, String, :length => 100, :required => true
+  property :url, String, :length => 1024, :required => true
+  property :rss, String, :length => 1024
+  property :banner, String, :length => 1024, :required => true
+  property :contact, String, :length => 255
   property :total_plays, Integer, :required => true, :default => 0
   property :total_beers, Integer, :required => true, :default => 0
   property :weekly_plays, Integer, :required => true, :default => 0

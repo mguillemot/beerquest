@@ -30,6 +30,9 @@ class ScoresController < ApplicationController
       logger.debug "Received: #{k} => #{v}"
       if v != "NaN"
         begin
+          if k[0..3] == 'avg_'
+            v = v.to_f
+          end
           replay.attribute_set(k, v)
         rescue NoMethodError
           logger.warn "No attribute #{k}"
@@ -38,6 +41,7 @@ class ScoresController < ApplicationController
     end
     replay.update_count += 1
     replay.user_agent = request.env["HTTP_USER_AGENT"]
+    logger.debug "AVG #{replay.avg_time_per_turn} #{replay.avg_time_per_turn.type}"
     unless replay.save
       logger.error "Impossible to save replay!"
       replay.errors.each do |e|
