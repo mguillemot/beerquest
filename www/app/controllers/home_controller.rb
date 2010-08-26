@@ -9,9 +9,15 @@ class HomeController < FacebookController
     @required_version = "0.8"
     @mode = "solo"
     @replay = @account.replays.create(:bar => @bar, :token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip)
+    unless @replay.saved?
+      logger.error "Impossible to create replay because of the following errors:"
+      @replay.errors.each do |e|
+        logger.error "ERROR: #{e}"
+      end
+    end
 
     @barship = @account.barships.first(:bar => @bar)
-    
+
     if @bar.rss
       @rss = []
       begin
