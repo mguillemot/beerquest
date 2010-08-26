@@ -55,7 +55,7 @@ class Replay
   property :ip, String, :length => 15
   property :seed, Integer
   property :game_over, Boolean, :required => true, :default => false, :index => true
-  property :created_at, DateTime, :required => true, :index => true
+  property :created_at, DateTime, :index => true
   property :updated_at, DateTime
   property :update_count, Integer, :default => 0
 
