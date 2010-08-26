@@ -99,6 +99,10 @@ ul.rss li {
 table.barscore-grid {
 }
 
+table.barscore-grid tr.me {
+  background: red;
+}
+
 table.barscore-grid td {
   border: none;
   vertical-align: middle;

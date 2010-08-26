@@ -57,6 +57,38 @@ fr:
           title: "Reçus (%{count})"
         sent:
           title: "Envoyés (%{count})"
+  bar:
+    member_count:
+      one: "1 Membre"
+      other: "%{count} Membres"
+    beer_count: "%{count} bières bues"
+    right:
+      news:
+        title: "News bar"
+      messages:
+        title: "Messages"
+    scores:
+      bar: "Scores du bar"
+      friends: "Scores de vos amis"
+      all: "Tous"
+      me: "Moi"
+      weekly: "7 jours"
+      always: "Toujours"
+    stats:
+      bar_stats: "Statistiques du bar"
+      bar_rank: "Place du bar"
+      bar_weekly_activity: "Activité Membres 7 jours"
+      bar_active_members:
+        one: "1 actif"
+        other: "%{count} actifs"
+      bar_new_active_members: "%{count} en +"
+      my_stats: "Mes stats du bar"
+      total_beers: "Bières au total"
+      weekly_beers: "Bières sur 7 jours"
+      member_since: "Membre du bar depuis"
+      best_rank_title: "Meilleur rang dans ce bar"
+      best_rank_value: "#%{rank} le %{date}"
+      play_count: "Nombre de parties"
 
   # http://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/fr.yml
   # WARNING: some changes below (tagged Erhune)

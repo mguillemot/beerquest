@@ -34,11 +34,11 @@
                 %a{:href => bar_url(@account.last_bar)}= t 'home.score.button_html'
         %ul.tabs
           %li
-            %a{:href => '#'}= t 'home.score.tabs.favorites.title'
+            %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.favorites.title'
           %li
-            %a{:href => '#'}= t 'home.score.tabs.bartners.title'
+            %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.bartners.title'
           %li.last
-            %a{:href => '#'}= t 'home.score.tabs.search.title'
+            %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.search.title'
         .panes
           .pane#favorites
             %table.header
@@ -114,11 +114,11 @@
                 %a{:href => '#'}= t 'home.battle.button_html'
         %ul.tabs
           %li
-            %a{:href => '#'}= t 'home.battle.tabs.current.title'
+            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.current.title'
           %li
-            %a{:href => '#'}= t 'home.battle.tabs.received.title', :count => 12
+            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.received.title', :count => 12
           %li.last
-            %a{:href => '#'}= t 'home.battle.tabs.sent.title', :count => 3
+            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.sent.title', :count => 3
         .panes
           .pane#current
             %table.challenge-grid

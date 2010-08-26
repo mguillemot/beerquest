@@ -11,8 +11,11 @@
         %tr
           %td.bar-name{:colspan => 2}
             %h1= @bar.name
-            %a{:href => @bar.url}= @bar.url
-            .member-count= "#{number_with_delimiter(@bar.total_members)} Membres - #{number_with_delimiter(@bar.total_beers)} bières bues"
+            %a{:href => @bar.url, :target => '_blank'}= @bar.url
+            .member-count
+              = t 'bar.member_count', :count => number_with_delimiter(@bar.total_members)
+              = "-"
+              = t 'bar.beer_count', :count => number_with_delimiter(@bar.total_beers)
           %td.bar-logo
             = image_tag @bar.banner, :alt => @bar.name, :class => 'bar-banner'
         %tr
@@ -20,42 +23,31 @@
             #game
           %td.sidebar
             %ul.tabs
-              %li
-                %a{:href => '#'} News Bar
+              - if @rss
+                %li
+                  %a{:href => 'javascript:void(0)'}= t 'bar.right.news.title'
               %li.last
-                %a{:href => '#'} Messages
+                %a{:href => 'javascript:void(0)'}= t 'bar.right.messages.title'
             .panes
-              .pane#rss
-                %ul.rss
-                  %li
-                    %a{:href => '#'} La fable du blogueur qui aurait mangé un journaliste
-                  %li
-                    %a{:href => '#'} 10 plugins pour mieux sécuriser votre blog sous Wordpress
-                  %li
-                    %a{:href => '#'} Twitter : 10 façons d’augmenter votre nombre de followers
-                  %li
-                    %a{:href => '#'} Les bureaux des blogueurs du Top 20 Wikio
-                  %li
-                    %a{:href => '#'} Shazam, une application pour iPhone époustouflante
-                  %li
-                    %a{:href => '#'} Twitter : 10 façons d’augmenter votre nombre de followers
-                  %li
-                    %a{:href => '#'} Les bureaux des blogueurs du Top 20 Wikio
-                  %li
-                    %a{:href => '#'} Shazam, une application pour iPhone époustouflante
+              - if @rss
+                .pane#rss
+                  %ul.rss
+                    - @rss.each do |rss|
+                      %li
+                        %a{:href => rss[:url]}= rss[:title]
               .pane#messages
-                messages
+                Y'en a pas pour l'instant !
         %tr.bottom                    
           %td.bar-scores
             .panes
               .pane#barscore-7j
                 %table
                   %tr
-                    %td.header Scores du bar
+                    %td.header= t 'bar.scores.bar'
                     %td.subnav#subtabs1
-                      %a{:href => '#'} Tous
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
                       = "-"
-                      %a{:href => '#'} Moi
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
                 .subpanes#subpanes1
                   .subpane
                     %table.barscore-grid
@@ -66,11 +58,11 @@
               .pane#barscore-always
                 %table
                   %tr
-                    %td.header Scores du bar
+                    %td.header= t 'bar.scores.bar'
                     %td.subnav#subtabs2
-                      %a{:href => '#'} Tous
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
                       = "-"
-                      %a{:href => '#'} Moi
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
                 .subpanes#subpanes2
                   .subpane
                     %table.barscore-grid
@@ -80,19 +72,19 @@
                       = render :partial => 'barscore', :collection => @bar.total_scores_for(@account)
             %ul.tabs
               %li
-                %a{:href => '#'} 7 jours
+                %a{:href => 'javascript:void(0)'}= t 'bar.scores.weekly'
               %li.last
-                %a{:href => '#'} Toujours
+                %a{:href => 'javascript:void(0)'}= t 'bar.scores.always'
           %td.friends-scores
             .panes
               .pane#friendsscore-7j
                 %table
                   %tr
-                    %td.header Scores de vos amis
+                    %td.header= t 'bar.scores.friends'
                     %td.subnav#subtabs3
-                      %a{:href => '#'} Tous
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
                       = "-"
-                      %a{:href => '#'} Moi
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
                 .subpanes#subpanes3
                   .subpane
                     %table.barscore-grid
@@ -103,11 +95,11 @@
               .pane#friendsscore-always
                 %table
                   %tr
-                    %td.header Scores de vos amis
+                    %td.header= t 'bar.scores.friends'
                     %td.subnav#subtabs4
-                      %a{:href => '#'} Tous
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
                       = "-"
-                      %a{:href => '#'} Moi
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
                 .subpanes#subpanes4
                   .subpane
                     %table.barscore-grid
@@ -117,69 +109,69 @@
                       = render :partial => 'barscore', :collection => @bar.total_scores_for(@account)
             %ul.tabs
               %li
-                %a{:href => '#'} 7 jours
+                %a{:href => 'javascript:void(0)'}= t 'bar.scores.weekly'
               %li.last
-                %a{:href => '#'} Toujours
+                %a{:href => 'javascript:void(0)'}= t 'bar.scores.always'
           %td.bar-stats
             .header
-              Statistiques du bar
+              = t 'bar.stats.bar_stats'
             .stat
               .section
-                Place du bar
+                = t 'bar.stats.bar_rank'
               .value
-                = "#720"
+                = "##{@bar.rank}"
             .stat
               .section
-                Activité Membres 7 jours
+                = t 'bar.stats.bar_weekly_activity'
               .value
-                34.000 actifs
+                = t 'bar.stats.bar_active_members', :count => @bar.active_members
                 %br
-                233.000 en +
+                = t 'bar.stats.bar_new_active_members', :count => @bar.new_active_members
             .stat
               .section
-                Bières sur 7 jours
+                = t 'bar.stats.weekly_beers'
               .value
                 = image_tag 'mini-biere.png', :alt => t('beers')
-                1.223.912
+                = number_with_delimiter(@bar.weekly_beers)
             .stat
               .section
-                Bières au total
+                = t 'bar.stats.total_beers'
               .value
                 = image_tag 'mini-biere.png', :alt => t('beers')
-                52.100.654
+                = number_with_delimiter(@bar.total_beers)
             %br
             .header
-              Mes stats du bar
+              = t 'bar.stats.my_stats'
             .portrait
-              = image_tag 'avatar1.png', :class => 'portrait'
+              = image_tag @account.profile_picture, :alt => @account.full_name, :class => 'portrait'
             .stat
               .section
-                Bières sur 7 jours
+                = t 'bar.stats.weekly_beers'
               .value
                 = image_tag 'mini-biere.png', :alt => t('beers')
-                43.000
+                = number_with_delimiter(@barship.weekly_beers)
             .stat
               .section
-                Bières au total
+                = t 'bar.stats.total_beers'
               .value
                 = image_tag 'mini-biere.png', :alt => t('beers')
-                1.230.190
+                = number_with_delimiter(@account.total_beers)
             .clear
             .stat
               .section
-                Membre du bar depuis
+                = t 'bar.stats.member_since'
               .value
-                12.08.2010
+                = l(@barship.created_at, :format => :short)
             .stat
               .section
-                Meilleur rang dans ce bar
+                = t 'bar.stats.best_rank_title'
               .value
-                = "#12 le 14.08.2010"
+                = t 'bar.stats.best_rank_value', :rank => @barship.best_rank, :date => l(@barship.best_rank_date, :format => :short)
             .stat
               .section
-                Nombre de parties
+                = t 'bar.stats.play_count'
               .value
-                840
+                = number_with_delimiter(@barship.play_count)
     %td.small.shadow
   %tr.small
     %td.small
@@ -195,7 +187,7 @@
       hasVersion: 9,
       flashvars: {
         mode: "#{@mode}",
-        token: "#{@token}",
+        token: "#{@replay.token}",
         requiredVersion: #{@required_version}
       }
     });

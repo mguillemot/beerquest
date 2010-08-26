@@ -3,13 +3,43 @@ class Barship
 
   property :account_id, Integer, :min => 1, :key => true # Note 1: these 2 properties are necessary besides the belongs_to declarations to declare the composite key
   property :bar_id, Integer, :min => 1, :key => true     # Note 2: :min => 1 is necessary to have UNSIGNED INT to reference the column as FK
-  property :play_count, Integer
+  property :play_count, Integer, :required => true, :default => 0
   property :last_play, DateTime
-  property :total_beers, Integer
+  property :total_beers, Integer, :required => true, :default => 0
   property :max_score, Integer
   property :created_at, DateTime
   property :updated_at, DateTime
 
   belongs_to :account
   belongs_to :bar
+
+  # TODO
+  def weekly_beers
+    0
+  end
+
+  # TODO
+  def best_rank
+    1
+  end
+
+  # TODO
+  def best_rank_date
+    DateTime.now
+  end
+
+  # TODO précalculer
+  def play_count
+    Replay.all(:bar => bar, :account => account, :game_over => true).count
+  end
+
+  # TODO précalculer
+  def total_beers
+    Replay.all(:bar => bar, :account => account, :game_over => true).sum(:score)
+  end
+
+  # TODO précalculer
+  def max_score
+    Replay.all(:bar => bar, :account => account, :game_over => true).max(:score)
+  end
 end

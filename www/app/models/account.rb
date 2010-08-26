@@ -26,15 +26,15 @@ class Account
   end
 
   def total_beers
-    barships.sum(:total_beers)
+    replays.all(:game_over => true).sum(:score)
   end
 
   def max_beers
-    barships.maximum(:max_beers)
+    replays.all(:game_over => true).max(:score)
   end
 
   def play_count
-    barships.sum(:play_count)
+    replays.all(:game_over => true).count
   end
 
   def last_bar

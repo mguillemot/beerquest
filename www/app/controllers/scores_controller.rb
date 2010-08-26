@@ -27,8 +27,13 @@ class ScoresController < ApplicationController
     replay = Replay.first(:token => params[:token])
     logger.debug "Found replay #{replay.id} with token #{params[:token]}"
     params.each do |k, v|
-      if replay.attributes.key?(k) && v != "NaN"
-        replay[k] = v
+      logger.debug "Received: #{k} => #{v}"
+      if v != "NaN"
+        begin
+          replay.attribute_set(k, v)
+        rescue NoMethodError
+          logger.warn "No attribute #{k}"
+        end
       end
     end
     replay.update_count += 1

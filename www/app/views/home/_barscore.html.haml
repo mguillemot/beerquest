@@ -1,10 +1,10 @@
-%tr.barscore
+%tr.barscore{:class => (barscore[:account_id] == @account.id) ? 'me' : ''}
   %td.portrait
-    = image_tag barscore.account.profile_picture, :alt => barscore.account.full_name, :class => 'portrait'
+    = image_tag barscore[:profile_picture], :alt => barscore[:full_name], :class => 'portrait'
   %td.description
-    .rank= "##{barscore.rank}"
-    .name= barscore.account.full_name
+    .rank= "##{barscore[:rank]}"
+    .name= barscore[:full_name]
     .score
       Score :
       = image_tag 'mini-biere.png', :alt => t('beers')
-      %span.value= barscore.score
+      %span.value= barscore[:score]

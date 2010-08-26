@@ -5,7 +5,7 @@ defaults: &defaults
 
 development:
   adapter: sqlite
-  database: beerquest_development.db
+  database: db/beerquest_development.sqlite
   username: root
   password:
   host: localhost
@@ -13,7 +13,7 @@ development:
 
 test:
   adapter: sqlite
-  database: beerquest_test.db
+  database: db/beerquest_test.sqlite
   username: root
   password:
   host: localhost
