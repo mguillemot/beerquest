@@ -20,10 +20,6 @@ public class TokenCollectionView extends UIComponent {
     public function TokenCollectionView() {
         width = 170;
         height = 11;
-        graphics.lineStyle(1, 0x000000);
-        graphics.drawRect(2 + 12 * 11, 0, 11, 11);
-        graphics.drawRect(2 + 12 * 11, 0, 22, 11);
-        graphics.drawRect(2 + 12 * 11, 0, 33, 11);
     }
 
     public function get player():PlayerData {

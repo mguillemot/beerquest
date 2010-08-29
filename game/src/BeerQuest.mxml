@@ -30,28 +30,10 @@
             backgroundColor: #ff0000;
         }
 
-        .game-type {
-            fontFamily: Kro;
-            fontSize: 16;
-            color: #753e00;
-        }
-
         .gameOver {
             fontFamily: Kro;
             fontSize: 48;
             color: #ff0000;
-            textAlign: center;
-        }
-
-        .currentTime {
-            fontSize: 32px;
-            fontWeight: bold;
-            textAlign: center;
-        }
-
-        .remainingTurns {
-            fontSize: 12px;
-            fontWeight: bold;
             textAlign: center;
         }
     </fx:Style>
@@ -60,26 +42,19 @@
         import com.beerquest.Constants;
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
-        import com.beerquest.events.BeerCollectedEvent;
         import com.beerquest.events.CapacityEvent;
         import com.beerquest.events.GameEvent;
-        import com.beerquest.events.GemsSwappedEvent;
         import com.beerquest.events.PissEvent;
         import com.beerquest.events.ScoreEvent;
         import com.beerquest.events.TokenEvent;
-        import com.beerquest.events.VomitEvent;
         import com.greensock.OverwriteManager;
-
         import com.greensock.TweenLite;
-
         import com.greensock.plugins.ColorTransformPlugin;
         import com.greensock.plugins.TintPlugin;
-
         import com.greensock.plugins.TweenPlugin;
 
         import mx.controls.Alert;
         import mx.core.FlexGlobals;
-        import mx.effects.Tween;
 
         private function init():void {
             // Init TweenLite
@@ -164,7 +139,7 @@
         private function onCurrentTurnChanged(e:GameEvent):void {
             uploadScore();
         }
-        
+
         private function onGameOver(e:GameEvent):void {
             TweenLite.to(gameover, 2, {y:0});
             if (!_scoresSent) {
@@ -226,7 +201,6 @@
         private var _mode:String;
         private var _allowStart:Boolean;
         private var _scoresSent:Boolean = false;
-
         ]]></fx:Script>
 
     <!-- board -->
@@ -238,13 +212,9 @@
     </mx:Canvas>
 
     <!-- status bar -->
-    <ui:PlayerStatusView id="myStatus" x="12" y="40" game="{game}" player="{game.me}"/>
-    <mx:Canvas x="0" y="10" width="200" backgroundColor="0x000000" backgroundAlpha="0"
-               toolTip="Tours restants avant la fin de la partie.">
-        <mx:Label width="100%" text="{game.remainingTurns} coups à boire" styleName="remainingTurns"/>
-    </mx:Canvas>
-    <ui:SoundButton x="0" y="250" on="true"/>
-    <ui:QualityButton x="0" y="280" on="true"/>
+    <ui:PlayerStatusView id="myStatus" x="5" y="5" game="{game}" player="{game.me}"/>
+    <ui:SoundButton x="140" y="292" on="true"/>
+    <ui:QualityButton x="170" y="292" on="true"/>
 
     <!-- vfx layer -->
     <ui:EffectLayer id="vfxLayer" width="100%" height="100%"/>

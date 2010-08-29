@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f48027e-07ce-4b9f-9c55-b89931362e9f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/replay.rb" afterPath="$PROJECT_DIR$/app/models/replay.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/beerquest_development.sqlite" afterPath="$PROJECT_DIR$/db/beerquest_development.sqlite" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/production.rb" afterPath="$PROJECT_DIR$/config/environments/production.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
     </list>
-    <ignored path=".idea/workspace.xml" />
     <ignored path="BeerQuest.iws" />
+    <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,10 +79,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="home_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="27" selection-start="199" selection-end="321" vertical-scroll-proportion="0.0">
+            <state line="12" column="54" selection-start="376" selection-end="376" vertical-scroll-proportion="0.34991422">
               <folding />
             </state>
           </provider>
@@ -127,10 +124,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="replay.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="replay.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/replay.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="53" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.52487135">
+            <state line="60" column="45" selection-start="2416" selection-end="2416" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -188,8 +185,8 @@
         <option value="$PROJECT_DIR$/app/models/bar.rb" />
         <option value="$PROJECT_DIR$/app/controllers/scores_controller.rb" />
         <option value="$PROJECT_DIR$/config/environments/production.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/replay.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
       </list>
     </option>
   </component>
@@ -452,7 +449,7 @@
       <recent name="E:\Boulot\beerquest\www\config\locales" />
     </key>
   </component>
-  <component name="RunManager" selected="Rake.db:automigrate">
+  <component name="RunManager">
     <configuration default="false" name="db:automigrate" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
       <module name="BeerQuest" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e STDOUT.sync=true;STDERR.sync=true;load($0=ARGV.shift)" />
@@ -715,7 +712,6 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24656811" sideWeight="0.6710671" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933994" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33553356" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
@@ -729,6 +725,7 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -809,63 +806,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/bar.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="33" selection-start="775" selection-end="775" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="15" column="33" selection-start="775" selection-end="775" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://C:/Ruby187/lib/ruby/gems/1.8/gems/activesupport-3.0.0.rc2/lib/active_support/dependencies.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/account.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="31" selection-start="863" selection-end="863" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="27" selection-start="382" selection-end="382" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="26" selection-start="630" selection-end="630" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/scores_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="11" selection-start="1344" selection-end="1415" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="47" column="11" selection-start="1344" selection-end="1415" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://C:/Ruby187/lib/ruby/gems/1.8/gems/dm-core-1.0.0/lib/dm-core/resource.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="8" selection-start="4875" selection-end="4875" vertical-scroll-proportion="0.0">
+        <state line="175" column="8" selection-start="4875" selection-end="4875" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/account.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="31" selection-start="863" selection-end="863" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="27" selection-start="382" selection-end="382" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="26" selection-start="630" selection-end="630" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/replay.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="45" selection-start="2416" selection-end="2416" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="27" selection-start="199" selection-end="321" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/replay.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="53" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.52487135">
+        <state line="12" column="54" selection-start="376" selection-end="376" vertical-scroll-proportion="0.34991422">
           <folding />
         </state>
       </provider>

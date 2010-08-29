@@ -93,6 +93,14 @@ public class PlayerData extends EventDispatcher {
         return _partialBeers;
     }
 
+    public function get stackCompletion():int {
+        if (_partialBeers.length <= 1) {
+            return _partialBeers.length;
+        } else {
+            return (_partialBeers.getItemAt(_partialBeers.length - 1) == _partialBeers.getItemAt(_partialBeers.length - 2)) ? 2 : 1;
+        }
+    }
+
     public function partialBeersEncodedState():String {
         var res:String = "";
         for each (var pb:TokenType in partialBeers) {

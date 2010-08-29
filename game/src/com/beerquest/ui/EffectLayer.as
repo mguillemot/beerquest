@@ -20,6 +20,9 @@ public class EffectLayer extends Canvas {
 
     public function EffectLayer() {
         super();
+        horizontalScrollPolicy = "off";
+        verticalScrollPolicy = "off";
+
         var i:int;
 
         _scoreEffectBuffer = new Array();

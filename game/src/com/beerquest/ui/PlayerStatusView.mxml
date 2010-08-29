@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
          xmlns:ui="com.beerquest.ui.*"
-         width="176" horizontalAlign="center" verticalGap="0"
+         width="185" horizontalAlign="center" verticalGap="0"
          creationComplete="init()">
     <mx:Style>
         .score {
@@ -11,15 +11,15 @@
             textAlign: right;
         }
 
-        .small-score {
-            fontFamily: Kro;
-            fontSize: 16;
+        .remaining-turns {
+            fontSize: 18;
             color: white;
-            textAlign: right;
+            textAlign: center;
         }
     </mx:Style>
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;
+        import com.beerquest.Constants;
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
         import com.beerquest.events.BeerCollectedEvent;
@@ -38,6 +38,7 @@
         [Bindable]
         public function set player(value:PlayerData):void {
             _player = value;
+            _player.addEventListener(GameEvent.PARTIAL_BEERS_CHANGED, onPartialBeersChanged);
             _player.addEventListener(GameEvent.FULL_BEERS_CHANGED, onFullBeersChanged);
         }
 
@@ -63,6 +64,23 @@
             vfx.y = -vfx.height / 2 + 30;
             vfx.alpha = 1;
             TweenLite.to(vfx, 1, {alpha:0, y:"-20"});
+        }
+
+        private function onPartialBeersChanged(e:GameEvent):void {
+            switch (_player.stackCompletion) {
+                case 1:
+                    arrow.source = Arrow1;
+                    break;
+                case 2:
+                    arrow.source = Arrow2;
+                    break;
+                case 3:
+                    arrow.source = Arrow3;
+                    break;
+                default:
+                    arrow.source = Arrow0;
+                    break;
+            }
         }
 
         private function onFullBeersChanged(e:GameEvent):void {
@@ -101,31 +119,59 @@
 
         [Embed(source="../../../wc-over.png")]
         private static var WcIconHover:Class;
+
+        [Embed(source="../../../fleche-0.png")]
+        private static var Arrow0:Class;
+
+        [Embed(source="../../../fleche-1.png")]
+        private static var Arrow1:Class;
+
+        [Embed(source="../../../fleche-2.png")]
+        private static var Arrow2:Class;
+
+        [Embed(source="../../../fleche-3.png")]
+        private static var Arrow3:Class;
         ]]></mx:Script>
     <mx:NumberFormatter id="scoreFormatter" useThousandsSeparator="true" decimalSeparatorTo=","
                         thousandsSeparatorTo="."/>
 
     <mx:Canvas width="100%"
-               toolTip="Attention, à 100% : vomito (bloque 5 cases) ! Mangez des Cahouètes ou buvez de l'eau.">
-        <ui:ProgressBar y="2" width="100%" height="16" progress="{player.vomit}" emptyColor="0x619f00"
+               toolTip="Tours de jeu restant. Buvez du jus de tomate pour tenir le coup !">
+        <ui:ProgressBar x="12" y="12" width="170" height="16" progress="{game.remainingTurns/Constants.INITIAL_TOTAL_TURNS*100}" emptyColor="0x00789f"
+                        fullColorLight="0x00bbf9" fullColorDark="0x0098d6"/>
+        <mx:Image source="@Embed(source='../../../barre-tours.png')"/>
+        <mx:Label y="3" width="30" text="{game.remainingTurns}" styleName="remaining-turns">
+            <mx:filters>
+                <mx:GlowFilter blurX="3" blurY="3" alpha="1" color="0x000000" quality="3"/>
+            </mx:filters>
+        </mx:Label>
+    </mx:Canvas>
+
+    <mx:Spacer height="5"/>
+
+    <mx:Canvas width="100%"
+               toolTip="Attention, à 100% : vomito (bloque 5 cases) ! Mangez des Cahouètes !">
+        <ui:ProgressBar x="12" y="12" width="170" height="16" progress="{player.vomit}" emptyColor="0x619f00"
                         fullColorLight="0xbbf900" fullColorDark="0x82d500" alert="true"/>
+        <mx:Image source="@Embed(source='../../../barre-vomi.png')"/>
     </mx:Canvas>
 
     <mx:Spacer height="5"/>
 
     <mx:Canvas width="100%"
                toolTip="Attention, à partir de 80% : innondation (bloque les lignes du fond) !">
-        <ui:ProgressBar y="9" width="100%" height="16" progress="{player.piss}" emptyColor="0x9f9600"
+        <ui:ProgressBar x="12" y="12" width="170" height="16" progress="{player.piss}" emptyColor="0x9f9600"
                         fullColorLight="0xfbe400" fullColorDark="0xcd1be00"/>
-        <mx:Image x="15" id="wcButton" source="{WcIcon}" mouseOver="onMouseOverPiss(event)"
+        <mx:Image x="60" y="3" id="wcButton" source="{WcIcon}" mouseOver="onMouseOverPiss(event)"
                   mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
                   visible="{player.piss >= 80}"/>
+        <mx:Image source="@Embed(source='../../../barre-pisse.png')"/>
     </mx:Canvas>
 
-    <mx:Spacer height="20"/>
+    <mx:Spacer height="10"/>
 
-    <mx:Canvas id="scoreContainer" width="100%">
-        <mx:Image source="@Embed(source='../../../player-score.png')"/>
+    <mx:Canvas width="100%">
+        <mx:Image source="@Embed(source='../../../fond-score-srack.png')"/>
         <mx:Canvas toolTip="Ton score. Il augmente de 1 pour chaque bière bue.">
             <mx:Canvas x="5" y="2" width="120">
                 <mx:Label id="collectedBeers" text="{player.fullBeers}" width="100%" styleName="score">
@@ -136,18 +182,19 @@
             </mx:Canvas>
             <mx:Image id="scoreIcon" x="130" y="7" source="@Embed(source='../../../collected-beer.png')"/>
         </mx:Canvas>
-        <mx:Canvas x="3" y="57" width="170" height="11" backgroundColor="0x000000" backgroundAlpha="0"
+        <mx:Canvas x="4" y="57" width="170" height="11" backgroundColor="0x000000" backgroundAlpha="0"
                    toolTip="Collecte 3 jetons de la même couleur pour gagner 5 bouteilles supplémentaires !">
             <ui:TokenCollectionView id="stack" player="{player}"/>
         </mx:Canvas>
+        <mx:Image id="arrow" x="161" y="33" source="{Arrow0}"/>
         <ui:FullBeerFx id="vfx" x="{-vfx.width / 2 + 140}" y="{-vfx.height / 2 + 30}" alpha="0" value="5"/>
     </mx:Canvas>
 
-    <mx:Spacer height="25"/>
+    <mx:Spacer height="10"/>
 
     <ui:CapacityView id="capa0" player="{player}" capacity="{player.capacities.getItemAt(0) as Capacity}"
                      clickable="{!game.gameOver}"/>
-    <mx:Spacer height="10"/>
+    <!--<mx:Spacer height="4"/>-->
     <ui:CapacityView id="capa1" player="{player}" capacity="{player.capacities.getItemAt(1) as Capacity}"
                      clickable="{!game.gameOver}"/>
 </mx:VBox>
