@@ -14,8 +14,9 @@ public class Token extends Sprite {
     public function Token(type:TokenType, superToken:Boolean) {
         super();
 
-        _id = nextId++;
         _superToken = superToken;
+        _type = type;
+        _mark = false;
 
         var hit:Sprite = new Sprite();
         hit.graphics.drawRect(0, 0, 100, 100);
@@ -75,23 +76,7 @@ public class Token extends Sprite {
                 _superTween.restart();
             }});
         }
-
-        _type = type;
-        _mark = false;
     }
-
-    /*private function onEnterFrame(e:Event):void {
-     if (_movieClip != null && _movieClip.currentLabel == "end_explode") {
-     removeChild(_movieClip);
-     _movieClip = null;
-     }
-     }
-
-     public function explode():void {
-     if (_movieClip != null) {
-     _movieClip.gotoAndPlay("start_explode");
-     }
-     }*/
 
     public function get type():TokenType {
         return _type;
@@ -157,11 +142,7 @@ public class Token extends Sprite {
         _hint = value;
     }
 
-    private static var nextId:int = 1;
-
-    private var _id:int;
     private var _icon:BitmapAsset;
-    //private var _movieClip:MovieClipAsset;
     private var _type:TokenType;
     private var _superToken:Boolean = false;
     private var _boardX:int = int.MIN_VALUE;

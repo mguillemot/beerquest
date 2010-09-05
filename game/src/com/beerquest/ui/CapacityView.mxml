@@ -13,6 +13,7 @@
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
 
+        [Bindable]
         public function set capacity(value:Capacity):void {
             _capacity = value;
             if (value.enabled) {

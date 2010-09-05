@@ -4,10 +4,12 @@ import com.beerquest.events.CellEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 
+import com.beerquest.events.GroupCollectionEvent;
+
 import flash.geom.Point;
 
 public class BoardState {
-    public function BoardState(game:Game = null, rand:MersenneTwister = null) {
+    public function BoardState(rand:MersenneTwister = null) {
         _rand = (rand == null) ? MersenneTwister.generate() : rand;
         for (var i:int = 0; i < Constants.BOARD_SIZE * Constants.BOARD_SIZE; i++) {
             _state.push(TokenType.NONE);
@@ -45,20 +47,11 @@ public class BoardState {
         }
     }
 
-    public function updateTo(otherState:BoardState):void {
-        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
-            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                setCell(i, j, otherState.getCell(i, j), otherState.getSuper(i, j));
-            }
-        }
-        pissLevel = otherState.pissLevel;
-    }
-
     public function toString():String {
         var repr:String = "";
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                repr += getCell(i, j).value.toString();
+                repr += getCell(i, j).toString();
                 repr += (getSuper(i, j)) ? "S" : "-";
                 repr += "|";
             }
@@ -91,7 +84,9 @@ public class BoardState {
             generateFullRandom();
             normalize();
         } while (computeMoves().length == 0);
-        _game.dispatchEvent(new BoardResetEvent(new Array()));
+        if (_game != null) {
+            _game.dispatchEvent(new BoardResetEvent(new Array()));
+        }
     }
 
     public function generateTestBoard():void {
@@ -106,7 +101,9 @@ public class BoardState {
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.BROWN_BEER]
         ], false);
         setCell(0, 0, TokenType.BLOND_BEER, true);
-        _game.dispatchEvent(new BoardResetEvent(new Array()));
+        if (_game != null) {
+            _game.dispatchEvent(new BoardResetEvent(new Array()));
+        }
     }
 
     public function getRandomNonVomitNonSuperCell():Object {
@@ -133,37 +130,48 @@ public class BoardState {
     }
 
     public function swapGems(sx:int, sy:int, dx:int, dy:int):void {
-        // TODO implémenter swap
+        // Operation
+        var destType:TokenType = getCell(dx, dy);
+        var destSuper:Boolean = getSuper(dx, dy);
+        setCell(dx, dy, getCell(sx, sy), getSuper(dx, sy));
+        setCell(sx, sy, destType, destSuper);
+
+        // Event
         Constants.STATS.gemsSwapped(sx, sy, dx, dy);
-        _game.dispatchEvent(new GemsSwappedEvent(sx, sy, dx, dy));
+        if (_game != null) {
+            _game.dispatchEvent(new GemsSwappedEvent(sx, sy, dx, dy));
+        }
+
+        // Result
+        normalize();
     }
 
     /*private function checkSeries():int {
-        var groups:Array = computeGroups();
-        for (var i:int = 0; i < groups.length; i++) {
-            var group:Object = groups[i];
-            for (var k:int = 0; k < group.length; k++) {
-                var x:int = group.startX;
-                var y:int = group.startY;
-                if (group.type == "horizontal") {
-                    x += k;
-                } else {
-                    y += k;
-                }
-                if (group.length >= 5) {
-                    if (x == group.midX && y == group.midY) {
-                        getToken(x, y).mark = "BOMB";
-                    } else {
-                        getToken(x, y).mark = new Point(group.midX, group.midY);
-                    }
-                } else {
-                    getToken(x, y).mark = true;
-                }
-            }
-        }
-        invalidateDisplayList();
-        return groups.length;
-    }          */
+     var groups:Array = computeGroups();
+     for (var i:int = 0; i < groups.length; i++) {
+     var group:Object = groups[i];
+     for (var k:int = 0; k < group.length; k++) {
+     var x:int = group.startX;
+     var y:int = group.startY;
+     if (group.type == "horizontal") {
+     x += k;
+     } else {
+     y += k;
+     }
+     if (group.length >= 5) {
+     if (x == group.midX && y == group.midY) {
+     getToken(x, y).mark = "BOMB";
+     } else {
+     getToken(x, y).mark = new Point(group.midX, group.midY);
+     }
+     } else {
+     getToken(x, y).mark = true;
+     }
+     }
+     }
+     invalidateDisplayList();
+     return groups.length;
+     }          */
 
     public function createVomit(count:int):Array {
         var cells:Array = new Array();
@@ -189,7 +197,9 @@ public class BoardState {
             var replacement:TokenType = generateNewCell();
             setCell(cell.x, 0, replacement, false);
             // Dispatch result
-            _game.dispatchEvent(new CellEvent(CellEvent.CELL_DESTROYED, cell.x, cell.y, replacement));
+            if (_game != null) {
+                _game.dispatchEvent(new CellEvent(CellEvent.CELL_DESTROYED, cell.x, cell.y, replacement));
+            }
         }
     }
 
@@ -218,7 +228,9 @@ public class BoardState {
                 if (getCell(i, j) == source) {
                     count++;
                     setCell(i, j, target, getSuper(i, j));
-                    _game.dispatchEvent(new CellEvent(CellEvent.CELL_TRANSFORMED, i, j, target));
+                    if (_game != null) {
+                        _game.dispatchEvent(new CellEvent(CellEvent.CELL_TRANSFORMED, i, j, target));
+                    }
                 }
             }
         }
@@ -238,7 +250,7 @@ public class BoardState {
     }
 
     public function normalize():void {
-        while (hasGroups > 0) {
+        while (hasGroups) {
             destroyGroups();
             compact();
         }
@@ -262,7 +274,7 @@ public class BoardState {
                         di++;
                     }
                     if (di >= 3) {
-                        groups.push({type:"horizontal", startX:i, startY:j, midX:(i + Math.floor(di / 2)), midY:j, length:di, token:token, supers:supers});
+                        groups.push(new Group(i, j, "horizontal", di, token, supers));
                     }
                     i += (di - 1);
                 }
@@ -283,7 +295,7 @@ public class BoardState {
                         dj++;
                     }
                     if (dj >= 3) {
-                        groups.push({type:"vertical", startX:i, startY:j, midX:i, midY:(j + Math.floor(dj / 2)), length:dj, token:token, supers:supers});
+                        groups.push(new Group(i, j, "vertical", dj, token, supers));
                     }
                     j += (dj - 1);
                 }
@@ -399,15 +411,18 @@ public class BoardState {
     }
 
     private function destroyGroups():void {
-        for each (var group:Object in computeGroups()) {
-            if (group.type == "horizontal") {
+        for each (var group:Group in computeGroups()) {
+            if (group.direction == "horizontal") {
                 for (var di:int = 0; di < group.length; di++) {
-                    setCell(group.startX + di, group.startY, TokenType.NONE, false);
+                    setCell(group.x + di, group.y, TokenType.NONE, false);
                 }
             } else {
                 for (var dj:int = 0; dj < group.length; dj++) {
-                    setCell(group.startX, group.startY + dj, TokenType.NONE, false);
+                    setCell(group.x, group.y + dj, TokenType.NONE, false);
                 }
+            }
+            if (_game != null) {
+                _game.dispatchEvent(new GroupCollectionEvent(group));
             }
         }
     }
@@ -459,7 +474,17 @@ public class BoardState {
 
     public function set pissLevel(pissLevel:int):void {
         _pissLevel = pissLevel;
-        _game.dispatchEvent(new GameEvent(GameEvent.PISS_CHANGED));
+        if (_game != null) {
+            _game.dispatchEvent(new GameEvent(GameEvent.PISS_CHANGED));
+        }
+    }
+
+    public function get game():Game {
+        return _game;
+    }
+
+    public function set game(value:Game):void {
+        _game = value;
     }
 
     private var _game:Game;

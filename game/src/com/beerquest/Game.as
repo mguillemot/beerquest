@@ -11,13 +11,17 @@ public class Game extends EventDispatcher {
         _me = me;
         _totalTurns = Constants.INITIAL_TOTAL_TURNS;
         _rand = new MersenneTwister(seed);
-        _board = new BoardState(this, _rand);
+        _board = new BoardState(_rand);
+        _board.generateRandomWithoutGroups();
+        _board.game = this; // Do this AFTER not to have events during generation phase
+        dispatchEvent(new GameEvent(GameEvent.GAME_START));
     }
 
     public function get mode():String {
         return _mode;
     }
 
+    [Bindable]
     public function get me():PlayerData {
         return _me;
     }

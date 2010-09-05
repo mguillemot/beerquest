@@ -35,6 +35,8 @@ public class BoardView extends UIComponent {
 
     public function BoardView() {
         super();
+        width = 320;
+        height = 320;
 
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             _board[i] = new Array();
@@ -42,65 +44,59 @@ public class BoardView extends UIComponent {
 
         addEventListener(Event.ADDED_TO_STAGE, function(e:Event):void {
             stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-
-            // Background
-            var bg:BitmapAsset = new BoardBackground();
-            bg.name = "bg";
-            bg.width = width;
-            bg.height = height;
-            addChild(bg);
-
-            // Gems
-            _gemsLayer = new Sprite();
-            addChild(_gemsLayer);
-
-            // Piss
-            _pissLayer = new Sprite();
-            var subPiss:BitmapAsset = new PissAnimation();
-            _pissLayer.addChild(subPiss);
-            subPiss = new PissAnimation();
-            subPiss.x = subPiss.width;
-            _pissLayer.addChild(subPiss);
-            _pissLayer.alpha = 0.6;
-            _pissLayer.name = "piss";
-            _pissLayer.width = 2 * width;
-            _pissLayer.height = 3 * height / Constants.BOARD_SIZE + 5;
-            _pissLayer.y = height;
-            addChild(_pissLayer);
-            _currentPissLevel = 0;
-
-            // Selection
-            _selection = new Sprite();
-            _selection.name = "selection";
-            _selection.graphics.lineStyle(2, 0xff0000);
-            _selection.graphics.drawRect(0, 0, width / Constants.BOARD_SIZE, height / Constants.BOARD_SIZE);
-            addChild(_selection);
-
-            // Mask
-            var rect:Sprite = new Sprite();
-            rect.name = "mask";
-            rect.graphics.beginFill(0xff0000);
-            rect.graphics.drawRect(0 - 1, 0 - 1, width + 2, height + 2);
-            addChild(rect);
-            mask = rect;
-
-            Constants.GAME.addEventListener(BoardResetEvent.BOARD_RESET, onBoardReset);
-            Constants.GAME.addEventListener(GroupCollectionEvent.GROUP_COLLECTED, onGroupCollected);
-            Constants.GAME.addEventListener(VomitEvent.VOMIT, onVomit);
-            Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGemsSwapped);
-            Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, onPissLevelChanged);
-            _initialized = true;
-
-            // Generate initial board
-            //regenBoard(false);
-
-            // Start stats collection
-            Constants.STATS.startTurn(Constants.GAME);
-            refreshStats();
         });
+
+        // Background
+        var bg:BitmapAsset = new BoardBackground();
+        bg.name = "bg";
+        bg.width = width;
+        bg.height = height;
+        addChild(bg);
+
+        // Gems
+        _gemsLayer = new Sprite();
+        addChild(_gemsLayer);
+
+        // Piss
+        _pissLayer = new Sprite();
+        var subPiss:BitmapAsset = new PissAnimation();
+        _pissLayer.addChild(subPiss);
+        subPiss = new PissAnimation();
+        subPiss.x = subPiss.width;
+        _pissLayer.addChild(subPiss);
+        _pissLayer.alpha = 0.6;
+        _pissLayer.name = "piss";
+        _pissLayer.width = 2 * width;
+        _pissLayer.height = 3 * height / Constants.BOARD_SIZE + 5;
+        _pissLayer.y = height;
+        addChild(_pissLayer);
+        _currentPissLevel = 0;
+
+        // Selection
+        _selection = new Sprite();
+        _selection.name = "selection";
+        _selection.graphics.lineStyle(2, 0xff0000);
+        _selection.graphics.drawRect(0, 0, width / Constants.BOARD_SIZE, height / Constants.BOARD_SIZE);
+        addChild(_selection);
+
+        // Mask
+        var rect:Sprite = new Sprite();
+        rect.name = "mask";
+        rect.graphics.beginFill(0xff0000);
+        rect.graphics.drawRect(0 - 1, 0 - 1, width + 2, height + 2);
+        addChild(rect);
+        mask = rect;
+
         addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
         addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
+        Constants.GAME.addEventListener(GameEvent.GAME_START, onGameStart);
+        Constants.GAME.addEventListener(BoardResetEvent.BOARD_RESET, onBoardReset);
+        Constants.GAME.addEventListener(GroupCollectionEvent.GROUP_COLLECTED, onGroupCollected);
+        Constants.GAME.addEventListener(VomitEvent.VOMIT, onVomit);
+        Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGemsSwapped);
+        Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, onPissLevelChanged);
     }
 
     private function onMouseUp(e:MouseEvent):void {
@@ -150,6 +146,11 @@ public class BoardView extends UIComponent {
         // Note: registered from the application
         switch (e.keyCode) {
             case 32: // space
+                if (Constants.DEBUG) {
+                    reinitBoardView();
+                }
+                break;
+            case 81: // q
                 if (Constants.DEBUG) {
                     Constants.GAME.board.generateTestBoard();
                 }
@@ -234,39 +235,41 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function onBoardReset(e:BoardResetEvent):void {
-        startAction("regenBoard");
-        clearSelection();
-        var i:int, j:int, token:Token;
-        if (_initialized) {
-            resetMarks();
-            for each (var cell:Point in e.except) {
-                getToken(cell.x, cell.y).mark = true;
-            }
-            for (i = 0; i < Constants.BOARD_SIZE; i++) {
-                for (j = 0; j < Constants.BOARD_SIZE; j++) {
-                    token = getToken(i, j);
-                    if (!token.mark) {
-                        var duration:Number = 1 + Math.random() * 0.5;
-                        var d:Number = Math.random() * 0.2;
-                        var x:Number = Math.random() * width - width / Constants.BOARD_SIZE;
-                        var y:Number = height + Math.random() * height;
-                        TweenLite.to(token, duration, {x:x, y:y, ease:Expo.easeIn, delay:d});
-                    }
-                }
-            }
-            var timer:Timer = new Timer(1500, 1);
-            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
-                reinitBoardView();
-            });
-            timer.start();
-        } else {
-            reinitBoardView();
-        }
+    private function onGameStart(e:GameEvent):void {
+        trace("Game start!");
+        onBoardReset(new BoardResetEvent(new Array()));
+        trace("Game started.");
     }
 
-    private function reinitBoardView():void {
-        startAction("reinitBoardView");
+    private function onBoardReset(e:BoardResetEvent):void {
+        startAction("onBoardReset");
+        clearSelection();
+        var i:int, j:int, token:Token;
+        resetMarks();
+        for each (var cell:Point in e.except) {
+            getToken(cell.x, cell.y).mark = true;
+        }
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = 0; j < Constants.BOARD_SIZE; j++) {
+                token = getToken(i, j);
+                if (token != null && !token.mark) {
+                    var duration:Number = 1 + Math.random() * 0.5;
+                    var d:Number = Math.random() * 0.2;
+                    var x:Number = Math.random() * width - width / Constants.BOARD_SIZE;
+                    var y:Number = height + Math.random() * height;
+                    TweenLite.to(token, duration, {x:x, y:y, ease:Expo.easeIn, delay:d});
+                }
+            }
+        }
+        var timer:Timer = new Timer(1500, 1);
+        timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+            endBoardReset();
+        });
+        timer.start();
+    }
+
+    private function endBoardReset():void {
+        startAction("endBoardReset");
         var i:int, j:int, token:Token;
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
@@ -287,6 +290,24 @@ public class BoardView extends UIComponent {
         timer.start();
     }
 
+    private function reinitBoardView():void {
+        trace("reinitBoardView() called");
+        var i:int, j:int, token:Token;
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = 0; j < Constants.BOARD_SIZE; j++) {
+                token = getToken(i, j);
+                if (token == null || token.type != boardState.getCell(i, j) || token.superToken != boardState.getSuper(i, j)) {
+                    if (token != null) {
+                        removeToken(token);
+                    }
+                    token = generateToken(boardState.getCell(i, j), boardState.getSuper(i, j));
+                    addToken(token);
+                    setToken(i, j, token);
+                }
+            }
+        }
+    }
+
     private function onVomit(e:VomitEvent):void {
         for each (var cell:Point in e.cells) {
             var token:Token = getToken(cell.x, cell.y);
@@ -299,7 +320,10 @@ public class BoardView extends UIComponent {
     }
 
     private function onGemsSwapped(e:GemsSwappedEvent):void {
-        // TODO
+        var s:Token = getToken(e.sx, e.sy);
+        var d:Token = getToken(e.dx, e.dy);
+        setToken(e.sx, e.sy, d);
+        setToken(e.dx, e.dy, s);
     }
 
     private function generateToken(type:TokenType, superToken:Boolean):Token {
@@ -399,6 +423,12 @@ public class BoardView extends UIComponent {
         if (action == "") {
             refreshStats();
         }
+        dispatchEvent(new Event("currentActionChanged"));
+    }
+
+    [Bindable(event="currentActionChanged")]
+    public function get currentAction():String {
+        return _currentAction;
     }
 
     private function selectCell(x:int, y:int):Boolean {
@@ -426,73 +456,89 @@ public class BoardView extends UIComponent {
     }
 
     private function onGroupCollected(e:GroupCollectionEvent):void {
+        var group:Group = e.group;
+
         // VFX
-        var token:Token = getToken(e.group.x, e.group.y);
+        var token:Token = getToken(group.x, group.y);
         var local:Point = new Point(token.x, token.y);
-        if (e.group.direction == "horizontal") {
-            local.x += width / Constants.BOARD_SIZE * e.group.length / 2;
+        if (group.direction == "horizontal") {
+            local.x += width / Constants.BOARD_SIZE * group.length / 2;
             local.y += height / Constants.BOARD_SIZE / 2;
         } else {
             local.x += width / Constants.BOARD_SIZE / 2;
-            local.y += height / Constants.BOARD_SIZE * e.group.length / 2;
+            local.y += height / Constants.BOARD_SIZE * group.length / 2;
         }
         var scoreCoords:Point = localToGlobal(local);
-        dispatchEvent(new ScoreEvent(e.group.beerGain, e.group.turnsGain, scoreCoords.x, scoreCoords.y));
-        if (e.group.collectedToken != null) {
-            dispatchEvent(new TokenEvent(e.group.collectedToken, scoreCoords.x, scoreCoords.y));
+        dispatchEvent(new ScoreEvent(group.beerGain, group.turnsGain, scoreCoords.x, scoreCoords.y));
+        if (group.collectedToken != null) {
+            dispatchEvent(new TokenEvent(group.collectedToken, scoreCoords.x, scoreCoords.y));
         }
 
         // Explosion or collection effect
         startAction("exploding");
         var duration:Number = EXPLODE_DURATION_MS;
-        for (var k:int = 0; k < e.group.length; k++) {
-            var i:int = e.group.x;
-            var j:int = e.group.y;
-            if (e.group.direction == "horizontal") {
+        for (var k:int = 0; k < group.length; k++) {
+            var i:int = group.x;
+            var j:int = group.y;
+            if (group.direction == "horizontal") {
                 i += k;
             } else {
                 j += k;
             }
             token = getToken(i, j);
-            if (e.group.length <= 4) {
+//            if (group.length <= 4) {
                 TweenLite.to(token, EXPLODE_DURATION_MS / 1000, {alpha:0});
-            } else if (token.mark is Point) {
-                var focus:Point; // TODO
-                var dx:Number = (focus.x - i) * width / Constants.BOARD_SIZE;
-                var dy:Number = (focus.y - j) * height / Constants.BOARD_SIZE;
-                TweenLite.to(token, GROUP5_COMPACTION_DURATION_MS / 1000, {x:dx.toString(), y:dy.toString()});
-                duration = GROUP5_COMPACTION_DURATION_MS;
-            }
+//            } else if (token.mark is Point) {
+//                var focus:Point; // TODO
+//                var dx:Number = (focus.x - i) * width / Constants.BOARD_SIZE;
+//                var dy:Number = (focus.y - j) * height / Constants.BOARD_SIZE;
+//                TweenLite.to(token, GROUP5_COMPACTION_DURATION_MS / 1000, {x:dx.toString(), y:dy.toString()});
+//                duration = GROUP5_COMPACTION_DURATION_MS;
+//            }
         }
         var timer:Timer = new Timer(duration, 1);
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
-            reinitBoardView();
+            for (var k:int = 0; k < group.length; k++) {
+                var i:int = group.x;
+                var j:int = group.y;
+                if (group.direction == "horizontal") {
+                    i += k;
+                } else {
+                    j += k;
+                }
+                token = getToken(i, j);
+                removeToken(token);
+            }
+            endGroupCollected();
         });
         timer.start();
     }
 
-    private function endDestroySeries():void {
-        startAction("falling");
-        removeMarkedTokens();
+    private function endGroupCollected():void {
+        startAction("endGroupCollected");
         resetFalling();
+        var i:int, j:int, holes:int, token:Token;
         var falling:Boolean = false;
-        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-            for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
-                var token:Token = getToken(i, j);
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = Constants.BOARD_SIZE - 1; j >= 0; j--) {
+                token = getToken(i, j);
                 if (token == null) {
                     falling = true;
+                    holes = 0;
                     for (var jj:int = j - 1; jj >= -1; jj--) {
                         var upToken:Token;
                         if (jj >= 0) {
                             upToken = getToken(i, jj);
                         } else {
-                            upToken = generateToken(null, false);
+                            upToken = generateToken(boardState.getCell(i, holes), false);
                             addToken(upToken);
                             setToken(i, jj, upToken);
                         }
                         if (upToken != null) {
                             upToken.falling = true;
                             TweenLite.to(upToken, FALL_TIME_MS / 1000, {y: (jj + 1) * height / Constants.BOARD_SIZE, ease:Linear.easeNone});
+                        } else {
+                            holes++;
                         }
                     }
                     break;
@@ -503,22 +549,12 @@ public class BoardView extends UIComponent {
             var timer:Timer = new Timer(FALL_TIME_MS, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                 updateFalling();
-                endDestroySeries();
+                endGroupCollected();
             });
             timer.start();
         } else {
+            startAction("");
             //endDestroySeries2();
-        }
-    }
-
-    private function removeMarkedTokens():void {
-        for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-            for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
-                var token:Token = getToken(i, j);
-                if (token != null && token.mark) {
-                    removeToken(token);
-                }
-            }
         }
     }
 
@@ -540,7 +576,6 @@ public class BoardView extends UIComponent {
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 var token:Token = getToken(i, j);
-                token.mark = null;
             }
         }
     }
@@ -594,20 +629,20 @@ public class BoardView extends UIComponent {
     }
 
     private function refreshStats():void {
-        //if (_initialized) {
-        var moves:Array = boardState.computeMoves();
-        availableMoves = moves.length;
-        if (moves.length > 0) {
-            moves = Utils.randomizeArray(moves);
-            setHint(moves[0].hintX, moves[0].hintY);
-        } else {
-            setHint(-1, -1);
+        if (boardState != null) {
+            var moves:Array = boardState.computeMoves();
+            availableMoves = moves.length;
+            if (moves.length > 0) {
+                moves = Utils.randomizeArray(moves);
+                setHint(moves[0].hintX, moves[0].hintY);
+            } else {
+                setHint(-1, -1);
+            }
+            /*trace("available moves:");
+             for each (var move:Object in state.computeMoves()) {
+             trace("  " + move.type + " of " + move.startX + ":" + move.startY);
+             }*/
         }
-        /*trace("available moves:");
-         for each (var move:Object in state.computeMoves()) {
-         trace("  " + move.type + " of " + move.startX + ":" + move.startY);
-         }*/
-        //}
     }
 
     private function setHint(x:int, y:int):void {
@@ -675,7 +710,6 @@ public class BoardView extends UIComponent {
         return Constants.GAME.board;
     }
 
-    private var _initialized:Boolean = false;
     private var _board:Array = new Array();
     private var _selectedX:int = -1;
     private var _selectedY:int = -1;

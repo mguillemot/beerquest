@@ -7,15 +7,46 @@
  */
 package com.beerquest {
 public class Group {
-    public function Group() {
+    public function Group(x:int, y:int, direction:String, length:int, token:TokenType, supers:int) {
+        _x = x;
+        _y = y;
+        _direction = direction;
+        _length = length;
+        _token = token;
+        _supers = supers;
     }
 
-    public var x:int;
-    public var y:int;
-    public var length:int;
-    public var token:TokenType;
-    public var direction:String;
-    public var supers:int;
+    public function get x():int {
+        return _x;
+    }
+
+    public function get y():int {
+        return _y;
+    }
+
+    public function get length():int {
+        return _length;
+    }
+
+    public function get token():TokenType {
+        return _token;
+    }
+
+    public function get direction():String {
+        return _direction;
+    }
+
+    public function get supers():int {
+        return _supers;
+    }
+
+    public function get midX():int {
+        return (direction == "horizontal") ? (x + Math.floor(length / 2)) : x;
+    }
+
+    public function get midY():int {
+        return (direction == "vertical") ? (y + Math.floor(length / 2)) : y;
+    }
 
     public function get collectedToken():TokenType {
         if (token == TokenType.BLOND_BEER || token == TokenType.BROWN_BEER || token == TokenType.AMBER_BEER) {
@@ -43,5 +74,12 @@ public class Group {
     public function get vomitGain():Number {
         return token.vomit * length;
     }
+
+    private var _x:int;
+    private var _y:int;
+    private var _length:int;
+    private var _token:TokenType;
+    private var _direction:String;
+    private var _supers:int;
 }
 }
