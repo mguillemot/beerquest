@@ -20,6 +20,7 @@
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
+        import com.beerquest.TokenType;
         import com.beerquest.events.GameEvent;
         import com.greensock.TweenLite;
 
@@ -39,6 +40,10 @@
             } else {
                 return localToGlobal(new Point(capa0.x + capa0.width / 2, capa0.y + capa0.height / 2));
             }
+        }
+
+        public function addCollectedToken(token:TokenType):void {
+            stack.pushTokenIntoStack(token);
         }
 
         private function onBeerCollected(e:GameEvent):void {
@@ -161,7 +166,7 @@
         </mx:Canvas>
         <mx:Canvas x="4" y="57" width="170" height="11" backgroundColor="0x000000" backgroundAlpha="0"
                    toolTip="Collecte 3 jetons de la même couleur pour gagner 5 bouteilles supplémentaires !">
-            <ui:TokenCollectionView id="stack" player="{Constants.GAME.me}"/>
+            <ui:TokenCollectionView id="stack"/>
         </mx:Canvas>
         <mx:Image id="arrow" x="161" y="33" source="{Arrow0}"/>
         <ui:FullBeerFx id="vfx" x="{-vfx.width / 2 + 140}" y="{-vfx.height / 2 + 30}" alpha="0" value="5"/>

@@ -21,15 +21,6 @@ public class TokenCollectionView extends UIComponent {
         height = 11;
     }
 
-    public function get player():PlayerData {
-        return _player;
-    }
-
-    public function set player(value:PlayerData):void {
-        _player = value;
-        _player.partialBeers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onCollectionChange);
-    }
-
     public function pushTokenIntoStack(token:TokenType):void {
         if (_currentAction != "") {
             trace("TokenView PENDING " + token);
@@ -154,7 +145,6 @@ public class TokenCollectionView extends UIComponent {
             trace("TokenView EXPLUSE");
             s = _stack.shift();
             removeChild(s);
-            _player.partialBeers.removeItemAt(0);
             Constants.STATS.stackEjected++;
         }
     }
@@ -197,19 +187,6 @@ public class TokenCollectionView extends UIComponent {
         return null;
     }
 
-    private function onCollectionChange(e:CollectionEvent):void {
-        switch (e.kind) {
-            case "add":
-                for each(var token:TokenType in e.items) {
-                    pushTokenIntoStack(token);
-                }
-                break;
-            case "remove":
-                // Rien à faire
-                break;
-        }
-    }
-
     private function startAction(action:String):void {
         trace("TokenView START " + action);
         dump();
@@ -236,7 +213,6 @@ public class TokenCollectionView extends UIComponent {
 
     private static var nextId:int = 1;
 
-    private var _player:PlayerData;
     private var _currentAction:String = "";
     private var _casiers:Array = new Array();
     private var _stack:Array = new Array();

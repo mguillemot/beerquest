@@ -187,7 +187,7 @@ public class BoardState {
         return cells;
     }
 
-    public function destroy(cells:Array):void {
+    private function destroyCells(cells:Array):void {
         for each (var cell:Point in cells) {
             // Drop top cells
             for (var j:int = cell.y; j >= 1; j--) {
@@ -200,6 +200,7 @@ public class BoardState {
         if (_game != null) {
             _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_DESTROYED, cells, clone()));
         }
+        normalize();
     }
 
     public function destroyTokensOfType(targetType:TokenType):int {
@@ -216,7 +217,7 @@ public class BoardState {
                 }
             }
         }
-        destroy(toRemove);
+        destroyCells(toRemove);
         return count + Constants.SUPER_TOKEN_VALUE * supers;
     }
 
@@ -241,6 +242,7 @@ public class BoardState {
         if (_game != null) {
             _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_TRANSFORMED, cells, clone()));
         }
+        normalize();
     }
 
     public function cellsOfType(token:TokenType):Array {

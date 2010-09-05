@@ -39,6 +39,7 @@
         import com.beerquest.Constants;
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
+        import com.beerquest.TokenType;
         import com.beerquest.events.GameEvent;
         import com.beerquest.ui.events.ScoreEvent;
         import com.beerquest.ui.events.TokenEvent;
@@ -104,8 +105,6 @@
 
         private function startGame(mode:String, me:PlayerData, seed:int):void {
             var game:Game = Constants.GAME;
-            game.addEventListener(ScoreEvent.SCORE_GAINED, onScoreGained);
-            game.addEventListener(TokenEvent.TOKEN_GAINED, onTokenGained);
             game.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onCurrentTurnChanged);
             game.addEventListener(GameEvent.GAME_OVER, onGameOver);
             game.start(mode, me, seed);
@@ -173,7 +172,13 @@
 
         private function onTokenGained(e:TokenEvent):void {
             var entryPoint:Point = myStatus.tokenEntryPoint;
-            vfxLayer.addTokenEffect(e.token, e.stageX, e.stageY, entryPoint.x, entryPoint.y);
+            var token:TokenType = e.token;
+            vfxLayer.addTokenEffect(token, e.stageX, e.stageY, entryPoint.x, entryPoint.y);
+            var timer:Timer = new Timer(EffectLayer.TOKEN_EFFECT_TIME_MS, 1);
+            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+                myStatus.addCollectedToken(token);
+            });
+            timer.start();
         }
 
         private function onScorePosted(e:Event):void {
@@ -189,7 +194,7 @@
 
     <!-- board -->
     <mx:Canvas x="200" y="0" width="320" height="320">
-        <ui:BoardView id="boardView"/>
+        <ui:BoardView id="boardView" ScoreGained="onScoreGained(event)" TokenGained="onTokenGained(event)"/>
         <mx:Canvas id="gameover" width="100%" height="100%" backgroundColor="black" y="{-boardView.height}">
             <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>
         </mx:Canvas>

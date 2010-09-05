@@ -56,11 +56,6 @@ public class Game extends EventDispatcher {
         return Math.max(0, totalTurns - _currentTurn);
     }
 
-    [Bindable(event="CurrentTurnChanged")]
-    public function get currentTurn():int {
-        return _currentTurn;
-    }
-
     public function gainAdditionalTurns(t:int):void {
         if (t != 0) {
             _currentTurn -= t;

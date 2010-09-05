@@ -24,6 +24,8 @@ import mx.core.UIComponent;
 import mx.managers.CursorManager;
 import mx.managers.CursorManagerPriority;
 
+[Event(name="ScoreGained", type="com.beerquest.ui.events.ScoreEvent")]
+[Event(name="TokenGained", type="com.beerquest.ui.events.TokenEvent")]
 public class BoardView extends UIComponent {
 
     private static const EXPLODE_DURATION_MS:int = 250;
@@ -534,6 +536,22 @@ public class BoardView extends UIComponent {
             var e:GameEvent = _eventBuffer.shift();
             trace("Unstack pending " + e.type);
             processEvent(e);
+        } else {
+            checkSynchro();
+        }
+    }
+
+    private function checkSynchro():void {
+        var i:int, j:int, token:Token;
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = 0; j < Constants.BOARD_SIZE; j++) {
+                token = getToken(i, j);
+                if (token == null) {
+                    trace("WARN: (" + i + ":" + j + ") should not be null");
+                } else if (token.type != boardState.getCell(i, j) || token.superToken != boardState.getSuper(i, j)) {
+                    trace("WARN: (" + i + ":" + j + ") should not be " + boardState.getCell(i, j).repr + (boardState.getSuper(i, j) ? "!" : "-") + " instead of " + token.type.repr + (token.superToken ? "!" : "-"));
+                }
+            }
         }
     }
 
