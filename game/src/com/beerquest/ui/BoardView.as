@@ -558,7 +558,7 @@ public class BoardView extends UIComponent {
         dispatchEvent(new Event("currentActionChanged"));
         refreshStats();
         if (_eventBuffer.length > 0) {
-            var e:GameEvent = _eventBuffer.shift();
+            var e:Event = _eventBuffer.shift();
             trace("Unstack pending " + e.type);
             processEvent(e);
         } else if (oldAction != "gameStart") {
