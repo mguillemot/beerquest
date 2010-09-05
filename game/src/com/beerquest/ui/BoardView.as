@@ -482,12 +482,13 @@ public class BoardView extends UIComponent {
         var dy:int = y - _selectedY;
         startAction("swapping");
         var valid:Boolean;
+        // Check the reference board instead of the local view to be 100% sure that pending actions won't prevent the swap
         if (dx != 0) {
-            valid = boardState.isLegalMove("horizontal", Math.min(x, sx), y);
+            valid = Constants.GAME.board.isLegalMove("horizontal", Math.min(x, sx), y);
             TweenLite.to(src, SWAP_TIME_MS / 1000, {x: src.x + dx * width / Constants.BOARD_SIZE});
             TweenLite.to(dst, SWAP_TIME_MS / 1000, {x: dst.x - dx * width / Constants.BOARD_SIZE});
         } else {
-            valid = boardState.isLegalMove("vertical", x, Math.min(y, sy));
+            valid = Constants.GAME.board.isLegalMove("vertical", x, Math.min(y, sy));
             TweenLite.to(src, SWAP_TIME_MS / 1000, {y: src.y + dy * height / Constants.BOARD_SIZE});
             TweenLite.to(dst, SWAP_TIME_MS / 1000, {y: dst.y - dy * height / Constants.BOARD_SIZE});
         }

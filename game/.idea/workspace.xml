@@ -93,10 +93,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BoardView.as" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BoardView.as" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="441" column="40" selection-start="17370" selection-end="17370" vertical-scroll-proportion="0.0">
+            <state line="484" column="122" selection-start="19028" selection-end="19028" vertical-scroll-proportion="0.3306011">
               <folding />
             </state>
           </provider>
@@ -111,10 +111,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.as" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Game.as" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="93" column="34" selection-start="2798" selection-end="2798" vertical-scroll-proportion="-0.69920844">
+            <state line="122" column="72" selection-start="4139" selection-end="4139" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -385,8 +385,8 @@
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/Game.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
       </list>
     </option>
   </component>
@@ -1206,16 +1206,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="441" column="40" selection-start="17370" selection-end="17370" vertical-scroll-proportion="0.0">
+        <state line="122" column="72" selection-start="4139" selection-end="4139" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="34" selection-start="2798" selection-end="2798" vertical-scroll-proportion="-0.69920844">
+        <state line="484" column="122" selection-start="19028" selection-end="19028" vertical-scroll-proportion="0.3306011">
           <folding />
         </state>
       </provider>
