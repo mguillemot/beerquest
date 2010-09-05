@@ -44,7 +44,7 @@ public class PlayerData extends EventDispatcher {
     }
 
     [Bindable(event="pissChanged")]
-    public function get pissLevel():int {
+    internal function get pissLevel():int {
         if (_piss >= 100) {
             return 3;
         } else if (_piss >= 90) {
@@ -66,7 +66,7 @@ public class PlayerData extends EventDispatcher {
         }
         dispatchEvent(new Event("pissChanged"));
         if (pissLevel != previousPissLevel) {
-            _game.dispatchEvent(new GameEvent(GameEvent.PISS_LEVEL_CHANGED));
+            _game.pissLevel = pissLevel;
         }
     }
 

@@ -1,6 +1,5 @@
 package com.beerquest.events {
 import com.beerquest.BoardState;
-import com.beerquest.Group;
 
 public class GroupCollectionEvent extends GameEvent {
 

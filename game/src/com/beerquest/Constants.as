@@ -9,8 +9,8 @@ public class Constants {
     public static const MAX_CAPACITIES:int = 2;
     public static const SUPER_TOKEN_VALUE:int = 10;
 
-    public static const GAME:Game = new Game();
-    public static const STATS:GameStats = new GameStats();
+    public static var GAME:Game = new Game();
+    public static var STATS:GameStats = new GameStats();
 
     [Bindable]
     public static var SOUND_ENABLED:Boolean = true;

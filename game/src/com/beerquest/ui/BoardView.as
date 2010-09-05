@@ -141,7 +141,7 @@ public class BoardView extends UIComponent {
             var ly:int = Math.floor(local.y / height * Constants.BOARD_SIZE);
             var dx:Number = lx - _draggingX;
             var dy:Number = ly - _draggingY;
-            if (Math.abs(dx) > 0 && Math.abs(dy) == 0 && _draggingY < Constants.BOARD_SIZE - boardState.pissLevel) {
+            if (Math.abs(dx) > 0 && Math.abs(dy) == 0 && _draggingY < Constants.BOARD_SIZE - Constants.GAME.pissLevel) {
                 // Horizontal drag
                 if (dx > 0 && _draggingX + 1 < Constants.BOARD_SIZE) {
                     if (selectCell(_draggingX, _draggingY)) {
@@ -154,7 +154,7 @@ public class BoardView extends UIComponent {
                 }
             } else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
                 // Vertical drag
-                if (dy > 0 && _draggingY + 1 < Constants.BOARD_SIZE - boardState.pissLevel) {
+                if (dy > 0 && _draggingY + 1 < Constants.BOARD_SIZE - Constants.GAME.pissLevel) {
                     if (selectCell(_draggingX, _draggingY)) {
                         swapTokens(_draggingX, _draggingY + 1);
                     }
@@ -187,12 +187,12 @@ public class BoardView extends UIComponent {
                 break;
             case 81: // q
                 if (Constants.DEBUG) {
-                    Constants.GAME.board.generateTestBoard();
+                    Constants.GAME.generateTestBoard();
                 }
                 break;
             case 82: // r
                 if (Constants.DEBUG) {
-                    Constants.GAME.board.generateRandomKeepingSomeVomit();
+                    Constants.GAME.generateRandomKeepingSomeVomit();
                 }
                 break;
             case 84: // t
@@ -262,7 +262,7 @@ public class BoardView extends UIComponent {
                 break;
             case 65: // a
                 if (Constants.DEBUG) {
-                    boardState.pissLevel = (boardState.pissLevel + 1) % 4;
+                    Constants.GAME.pissLevel = (Constants.GAME.pissLevel + 1) % 4;
                 }
                 break;
             case 27: // Escape
@@ -359,8 +359,28 @@ public class BoardView extends UIComponent {
         timer.start();
     }
 
+    private function checkSynchro():void {
+        var i:int, j:int, token:Token;
+        trace("checkSynchro() board should be\n" + Constants.GAME.board.toString());
+        for (i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (j = 0; j < Constants.BOARD_SIZE; j++) {
+                token = getToken(i, j);
+                if (token == null) {
+                    throw ("WARN: (" + i + ":" + j + ") should not be null");
+                } else if (token.type != boardState.getCell(i, j) || token.superToken != boardState.getSuper(i, j)) {
+                    throw ("WARN: (" + i + ":" + j + ") should be " + boardState.getCell(i, j).repr + (boardState.getSuper(i, j) ? "!" : "-") + " instead of " + token.type.repr + (token.superToken ? "!" : "-"));
+                }
+                if (boardState.getCell(i, j) != Constants.GAME.board.getCell(i, j) || boardState.getSuper(i, j) != Constants.GAME.board.getSuper(i, j)) {
+                    throw ("WARN: boardView discrepancy! (" + i + ":" + j + ") should be " + Constants.GAME.board.getCell(i, j).repr + (Constants.GAME.board.getSuper(i, j) ? "!" : "-") + " instead of " + boardState.getCell(i, j).repr + (boardState.getSuper(i, j) ? "!" : "-"));
+                }
+            }
+        }
+    }
+
+
     private function reinitBoardView():void {
         trace("reinitBoardView() called");
+        checkSynchro();
         var i:int, j:int, token:Token;
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
@@ -423,7 +443,7 @@ public class BoardView extends UIComponent {
                 endAction("selectTokenToDestroy");
             }
         } else if (_currentAction == "") {
-            if (y >= Constants.BOARD_SIZE - boardState.pissLevel) {
+            if (y >= Constants.BOARD_SIZE - Constants.GAME.pissLevel) {
                 // Cannot click in piss
                 return;
             }
@@ -470,7 +490,7 @@ public class BoardView extends UIComponent {
         var timer:Timer = new Timer(SWAP_TIME_MS, 1);
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
             if (valid) {
-                boardState.swapGems(sx, sy, x, y);
+                Constants.GAME.swapCells(sx, sy, x, y);
                 endAction("swapping");
             } else {
                 trace("Invalid swap");
@@ -504,7 +524,7 @@ public class BoardView extends UIComponent {
         _currentAction = action;
         _currentActionStart = _currentFrame;
         if (boardView != null) {
-            trace("Updated board view");
+            trace("Updated board view to:\n" + boardView.toString());
             _currentActionBoardView = boardView;
         }
         dispatchEvent(new Event("currentActionChanged"));
@@ -536,22 +556,8 @@ public class BoardView extends UIComponent {
             var e:GameEvent = _eventBuffer.shift();
             trace("Unstack pending " + e.type);
             processEvent(e);
-        } else {
+        } else if (oldAction != "gameStart") {
             checkSynchro();
-        }
-    }
-
-    private function checkSynchro():void {
-        var i:int, j:int, token:Token;
-        for (i = 0; i < Constants.BOARD_SIZE; i++) {
-            for (j = 0; j < Constants.BOARD_SIZE; j++) {
-                token = getToken(i, j);
-                if (token == null) {
-                    trace("WARN: (" + i + ":" + j + ") should not be null");
-                } else if (token.type != boardState.getCell(i, j) || token.superToken != boardState.getSuper(i, j)) {
-                    trace("WARN: (" + i + ":" + j + ") should not be " + boardState.getCell(i, j).repr + (boardState.getSuper(i, j) ? "!" : "-") + " instead of " + token.type.repr + (token.superToken ? "!" : "-"));
-                }
-            }
         }
     }
 
@@ -564,7 +570,7 @@ public class BoardView extends UIComponent {
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid select coords: " + x + ":" + y;
         }
-        if (y >= Constants.BOARD_SIZE - boardState.pissLevel) {
+        if (y >= Constants.BOARD_SIZE - Constants.GAME.pissLevel) {
             // Cannot select in piss    
             return false;
         }
@@ -633,7 +639,10 @@ public class BoardView extends UIComponent {
                         j += k;
                     }
                     var token:Token = getToken(i, j);
-                    removeToken(token);
+                    if (token != null) {
+                        // Since a token can be present in 2 groups in the same phase...
+                        removeToken(token);
+                    }
                 }
             }
             continueAction("onGroupsCollected", "gravity");
@@ -833,8 +842,8 @@ public class BoardView extends UIComponent {
 
     private function onPissLevelChanged(e:GameEvent):void {
         startAction("onPissLevelChanged");
-        var dy:int = Constants.GAME.me.pissLevel - _currentPissLevel;
-        _currentPissLevel = boardState.pissLevel;
+        var dy:int = Constants.GAME.pissLevel - _currentPissLevel;
+        _currentPissLevel = Constants.GAME.pissLevel;
         var epsilon:int = (_currentPissLevel > 0) ? -5 : 0;
         TweenLite.to(_pissLayer, PISS_RAISE_TIME_MS / 1000, {y: (Constants.BOARD_SIZE - _currentPissLevel) * height / Constants.BOARD_SIZE + epsilon});
         if (_selectedY >= Constants.BOARD_SIZE - _currentPissLevel) {

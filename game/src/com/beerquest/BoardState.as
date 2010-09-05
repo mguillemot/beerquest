@@ -29,7 +29,7 @@ public class BoardState {
         return _supers[x * Constants.BOARD_SIZE + y];
     }
 
-    public function setCell(x:int, y:int, value:TokenType, superToken:Boolean):void {
+    internal function setCell(x:int, y:int, value:TokenType, superToken:Boolean):void {
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid cell: " + x + ":" + y;
         }
@@ -37,7 +37,7 @@ public class BoardState {
         _supers[x * Constants.BOARD_SIZE + y] = superToken;
     }
 
-    public function setAllCells(cells:Array, allSupers:Boolean):void {
+    private function setAllCells(cells:Array, allSupers:Boolean):void {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                 setCell(i, j, cells[j][i], allSupers);
@@ -49,8 +49,8 @@ public class BoardState {
         var repr:String = "";
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                repr += getCell(i, j).toString();
-                repr += (getSuper(i, j)) ? "S" : "-";
+                repr += getCell(i, j).repr;
+                repr += getSuper(i, j) ? "!" : "-";
                 repr += "|";
             }
             repr += "\n";
@@ -77,7 +77,6 @@ public class BoardState {
             }
         }
         clone.pissLevel = pissLevel;
-        clone.game = game;
         return clone;
     }
 
@@ -89,14 +88,14 @@ public class BoardState {
         }
     }
 
-    public function generateRandomWithoutGroups():void {
+    internal function generateRandomWithoutGroups():void {
         do {
             generateFullRandom();
             normalize(true);
         } while (computeMoves().length == 0);
     }
 
-    public function generateRandomKeepingSomeVomit():void {
+    internal function generateRandomKeepingSomeVomit():void {
         var vomit:Array = cellsOfType(TokenType.VOMIT);
         if (vomit.length > 0) {
             vomit = Utils.randomizeArray(vomit, _rand);
@@ -105,17 +104,18 @@ public class BoardState {
         }
         do {
             generateFullRandom();
+            normalize(true);
             for each (var cell:Point in vomit) {
                 setCell(cell.x, cell.y, TokenType.VOMIT, false);
             }
-            normalize(true);
         } while (computeMoves().length == 0);
         if (_game != null) {
+            _game.skipTurns(3);
             _game.dispatchEvent(new BoardEvent(BoardEvent.BOARD_RESET, vomit, clone()));
         }
     }
 
-    public function generateTestBoard():void {
+    internal function generateTestBoard():void {
         setAllCells([
             [TokenType.BLOND_BEER,TokenType.TOMATO_JUICE,TokenType.TOMATO_JUICE,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.TOMATO_JUICE,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
@@ -132,7 +132,7 @@ public class BoardState {
         }
     }
 
-    public function getRandomNonVomitNonSuperCell():Point {
+    private function getRandomNonVomitNonSuperCell():Point {
         var count:int = 0;
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
@@ -155,7 +155,7 @@ public class BoardState {
         return null;
     }
 
-    public function swapGems(sx:int, sy:int, dx:int, dy:int):void {
+    internal function swapCells(sx:int, sy:int, dx:int, dy:int):void {
         // Operation
         var destType:TokenType = getCell(dx, dy);
         var destSuper:Boolean = getSuper(dx, dy);
@@ -163,16 +163,18 @@ public class BoardState {
         setCell(sx, sy, destType, destSuper);
 
         // Event
-        Constants.STATS.gemsSwapped(sx, sy, dx, dy);
         if (_game != null) {
-            _game.dispatchEvent(new GemsSwappedEvent(sx, sy, dx, dy));
+            _game.dispatchEvent(new GemsSwappedEvent(sx, sy, dx, dy, clone()));
         }
 
         // Result
         normalize();
+        if (_game != null) {
+            _game.newTurn();
+        }
     }
 
-    public function createVomit(count:int):Array {
+    internal function createVomit(count:int):Array {
         var cells:Array = new Array();
         for (var i:int = 0; i < count; i++) {
             var cell:Point = getRandomNonVomitNonSuperCell();
@@ -189,21 +191,16 @@ public class BoardState {
 
     private function destroyCells(cells:Array):void {
         for each (var cell:Point in cells) {
-            // Drop top cells
-            for (var j:int = cell.y; j >= 1; j--) {
-                setCell(cell.x, j, getCell(cell.x, j - 1), getSuper(cell.x, j - 1));
-            }
-            // Enter replacement cell from the top
-            var replacement:TokenType = generateNewCell();
-            setCell(cell.x, 0, replacement, false);
+            setCell(cell.x, cell.y, TokenType.NONE, false);
         }
+        compact();
         if (_game != null) {
             _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_DESTROYED, cells, clone()));
         }
         normalize();
     }
 
-    public function destroyTokensOfType(targetType:TokenType):int {
+    internal function destroyTokensOfType(targetType:TokenType):int {
         var count:int = 0, supers:int = 0;
         var toRemove:Array = new Array();
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
@@ -221,7 +218,7 @@ public class BoardState {
         return count + Constants.SUPER_TOKEN_VALUE * supers;
     }
 
-    public function transformTokensOfType(source:TokenType, target:TokenType):int {
+    internal function transformTokensOfType(source:TokenType, target:TokenType):int {
         var cells:Array = new Array();
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
@@ -257,18 +254,26 @@ public class BoardState {
         return cells;
     }
 
-    public function normalize(inhibitEvents:Boolean = false):void {
+    private function normalize(inhibitEvents:Boolean = false):void {
+        trace("[BoardState] start normalize()");
         while (hasGroups) {
-            var groups:Array = destroyGroups();
+            var groups:Array = computeGroups();
+            trace("[BoardState] " + groups.length + " groups found. Piss level is " + pissLevel);
+            destroyGroups(groups);
+            trace("[BoardState] groups destroyed");
             if (_game != null && !inhibitEvents) {
                 _game.collectGroups(groups);
             }
+            trace("[BoardState] groups collected by the game. Piss level is now " + pissLevel);
             compact();
+            trace("[BoardState] compacted");
             if (_game != null && !inhibitEvents) {
+                trace("[BoardState] dispatch collect event for " + groups.length + " groups");
                 _game.dispatchEvent(new GroupCollectionEvent(groups, clone()));
             }
         }
-        if (computeMoves().length == 0 && !inhibitEvents) {
+        if (!inhibitEvents && computeMoves().length == 0) {
+            trace("[BoardState] reset");
             generateRandomKeepingSomeVomit();
         }
     }
@@ -426,8 +431,7 @@ public class BoardState {
         return false;
     }
 
-    private function destroyGroups():Array {
-        var groups:Array = computeGroups();
+    private function destroyGroups(groups:Array):Array {
         for each (var group:Group in groups) {
             if (group.direction == "horizontal") {
                 for (var di:int = 0; di < group.length; di++) {
@@ -463,7 +467,7 @@ public class BoardState {
         }
     }
 
-    public function generateNewCell():TokenType {
+    private function generateNewCell():TokenType {
         var r:int = _rand.nextInt(1, 17);
         if (r <= 3) {
             return TokenType.BLOND_BEER;
@@ -482,11 +486,11 @@ public class BoardState {
         }
     }
 
-    public function get pissLevel():int {
+    internal function get pissLevel():int {
         return _pissLevel;
     }
 
-    public function set pissLevel(pissLevel:int):void {
+    internal function set pissLevel(pissLevel:int):void {
         _pissLevel = pissLevel;
     }
 

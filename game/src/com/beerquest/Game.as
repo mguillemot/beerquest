@@ -1,5 +1,6 @@
 package com.beerquest {
 import com.beerquest.events.GameEvent;
+import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.ui.events.ScoreEvent;
 
 import flash.events.Event;
@@ -8,10 +9,12 @@ import flash.events.EventDispatcher;
 public class Game extends EventDispatcher {
 
     public function start(mode:String, me:PlayerData, seed:int):void {
+        if (_mode != null) {
+            throw "cannot start game multiple times";
+        }
         _mode = mode;
         _me = me;
         dispatchEvent(new Event("meChanged"));
-        _totalTurns = Constants.INITIAL_TOTAL_TURNS;
         _rand = new MersenneTwister(seed);
         _board = new BoardState(_rand);
         _board.game = this;
@@ -32,15 +35,11 @@ public class Game extends EventDispatcher {
         return _board;
     }
 
-    public function get rand():MersenneTwister {
-        return _rand;
-    }
-
     public function get totalTurns():int {
-        return _totalTurns;
+        return Constants.INITIAL_TOTAL_TURNS;
     }
 
-    [Bindable(event="GameOver")]
+    [Bindable(event="gameOverChanged")]
     public function get gameOver():Boolean {
         return _gameOver;
     }
@@ -48,10 +47,11 @@ public class Game extends EventDispatcher {
     public function endOfGame():void {
         _gameOver = true;
         Constants.STATS.gameOver = true;
+        dispatchEvent(new Event("gameOverChanged"));
         dispatchEvent(new GameEvent(GameEvent.GAME_OVER));
     }
 
-    [Bindable(event="CurrentTurnChanged")]
+    [Bindable(event="remainingTurnsChanged")]
     public function get remainingTurns():int {
         return Math.max(0, totalTurns - _currentTurn);
     }
@@ -59,6 +59,7 @@ public class Game extends EventDispatcher {
     public function gainAdditionalTurns(t:int):void {
         if (t != 0) {
             _currentTurn -= t;
+            dispatchEvent(new Event("remainingTurnsChanged"));
             dispatchEvent(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
         }
     }
@@ -71,6 +72,7 @@ public class Game extends EventDispatcher {
 
     public function newTurn():void {
         _currentTurn++;
+        dispatchEvent(new Event("remainingTurnsChanged"));
         dispatchEvent(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
         if (remainingTurns <= 0) {
             endOfGame();
@@ -88,7 +90,7 @@ public class Game extends EventDispatcher {
                 board.destroyTokensOfType(TokenType.VOMIT);
                 break;
             case Capacity.BIG_BANG:
-                board.destroyTokensOfType(token);
+                //board.destroyTokensOfType(token);
                 break;
             case Capacity.BLOND_FURY_BAR:
                 var blonds:int = board.destroyTokensOfType(TokenType.BLOND_BEER);
@@ -151,31 +153,36 @@ public class Game extends EventDispatcher {
         me.fullBeers += group.beerGain;
         gainAdditionalTurns(group.turnsGain);
         Constants.STATS.addCollectedGroup(group.token, group.length);
+    }
 
-        // Dispatch events for vfx display
-//        var token:Token = getToken(group.startX, group.startY);
-//        var local:Point = new Point(token.x, token.y);
-//        if (group.type == "horizontal") {
-//            local.x += width / Constants.BOARD_SIZE * group.length / 2;
-//            local.y += height / Constants.BOARD_SIZE / 2;
-//        } else {
-//            local.x += width / Constants.BOARD_SIZE / 2;
-//            local.y += height / Constants.BOARD_SIZE * group.length / 2;
-//        }
-//        var scoreCoords:Point = localToGlobal(local);
-//        var now:Date = new Date();
-//        dispatchEvent(new ScoreEvent(beerGain, turnsGain, scoreCoords.x, scoreCoords.y));
-//        if (collectedToken != null) {
-//            dispatchEvent(new TokenEvent(collectedToken, scoreCoords.x, scoreCoords.y));
-//        }
+    public function generateTestBoard():void {
+        _board.generateTestBoard();
+    }
+
+    public function generateRandomKeepingSomeVomit():void {
+        _board.generateRandomKeepingSomeVomit();
+    }
+
+    public function swapCells(sx:int, sy:int, dx:int, dy:int):void {
+        Constants.STATS.gemsSwapped(sx, sy, dx, dy);
+        _board.swapCells(sx, sy, dx, dy);
+    }
+
+    public function get pissLevel():int {
+        return _board.pissLevel;
+    }
+
+    public function set pissLevel(value:int):void {
+        _board.pissLevel = value;
+        dispatchEvent(new GameEvent(GameEvent.PISS_LEVEL_CHANGED));
     }
 
     private var _mode:String;
     private var _me:PlayerData;
-    private var _totalTurns:int;
     private var _currentTurn:int = 0;
     private var _board:BoardState;
     private var _gameOver:Boolean = false;
     private var _rand:MersenneTwister;
+
 }
 }
