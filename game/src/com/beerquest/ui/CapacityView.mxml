@@ -14,6 +14,11 @@
         import com.beerquest.Constants;
 
         [Bindable]
+        public function get capacity():Capacity {
+            return _capacity;
+        }
+
+        [Bindable]
         public function set capacity(value:Capacity):void {
             _capacity = value;
             if (value.enabled) {
@@ -36,20 +41,20 @@
         }
 
         private function onMouseOver(e:MouseEvent):void {
-            if (clickable && _capacity.enabled) {
+            if (clickable && capacity.enabled) {
                 background.source = CapacityHover;
             }
         }
 
         private function onMouseOut(e:MouseEvent):void {
-            if (clickable && _capacity.enabled) {
+            if (clickable && capacity.enabled) {
                 background.source = CapacityEnabled;
             }
         }
 
         private function onClick(e:MouseEvent):void {
-            if (clickable && _capacity.enabled) {
-                Constants.GAME.me.useCapacity(_capacity);
+            if (clickable && capacity.enabled) {
+                Constants.GAME.executeCapacity(capacity);
             }
         }
 
@@ -69,9 +74,9 @@
     <mx:HBox id="box" verticalAlign="middle" width="100%" height="100%" horizontalGap="1" paddingLeft="10"
              paddingRight="10"
              mouseOut="onMouseOut(event)" mouseOver="onMouseOver(event)" click="onClick(event)">
-        <mx:Canvas id="capaIcon" width="28" height="28" visible="{_capacity.enabled}"/>
-        <mx:Canvas width="108" visible="{_capacity.enabled}">
-            <mx:Label text="{_capacity.name}" width="100%" styleName="capacity">
+        <mx:Canvas id="capaIcon" width="28" height="28" visible="{capacity.enabled}"/>
+        <mx:Canvas width="108" visible="{capacity.enabled}">
+            <mx:Label text="{capacity.name}" width="100%" styleName="capacity">
                 <mx:filters>
                     <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>

@@ -2,6 +2,7 @@ package com.beerquest {
 import com.beerquest.events.GameEvent;
 import com.beerquest.ui.events.ScoreEvent;
 
+import flash.events.Event;
 import flash.events.EventDispatcher;
 
 public class Game extends EventDispatcher {
@@ -9,6 +10,7 @@ public class Game extends EventDispatcher {
     public function start(mode:String, me:PlayerData, seed:int):void {
         _mode = mode;
         _me = me;
+        dispatchEvent(new Event("meChanged"));
         _totalTurns = Constants.INITIAL_TOTAL_TURNS;
         _rand = new MersenneTwister(seed);
         _board = new BoardState(_rand);
@@ -21,7 +23,7 @@ public class Game extends EventDispatcher {
         return _mode;
     }
 
-    [Bindable]
+    [Bindable(event="meChanged")]
     public function get me():PlayerData {
         return _me;
     }

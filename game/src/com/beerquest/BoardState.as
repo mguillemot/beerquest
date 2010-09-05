@@ -1,9 +1,7 @@
 package com.beerquest {
-import com.beerquest.events.BoardResetEvent;
-import com.beerquest.events.CellEvent;
+import com.beerquest.events.BoardEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
-
 import com.beerquest.events.GroupCollectionEvent;
 
 import flash.geom.Point;
@@ -75,7 +73,7 @@ public class BoardState {
         var clone:BoardState = new BoardState();
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                clone.setCell(i, j, getCell(i,j), getSuper(i,j));
+                clone.setCell(i, j, getCell(i, j), getSuper(i, j));
             }
         }
         clone.pissLevel = pissLevel;
@@ -96,7 +94,7 @@ public class BoardState {
             normalize();
         } while (computeMoves().length == 0);
         if (_game != null) {
-            _game.dispatchEvent(new BoardResetEvent(new Array()));
+            _game.dispatchEvent(BoardEvent.FullBoardResetEvent());
         }
     }
 
@@ -113,11 +111,11 @@ public class BoardState {
         ], false);
         setCell(0, 0, TokenType.BLOND_BEER, true);
         if (_game != null) {
-            _game.dispatchEvent(new BoardResetEvent(new Array()));
+            _game.dispatchEvent(BoardEvent.FullBoardResetEvent());
         }
     }
 
-    public function getRandomNonVomitNonSuperCell():Object {
+    public function getRandomNonVomitNonSuperCell():Point {
         var count:int = 0;
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
@@ -134,7 +132,7 @@ public class BoardState {
             var y:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
             var token:TokenType = getCell(x, y);
             if (token != TokenType.VOMIT && !getSuper(x, y)) {
-                return {x:x, y:y};
+                return new Point(x, y);
             }
         }
         return null;
@@ -187,14 +185,15 @@ public class BoardState {
     public function createVomit(count:int):Array {
         var cells:Array = new Array();
         for (var i:int = 0; i < count; i++) {
-            var cell:Object = getRandomNonVomitNonSuperCell();
+            var cell:Point = getRandomNonVomitNonSuperCell();
             if (cell != null) {
                 trace("Creating vomit on " + cell.x + ":" + cell.y);
-                setCell(cell.x, cell.y, TokenType.VOMIT, false);
+                cells.push(cell);
             } else {
                 trace("WARN: Too much vomit on board")
             }
         }
+        transformCells(cells, TokenType.VOMIT, true);
         return cells;
     }
 
@@ -207,10 +206,9 @@ public class BoardState {
             // Enter replacement cell from the top
             var replacement:TokenType = generateNewCell();
             setCell(cell.x, 0, replacement, false);
-            // Dispatch result
-            if (_game != null) {
-                _game.dispatchEvent(new CellEvent(CellEvent.CELL_DESTROYED, cell.x, cell.y, replacement));
-            }
+        }
+        if (_game != null) {
+            _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_DESTROYED, cells));
         }
     }
 
@@ -233,19 +231,26 @@ public class BoardState {
     }
 
     public function transformTokensOfType(source:TokenType, target:TokenType):int {
-        var count:int = 0;
+        var cells:Array = new Array();
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 if (getCell(i, j) == source) {
-                    count++;
-                    setCell(i, j, target, getSuper(i, j));
-                    if (_game != null) {
-                        _game.dispatchEvent(new CellEvent(CellEvent.CELL_TRANSFORMED, i, j, target));
-                    }
+                    cells.push(new Point(i, j));
                 }
             }
         }
-        return count;
+        transformCells(cells, target, false);
+        normalize();
+        return cells.length;
+    }
+
+    private function transformCells(cells:Array, target:TokenType, resetSuper:Boolean):void {
+        for each (var cell:Point in cells) {
+            setCell(cell.x, cell.y, target, resetSuper ? false : getSuper(cell.x, cell.y));
+        }
+        if (_game != null) {
+            _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_TRANSFORMED, cells));
+        }
     }
 
     public function count(token:TokenType):int {

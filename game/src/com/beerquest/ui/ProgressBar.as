@@ -42,7 +42,13 @@ public class ProgressBar extends UIComponent {
     }
 
     public function set progress(value:Number):void {
-        _progress = value;
+        if (value < 0) {
+            _progress = 0;
+        } else if (value > 100) {
+            _progress = 100;
+        } else {
+            _progress = value;
+        }
         dispatchEvent(new Event("progressChanged"));
 
         var m:Matrix = new Matrix();

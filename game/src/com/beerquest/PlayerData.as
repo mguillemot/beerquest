@@ -1,7 +1,6 @@
 package com.beerquest {
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
-import com.beerquest.events.VomitEvent;
 import com.beerquest.ui.EffectLayer;
 import com.beerquest.ui.TokenCollectionView;
 
@@ -78,11 +77,11 @@ public class PlayerData extends EventDispatcher {
             _vomit = 101;
         }
         _game.dispatchEvent(new GameEvent(GameEvent.VOMIT_CHANGED));
-        if (Constants.GAME.me.vomit > 100) {
-            var cells:Array = _game.board.createVomit(5);
-            _game.dispatchEvent(new VomitEvent(cells));
-            vomit = 30;
+        if (vomit > 100) {
+            _game.board.createVomit(5);
+            dispatchEvent(new GameEvent(GameEvent.VOMIT));
             Constants.STATS.vomitCount++;
+            vomit = 30;
         }
     }
 

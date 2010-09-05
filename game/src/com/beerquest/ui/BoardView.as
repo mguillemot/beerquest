@@ -1,10 +1,9 @@
 package com.beerquest.ui {
 import com.beerquest.*;
-import com.beerquest.events.BoardResetEvent;
+import com.beerquest.events.BoardEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
-import com.beerquest.events.VomitEvent;
 import com.beerquest.ui.events.ScoreEvent;
 import com.beerquest.ui.events.TokenEvent;
 import com.greensock.TweenLite;
@@ -92,9 +91,10 @@ public class BoardView extends UIComponent {
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
         Constants.GAME.addEventListener(GameEvent.GAME_START, onGameStart);
-        Constants.GAME.addEventListener(BoardResetEvent.BOARD_RESET, onBoardReset);
+        Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, onBoardReset);
+        Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, onCellsDestroyed);
+        Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, onCellsTransformed);
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupsCollected);
-        Constants.GAME.addEventListener(VomitEvent.VOMIT, onVomit);
         Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGemsSwapped);
         Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, onPissLevelChanged);
     }
@@ -182,7 +182,7 @@ public class BoardView extends UIComponent {
                 break;
             case 79: // o
                 if (Constants.DEBUG) {
-                    Constants.GAME.me.gainCapacity(Capacity.BLOODY_MARY);
+                    Constants.GAME.me.gainCapacity(Capacity.DIVINE_PEANUTS);
                 }
                 break;
             case 86: // v
@@ -206,7 +206,7 @@ public class BoardView extends UIComponent {
                         CursorManager.removeCursor(_destroyCursor);
                         _destroyCursor = 0;
                     }
-                    startAction("");
+                    endAction("selectTokenToDestroy");
                 }
                 break;
             case 90: // z
@@ -237,16 +237,16 @@ public class BoardView extends UIComponent {
 
     private function onGameStart(e:GameEvent):void {
         trace("Game start!");
-        onBoardReset(new BoardResetEvent(new Array()));
+        onBoardReset(BoardEvent.FullBoardResetEvent());
         trace("Game started.");
     }
 
-    private function onBoardReset(e:BoardResetEvent):void {
+    private function onBoardReset(e:BoardEvent):void {
         startAction("onBoardReset");
         clearSelection();
         var i:int, j:int, token:Token;
         resetMarks();
-        for each (var cell:Point in e.except) {
+        for each (var cell:Point in e.cells) {
             getToken(cell.x, cell.y).mark = true;
         }
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
@@ -269,7 +269,7 @@ public class BoardView extends UIComponent {
     }
 
     private function endBoardReset():void {
-        startAction("endBoardReset");
+        continueAction("onBoardReset", "endBoardReset");
         var i:int, j:int, token:Token;
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
@@ -285,7 +285,7 @@ public class BoardView extends UIComponent {
         }
         var timer:Timer = new Timer(1500, 1);
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
-            startAction("");
+            endAction("endBoardReset");
         });
         timer.start();
     }
@@ -308,15 +308,17 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function onVomit(e:VomitEvent):void {
+    private function onCellsTransformed(e:BoardEvent):void {
+        startAction("onCellsTransformed", e.board);
         for each (var cell:Point in e.cells) {
             var token:Token = getToken(cell.x, cell.y);
             removeToken(token);
-            token = generateToken(TokenType.VOMIT, false);
+            token = generateToken(boardState.getCell(cell.x, cell.y), boardState.getSuper(cell.x, cell.y));
             addToken(token);
             setToken(cell.x, cell.y, token);
             TweenLite.from(token, .5, {scaleX:0.1, scaleY:0.1});
         }
+        endAction("onCellsTransformed");
     }
 
     private function onGemsSwapped(e:GemsSwappedEvent):void {
@@ -343,7 +345,7 @@ public class BoardView extends UIComponent {
                     CursorManager.removeCursor(_destroyCursor);
                     _destroyCursor = 0;
                 }
-                startAction("");
+                endAction("selectTokenToDestroy");
             }
         } else if (_currentAction == "") {
             if (y >= Constants.BOARD_SIZE - boardState.pissLevel) {
@@ -394,7 +396,7 @@ public class BoardView extends UIComponent {
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
             if (valid) {
                 boardState.swapGems(sx, sy, x, y);
-                startAction("");
+                endAction("swapping");
             } else {
                 trace("Invalid swap");
                 if (dx != 0) {
@@ -406,7 +408,7 @@ public class BoardView extends UIComponent {
                 }
                 var timer:Timer = new Timer(SWAP_TIME_MS, 1);
                 timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
-                    startAction("");
+                    endAction("swapping");
                 });
                 timer.start();
                 Constants.STATS.invalidMoves++;
@@ -417,17 +419,44 @@ public class BoardView extends UIComponent {
     }
 
     private function startAction(action:String, boardView:BoardState = null):void {
-        trace("(frame " + _currentFrame + ") START " + ((action != "") ? action : "(none)"));
+        if (action == "") {
+            throw "Invalid empty action";
+        }
+        if (_currentAction != "") {
+            throw "Impossible to start " + action + ": " + _currentAction + " is already in progress";
+        }
+        trace("(frame " + _currentFrame + ") START " + action);
         _currentAction = action;
         _currentActionStart = _currentFrame;
         _currentActionBoardView = boardView;
-        if (action == "") {
-            refreshStats();
-        }
         dispatchEvent(new Event("currentActionChanged"));
 
-        if (action == "" && _groupCollectionBuffer.length > 0) {
-            trace("unstack pending action");
+    }
+
+    private function continueAction(oldAction:String, action:String):void {
+        if (action == "") {
+            throw "Invalid empty action";
+        }
+        if (_currentAction != oldAction && _currentAction != action) {
+            throw "Impossible to continue " + oldAction + ": " + _currentAction + " is already in progress";
+        }
+        trace("(frame " + _currentFrame + ") CONTINUE " + oldAction + " => " + action);
+        _currentAction = action;
+        _currentActionStart = _currentFrame;
+        dispatchEvent(new Event("currentActionChanged"));
+    }
+
+    private function endAction(oldAction:String):void {
+        if (_currentAction != oldAction) {
+            throw "Impossible end " + oldAction + ": current was " + _currentAction;
+        }
+        trace("(frame " + _currentFrame + ") END " + oldAction);
+        _currentAction = "";
+        _currentActionStart = _currentFrame;
+        dispatchEvent(new Event("currentActionChanged"));
+        refreshStats();
+        if (_groupCollectionBuffer.length > 0) {
+            trace("Unstack pending GroupCollectionEvent");
             var groups:GroupCollectionEvent = _groupCollectionBuffer.shift();
             onGroupsCollected(groups);
         }
@@ -460,6 +489,10 @@ public class BoardView extends UIComponent {
         _selectedX = -1;
         _selection.visible = false;
         trace("Unselected");
+    }
+
+    private function onCellsDestroyed(e:BoardEvent):void {
+        // TODO
     }
 
     private function onGroupsCollected(e:GroupCollectionEvent):void {
@@ -544,7 +577,7 @@ public class BoardView extends UIComponent {
     }
 
     private function endGroupsCollected():void {
-        startAction("endGroupsCollected", _currentActionBoardView);
+        continueAction("onGroupsCollected", "endGroupsCollected");
         resetFalling();
         var i:int, j:int, holes:int, token:Token;
         var falling:Boolean = false;
@@ -588,7 +621,7 @@ public class BoardView extends UIComponent {
             } else {
                 trace("No more phases to execute.");
             }
-            startAction("");
+            endAction("endGroupsCollected");
         }
     }
 
@@ -706,11 +739,6 @@ public class BoardView extends UIComponent {
     }
 
     private function startBigBang():void {
-        if (_currentAction != "") {
-            // TODO généraliser ce testaux autres capacités ?
-            trace("ERROR: unable to execute capacity because an action is already in progress");
-            return;
-        }
         startAction("selectTokenToDestroy");
         if (_destroyCursor == 0) {
             _destroyCursor = CursorManager.setCursor(DestroyCursor, CursorManagerPriority.HIGH);
