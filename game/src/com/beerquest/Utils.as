@@ -14,5 +14,13 @@ public class Utils {
         }
         return newArray;
     }
+
+    public static function cloneArray(array:Array):Array {
+        var result:Array = new Array();
+        for each (var o:Object in array) {
+            result.push(o);
+        }
+        return result;
+    }
 }
 }

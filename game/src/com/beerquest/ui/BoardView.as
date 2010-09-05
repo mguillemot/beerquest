@@ -96,7 +96,7 @@ public class BoardView extends UIComponent {
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, processEvent);
         Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, processEvent);
-        Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, processEvent);
+        Constants.GAME.addEventListener(GameEvent.PISS_LEVEL_CHANGED, processEvent);
     }
 
     private function processEvent(e:GameEvent):void {
@@ -120,7 +120,7 @@ public class BoardView extends UIComponent {
                 case GemsSwappedEvent.GEMS_SWAPPED:
                     onGemsSwapped(e as GemsSwappedEvent);
                     break;
-                case GameEvent.PISS_CHANGED:
+                case GameEvent.PISS_LEVEL_CHANGED:
                     onPissLevelChanged(e);
                     break;
                 default:
@@ -213,9 +213,39 @@ public class BoardView extends UIComponent {
                     Constants.GAME.me.addPartialBeer(TokenType.TRIPLE);
                 }
                 break;
-            case 79: // o
+            case 49: // 1
+                if (Constants.DEBUG) {
+                    Constants.GAME.me.gainCapacity(Capacity.BLOND_FURY_BAR);
+                }
+                break;
+            case 50: // 2
+                if (Constants.DEBUG) {
+                    Constants.GAME.me.gainCapacity(Capacity.AMBER_FURY_BAR);
+                }
+                break;
+            case 51: // 3
+                if (Constants.DEBUG) {
+                    Constants.GAME.me.gainCapacity(Capacity.BROWN_FURY_BAR);
+                }
+                break;
+            case 52: // 4
                 if (Constants.DEBUG) {
                     Constants.GAME.me.gainCapacity(Capacity.DIVINE_PEANUTS);
+                }
+                break;
+            case 53: // 5
+                if (Constants.DEBUG) {
+                    Constants.GAME.me.gainCapacity(Capacity.BIG_BANG);
+                }
+                break;
+            case 54: // 6
+                if (Constants.DEBUG) {
+                    Constants.GAME.me.gainCapacity(Capacity.BLOODY_MARY);
+                }
+                break;
+            case 55: // 7
+                if (Constants.DEBUG) {
+                    Constants.GAME.me.gainCapacity(Capacity.WATERFALL);
                 }
                 break;
             case 86: // v
@@ -355,7 +385,11 @@ public class BoardView extends UIComponent {
             setToken(cell.x, cell.y, token);
             TweenLite.from(token, .5, {scaleX:0.1, scaleY:0.1});
         }
-        endAction("onCellsTransformed");
+        var timer:Timer = new Timer(500, 1);
+        timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+            endAction("onCellsTransformed");
+        });
+        timer.start();
     }
 
     private function onGemsSwapped(e:GemsSwappedEvent):void {
@@ -533,7 +567,27 @@ public class BoardView extends UIComponent {
     }
 
     private function onCellsDestroyed(e:BoardEvent):void {
-        // TODO
+        startAction("onCellsDestroyed", e.board);
+        resetMarks();
+        for each (var cell:Point in e.cells) {
+            var token:Token = getToken(cell.x, cell.y);
+            token.mark = true;
+            TweenLite.to(token, EXPLODE_DURATION_MS / 1000, {alpha:0});
+        }
+        var timer:Timer = new Timer(EXPLODE_DURATION_MS, 1);
+        timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
+                    var token:Token = getToken(i, j);
+                    if (token.mark) {
+                        removeToken(token);
+                    }
+                }
+            }
+            continueAction("onCellsDestroyed", "gravity");
+            gravity();
+        });
+        timer.start();
     }
 
     private function onGroupsCollected(e:GroupCollectionEvent):void {
@@ -564,7 +618,8 @@ public class BoardView extends UIComponent {
                     removeToken(token);
                 }
             }
-            endGroupsCollected();
+            continueAction("onGroupsCollected", "gravity");
+            gravity();
         });
         timer.start();
     }
@@ -612,8 +667,8 @@ public class BoardView extends UIComponent {
         return EXPLODE_DURATION_MS;
     }
 
-    private function endGroupsCollected():void {
-        continueAction("onGroupsCollected", "endGroupsCollected");
+    private function gravity():void {
+        continueAction("gravity", "gravity");
         resetFalling();
         var i:int, j:int, holes:int, token:Token;
         var falling:Boolean = false;
@@ -648,11 +703,11 @@ public class BoardView extends UIComponent {
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                 trace("Next falling pass...");
                 updateFalling();
-                endGroupsCollected();
+                gravity();
             });
             timer.start();
         } else {
-            endAction("endGroupsCollected");
+            endAction("gravity");
         }
     }
 
@@ -759,7 +814,8 @@ public class BoardView extends UIComponent {
     }
 
     private function onPissLevelChanged(e:GameEvent):void {
-        var dy:int = boardState.pissLevel - _currentPissLevel;
+        startAction("onPissLevelChanged");
+        var dy:int = Constants.GAME.me.pissLevel - _currentPissLevel;
         _currentPissLevel = boardState.pissLevel;
         var epsilon:int = (_currentPissLevel > 0) ? -5 : 0;
         TweenLite.to(_pissLayer, PISS_RAISE_TIME_MS / 1000, {y: (Constants.BOARD_SIZE - _currentPissLevel) * height / Constants.BOARD_SIZE + epsilon});
@@ -767,9 +823,9 @@ public class BoardView extends UIComponent {
             clearSelection();
         }
         if (dy > 0) {
-            // TODO dispatch sound event ?
+            // TODO dispatch sound events ?
         }
-        refreshStats();
+        endAction("onPissLevelChanged");
     }
 
     private function startBigBang():void {

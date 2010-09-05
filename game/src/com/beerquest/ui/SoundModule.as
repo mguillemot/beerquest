@@ -21,7 +21,7 @@ import mx.core.UIComponent;
 public class SoundModule extends UIComponent {
     public function SoundModule() {
         Constants.GAME.addEventListener(GameEvent.PISS, onPiss);
-        Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
+        Constants.GAME.addEventListener(GameEvent.PISS_LEVEL_CHANGED, onPissChanged);
         Constants.GAME.addEventListener(GameEvent.BOARD_RESET, onBoardReset);
         Constants.GAME.addEventListener(VomitEvent.VOMIT, onVomit);
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupCollected);

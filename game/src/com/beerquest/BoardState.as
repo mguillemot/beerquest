@@ -77,6 +77,7 @@ public class BoardState {
             }
         }
         clone.pissLevel = pissLevel;
+        clone.game = game;
         return clone;
     }
 
@@ -197,7 +198,7 @@ public class BoardState {
             setCell(cell.x, 0, replacement, false);
         }
         if (_game != null) {
-            _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_DESTROYED, cells));
+            _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_DESTROYED, cells, clone()));
         }
     }
 
@@ -238,7 +239,7 @@ public class BoardState {
             setCell(cell.x, cell.y, target, resetSuper ? false : getSuper(cell.x, cell.y));
         }
         if (_game != null) {
-            _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_TRANSFORMED, cells));
+            _game.dispatchEvent(new BoardEvent(BoardEvent.CELLS_TRANSFORMED, cells, clone()));
         }
     }
 
@@ -257,6 +258,9 @@ public class BoardState {
     public function normalize(inhibitEvents:Boolean = false):void {
         while (hasGroups) {
             var groups:Array = destroyGroups();
+            if (_game != null && !inhibitEvents) {
+                _game.collectGroups(groups);
+            }
             compact();
             if (_game != null && !inhibitEvents) {
                 _game.dispatchEvent(new GroupCollectionEvent(groups, clone()));
@@ -476,16 +480,12 @@ public class BoardState {
         }
     }
 
-    [Bindable(event="PissChanged")]
     public function get pissLevel():int {
         return _pissLevel;
     }
 
     public function set pissLevel(pissLevel:int):void {
         _pissLevel = pissLevel;
-        if (_game != null) {
-            _game.dispatchEvent(new GameEvent(GameEvent.PISS_CHANGED));
-        }
     }
 
     public function get game():Game {

@@ -122,23 +122,20 @@ public class Game extends EventDispatcher {
 
     public function collectGroups(groups:Array):void {
         // Reorder collected partial beers during the phase to favorize stack groups
-        while (groups.length > 0) {
+        var groups2:Array = Utils.cloneArray(groups);
+        while (groups2.length > 0) {
             var preferred:TokenType = me.preferredPartialBeer;
-            if (preferred == TokenType.NONE || preferred == TokenType.TRIPLE) {
-                collectGroup(groups.pop());
-            } else {
-                var found:Boolean = false;
-                for (var i:int = 0; i < groups.length; i++) {
-                    if (groups[i].collectedToken != null && TokenType.isCompatible(groups[i].collectedToken, preferred)) {
-                        collectGroup(groups[i]);
-                        groups.splice(i, 1);
-                        found = true;
-                        break;
-                    }
+            var found:Boolean = false;
+            for (var i:int = 0; i < groups2.length; i++) {
+                var collectedToken:TokenType = groups2[i].collectedToken;
+                if (collectedToken != null && TokenType.isCompatible(collectedToken, preferred)) {
+                    collectGroup(groups2[i]);
+                    groups2.splice(i, 1);
+                    found = true;
                 }
-                if (!found) {
-                    collectGroup(groups.pop());
-                }
+            }
+            if (!found) {
+                collectGroup(groups2.pop());
             }
         }
     }

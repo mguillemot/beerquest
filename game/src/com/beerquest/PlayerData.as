@@ -4,6 +4,7 @@ import com.beerquest.events.GameEvent;
 import com.beerquest.ui.EffectLayer;
 import com.beerquest.ui.TokenCollectionView;
 
+import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
@@ -37,12 +38,12 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new GameEvent(GameEvent.FULL_BEERS_CHANGED));
     }
 
-    [Bindable(event="PissChanged")]
+    [Bindable(event="pissChanged")]
     public function get piss():Number {
         return _piss;
     }
 
-    [Bindable(event="PissChanged")]
+    [Bindable(event="pissChanged")]
     public function get pissLevel():int {
         if (_piss >= 100) {
             return 3;
@@ -55,16 +56,21 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function set piss(value:Number):void {
-        _piss = value;
-        if (_piss < 0) {
+        var previousPissLevel:int = pissLevel;
+        if (value < 0) {
             _piss = 0;
-        } else if (_piss > 100) {
+        } else if (value > 100) {
             _piss = 100;
+        } else {
+            _piss = value;
         }
-        dispatchEvent(new GameEvent(GameEvent.PISS_CHANGED));
+        dispatchEvent(new Event("pissChanged"));
+        if (pissLevel != previousPissLevel) {
+            _game.dispatchEvent(new GameEvent(GameEvent.PISS_LEVEL_CHANGED));
+        }
     }
 
-    [Bindable(event="VomitChanged")]
+    [Bindable(event="vomitChanged")]
     public function get vomit():Number {
         return _vomit;
     }
@@ -76,7 +82,7 @@ public class PlayerData extends EventDispatcher {
         } else if (_vomit > 101) {
             _vomit = 101;
         }
-        _game.dispatchEvent(new GameEvent(GameEvent.VOMIT_CHANGED));
+        dispatchEvent(new Event("vomitChanged"));
         if (vomit > 100) {
             _game.board.createVomit(5);
             dispatchEvent(new GameEvent(GameEvent.VOMIT));
