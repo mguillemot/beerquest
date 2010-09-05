@@ -25,7 +25,7 @@ public class GameStats {
             maxPissLevel = game.board.pissLevel;
         }
         pissLevels.push(game.board.pissLevel);
-        var vc:int = game.board.count(TokenType.VOMIT);
+        var vc:int = game.board.cellsOfType(TokenType.VOMIT).length;
         if (vc > maxVomitOnBoard) {
             maxVomitOnBoard = vc;
         }

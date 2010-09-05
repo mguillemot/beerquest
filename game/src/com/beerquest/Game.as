@@ -14,9 +14,9 @@ public class Game extends EventDispatcher {
         _totalTurns = Constants.INITIAL_TOTAL_TURNS;
         _rand = new MersenneTwister(seed);
         _board = new BoardState(_rand);
+        _board.game = this;
         _board.generateRandomWithoutGroups();
-        _board.game = this; // Do this AFTER not to have events during generation phase
-        dispatchEvent(new GameEvent(GameEvent.GAME_START));
+        dispatchEvent(new GameEvent(GameEvent.GAME_START, _board.clone()));
     }
 
     public function get mode():String {

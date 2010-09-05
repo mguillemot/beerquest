@@ -1,9 +1,11 @@
 package com.beerquest.events {
+import com.beerquest.BoardState;
+
 public class GemsSwappedEvent extends GameEvent {
     public static const GEMS_SWAPPED:String = "GemsSwapped";
 
-    public function GemsSwappedEvent(sx:int, sy:int, dx:int, dy:int) {
-        super(GEMS_SWAPPED);
+    public function GemsSwappedEvent(sx:int, sy:int, dx:int, dy:int, board:BoardState = null) {
+        super(GEMS_SWAPPED, board);
         _sx = sx;
         _sy = sy;
         _dx = dx;

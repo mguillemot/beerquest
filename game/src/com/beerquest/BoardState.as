@@ -80,7 +80,7 @@ public class BoardState {
         return clone;
     }
 
-    public function generateFullRandom():void {
+    private function generateFullRandom():void {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                 setCell(i, j, generateNewCell(), false);
@@ -91,10 +91,26 @@ public class BoardState {
     public function generateRandomWithoutGroups():void {
         do {
             generateFullRandom();
-            normalize();
+            normalize(true);
+        } while (computeMoves().length == 0);
+    }
+
+    public function generateRandomKeepingSomeVomit():void {
+        var vomit:Array = cellsOfType(TokenType.VOMIT);
+        if (vomit.length > 0) {
+            vomit = Utils.randomizeArray(vomit, _rand);
+            var toRemove:int = Math.floor(vomit.length * .25);
+            vomit.splice(-toRemove, toRemove);
+        }
+        do {
+            generateFullRandom();
+            for each (var cell:Point in vomit) {
+                setCell(cell.x, cell.y, TokenType.VOMIT, false);
+            }
+            normalize(true);
         } while (computeMoves().length == 0);
         if (_game != null) {
-            _game.dispatchEvent(BoardEvent.FullBoardResetEvent());
+            _game.dispatchEvent(new BoardEvent(BoardEvent.BOARD_RESET, vomit, clone()));
         }
     }
 
@@ -111,7 +127,7 @@ public class BoardState {
         ], false);
         setCell(0, 0, TokenType.BLOND_BEER, true);
         if (_game != null) {
-            _game.dispatchEvent(BoardEvent.FullBoardResetEvent());
+            _game.dispatchEvent(new BoardEvent(BoardEvent.BOARD_RESET, new Array(), clone()));
         }
     }
 
@@ -154,33 +170,6 @@ public class BoardState {
         // Result
         normalize();
     }
-
-    /*private function checkSeries():int {
-     var groups:Array = computeGroups();
-     for (var i:int = 0; i < groups.length; i++) {
-     var group:Object = groups[i];
-     for (var k:int = 0; k < group.length; k++) {
-     var x:int = group.startX;
-     var y:int = group.startY;
-     if (group.type == "horizontal") {
-     x += k;
-     } else {
-     y += k;
-     }
-     if (group.length >= 5) {
-     if (x == group.midX && y == group.midY) {
-     getToken(x, y).mark = "BOMB";
-     } else {
-     getToken(x, y).mark = new Point(group.midX, group.midY);
-     }
-     } else {
-     getToken(x, y).mark = true;
-     }
-     }
-     }
-     invalidateDisplayList();
-     return groups.length;
-     }          */
 
     public function createVomit(count:int):Array {
         var cells:Array = new Array();
@@ -253,25 +242,28 @@ public class BoardState {
         }
     }
 
-    public function count(token:TokenType):int {
-        var count:int = 0;
+    public function cellsOfType(token:TokenType):Array {
+        var cells:Array = new Array();
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                 if (getCell(i, j) == token) {
-                    count++;
+                    cells.push(new Point(i, j));
                 }
             }
         }
-        return count;
+        return cells;
     }
 
-    public function normalize():void {
+    public function normalize(inhibitEvents:Boolean = false):void {
         while (hasGroups) {
             var groups:Array = destroyGroups();
             compact();
-            if (_game != null) {
+            if (_game != null && !inhibitEvents) {
                 _game.dispatchEvent(new GroupCollectionEvent(groups, clone()));
             }
+        }
+        if (computeMoves().length == 0 && !inhibitEvents) {
+            generateRandomKeepingSomeVomit();
         }
     }
 
@@ -365,7 +357,6 @@ public class BoardState {
     }
 
     public function computeMoves(piss:Boolean = true):Array {
-        normalize();
         var moves:Array = new Array();
         var i:int, j:int;
         var movePissLevel:int = (piss) ? pissLevel : 0;

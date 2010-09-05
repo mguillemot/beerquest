@@ -90,13 +90,46 @@ public class BoardView extends UIComponent {
         addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
-        Constants.GAME.addEventListener(GameEvent.GAME_START, onGameStart);
-        Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, onBoardReset);
-        Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, onCellsDestroyed);
-        Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, onCellsTransformed);
-        Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupsCollected);
-        Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGemsSwapped);
-        Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, onPissLevelChanged);
+        Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
+        Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, processEvent);
+        Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, processEvent);
+        Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
+        Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, processEvent);
+        Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, processEvent);
+        Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, processEvent);
+    }
+
+    private function processEvent(e:GameEvent):void {
+        if (_currentAction == "") {
+            switch (e.type) {
+                case GameEvent.GAME_START:
+                    onGameStart(e);
+                    break;
+                case BoardEvent.BOARD_RESET:
+                    onBoardReset(e as BoardEvent);
+                    break;
+                case BoardEvent.CELLS_DESTROYED:
+                    onCellsDestroyed(e as BoardEvent);
+                    break;
+                case BoardEvent.CELLS_TRANSFORMED:
+                    onCellsTransformed(e as BoardEvent);
+                    break;
+                case GroupCollectionEvent.GROUPS_COLLECTED:
+                    onGroupsCollected(e as GroupCollectionEvent);
+                    break;
+                case GemsSwappedEvent.GEMS_SWAPPED:
+                    onGemsSwapped(e as GemsSwappedEvent);
+                    break;
+                case GameEvent.PISS_CHANGED:
+                    onPissLevelChanged(e);
+                    break;
+                default:
+                    throw "Unkown event buffered: " + e.type;
+            }
+        } else {
+            trace(e.type + " received while " + _currentAction + " is in progress: buffering");
+            _eventBuffer.push(e);
+        }
     }
 
     private function onMouseUp(e:MouseEvent):void {
@@ -157,7 +190,7 @@ public class BoardView extends UIComponent {
                 break;
             case 82: // r
                 if (Constants.DEBUG) {
-                    Constants.GAME.board.generateRandomWithoutGroups();
+                    Constants.GAME.board.generateRandomKeepingSomeVomit();
                 }
                 break;
             case 84: // t
@@ -236,13 +269,14 @@ public class BoardView extends UIComponent {
     }
 
     private function onGameStart(e:GameEvent):void {
-        trace("Game start!");
-        onBoardReset(BoardEvent.FullBoardResetEvent());
+        startAction("gameStart", e.board);
+        endAction("gameStart");
+        onBoardReset(new BoardEvent(BoardEvent.BOARD_RESET, new Array(), _currentActionBoardView));
         trace("Game started.");
     }
 
     private function onBoardReset(e:BoardEvent):void {
-        startAction("onBoardReset");
+        startAction("onBoardReset", e.board);
         clearSelection();
         var i:int, j:int, token:Token;
         resetMarks();
@@ -274,13 +308,16 @@ public class BoardView extends UIComponent {
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
                 token = getToken(i, j);
-                if (token != null) {
+                if (token != null && !token.mark) {
                     removeToken(token);
+                    token = null;
                 }
-                token = generateToken(boardState.getCell(i, j), boardState.getSuper(i, j));
-                addToken(token);
-                setToken(i, j, token);
-                TweenLite.from(token, 0.7, {x:token.x, y:-height / Constants.BOARD_SIZE, delay:(Constants.BOARD_SIZE - j) * 0.075});
+                if (token == null) {
+                    token = generateToken(boardState.getCell(i, j), boardState.getSuper(i, j));
+                    addToken(token);
+                    setToken(i, j, token);
+                    TweenLite.from(token, 0.7, {x:token.x, y:-height / Constants.BOARD_SIZE, delay:(Constants.BOARD_SIZE - j) * 0.075});
+                }
             }
         }
         var timer:Timer = new Timer(1500, 1);
@@ -322,10 +359,12 @@ public class BoardView extends UIComponent {
     }
 
     private function onGemsSwapped(e:GemsSwappedEvent):void {
+        startAction("onGemsSwapped", e.board);
         var s:Token = getToken(e.sx, e.sy);
         var d:Token = getToken(e.dx, e.dy);
         setToken(e.sx, e.sy, d);
         setToken(e.dx, e.dy, s);
+        endAction("onGemsSwapped");
     }
 
     private function generateToken(type:TokenType, superToken:Boolean):Token {
@@ -428,9 +467,11 @@ public class BoardView extends UIComponent {
         trace("(frame " + _currentFrame + ") START " + action);
         _currentAction = action;
         _currentActionStart = _currentFrame;
-        _currentActionBoardView = boardView;
+        if (boardView != null) {
+            trace("Updated board view");
+            _currentActionBoardView = boardView;
+        }
         dispatchEvent(new Event("currentActionChanged"));
-
     }
 
     private function continueAction(oldAction:String, action:String):void {
@@ -455,10 +496,10 @@ public class BoardView extends UIComponent {
         _currentActionStart = _currentFrame;
         dispatchEvent(new Event("currentActionChanged"));
         refreshStats();
-        if (_groupCollectionBuffer.length > 0) {
-            trace("Unstack pending GroupCollectionEvent");
-            var groups:GroupCollectionEvent = _groupCollectionBuffer.shift();
-            onGroupsCollected(groups);
+        if (_eventBuffer.length > 0) {
+            var e:GameEvent = _eventBuffer.shift();
+            trace("Unstack pending " + e.type);
+            processEvent(e);
         }
     }
 
@@ -496,11 +537,6 @@ public class BoardView extends UIComponent {
     }
 
     private function onGroupsCollected(e:GroupCollectionEvent):void {
-        if (_currentAction != "") {
-            trace("Impossible to collect groups while in action " + _currentAction + " => buffering");
-            _groupCollectionBuffer.push(e);
-            return;
-        }
         startAction("onGroupsCollected", e.board);
 
         resetMarks();
@@ -616,11 +652,6 @@ public class BoardView extends UIComponent {
             });
             timer.start();
         } else {
-            if (_groupCollectionBuffer.length > 0) {
-                trace("There are still " + _groupCollectionBuffer.length + " phases to execute!");
-            } else {
-                trace("No more phases to execute.");
-            }
             endAction("endGroupsCollected");
         }
     }
@@ -643,6 +674,9 @@ public class BoardView extends UIComponent {
         for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 var token:Token = getToken(i, j);
+                if (token != null) {
+                    token.mark = false;
+                }
             }
         }
     }
@@ -696,20 +730,18 @@ public class BoardView extends UIComponent {
     }
 
     private function refreshStats():void {
-        if (boardState != null) {
-            var moves:Array = boardState.computeMoves();
-            availableMoves = moves.length;
-            if (moves.length > 0) {
-                moves = Utils.randomizeArray(moves);
-                setHint(moves[0].hintX, moves[0].hintY);
-            } else {
-                setHint(-1, -1);
-            }
-            /*trace("available moves:");
-             for each (var move:Object in state.computeMoves()) {
-             trace("  " + move.type + " of " + move.startX + ":" + move.startY);
-             }*/
+        var moves:Array = boardState.computeMoves();
+        availableMoves = moves.length;
+        if (moves.length > 0) {
+            moves = Utils.randomizeArray(moves);
+            setHint(moves[0].hintX, moves[0].hintY);
+        } else {
+            setHint(-1, -1);
         }
+        /*trace("available moves:");
+         for each (var move:Object in state.computeMoves()) {
+         trace("  " + move.type + " of " + move.startX + ":" + move.startY);
+         }*/
     }
 
     private function setHint(x:int, y:int):void {
@@ -718,7 +750,9 @@ public class BoardView extends UIComponent {
         }
         if (x != -1 && y != -1) {
             _hint = getToken(x, y);
-            _hint.hint = true;
+            if (_hint != null) {
+                _hint.hint = true;
+            }
         } else {
             _hint = null;
         }
@@ -769,7 +803,10 @@ public class BoardView extends UIComponent {
     }
 
     private function get boardState():BoardState {
-        return (_currentActionBoardView != null) ? _currentActionBoardView : Constants.GAME.board;
+        if (_currentActionBoardView == null) {
+            throw "unknown board state";
+        }
+        return _currentActionBoardView;
     }
 
     private var _board:Array = new Array();
@@ -792,7 +829,7 @@ public class BoardView extends UIComponent {
     private var _destroyCursor:int = 0;
     private var _playable:Boolean = true;
     private var _resolvingCapacity:Boolean = false;
-    private var _groupCollectionBuffer:Array = new Array();
+    private var _eventBuffer:Array = new Array();
 
     [Embed(source="../../../assets/image/board.png")]
     private static var BoardBackground:Class;

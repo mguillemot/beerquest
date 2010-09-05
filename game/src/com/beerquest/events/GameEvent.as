@@ -1,4 +1,6 @@
 package com.beerquest.events {
+import com.beerquest.BoardState;
+
 import flash.events.Event;
 
 public class GameEvent extends Event {
@@ -14,9 +16,15 @@ public class GameEvent extends Event {
     public static const GAME_OVER:String = "GameOver";
     public static const CURRENT_TURN_CHANGED:String = "CurrentTurnChanged";
 
-    public function GameEvent(type:String) {
+    public function GameEvent(type:String, board:BoardState = null) {
         super(type, true);
+        _board = board;
     }
 
+    public function get board():BoardState {
+        return _board;
+    }
+
+    private var _board:BoardState;
 }
 }
