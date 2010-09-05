@@ -93,7 +93,7 @@ public class BoardView extends UIComponent {
 
         Constants.GAME.addEventListener(GameEvent.GAME_START, onGameStart);
         Constants.GAME.addEventListener(BoardResetEvent.BOARD_RESET, onBoardReset);
-        Constants.GAME.addEventListener(GroupCollectionEvent.GROUP_COLLECTED, onGroupCollected);
+        Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupsCollected);
         Constants.GAME.addEventListener(VomitEvent.VOMIT, onVomit);
         Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGemsSwapped);
         Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, onPissLevelChanged);
@@ -416,14 +416,21 @@ public class BoardView extends UIComponent {
         clearSelection();
     }
 
-    private function startAction(action:String):void {
+    private function startAction(action:String, boardView:BoardState = null):void {
         trace("(frame " + _currentFrame + ") START " + ((action != "") ? action : "(none)"));
         _currentAction = action;
         _currentActionStart = _currentFrame;
+        _currentActionBoardView = boardView;
         if (action == "") {
             refreshStats();
         }
         dispatchEvent(new Event("currentActionChanged"));
+
+        if (action == "" && _groupCollectionBuffer.length > 0) {
+            trace("unstack pending action");
+            var groups:GroupCollectionEvent = _groupCollectionBuffer.shift();
+            onGroupsCollected(groups);
+        }
     }
 
     [Bindable(event="currentActionChanged")]
@@ -455,9 +462,45 @@ public class BoardView extends UIComponent {
         trace("Unselected");
     }
 
-    private function onGroupCollected(e:GroupCollectionEvent):void {
-        var group:Group = e.group;
+    private function onGroupsCollected(e:GroupCollectionEvent):void {
+        if (_currentAction != "") {
+            trace("Impossible to collect groups while in action " + _currentAction + " => buffering");
+            _groupCollectionBuffer.push(e);
+            return;
+        }
+        startAction("onGroupsCollected", e.board);
 
+        resetMarks();
+        var maxDuration:Number = 0;
+        var groups:Array = e.groups;
+        for each (var group:Group in groups) {
+            var duration:Number = collectGroup(group);
+            if (duration > maxDuration) {
+                maxDuration = duration;
+            }
+        }
+
+        var timer:Timer = new Timer(maxDuration, 1);
+        timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+            for each (var group:Group in groups) {
+                for (var k:int = 0; k < group.length; k++) {
+                    var i:int = group.x;
+                    var j:int = group.y;
+                    if (group.direction == "horizontal") {
+                        i += k;
+                    } else {
+                        j += k;
+                    }
+                    var token:Token = getToken(i, j);
+                    removeToken(token);
+                }
+            }
+            endGroupsCollected();
+        });
+        timer.start();
+    }
+
+    private function collectGroup(group:Group):Number {
         // VFX
         var token:Token = getToken(group.x, group.y);
         var local:Point = new Point(token.x, token.y);
@@ -475,8 +518,6 @@ public class BoardView extends UIComponent {
         }
 
         // Explosion or collection effect
-        startAction("exploding");
-        var duration:Number = EXPLODE_DURATION_MS;
         for (var k:int = 0; k < group.length; k++) {
             var i:int = group.x;
             var j:int = group.y;
@@ -486,6 +527,7 @@ public class BoardView extends UIComponent {
                 j += k;
             }
             token = getToken(i, j);
+            if (!token.mark) {
 //            if (group.length <= 4) {
                 TweenLite.to(token, EXPLODE_DURATION_MS / 1000, {alpha:0});
 //            } else if (token.mark is Point) {
@@ -495,27 +537,14 @@ public class BoardView extends UIComponent {
 //                TweenLite.to(token, GROUP5_COMPACTION_DURATION_MS / 1000, {x:dx.toString(), y:dy.toString()});
 //                duration = GROUP5_COMPACTION_DURATION_MS;
 //            }
-        }
-        var timer:Timer = new Timer(duration, 1);
-        timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
-            for (var k:int = 0; k < group.length; k++) {
-                var i:int = group.x;
-                var j:int = group.y;
-                if (group.direction == "horizontal") {
-                    i += k;
-                } else {
-                    j += k;
-                }
-                token = getToken(i, j);
-                removeToken(token);
+                token.mark = true; // To prevent tween conflicts with a token participating in multiple groups
             }
-            endGroupCollected();
-        });
-        timer.start();
+        }
+        return EXPLODE_DURATION_MS;
     }
 
-    private function endGroupCollected():void {
-        startAction("endGroupCollected");
+    private function endGroupsCollected():void {
+        startAction("endGroupsCollected", _currentActionBoardView);
         resetFalling();
         var i:int, j:int, holes:int, token:Token;
         var falling:Boolean = false;
@@ -548,13 +577,18 @@ public class BoardView extends UIComponent {
         if (falling) {
             var timer:Timer = new Timer(FALL_TIME_MS, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
+                trace("Next falling pass...");
                 updateFalling();
-                endGroupCollected();
+                endGroupsCollected();
             });
             timer.start();
         } else {
+            if (_groupCollectionBuffer.length > 0) {
+                trace("There are still " + _groupCollectionBuffer.length + " phases to execute!");
+            } else {
+                trace("No more phases to execute.");
+            }
             startAction("");
-            //endDestroySeries2();
         }
     }
 
@@ -707,7 +741,7 @@ public class BoardView extends UIComponent {
     }
 
     private function get boardState():BoardState {
-        return Constants.GAME.board;
+        return (_currentActionBoardView != null) ? _currentActionBoardView : Constants.GAME.board;
     }
 
     private var _board:Array = new Array();
@@ -721,6 +755,7 @@ public class BoardView extends UIComponent {
     private var _currentFrame:int = 0;
     private var _currentAction:String = "";
     private var _currentActionStart:int = 0;
+    private var _currentActionBoardView:BoardState;
     private var _availableMoves:int;
     private var _gemsLayer:DisplayObjectContainer;
     private var _pissLayer:DisplayObjectContainer;
@@ -729,6 +764,7 @@ public class BoardView extends UIComponent {
     private var _destroyCursor:int = 0;
     private var _playable:Boolean = true;
     private var _resolvingCapacity:Boolean = false;
+    private var _groupCollectionBuffer:Array = new Array();
 
     [Embed(source="../../../assets/image/board.png")]
     private static var BoardBackground:Class;

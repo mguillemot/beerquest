@@ -24,7 +24,7 @@ public class SoundModule extends UIComponent {
         Constants.GAME.addEventListener(GameEvent.PISS_CHANGED, onPissChanged);
         Constants.GAME.addEventListener(GameEvent.BOARD_RESET, onBoardReset);
         Constants.GAME.addEventListener(VomitEvent.VOMIT, onVomit);
-        Constants.GAME.addEventListener(GroupCollectionEvent.GROUP_COLLECTED, onGroupCollected);
+        Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupCollected);
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, onCapacityGained);
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
     }

@@ -71,6 +71,17 @@ public class BoardState {
         return repr;
     }
 
+    public function clone():BoardState {
+        var clone:BoardState = new BoardState();
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                clone.setCell(i, j, getCell(i,j), getSuper(i,j));
+            }
+        }
+        clone.pissLevel = pissLevel;
+        return clone;
+    }
+
     public function generateFullRandom():void {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
@@ -91,8 +102,8 @@ public class BoardState {
 
     public function generateTestBoard():void {
         setAllCells([
-            [TokenType.LIQUOR,TokenType.TOMATO_JUICE,TokenType.TOMATO_JUICE,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.TOMATO_JUICE,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.BLOND_BEER,TokenType.TOMATO_JUICE,TokenType.TOMATO_JUICE,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.TOMATO_JUICE,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
@@ -251,8 +262,11 @@ public class BoardState {
 
     public function normalize():void {
         while (hasGroups) {
-            destroyGroups();
+            var groups:Array = destroyGroups();
             compact();
+            if (_game != null) {
+                _game.dispatchEvent(new GroupCollectionEvent(groups, clone()));
+            }
         }
     }
 
@@ -410,8 +424,9 @@ public class BoardState {
         return false;
     }
 
-    private function destroyGroups():void {
-        for each (var group:Group in computeGroups()) {
+    private function destroyGroups():Array {
+        var groups:Array = computeGroups();
+        for each (var group:Group in groups) {
             if (group.direction == "horizontal") {
                 for (var di:int = 0; di < group.length; di++) {
                     setCell(group.x + di, group.y, TokenType.NONE, false);
@@ -421,10 +436,8 @@ public class BoardState {
                     setCell(group.x, group.y + dj, TokenType.NONE, false);
                 }
             }
-            if (_game != null) {
-                _game.dispatchEvent(new GroupCollectionEvent(group));
-            }
         }
+        return groups;
     }
 
     private function compact():void {

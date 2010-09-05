@@ -3,13 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="36cec4e9-0d20-42a8-b640-434ae12d528e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/BoardState.as" afterPath="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/Group.as" afterPath="$PROJECT_DIR$/src/com/beerquest/Group.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/Game.as" afterPath="$PROJECT_DIR$/src/com/beerquest/Game.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as" afterPath="$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/SoundModule.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/SoundModule.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/Token.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/Token.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/TokenType.as" afterPath="$PROJECT_DIR$/src/com/beerquest/TokenType.as" />
     </list>
     <ignored path="BeerQuest.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,8 +94,50 @@
       <file leaf-file-name="BoardView.as" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="607" column="107" selection-start="23017" selection-end="23017" vertical-scroll-proportion="0.5210643">
+            <state line="741" column="27" selection-start="27743" selection-end="27743" vertical-scroll-proportion="0.32543105">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CapacityView.mxml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="77" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1283655764652" expanded="true" signature="144:267" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="144:267" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="324:387" placeholder="..." />
+                <marker date="1283655764652" expanded="false" signature="324:387" placeholder="..." />
+                <marker date="1283655764652" expanded="true" signature="466:1276" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="466:1276" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="530:1015" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="530:1015" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="824:902" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="824:902" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1021:1266" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1021:1266" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1138:1216" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1138:1216" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1334:1460" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1334:1460" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1384:1450" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1384:1450" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1517:1645" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1517:1645" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1567:1635" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1567:1635" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1699:1832" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1699:1832" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1749:1822" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="1749:1822" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="2494:2511" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="2494:2511" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="2524:2542" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="2524:2542" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="2551:2565" placeholder="{...}" />
+                <marker date="1283655764652" expanded="true" signature="2551:2565" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,15 +146,6 @@
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
           <provider selected="true" editor-type-id="text-editor">
             <state line="49" column="63" selection-start="1661" selection-end="1661" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoardState.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="310" column="41" selection-start="11382" selection-end="11382" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -163,15 +192,15 @@
         <option value="$PROJECT_DIR$/src/com/beerquest/events/TokenEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/events/BoardResetEvent.as" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/Token.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/TokenType.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml" />
         <option value="$PROJECT_DIR$/src/com/beerquest/Game.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/Group.as" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
       </list>
     </option>
@@ -652,7 +681,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32453245" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32995194" sideWeight="0.54015404" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23972237" sideWeight="0.54015404" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -746,11 +775,6 @@
         <state line="4" column="38" selection-start="132" selection-end="146" vertical-scroll-proportion="0.11584327" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="27" selection-start="58" selection-end="58" vertical-scroll-proportion="0.028960818" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/PlayerData.as">
       <provider selected="true" editor-type-id="text-editor">
         <state line="98" column="20" selection-start="2829" selection-end="2829" vertical-scroll-proportion="0.0">
@@ -801,37 +825,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="48" selection-start="188" selection-end="188" vertical-scroll-proportion="0.11584327">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="63" selection-start="1661" selection-end="1661" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="25" selection-start="407" selection-end="407" vertical-scroll-proportion="0.25215518">
-          <folding>
-            <marker date="1283655764652" expanded="true" signature="144:267" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="324:387" placeholder="..." />
-            <marker date="1283655764652" expanded="true" signature="466:1276" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="530:1015" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="824:902" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1021:1266" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1138:1216" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1334:1460" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1384:1450" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1517:1645" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1567:1635" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1699:1832" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="1749:1822" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="2494:2511" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="2524:2542" placeholder="{...}" />
-            <marker date="1283655764652" expanded="true" signature="2551:2565" placeholder="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -892,16 +885,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="38" selection-start="256" selection-end="256" vertical-scroll-proportion="0.29310346">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="310" column="41" selection-start="11382" selection-end="11382" vertical-scroll-proportion="0.0">
+        <state line="80" column="36" selection-start="2885" selection-end="2885" vertical-scroll-proportion="0.6607539">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="63" selection-start="1661" selection-end="1661" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="77" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1283655764652" expanded="true" signature="144:267" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="144:267" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="324:387" placeholder="..." />
+            <marker date="1283655764652" expanded="false" signature="324:387" placeholder="..." />
+            <marker date="1283655764652" expanded="true" signature="466:1276" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="466:1276" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="530:1015" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="530:1015" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="824:902" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="824:902" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1021:1266" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1021:1266" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1138:1216" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1138:1216" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1334:1460" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1334:1460" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1384:1450" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1384:1450" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1517:1645" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1517:1645" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1567:1635" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1567:1635" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1699:1832" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1699:1832" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1749:1822" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="1749:1822" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="2494:2511" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="2494:2511" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="2524:2542" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="2524:2542" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="2551:2565" placeholder="{...}" />
+            <marker date="1283655764652" expanded="true" signature="2551:2565" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="607" column="107" selection-start="23017" selection-end="23017" vertical-scroll-proportion="0.5210643">
+        <state line="741" column="27" selection-start="27743" selection-end="27743" vertical-scroll-proportion="0.32543105">
           <folding />
         </state>
       </provider>
