@@ -9,9 +9,13 @@
             textAlign: center;
         }
     </mx:Style>
+    <mx:Metadata>
+        [Event(name="AskForExecution", type="com.beerquest.ui.events.CapacityExecutionEvent")]
+    </mx:Metadata>
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
+        import com.beerquest.ui.events.CapacityExecutionEvent;
 
         [Bindable]
         public function get capacity():Capacity {
@@ -54,7 +58,7 @@
 
         private function onClick(e:MouseEvent):void {
             if (clickable && capacity.enabled) {
-                Constants.GAME.executeCapacity(capacity);
+                dispatchEvent(new CapacityExecutionEvent(CapacityExecutionEvent.ASK_FOR_EXECUTION, capacity));
             }
         }
 

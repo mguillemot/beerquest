@@ -90,7 +90,7 @@ public class Game extends EventDispatcher {
                 board.destroyTokensOfType(TokenType.VOMIT);
                 break;
             case Capacity.BIG_BANG:
-                //board.destroyTokensOfType(token);
+                board.destroyTokensOfType(token);
                 break;
             case Capacity.BLOND_FURY_BAR:
                 var blonds:int = board.destroyTokensOfType(TokenType.BLOND_BEER);

@@ -36,11 +36,13 @@
     </fx:Style>
     <fx:Script><![CDATA[
         import com.adobe.serialization.json.JSON;
+        import com.beerquest.Capacity;
         import com.beerquest.Constants;
         import com.beerquest.Game;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
         import com.beerquest.events.GameEvent;
+        import com.beerquest.ui.events.CapacityExecutionEvent;
         import com.beerquest.ui.events.ScoreEvent;
         import com.beerquest.ui.events.TokenEvent;
         import com.greensock.OverwriteManager;
@@ -185,6 +187,14 @@
             //Alert.show("Score uploaded.");
         }
 
+        private function onAskForExecution(e:CapacityExecutionEvent):void {
+            if (e.capacity == Capacity.BIG_BANG) {
+                boardView.processEvent(e);
+            } else {
+                Constants.GAME.executeCapacity(e.capacity);
+            }
+        }
+
         private var _token:String;
         private var _tokenLoader:URLLoader;
         private var _mode:String;
@@ -201,7 +211,7 @@
     </mx:Canvas>
 
     <!-- status bar -->
-    <ui:PlayerStatusView id="myStatus" x="5" y="5"/>
+    <ui:PlayerStatusView id="myStatus" x="5" y="5" AskForExecution="onAskForExecution(event)"/>
     <ui:SoundButton x="140" y="292" on="true"/>
     <ui:QualityButton x="170" y="292" on="true"/>
 

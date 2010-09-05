@@ -4,6 +4,7 @@ import com.beerquest.events.BoardEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
+import com.beerquest.ui.events.CapacityExecutionEvent;
 import com.beerquest.ui.events.ScoreEvent;
 import com.beerquest.ui.events.TokenEvent;
 import com.greensock.TweenLite;
@@ -101,11 +102,11 @@ public class BoardView extends UIComponent {
         Constants.GAME.addEventListener(GameEvent.PISS_LEVEL_CHANGED, processEvent);
     }
 
-    private function processEvent(e:GameEvent):void {
+    public function processEvent(e:Event):void {
         if (_currentAction == "") {
             switch (e.type) {
                 case GameEvent.GAME_START:
-                    onGameStart(e);
+                    onGameStart(e as GameEvent);
                     break;
                 case BoardEvent.BOARD_RESET:
                     onBoardReset(e as BoardEvent);
@@ -123,7 +124,10 @@ public class BoardView extends UIComponent {
                     onGemsSwapped(e as GemsSwappedEvent);
                     break;
                 case GameEvent.PISS_LEVEL_CHANGED:
-                    onPissLevelChanged(e);
+                    onPissLevelChanged(e as GameEvent);
+                    break;
+                case CapacityExecutionEvent.ASK_FOR_EXECUTION:
+                    startBigBang();
                     break;
                 default:
                     throw "Unkown event buffered: " + e.type;
