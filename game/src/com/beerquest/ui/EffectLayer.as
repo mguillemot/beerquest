@@ -1,15 +1,10 @@
 package com.beerquest.ui {
 import com.beerquest.TokenType;
 import com.greensock.TweenLite;
-
 import com.greensock.easing.Quad;
-
-import flash.display.Sprite;
 
 import mx.containers.Canvas;
 import mx.controls.Image;
-
-import org.osmf.traits.TemporalTrait;
 
 public class EffectLayer extends Canvas {
     public static const SCORE_EFFECT_TIME_MS:int = 1800;
@@ -96,16 +91,16 @@ public class EffectLayer extends Canvas {
     private var _scoreEffectBuffer:Array;
     private var _tokenEffectBuffer:Array;
 
-    [Embed(source="../../../small-blond.png")]
+    [Embed(source="../../../assets/image/small-blond.png")]
     private static var SmallBlond:Class;
 
-    [Embed(source="../../../small-amber.png")]
+    [Embed(source="../../../assets/image/small-amber.png")]
     private static var SmallAmber:Class;
 
-    [Embed(source="../../../small-brown.png")]
+    [Embed(source="../../../assets/image/small-brown.png")]
     private static var SmallBrown:Class;
 
-    [Embed(source="../../../small-triple.png")]
+    [Embed(source="../../../assets/image/small-triple.png")]
     private static var SmallTriple:Class;
 }
 }

@@ -40,7 +40,7 @@
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
-            <mx:Image source="@Embed('../../../collected-beer-small.png')"/>
+            <mx:Image source="@Embed('../../../assets/image/collected-beer-small.png')"/>
         </mx:HBox>
         <mx:HBox height="100%" verticalAlign="middle" horizontalGap="0" width="{(turns > 0) ? NaN : 0}">
             <mx:Label text="+{turns}" styleName="score-fx">
@@ -48,7 +48,7 @@
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
-            <mx:Image source="@Embed('../../../caps.png')"/>
+            <mx:Image source="@Embed('../../../assets/image/caps.png')"/>
         </mx:HBox>
     </mx:HBox>
 </mx:VBox>

@@ -1,6 +1,5 @@
 package com.beerquest.ui {
 import com.beerquest.*;
-import com.beerquest.events.BeerCollectedEvent;
 import com.greensock.TweenLite;
 
 import flash.events.TimerEvent;
@@ -77,8 +76,7 @@ public class TokenCollectionView extends UIComponent {
                 timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                     // Collect!
                     startAction("collecting");
-                    Constants.STATS.stackCollected++;
-                    dispatchEvent(new BeerCollectedEvent(player));
+                    Constants.GAME.me.collectBeer();
                     if (Constants.SOUND_ENABLED) {
                         var fx:Sound = new StackFX();
                         fx.play();
@@ -244,19 +242,19 @@ public class TokenCollectionView extends UIComponent {
     private var _stack:Array = new Array();
     private var _pendingActions:Array = new Array();
 
-    [Embed(source="../../../small-blond.png")]
+    [Embed(source="../../../assets/image/small-blond.png")]
     private static var SmallBlond:Class;
 
-    [Embed(source="../../../small-amber.png")]
+    [Embed(source="../../../assets/image/small-amber.png")]
     private static var SmallAmber:Class;
 
-    [Embed(source="../../../small-brown.png")]
+    [Embed(source="../../../assets/image/small-brown.png")]
     private static var SmallBrown:Class;
 
-    [Embed(source="../../../small-triple.png")]
+    [Embed(source="../../../assets/image/small-triple.png")]
     private static var SmallTriple:Class;
 
-    [Embed(source="../../../verser-biere.mp3")]
+    [Embed(source="../../../assets/sound/verser-biere.mp3")]
     private static var StackFX:Class;
 
 }

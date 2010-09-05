@@ -8,12 +8,11 @@
     <fx:Style>
         @namespace
         mx
-        "library://ns.adobe.com/flex/mx"
-        ;
+        "library://ns.adobe.com/flex/mx";
 
         @font-face
         {
-            src: url("kronika.ttf")
+            src: url("../../../assets/font/kronika.ttf")
         ;
             fontFamily: Kro
         ;
@@ -40,13 +39,10 @@
     <fx:Script><![CDATA[
         import com.adobe.serialization.json.JSON;
         import com.beerquest.Constants;
-        import com.beerquest.Game;
         import com.beerquest.PlayerData;
-        import com.beerquest.events.CapacityEvent;
         import com.beerquest.events.GameEvent;
-        import com.beerquest.events.PissEvent;
-        import com.beerquest.events.ScoreEvent;
-        import com.beerquest.events.TokenEvent;
+        import com.beerquest.ui.events.ScoreEvent;
+        import com.beerquest.ui.events.TokenEvent;
         import com.greensock.OverwriteManager;
         import com.greensock.TweenLite;
         import com.greensock.plugins.ColorTransformPlugin;
@@ -60,12 +56,6 @@
             // Init TweenLite
             OverwriteManager.init();
             TweenPlugin.activate([ColorTransformPlugin, TintPlugin]);
-
-            // Event listeners
-            addEventListener(CapacityEvent.CAPACITY_GAINED, onGameEvent);
-            addEventListener(PissEvent.PISS, onGameEvent);
-            addEventListener(ScoreEvent.SCORE_GAINED, onScoreGained);
-            addEventListener(TokenEvent.TOKEN_GAINED, onTokenGained);
 
             // Parameters passed to game
             _allowStart = true;
@@ -92,12 +82,12 @@
                 trace("WARN: No 'token' found");
                 _token = "none";
                 _allowStart = false;
-                startGame(new Game(_mode, new PlayerData(), Math.random()));
+                startGame(_mode, new PlayerData(Constants.GAME), Math.random());
             }
             trace("Using the following token: " + _token);
 
             // Retrieve game info from server using token
-            if (game == null) {
+            if (Constants.GAME == null) {
                 var request:URLRequest = new URLRequest("/start?token=" + _token);
                 request.method = URLRequestMethod.GET;
                 _tokenLoader = new URLLoader();
@@ -119,21 +109,18 @@
             trace("Seed is " + data.seed);
             _tokenLoader.removeEventListener(Event.COMPLETE, onStartInfoReceived);
             _tokenLoader = null;
-            startGame(new Game(_mode, new PlayerData(), data.seed));
+            startGame(_mode, new PlayerData(Constants.GAME), data.seed);
         }
 
-        private function startGame(game:Game):void {
+        private function startGame(mode:String, me:PlayerData, seed:int):void {
+            Constants.GAME.start(mode, me, seed);
             if (!_allowStart && !Constants.DEBUG) {
-                game.gameOver = true;
+                Constants.GAME.endOfGame();
             }
-            game.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onCurrentTurnChanged);
-            game.addEventListener(GameEvent.GAME_OVER, onGameOver);
-            this.game = game;
-            boardView.game = game;
-        }
-
-        private function onGameEvent(e:GameEvent):void {
-            game.handleEvent(e);
+            Constants.GAME.addEventListener(ScoreEvent.SCORE_GAINED, onScoreGained);
+            Constants.GAME.addEventListener(TokenEvent.TOKEN_GAINED, onTokenGained);
+            Constants.GAME.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onCurrentTurnChanged);
+            Constants.GAME.addEventListener(GameEvent.GAME_OVER, onGameOver);
         }
 
         private function onCurrentTurnChanged(e:GameEvent):void {
@@ -150,10 +137,10 @@
 
         private function uploadScore():void {
             var data:URLVariables = Constants.STATS.getForSerialization();
-            data.mode = game.mode;
+            data.mode = Constants.GAME.mode;
             data.token = _token;
             data.game_version = Constants.VERSION.toString();
-            data.score = game.me.fullBeers;
+            data.score = Constants.GAME.me.fullBeers;
             data.flash_version = Capabilities.version;
 
             var request:URLRequest = new URLRequest("/postscore");
@@ -193,9 +180,6 @@
             //Alert.show("Score uploaded.");
         }
 
-        [Bindable]
-        public var game:Game;
-
         private var _token:String;
         private var _tokenLoader:URLLoader;
         private var _mode:String;
@@ -212,7 +196,7 @@
     </mx:Canvas>
 
     <!-- status bar -->
-    <ui:PlayerStatusView id="myStatus" x="5" y="5" game="{game}" player="{game.me}"/>
+    <ui:PlayerStatusView id="myStatus" x="5" y="5"/>
     <ui:SoundButton x="140" y="292" on="true"/>
     <ui:QualityButton x="170" y="292" on="true"/>
 

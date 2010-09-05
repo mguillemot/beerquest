@@ -50,13 +50,13 @@
         private var _on:Boolean = true;
         private var _mouseOver:Boolean = false;
 
-        [Embed(source='../../../bruitages-active.png')]
+        [Embed(source='../../../assets/image/bruitages-active.png')]
         private static var EnabledState:Class;
 
-        [Embed(source='../../../bruitages-desactive.png')]
+        [Embed(source='../../../assets/image/bruitages-desactive.png')]
         private static var DisabledState:Class;
 
-        [Embed(source='../../../bruitages-over.png')]
+        [Embed(source='../../../assets/image/bruitages-over.png')]
         private static var HoverState:Class;
         ]]></mx:Script>
     <mx:Image id="button" source="{EnabledState}"/>

@@ -1,11 +1,9 @@
 package com.beerquest.events {
-import com.beerquest.PlayerData;
-
 public class VomitEvent extends GameEvent {
     public static const VOMIT:String = "Vomit";
 
-    public function VomitEvent(player:PlayerData, cells:Array) {
-        super(VOMIT, player);
+    public function VomitEvent(cells:Array) {
+        super(VOMIT);
         _cells = cells;
     }
 

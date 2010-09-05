@@ -81,7 +81,7 @@
     <mx:Image id="portrait" x="10" y="12" width="50" height="50"/>
     <mx:Canvas x="65" y="4" width="120" height="66">
         <mx:HBox horizontalGap="2" verticalAlign="middle">
-            <mx:Image source="@Embed(source='../../../collected-beer-small.png')"/>
+            <mx:Image source="@Embed(source='../../../assets/image/collected-beer-small.png')"/>
             <mx:Label text="{score}" styleName="scoreview-score">
                 <mx:filters>
                     <mx:DropShadowFilter distance="1" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>

@@ -173,34 +173,34 @@ public class Token extends Sprite {
     private var _falling:Boolean = false;
 
 
-    [Embed(source="../../../biere-brune.png")]
+    [Embed(source="../../../assets/image/biere-brune.png")]
     private static var BrownBeerIcon:Class;
 
-    [Embed(source="../../../biere-blonde.png")]
+    [Embed(source="../../../assets/image/biere-blonde.png")]
     private static var BlondBeerIcon:Class;
 
-    [Embed(source="../../../biere-ambree.png")]
+    [Embed(source="../../../assets/image/biere-ambree.png")]
     private static var WhiteBeerIcon:Class;
 
-    [Embed(source="../../../cahouet.png")]
+    [Embed(source="../../../assets/image/cahouet.png")]
     private static var FoodIcon:Class;
 
-    [Embed(source="../../../digestif.png")]
+    [Embed(source="../../../assets/image/digestif.png")]
     private static var LiquorIcon:Class;
 
-    [Embed(source="../../../verre-eau.png")]
+    [Embed(source="../../../assets/image/verre-eau.png")]
     private static var WaterIcon:Class;
 
-    [Embed(source="../../../jus-tomate.png")]
+    [Embed(source="../../../assets/image/jus-tomate.png")]
     private static var TomatoIcon:Class;
 
-    [Embed(source="../../../vomi-1.png")]
+    [Embed(source="../../../assets/image/vomi-1.png")]
     private static var VomitIcon1:Class;
 
-    [Embed(source="../../../vomi-2.png")]
+    [Embed(source="../../../assets/image/vomi-2.png")]
     private static var VomitIcon2:Class;
 
-    [Embed(source="../../../vomi-3.png")]
+    [Embed(source="../../../assets/image/vomi-3.png")]
     private static var VomitIcon3:Class;
 }
 }

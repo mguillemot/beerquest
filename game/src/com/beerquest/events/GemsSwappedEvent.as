@@ -1,11 +1,9 @@
 package com.beerquest.events {
-import com.beerquest.PlayerData;
-
 public class GemsSwappedEvent extends GameEvent {
     public static const GEMS_SWAPPED:String = "GemsSwapped";
 
-    public function GemsSwappedEvent(player:PlayerData, sx:int, sy:int, dx:int, dy:int) {
-        super(GEMS_SWAPPED, player);
+    public function GemsSwappedEvent(sx:int, sy:int, dx:int, dy:int) {
+        super(GEMS_SWAPPED);
         _sx = sx;
         _sy = sy;
         _dx = dx;

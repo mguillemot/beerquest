@@ -48,13 +48,13 @@
         private var _on:Boolean = true;
         private var _mouseOver:Boolean = false;
 
-        [Embed(source='../../../qualite-activee.png')]
+        [Embed(source='../../../assets/image/qualite-activee.png')]
         private static var EnabledState:Class;
 
-        [Embed(source='../../../qualite-desactivee.png')]
+        [Embed(source='../../../assets/image/qualite-desactivee.png')]
         private static var DisabledState:Class;
 
-        [Embed(source='../../../qualite-over.png')]
+        [Embed(source='../../../assets/image/qualite-over.png')]
         private static var HoverState:Class;
         ]]></mx:Script>
     <mx:Image id="button" source="{EnabledState}"/>

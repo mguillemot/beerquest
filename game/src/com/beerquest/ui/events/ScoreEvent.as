@@ -1,4 +1,4 @@
-package com.beerquest.events {
+package com.beerquest.ui.events {
 import com.beerquest.Capacity;
 
 import flash.events.Event;
