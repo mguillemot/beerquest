@@ -10,12 +10,12 @@
         }
     </mx:Style>
     <mx:Metadata>
-        [Event(name="AskForExecution", type="com.beerquest.ui.events.CapacityExecutionEvent")]
+        [Event(name="AskForExecution", type="com.beerquest.ui.events.UiCapacityExecutionEvent")]
     </mx:Metadata>
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
-        import com.beerquest.ui.events.CapacityExecutionEvent;
+        import com.beerquest.ui.events.UiCapacityExecutionEvent;
 
         [Bindable]
         public function get capacity():Capacity {
@@ -58,7 +58,7 @@
 
         private function onClick(e:MouseEvent):void {
             if (clickable && capacity.enabled) {
-                dispatchEvent(new CapacityExecutionEvent(CapacityExecutionEvent.ASK_FOR_EXECUTION, capacity));
+                dispatchEvent(new UiCapacityExecutionEvent(UiCapacityExecutionEvent.ASK_FOR_EXECUTION, capacity));
             }
         }
 

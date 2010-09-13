@@ -4,9 +4,10 @@ import com.beerquest.events.BoardEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
-import com.beerquest.ui.events.CapacityExecutionEvent;
-import com.beerquest.ui.events.ScoreEvent;
-import com.beerquest.ui.events.TokenEvent;
+import com.beerquest.ui.events.UiCapacityExecutionEvent;
+import com.beerquest.ui.events.UiGameOverEvent;
+import com.beerquest.ui.events.UiScoreEvent;
+import com.beerquest.ui.events.UiTokenEvent;
 import com.greensock.TweenLite;
 import com.greensock.easing.Expo;
 import com.greensock.easing.Linear;
@@ -25,8 +26,9 @@ import mx.core.UIComponent;
 import mx.managers.CursorManager;
 import mx.managers.CursorManagerPriority;
 
-[Event(name="ScoreGained", type="com.beerquest.ui.events.ScoreEvent")]
-[Event(name="TokenGained", type="com.beerquest.ui.events.TokenEvent")]
+[Event(name="UiScoreGained", type="com.beerquest.ui.events.UiScoreEvent")]
+[Event(name="UiTokenGained", type="com.beerquest.ui.events.UiTokenEvent")]
+[Event(name="UiGameOver", type="com.beerquest.ui.events.UiGameOverEvent")]
 public class BoardView extends UIComponent {
 
     private static const EXPLODE_DURATION_MS:int = 250;
@@ -94,6 +96,7 @@ public class BoardView extends UIComponent {
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
         Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
+        Constants.GAME.addEventListener(GameEvent.GAME_OVER, processEvent);
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
@@ -107,6 +110,9 @@ public class BoardView extends UIComponent {
             switch (e.type) {
                 case GameEvent.GAME_START:
                     onGameStart(e as GameEvent);
+                    break;
+                case GameEvent.GAME_OVER:
+                    onGameOver(e as GameEvent);
                     break;
                 case BoardEvent.BOARD_RESET:
                     onBoardReset(e as BoardEvent);
@@ -126,7 +132,7 @@ public class BoardView extends UIComponent {
                 case GameEvent.PISS_LEVEL_CHANGED:
                     onPissLevelChanged(e as GameEvent);
                     break;
-                case CapacityExecutionEvent.ASK_FOR_EXECUTION:
+                case UiCapacityExecutionEvent.ASK_FOR_EXECUTION:
                     startBigBang();
                     break;
                 default:
@@ -309,6 +315,12 @@ public class BoardView extends UIComponent {
         endAction("gameStart");
         onBoardReset(new BoardEvent(BoardEvent.BOARD_RESET, new Array(), _currentActionBoardView));
         trace("Game started.");
+    }
+
+    private function onGameOver(e:GameEvent):void {
+        startAction("gameOver");
+        dispatchEvent(new UiGameOverEvent());
+        trace("Game ended.");
     }
 
     private function onBoardReset(e:BoardEvent):void {
@@ -668,9 +680,9 @@ public class BoardView extends UIComponent {
             local.y += height / Constants.BOARD_SIZE * group.length / 2;
         }
         var scoreCoords:Point = localToGlobal(local);
-        dispatchEvent(new ScoreEvent(group.beerGain, group.turnsGain, scoreCoords.x, scoreCoords.y));
+        dispatchEvent(new UiScoreEvent(group.beerGain, group.turnsGain, scoreCoords.x, scoreCoords.y));
         if (group.collectedToken != null) {
-            dispatchEvent(new TokenEvent(group.collectedToken, scoreCoords.x, scoreCoords.y));
+            dispatchEvent(new UiTokenEvent(group.collectedToken, scoreCoords.x, scoreCoords.y));
         }
 
         // Explosion or collection effect
@@ -877,19 +889,6 @@ public class BoardView extends UIComponent {
         dispatchEvent(new Event("availableMovesChanged"));
     }
 
-    [Bindable(event="playableChanged")]
-    public function get playable():Boolean {
-        return _playable;
-    }
-
-    public function set playable(value:Boolean):void {
-        _playable = value;
-        dispatchEvent(new Event("playableChanged"));
-        if (!_playable) {
-            startAction("gameOver");
-        }
-    }
-
     private function get boardState():BoardState {
         if (_currentActionBoardView == null) {
             throw "unknown board state";
@@ -915,7 +914,6 @@ public class BoardView extends UIComponent {
     private var _hint:Token = null;
     private var _currentPissLevel:int = 0;
     private var _destroyCursor:int = 0;
-    private var _playable:Boolean = true;
     private var _resolvingCapacity:Boolean = false;
     private var _eventBuffer:Array = new Array();
 

@@ -18,7 +18,7 @@
         }
     </mx:Style>
     <mx:Metadata>
-        [Event(name="AskForExecution", type="com.beerquest.ui.events.CapacityExecutionEvent")]
+        [Event(name="AskForExecution", type="com.beerquest.ui.events.UiCapacityExecutionEvent")]
     </mx:Metadata>
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;

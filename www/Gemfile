@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-RAILS_VERSION = '3.0.0.rc2'
+RAILS_VERSION = '3.0.0'
 DM_VERSION = '1.0.0'
 
 #gem 'rails',                RAILS_VERSION
@@ -24,6 +24,9 @@ gem 'dm-timestamps',        DM_VERSION
 gem 'dm-observer',          DM_VERSION
 gem 'dm-serializer',        DM_VERSION
 gem 'dm-adjust',            DM_VERSION
+
+gem 'redis'
+gem 'redis-store',          '1.0.0.beta2'
 
 gem 'haml'
 

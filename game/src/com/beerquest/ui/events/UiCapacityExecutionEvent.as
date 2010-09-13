@@ -3,10 +3,10 @@ import com.beerquest.Capacity;
 
 import flash.events.Event;
 
-public class CapacityExecutionEvent extends Event {
+public class UiCapacityExecutionEvent extends Event {
     public static const ASK_FOR_EXECUTION:String = "AskForExecution";
 
-    public function CapacityExecutionEvent(type:String, capacity:Capacity) {
+    public function UiCapacityExecutionEvent(type:String, capacity:Capacity) {
         super(type, true);
         _capacity = capacity;
     }

@@ -3,10 +3,10 @@ import com.beerquest.Capacity;
 
 import flash.events.Event;
 
-public class ScoreEvent extends Event {
-    public static const SCORE_GAINED:String = "ScoreGained";
+public class UiScoreEvent extends Event {
+    public static const SCORE_GAINED:String = "UiScoreGained";
 
-    public function ScoreEvent(beers:int, turns:int, stageX:Number = NaN, stageY:Number = NaN, capacity:Capacity = null) {
+    public function UiScoreEvent(beers:int, turns:int, stageX:Number = NaN, stageY:Number = NaN, capacity:Capacity = null) {
         super(SCORE_GAINED, true);
         _beers = beers;
         _turns = turns;

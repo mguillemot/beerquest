@@ -27,7 +27,9 @@ class FacebookController < ApplicationController
     session[:user_id] = params[:id]
     session[:access_token] = "none"
     session[:account_id] = params[:id]
-    redirect_to home_url
+
+    render :text => "OK"
+#    redirect_to home_url
   end
 
   private

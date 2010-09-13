@@ -3,10 +3,10 @@ import com.beerquest.TokenType;
 
 import flash.events.Event;
 
-public class TokenEvent extends Event {
-    public static const TOKEN_GAINED:String = "TokenGained";
+public class UiTokenEvent extends Event {
+    public static const TOKEN_GAINED:String = "UiTokenGained";
 
-    public function TokenEvent(token:TokenType, stageX:Number, stageY:Number) {
+    public function UiTokenEvent(token:TokenType, stageX:Number, stageY:Number) {
         super(TOKEN_GAINED, true);
         _token = token;
         _stageX = stageX;

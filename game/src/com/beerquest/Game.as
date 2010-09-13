@@ -1,7 +1,7 @@
 package com.beerquest {
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
-import com.beerquest.ui.events.ScoreEvent;
+import com.beerquest.ui.events.UiScoreEvent;
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
@@ -95,22 +95,22 @@ public class Game extends EventDispatcher {
             case Capacity.BLOND_FURY_BAR:
                 var blonds:int = board.destroyTokensOfType(TokenType.BLOND_BEER);
                 me.fullBeers += blonds;
-                dispatchEvent(new ScoreEvent(blonds, 0, null, null, capacity));
+                dispatchEvent(new UiScoreEvent(blonds, 0, null, null, capacity));
                 break;
             case Capacity.BROWN_FURY_BAR:
                 var browns:int = board.destroyTokensOfType(TokenType.BROWN_BEER);
                 me.fullBeers += browns;
-                dispatchEvent(new ScoreEvent(browns, 0, null, null, capacity));
+                dispatchEvent(new UiScoreEvent(browns, 0, null, null, capacity));
                 break;
             case Capacity.AMBER_FURY_BAR:
                 var ambers:int = board.destroyTokensOfType(TokenType.AMBER_BEER);
                 me.fullBeers += ambers;
-                dispatchEvent(new ScoreEvent(ambers, 0, null, null, capacity));
+                dispatchEvent(new UiScoreEvent(ambers, 0, null, null, capacity));
                 break;
             case Capacity.BLOODY_MARY:
                 var turns:int = 6;
                 gainAdditionalTurns(turns);
-                dispatchEvent(new ScoreEvent(0, turns, null, null, capacity));
+                dispatchEvent(new UiScoreEvent(0, turns, null, null, capacity));
                 board.createVomit(3);
                 break;
         }

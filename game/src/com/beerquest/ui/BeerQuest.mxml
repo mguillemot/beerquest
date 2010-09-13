@@ -42,9 +42,10 @@
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
         import com.beerquest.events.GameEvent;
-        import com.beerquest.ui.events.CapacityExecutionEvent;
-        import com.beerquest.ui.events.ScoreEvent;
-        import com.beerquest.ui.events.TokenEvent;
+        import com.beerquest.ui.events.UiCapacityExecutionEvent;
+        import com.beerquest.ui.events.UiGameOverEvent;
+        import com.beerquest.ui.events.UiScoreEvent;
+        import com.beerquest.ui.events.UiTokenEvent;
         import com.greensock.OverwriteManager;
         import com.greensock.TweenLite;
         import com.greensock.plugins.ColorTransformPlugin;
@@ -108,7 +109,6 @@
         private function startGame(mode:String, me:PlayerData, seed:int):void {
             var game:Game = Constants.GAME;
             game.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onCurrentTurnChanged);
-            game.addEventListener(GameEvent.GAME_OVER, onGameOver);
             game.start(mode, me, seed);
             if (!_allowStart && !Constants.DEBUG) {
                 game.endOfGame();
@@ -128,7 +128,7 @@
             uploadScore();
         }
 
-        private function onGameOver(e:GameEvent):void {
+        private function onGameOver(e:UiGameOverEvent):void {
             TweenLite.to(gameover, 2, {y:0});
             if (!_scoresSent) {
                 uploadScore();
@@ -159,7 +159,7 @@
             }
         }
 
-        private function onScoreGained(e:ScoreEvent):void {
+        private function onScoreGained(e:UiScoreEvent):void {
             var x:Number, y:Number;
             if (e.capacity != null) {
                 var capaLoc:Point = myStatus.locateCapacity(e.capacity);
@@ -172,7 +172,7 @@
             vfxLayer.addScoreEffect(e.beers, e.turns, x, y);
         }
 
-        private function onTokenGained(e:TokenEvent):void {
+        private function onTokenGained(e:UiTokenEvent):void {
             var entryPoint:Point = myStatus.tokenEntryPoint;
             var token:TokenType = e.token;
             vfxLayer.addTokenEffect(token, e.stageX, e.stageY, entryPoint.x, entryPoint.y);
@@ -187,7 +187,7 @@
             //Alert.show("Score uploaded.");
         }
 
-        private function onAskForExecution(e:CapacityExecutionEvent):void {
+        private function onAskForExecution(e:UiCapacityExecutionEvent):void {
             if (e.capacity == Capacity.BIG_BANG) {
                 boardView.processEvent(e);
             } else {
@@ -204,7 +204,7 @@
 
     <!-- board -->
     <mx:Canvas x="200" y="0" width="320" height="320">
-        <ui:BoardView id="boardView" ScoreGained="onScoreGained(event)" TokenGained="onTokenGained(event)"/>
+        <ui:BoardView id="boardView" UiScoreGained="onScoreGained(event)" UiTokenGained="onTokenGained(event)" UiGameOver="onGameOver(event)"/>
         <mx:Canvas id="gameover" width="100%" height="100%" backgroundColor="black" y="{-boardView.height}">
             <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>
         </mx:Canvas>
