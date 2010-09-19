@@ -20,15 +20,26 @@ class FacebookController < ApplicationController
   # For testing purposes (out of Facebook)
   def hack_login
     account = Account.get(params[:id])
+    unless account
+      account = Account.create(:first_name => "Matthieu", :last_name => "Guillemot", :login_count => 0)
+    end
     account.last_login = DateTime.now
     account.login_count += 1
     account.save
+
+    if Bar.all.length == 0
+      Bar.create(:name => "Le Beer Quest", :url => "", :banner => "")
+      logger.debug "Created bar"
+    end
 
     session[:user_id] = params[:id]
     session[:access_token] = "none"
     session[:account_id] = params[:id]
 
-    render :text => "OK"
+    session[:test] ||= 0
+    session[:test] += 1
+
+    render :text => "OK compteur=#{session[:test]} SID=#{request.session_options[:id]}"
 #    redirect_to home_url
   end
 
