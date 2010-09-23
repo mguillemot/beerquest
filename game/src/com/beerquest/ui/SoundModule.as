@@ -7,7 +7,6 @@
  */
 package com.beerquest.ui {
 import com.beerquest.Capacity;
-import com.beerquest.Constants;
 import com.beerquest.Group;
 import com.beerquest.TokenType;
 import com.beerquest.events.BoardEvent;
@@ -41,6 +40,9 @@ public class SoundModule extends UIComponent {
             case GameEvent.GAME_OVER:
                 onGameOver(ge as GameEvent);
                 break;
+            case GameEvent.BEER_COLLECTED:
+                onBeerCollected(ge as GameEvent);
+                break;
             case PissLevelEvent.PISS_LEVEL_CHANGED:
                 onPissLevelChanged(ge as PissLevelEvent);
                 break;
@@ -65,6 +67,10 @@ public class SoundModule extends UIComponent {
 
     private function onGameOver(e:GameEvent):void {
         playSound(GameOverFX);
+    }
+
+    private function onBeerCollected(e:GameEvent):void {
+        playSound(StackFX);
     }
 
     private function onPissLevelChanged(e:PissLevelEvent):void {
@@ -117,11 +123,23 @@ public class SoundModule extends UIComponent {
     }
 
     private function playSound(s:Class):void {
-        if (Constants.SOUND_ENABLED) {
+        if (_soundEnabled) {
             var fx:Sound = new s();
             fx.play();
         }
     }
+
+    [Bindable]
+    public function get soundEnabled():Boolean {
+        return _soundEnabled;
+    }
+
+    [Bindable]
+    public function set soundEnabled(value:Boolean):void {
+        _soundEnabled = value;
+    }
+
+    private var _soundEnabled:Boolean;
 
     [Embed(source="../../../assets/sound/pipi.mp3")]
     private static var PissFX:Class;
@@ -161,6 +179,9 @@ public class SoundModule extends UIComponent {
 
     [Embed(source="../../../assets/sound/fin-partie.mp3")]
     private static var GameOverFX:Class;
+
+    [Embed(source="../../../assets/sound/verser-biere.mp3")]
+    private static var StackFX:Class;
 
 }
 }

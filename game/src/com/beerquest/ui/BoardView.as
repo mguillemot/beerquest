@@ -7,7 +7,6 @@ import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
 import com.beerquest.ui.events.UiCapacityExecutionEvent;
 import com.beerquest.ui.events.UiGameEvent;
-import com.beerquest.ui.events.UiGameOverEvent;
 import com.beerquest.ui.events.UiScoreEvent;
 import com.beerquest.ui.events.UiTokenEvent;
 import com.greensock.TweenLite;
@@ -30,7 +29,6 @@ import mx.managers.CursorManagerPriority;
 
 [Event(name="UiScoreGained", type="com.beerquest.ui.events.UiScoreEvent")]
 [Event(name="UiTokenGained", type="com.beerquest.ui.events.UiTokenEvent")]
-[Event(name="UiGameOver", type="com.beerquest.ui.events.UiGameOverEvent")]
 public class BoardView extends UIComponent {
 
     private static const EXPLODE_DURATION_MS:int = 250;
@@ -321,8 +319,7 @@ public class BoardView extends UIComponent {
     }
 
     private function onGameOver(e:GameEvent):void {
-        startAction("gameOver");
-        dispatchEvent(new UiGameOverEvent());
+        dispatchEvent(new UiGameEvent(e));
         trace("Game ended.");
     }
 

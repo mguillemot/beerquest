@@ -4,7 +4,6 @@ import com.greensock.TweenLite;
 
 import flash.events.TimerEvent;
 import flash.geom.Point;
-import flash.media.Sound;
 import flash.utils.Timer;
 
 import mx.core.BitmapAsset;
@@ -67,10 +66,6 @@ public class TokenCollectionView extends UIComponent {
                     // Collect!
                     startAction("collecting");
                     Constants.GAME.me.collectBeer();
-                    if (Constants.SOUND_ENABLED) {
-                        var fx:Sound = new StackFX();
-                        fx.play();
-                    }
                     for each (s in _casiers) {
                         TweenLite.to(s, OPERATION_TIME_MS / 1000, {alpha: 0});
                     }
@@ -227,9 +222,6 @@ public class TokenCollectionView extends UIComponent {
 
     [Embed(source="../../../assets/image/small-triple.png")]
     private static var SmallTriple:Class;
-
-    [Embed(source="../../../assets/sound/verser-biere.mp3")]
-    private static var StackFX:Class;
 
 }
 }

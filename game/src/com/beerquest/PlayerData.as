@@ -112,7 +112,7 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function collectBeer():void {
-        // TODO Constants.STATS.stackCollected++;
+        _game.dispatchEvent(new GameEvent(GameEvent.BEER_COLLECTED));
     }
 
     public function get partialBeers():ArrayCollection {

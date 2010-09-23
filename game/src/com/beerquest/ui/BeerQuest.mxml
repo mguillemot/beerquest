@@ -44,7 +44,6 @@
         import com.beerquest.events.GameEvent;
         import com.beerquest.ui.events.UiCapacityExecutionEvent;
         import com.beerquest.ui.events.UiGameEvent;
-        import com.beerquest.ui.events.UiGameOverEvent;
         import com.beerquest.ui.events.UiScoreEvent;
         import com.beerquest.ui.events.UiTokenEvent;
         import com.greensock.OverwriteManager;
@@ -108,8 +107,10 @@
         }
 
         private function startGame(mode:String, me:PlayerData, seed:int):void {
+            addEventListener(UiGameEvent.UI_GAME_EVENT, onUiGameEvent);
             Constants.GAME.addEventListener(GameEvent.VOMIT, onInstantGameEvent);
             Constants.GAME.addEventListener(GameEvent.PISS, onInstantGameEvent);
+            Constants.GAME.addEventListener(GameEvent.BEER_COLLECTED, onInstantGameEvent);
             Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, onInstantGameEvent);
             Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onInstantGameEvent);
             Constants.GAME.start(mode, me, seed);
@@ -122,6 +123,12 @@
             dispatchEvent(new UiGameEvent(e));
         }
 
+        private function onUiGameEvent(e:UiGameEvent):void {
+            if (e.event.type == GameEvent.GAME_OVER) {
+                gameOver();
+            }
+        }
+
         private function onStartInfoReceived(e:Event):void {
             trace("Game infos received.");
             var data:Object = JSON.decode(_tokenLoader.data);
@@ -131,7 +138,7 @@
             startGame(_mode, new PlayerData(Constants.GAME), data.seed);
         }
 
-        private function onGameOver(e:UiGameOverEvent):void {
+        private function gameOver():void {
             TweenLite.to(gameover, 2, {y:0});
         }
 
@@ -185,7 +192,7 @@
 
     <!-- board -->
     <mx:Canvas x="200" y="0" width="320" height="320">
-        <ui:BoardView id="boardView" UiScoreGained="onScoreGained(event)" UiTokenGained="onTokenGained(event)" UiGameOver="onGameOver(event)"/>
+        <ui:BoardView id="boardView" UiScoreGained="onScoreGained(event)" UiTokenGained="onTokenGained(event)"/>
         <mx:Canvas id="gameover" width="100%" height="100%" backgroundColor="black" y="{-boardView.height}">
             <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>
         </mx:Canvas>
@@ -193,11 +200,11 @@
 
     <!-- status bar -->
     <ui:PlayerStatusView id="myStatus" x="5" y="5" AskForExecution="onAskForExecution(event)"/>
-    <ui:SoundButton x="140" y="292" on="true"/>
+    <ui:SoundButton id="soundButton" x="140" y="292" on="true"/>
     <ui:QualityButton x="170" y="292" on="true"/>
 
     <!-- modules -->
-    <ui:SoundModule/>
+    <ui:SoundModule soundEnabled="{soundButton.on}"/>
     <ui:StatsModule token="token"/>
 
     <!-- vfx layer -->

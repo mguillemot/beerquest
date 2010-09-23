@@ -11,9 +11,6 @@ public class Constants {
 
     public static var GAME:Game = new Game();
 
-    [Bindable]
-    public static var SOUND_ENABLED:Boolean = true;
-    
     function Constants() {
     }
 }
