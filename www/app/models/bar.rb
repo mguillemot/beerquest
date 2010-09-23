@@ -7,25 +7,16 @@ class Bar
   property :rss, String, :length => 1024
   property :banner, String, :length => 1024, :required => true
   property :contact, String, :length => 255
-  property :total_plays, Integer, :required => true, :default => 0
-  property :total_beers, Integer, :required => true, :default => 0
-  property :weekly_plays, Integer, :required => true, :default => 0
-  property :weekly_beers, Integer, :required => true, :default => 0
-  property :total_members, Integer, :required => true, :default => 0
-  property :active_members, Integer, :required => true, :default => 0
-  property :weekly_new_active_members, Integer, :required => true, :default => 0
   property :created_at, DateTime
   property :updated_at, DateTime
 
   has n, :barships, :constraint => :destroy
   has n, :replays, :constraint => :set_nil
 
-  # TODO précalculer
   def total_members
     barships.count
   end
   
-  # TODO précalculer
   def active_members
     barships.all(:updated_at.gte => DateTime.now - 1.week).count
   end
@@ -35,12 +26,10 @@ class Bar
     0
   end
 
-  # TODO précalculer
   def total_beers
     replays.sum(:score) || 0
   end
 
-  # TODO précalculer
   def weekly_beers
     replays.all(:created_at.gte => DateTime.now - 1.week).sum(:score) || 0
   end
@@ -50,12 +39,10 @@ class Bar
     1
   end
 
-  # TODO cacher & optimiser
   def always_high_scores
     extract_scores(replays.all(:game_over => true, :order => :score.desc))
   end
 
-  # TODO cacher & optimiser
   def weekly_high_scores
     extract_scores(weekly_replays.all(:game_over => true, :order => :score.desc))
   end

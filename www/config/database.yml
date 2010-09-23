@@ -4,11 +4,12 @@ defaults: &defaults
   pool: 5
 
 development:
-  adapter: sqlite
-  database: db/beerquest_development.sqlite
-  username: root
-  password:
-  host: localhost
+  adapter: mysql
+  database: beerquest_production
+  username: beerquest
+  password: glouglou
+  host: 127.0.0.1
+  port: 3307
   <<: *defaults
 
 test:
