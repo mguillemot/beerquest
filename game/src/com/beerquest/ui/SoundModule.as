@@ -14,6 +14,7 @@ import com.beerquest.events.BoardEvent;
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GroupCollectionEvent;
+import com.beerquest.events.PissLevelEvent;
 
 import flash.media.Sound;
 
@@ -22,8 +23,9 @@ import mx.core.UIComponent;
 public class SoundModule extends UIComponent {
     public function SoundModule() {
         Constants.GAME.addEventListener(GameEvent.PISS, onPiss);
-        Constants.GAME.addEventListener(GameEvent.PISS_LEVEL_CHANGED, onPissChanged);
         Constants.GAME.addEventListener(GameEvent.VOMIT, onVomit);
+        Constants.GAME.addEventListener(GameEvent.GAME_OVER, onGameOver);
+        Constants.GAME.addEventListener(PissLevelEvent.PISS_LEVEL_CHANGED, onPissLevelChanged);
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, onBoardReset);
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupCollected);
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, onCapacityGained);
@@ -34,8 +36,14 @@ public class SoundModule extends UIComponent {
         playSound(PissFX);
     }
 
-    private function onPissChanged(e:GameEvent):void {
-        playSound(PissRaiseFX);
+    private function onGameOver(e:GameEvent):void {
+        playSound(GameOverFX);
+    }
+
+    private function onPissLevelChanged(e:PissLevelEvent):void {
+        if (e.pissRaise) {
+            playSound(PissRaiseFX);
+        }
     }
 
     private function onBoardReset(e:GameEvent):void {
@@ -123,6 +131,9 @@ public class SoundModule extends UIComponent {
 
     [Embed(source="../../../assets/sound/bruit-caps.mp3")]
     private static var GenericCapaFX:Class;
+
+    [Embed(source="../../../assets/sound/fin-partie.mp3")]
+    private static var GameOverFX:Class;
 
 }
 }

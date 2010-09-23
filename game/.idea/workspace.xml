@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsStructureConfigurable.UI">
+    <splitter-proportions>
+      <SplitterProportionsDataImpl>
+        <option name="proportions">
+          <list>
+            <option value="0.2" />
+          </list>
+        </option>
+      </SplitterProportionsDataImpl>
+    </splitter-proportions>
+    <settings />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="36cec4e9-0d20-42a8-b640-434ae12d528e" name="Default" comment="" />
+    <list default="true" id="36cec4e9-0d20-42a8-b640-434ae12d528e" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/beerquest/events/PissLevelEvent.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/BeerQuest.swf" afterPath="$PROJECT_DIR$/out/BeerQuest.swf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../www/public/swf/BeerQuest-0.91.swf" afterPath="$PROJECT_DIR$/../www/public/swf/BeerQuest-0.91.swf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeerQuest.iml" afterPath="$PROJECT_DIR$/BeerQuest.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/BoardState.as" afterPath="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/Game.as" afterPath="$PROJECT_DIR$/src/com/beerquest/Game.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/PlayerData.as" afterPath="$PROJECT_DIR$/src/com/beerquest/PlayerData.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as" afterPath="$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/beerquest/ui/SoundModule.as" afterPath="$PROJECT_DIR$/src/com/beerquest/ui/SoundModule.as" />
+    </list>
     <ignored path="BeerQuest.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -66,10 +91,22 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="exception_breakpoints_groupByClasses" value="true" />
+      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
+  </component>
+  <component name="FacetStructureConfigurable.UI">
+    <splitter-proportions>
+      <SplitterProportionsDataImpl>
+        <option name="proportions">
+          <list>
+            <option value="0.2" />
+          </list>
+        </option>
+      </SplitterProportionsDataImpl>
+    </splitter-proportions>
+    <last-edited>Flex</last-edited>
   </component>
   <component name="FavoritesManager">
     <favorites_list name="BeerQuest" />
@@ -77,19 +114,28 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" highlightNonProjectFiles="true" nonProjectFilesColor="ffffe4" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BoardView.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
+      <file leaf-file-name="SoundModule.as" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/SoundModule.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="320" column="56" selection-start="12078" selection-end="12078" vertical-scroll-proportion="0.0">
+            <state line="32" column="49" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.as" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Constants.as" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/Constants.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="20" selection-start="409" selection-end="409" vertical-scroll-proportion="0.2361111">
+            <state line="11" column="34" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayerData.as" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/beerquest/PlayerData.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="139" column="24" selection-start="4066" selection-end="4066" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,16 +144,49 @@
       <file leaf-file-name="Game.as" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="20" selection-start="1237" selection-end="1237" vertical-scroll-proportion="0.0">
+            <state line="119" column="53" selection-start="3970" selection-end="3970" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CapacityView.mxml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml">
+      <file leaf-file-name="BoardState.as" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="96" selection-start="310" selection-end="398" vertical-scroll-proportion="0.0">
+            <state line="267" column="46" selection-start="10226" selection-end="10226" vertical-scroll-proportion="0.16112085">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScoreFx.mxml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/ScoreFx.mxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="80" selection-start="268" selection-end="268" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1283262409015" expanded="true" signature="156:278" placeholder="{...}" />
+                <marker date="1283262409015" expanded="true" signature="379:417" placeholder="{...}" />
+                <marker date="1283262409015" expanded="true" signature="488:527" placeholder="{...}" />
+                <marker date="1283262409015" expanded="true" signature="588:626" placeholder="{...}" />
+                <marker date="1283262409015" expanded="true" signature="697:736" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BoardView.as" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="390" column="73" selection-start="15371" selection-end="15371" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TokenType.as" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="65" selection-start="654" selection-end="654" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -116,52 +195,7 @@
       <file leaf-file-name="BeerQuest.mxml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="71" selection-start="4046" selection-end="4046" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UiGameOverEvent.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiGameOverEvent.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="34" selection-start="231" selection-end="231" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UiScoreEvent.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiScoreEvent.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="60" selection-start="185" selection-end="196" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UiTokenEvent.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiTokenEvent.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="49" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlayerStatusView.mxml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="81" selection-start="599" selection-end="599" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UiCapacityExecutionEvent.as" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiCapacityExecutionEvent.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="69" selection-start="217" selection-end="217" vertical-scroll-proportion="0.0">
+            <state line="217" column="20" selection-start="8405" selection-end="8405" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -199,31 +233,67 @@
     <option name="UPDATE_CHANGES_POLICY" value="STASH" />
     <option name="LINE_SEPARATORS_CONVERSION_ASK" value="false" />
   </component>
+  <component name="GlobalLibrariesConfigurable.UI">
+    <splitter-proportions>
+      <SplitterProportionsDataImpl>
+        <option name="proportions">
+          <list>
+            <option value="0.2" />
+          </list>
+        </option>
+      </SplitterProportionsDataImpl>
+    </splitter-proportions>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/beerquest/ui/TokenCollectionView.as" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/PlayerData.as" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/events/CapacityEvent.as" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/ui/events/CapacityExecutionEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml" />
-        <option value="$PROJECT_DIR$/src/com/beerquest/Game.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/events/GameOverEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/events/UiGameOverEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/events/UiScoreEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/events/UiTokenEvent.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/ui/Token.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/events/PissLevelEvent.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/PlayerData.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/ui/SoundModule.as" />
         <option value="$PROJECT_DIR$/src/com/beerquest/Constants.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/BoardState.as" />
+        <option value="$PROJECT_DIR$/src/com/beerquest/Game.as" />
       </list>
     </option>
+  </component>
+  <component name="JdkListConfigurable.UI">
+    <splitter-proportions>
+      <SplitterProportionsDataImpl>
+        <option name="proportions">
+          <list>
+            <option value="0.2" />
+          </list>
+        </option>
+      </SplitterProportionsDataImpl>
+    </splitter-proportions>
+    <last-edited>flex_sdk_4.1.0.16076 (player 10.0)</last-edited>
   </component>
   <component name="ModuleEditorState">
     <option name="LAST_EDITED_MODULE_NAME" />
     <option name="LAST_EDITED_TAB_NAME" />
+  </component>
+  <component name="ModuleStructureConfigurable.UI">
+    <splitter-proportions>
+      <SplitterProportionsDataImpl>
+        <option name="proportions">
+          <list>
+            <option value="0.2" />
+            <option value="0.5" />
+          </list>
+        </option>
+      </SplitterProportionsDataImpl>
+    </splitter-proportions>
+    <last-edited>BeerQuest</last-edited>
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -254,6 +324,17 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+  <component name="ProjectLibrariesConfigurable.UI">
+    <splitter-proportions>
+      <SplitterProportionsDataImpl>
+        <option name="proportions">
+          <list>
+            <option value="0.2" />
+          </list>
+        </option>
+      </SplitterProportionsDataImpl>
+    </splitter-proportions>
+  </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
@@ -270,7 +351,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -303,28 +386,106 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="beerquest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sound" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Favorites" />
-      <pane id="PackagesPane">
-        <subPane />
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="265" />
-    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="296" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="recentsLimit" value="5" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="287" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="295" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="962" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="969" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="962" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="288" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="288" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -346,17 +507,17 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Boulot\beerquest\game\src\com\beerquest\ui\events" />
       <recent name="E:\Boulot\beerquest\game\src\com\beerquest\events" />
+      <recent name="E:\Boulot\beerquest\game\src\com\beerquest\ui\events" />
       <recent name="E:\Boulot\beerquest\game\src\com\beerquest\ui" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Boulot\beerquest\game\src\com\beerquest\events" />
       <recent name="E:\Boulot\beerquest\game\src\com\beerquest\ui" />
       <recent name="E:\Boulot\BeerQuest\src\BeerQuest" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com" />
     </key>
   </component>
   <component name="RunManager" selected="Flex.BeerQuest">
@@ -393,13 +554,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" debugger_sdk="Module SDK" html_or_swf_file_path="" launcher_type="OSDefault" main_class_name="" module_name="" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="http://">
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" />
       <extension name="snapshooter" />
@@ -427,6 +581,13 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="FlexRunConfigurationType" factoryName="Flex" browser_family="FIREFOX" debugger_sdk="Module SDK" html_or_swf_file_path="" launcher_type="OSDefault" main_class_name="" module_name="" player_path="FlashPlayer.exe" run_mode="HtmlOrSwfFile" run_trusted="false" url_to_launch="http://">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -545,24 +706,24 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3278328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3278328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12172984" sideWeight="0.53025305" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24239188" sideWeight="0.53025305" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46974698" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3278328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1334757" sideWeight="0.67216724" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40484047" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994652" sideWeight="0.5927152" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32453245" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19967966" sideWeight="0.67216724" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3278328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32453245" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973261" sideWeight="0.58719647" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -582,7 +743,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="putain de gros refactor de ouf" />
+    <option name="LAST_COMMIT_MESSAGE" value="nettoyage gems" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -595,8 +756,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Fix fall animé" />
-    <MESSAGE value="- Less invisible tokens&#10;- Ren package" />
     <MESSAGE value="- Constants&#10;- Board repr" />
     <MESSAGE value="Generate board without groups" />
     <MESSAGE value="Invalid swap" />
@@ -620,6 +779,8 @@
     <MESSAGE value="fix bug casiers avec les triples" />
     <MESSAGE value="Plusieurs modifs gameplay" />
     <MESSAGE value="putain de gros refactor de ouf" />
+    <MESSAGE value="gestion gemmes super" />
+    <MESSAGE value="nettoyage gems" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -637,84 +798,104 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="32" selection-start="63" selection-end="63" vertical-scroll-proportion="0.030035336" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="57" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GemsSwappedEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="20" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/PlayerData.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="47" selection-start="1901" selection-end="1901" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="104" selection-start="3582" selection-end="3582" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/CapacityEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="115" selection-start="520" selection-end="520" vertical-scroll-proportion="0.46575344" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="320" column="56" selection-start="12078" selection-end="12078" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="20" selection-start="1237" selection-end="1237" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/CapacityView.mxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="96" selection-start="310" selection-end="398" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="71" selection-start="4046" selection-end="4046" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiGameOverEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="34" selection-start="231" selection-end="231" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiScoreEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="60" selection-start="185" selection-end="196" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiTokenEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="49" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/PlayerStatusView.mxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="81" selection-start="599" selection-end="599" vertical-scroll-proportion="0.0" />
+        <state line="20" column="81" selection-start="599" selection-end="599" vertical-scroll-proportion="0.03846154" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/events/UiCapacityExecutionEvent.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="69" selection-start="217" selection-end="217" vertical-scroll-proportion="0.0" />
+        <state line="6" column="69" selection-start="217" selection-end="217" vertical-scroll-proportion="0.22417583" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Group.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="195" selection-end="195" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/Token.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="156" selection-end="156" vertical-scroll-proportion="-3.4833624" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GroupCollectionEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="0.08688245" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/GameEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="227" selection-end="227" vertical-scroll-proportion="0.20376712" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/events/PissLevelEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="31" selection-start="372" selection-end="372" vertical-scroll-proportion="0.23168655" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BeerQuest.mxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="217" column="20" selection-start="8405" selection-end="8405" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/ScoreFx.mxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="80" selection-start="268" selection-end="268" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1283262409015" expanded="true" signature="156:278" placeholder="{...}" />
+            <marker date="1283262409015" expanded="true" signature="379:417" placeholder="{...}" />
+            <marker date="1283262409015" expanded="true" signature="488:527" placeholder="{...}" />
+            <marker date="1283262409015" expanded="true" signature="588:626" placeholder="{...}" />
+            <marker date="1283262409015" expanded="true" signature="697:736" placeholder="{...}" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/beerquest/Constants.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="20" selection-start="409" selection-end="409" vertical-scroll-proportion="0.2361111">
+        <state line="11" column="34" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/SoundModule.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="49" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/TokenType.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="65" selection-start="654" selection-end="654" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/ui/BoardView.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="390" column="73" selection-start="15371" selection-end="15371" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/PlayerData.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="24" selection-start="4066" selection-end="4066" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/Game.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="119" column="53" selection-start="3970" selection-end="3970" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/beerquest/BoardState.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="267" column="46" selection-start="10226" selection-end="10226" vertical-scroll-proportion="0.16112085">
           <folding />
         </state>
       </provider>

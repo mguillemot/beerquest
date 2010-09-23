@@ -4,6 +4,7 @@ import com.beerquest.events.BoardEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
+import com.beerquest.events.PissLevelEvent;
 import com.beerquest.ui.events.UiCapacityExecutionEvent;
 import com.beerquest.ui.events.UiGameOverEvent;
 import com.beerquest.ui.events.UiScoreEvent;
@@ -102,7 +103,7 @@ public class BoardView extends UIComponent {
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, processEvent);
         Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, processEvent);
-        Constants.GAME.addEventListener(GameEvent.PISS_LEVEL_CHANGED, processEvent);
+        Constants.GAME.addEventListener(PissLevelEvent.PISS_LEVEL_CHANGED, processEvent);
     }
 
     public function processEvent(e:Event):void {
@@ -129,8 +130,8 @@ public class BoardView extends UIComponent {
                 case GemsSwappedEvent.GEMS_SWAPPED:
                     onGemsSwapped(e as GemsSwappedEvent);
                     break;
-                case GameEvent.PISS_LEVEL_CHANGED:
-                    onPissLevelChanged(e as GameEvent);
+                case PissLevelEvent.PISS_LEVEL_CHANGED:
+                    onPissLevelChanged(e as PissLevelEvent);
                     break;
                 case UiCapacityExecutionEvent.ASK_FOR_EXECUTION:
                     startBigBang();
@@ -861,7 +862,7 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function onPissLevelChanged(e:GameEvent):void {
+    private function onPissLevelChanged(e:PissLevelEvent):void {
         startAction("onPissLevelChanged");
         var dy:int = Constants.GAME.pissLevel - _currentPissLevel;
         _currentPissLevel = Constants.GAME.pissLevel;
@@ -869,9 +870,6 @@ public class BoardView extends UIComponent {
         TweenLite.to(_pissLayer, PISS_RAISE_TIME_MS / 1000, {y: (Constants.BOARD_SIZE - _currentPissLevel) * height / Constants.BOARD_SIZE + epsilon});
         if (_selectedY >= Constants.BOARD_SIZE - _currentPissLevel) {
             clearSelection();
-        }
-        if (dy > 0) {
-            // TODO dispatch sound events ?
         }
         endAction("onPissLevelChanged");
     }

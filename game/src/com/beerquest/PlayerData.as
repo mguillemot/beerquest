@@ -85,7 +85,7 @@ public class PlayerData extends EventDispatcher {
         dispatchEvent(new Event("vomitChanged"));
         if (vomit > 100) {
             _game.board.createVomit(5);
-            dispatchEvent(new GameEvent(GameEvent.VOMIT));
+            _game.dispatchEvent(new GameEvent(GameEvent.VOMIT));
             Constants.STATS.vomitCount++;
             vomit = 30;
         }
@@ -163,6 +163,7 @@ public class PlayerData extends EventDispatcher {
 
     public function doPiss():void {
         piss *= 0.4;
+        _game.dispatchEvent(new GameEvent(GameEvent.PISS));
         Constants.STATS.pissed();
         _game.newTurn();
     }

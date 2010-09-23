@@ -125,16 +125,17 @@ public class BoardState {
 
     internal function generateTestBoard():void {
         setAllCells([
-            [TokenType.BLOND_BEER,TokenType.TOMATO_JUICE,TokenType.TOMATO_JUICE,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.TOMATO_JUICE,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.BROWN_BEER,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
+            [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.AMBER_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
             [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.BROWN_BEER]
         ], false);
         setCell(0, 0, TokenType.BLOND_BEER, true);
+        setCell(1, 1, TokenType.BLOND_BEER, true);
         if (_game != null) {
             _game.dispatchEvent(new BoardEvent(BoardEvent.BOARD_RESET, new Array(), clone()));
         }
@@ -270,7 +271,7 @@ public class BoardState {
             destroyGroups(groups);
             trace("[BoardState] groups destroyed");
             if (_game != null && !inhibitEvents) {
-                _game.collectGroups(groups);
+                groups = _game.collectGroups(groups);
             }
             trace("[BoardState] groups collected by the game. Piss level is now " + pissLevel);
             compact();
@@ -440,20 +441,25 @@ public class BoardState {
     }
 
     private function destroyGroups(groups:Array):Array {
-        for each (var group:Group in groups) {
-            for (var k:int = 0; k < group.length; k++) {
-                var i:int = group.x;
-                var j:int = group.y;
+        // Warning: this operation is tricky since we have to make sure that super-gems that are also members of a <=4 group stay
+        // on board without any influence of the group destroy orders. To this prupose, destroy is implemented as a multiple pass
+        // process.
+        var group:Group, i:int, j:int, k:int;
+        for each (group in groups) {
+            for (k = 0; k < group.length; k++) {
+                i = group.x;
+                j = group.y;
                 if (group.direction == "horizontal") {
                     i += k;
                 } else {
                     j += k;
                 }
-                if (group.length >= 5 && i == group.midX && j == group.midY) {
-                    setCell(i, j, getCell(i, j), true);
-                } else {
-                    setCell(i, j, TokenType.NONE, false);
-                }
+                setCell(i, j, TokenType.NONE, false);
+            }
+        }
+        for each (group in groups) {
+            if (group.length >= 5) {
+                setCell(group.midX, group.midY, group.token, true);
             }
         }
         return groups;

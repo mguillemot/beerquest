@@ -1,6 +1,6 @@
 package com.beerquest {
 import com.beerquest.events.GameEvent;
-import com.beerquest.events.GemsSwappedEvent;
+import com.beerquest.events.PissLevelEvent;
 import com.beerquest.ui.events.UiScoreEvent;
 
 import flash.events.Event;
@@ -117,24 +117,31 @@ public class Game extends EventDispatcher {
         me.useCapacity(capacity);
     }
 
-    public function collectGroups(groups:Array):void {
+    public function collectGroups(groups:Array):Array {
         // Reorder collected partial beers during the phase to favorize stack groups
         var groups2:Array = Utils.cloneArray(groups);
+        var collected:Array = new Array();
+        var group:Group;
         while (groups2.length > 0) {
             var preferred:TokenType = me.preferredPartialBeer;
             var found:Boolean = false;
             for (var i:int = 0; i < groups2.length; i++) {
-                var collectedToken:TokenType = groups2[i].collectedToken;
+                group = groups2[i];
+                var collectedToken:TokenType = group.collectedToken;
                 if (collectedToken != null && TokenType.isCompatible(collectedToken, preferred)) {
-                    collectGroup(groups2[i]);
+                    collectGroup(group);
+                    collected.push(group);
                     groups2.splice(i, 1);
                     found = true;
                 }
             }
             if (!found) {
-                collectGroup(groups2.pop());
+                group = groups2.pop();
+                collectGroup(group);
+                collected.push(group);
             }
         }
+        return collected;
     }
 
     public function collectGroup(group:Group):void {
@@ -173,8 +180,9 @@ public class Game extends EventDispatcher {
     }
 
     public function set pissLevel(value:int):void {
+        var pissRaise:Boolean = (value > _board.pissLevel);
         _board.pissLevel = value;
-        dispatchEvent(new GameEvent(GameEvent.PISS_LEVEL_CHANGED));
+        dispatchEvent(new PissLevelEvent(pissRaise));
     }
 
     private var _mode:String;
