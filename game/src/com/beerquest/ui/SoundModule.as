@@ -8,11 +8,12 @@
 package com.beerquest.ui {
 import com.beerquest.Capacity;
 import com.beerquest.Constants;
+import com.beerquest.Group;
 import com.beerquest.TokenType;
+import com.beerquest.events.BoardEvent;
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GroupCollectionEvent;
-import com.beerquest.events.VomitEvent;
 
 import flash.media.Sound;
 
@@ -22,8 +23,8 @@ public class SoundModule extends UIComponent {
     public function SoundModule() {
         Constants.GAME.addEventListener(GameEvent.PISS, onPiss);
         Constants.GAME.addEventListener(GameEvent.PISS_LEVEL_CHANGED, onPissChanged);
-        Constants.GAME.addEventListener(GameEvent.BOARD_RESET, onBoardReset);
-        Constants.GAME.addEventListener(VomitEvent.VOMIT, onVomit);
+        Constants.GAME.addEventListener(GameEvent.VOMIT, onVomit);
+        Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, onBoardReset);
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupCollected);
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, onCapacityGained);
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
@@ -41,12 +42,13 @@ public class SoundModule extends UIComponent {
         playSound(BoardResetFX);
     }
 
-    private function onVomit(e:VomitEvent):void {
+    private function onVomit(e:GameEvent):void {
         playSound(VomitFX);
     }
 
     private function onGroupCollected(e:GroupCollectionEvent):void {
-        switch (e.tokenType) {
+        var group:Group = e.groups[0];
+        switch (group.token) {
             case TokenType.BLOND_BEER:
             case TokenType.BROWN_BEER:
             case TokenType.AMBER_BEER:

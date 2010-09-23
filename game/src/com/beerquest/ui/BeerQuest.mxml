@@ -215,6 +215,9 @@
     <ui:SoundButton x="140" y="292" on="true"/>
     <ui:QualityButton x="170" y="292" on="true"/>
 
+    <!-- modules -->
+    <ui:SoundModule/>
+
     <!-- vfx layer -->
     <ui:EffectLayer id="vfxLayer" width="100%" height="100%"/>
 
