@@ -329,12 +329,12 @@ public class BoardView extends UIComponent {
         var i:int, j:int, token:Token;
         resetMarks();
         for each (var cell:Point in e.cells) {
-            getToken(cell.x, cell.y).mark = true;
+            getToken(cell.x, cell.y).mark = 1;
         }
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
                 token = getToken(i, j);
-                if (token != null && !token.mark) {
+                if (token != null && token.mark == 0) {
                     var duration:Number = 1 + Math.random() * 0.5;
                     var d:Number = Math.random() * 0.2;
                     var x:Number = Math.random() * width - width / Constants.BOARD_SIZE;
@@ -356,7 +356,7 @@ public class BoardView extends UIComponent {
         for (i = 0; i < Constants.BOARD_SIZE; i++) {
             for (j = 0; j < Constants.BOARD_SIZE; j++) {
                 token = getToken(i, j);
-                if (token != null && !token.mark) {
+                if (token != null && token.mark == 0) {
                     removeToken(token);
                     token = null;
                 }
@@ -612,7 +612,7 @@ public class BoardView extends UIComponent {
         resetMarks();
         for each (var cell:Point in e.cells) {
             var token:Token = getToken(cell.x, cell.y);
-            token.mark = true;
+            token.mark = 1;
             TweenLite.to(token, EXPLODE_DURATION_MS / 1000, {alpha:0});
         }
         var timer:Timer = new Timer(EXPLODE_DURATION_MS, 1);
@@ -620,7 +620,7 @@ public class BoardView extends UIComponent {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                 for (var j:int = Constants.BOARD_SIZE - 1; j >= 0; j--) {
                     var token:Token = getToken(i, j);
-                    if (token.mark) {
+                    if (token.mark != 0) {
                         removeToken(token);
                     }
                 }
@@ -646,19 +646,16 @@ public class BoardView extends UIComponent {
 
         var timer:Timer = new Timer(maxDuration, 1);
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
-            for each (var group:Group in groups) {
-                for (var k:int = 0; k < group.length; k++) {
-                    var i:int = group.x;
-                    var j:int = group.y;
-                    if (group.direction == "horizontal") {
-                        i += k;
-                    } else {
-                        j += k;
-                    }
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                     var token:Token = getToken(i, j);
-                    if (token != null) {
-                        // Since a token can be present in 2 groups in the same phase...
+                    if (token.mark == 1) {
                         removeToken(token);
+                    } else if (token.mark == 2) {
+                        removeToken(token);
+                        token = generateToken(token.type, true);
+                        addToken(token);
+                        setToken(i, j, token);
                     }
                 }
             }
@@ -695,20 +692,27 @@ public class BoardView extends UIComponent {
                 j += k;
             }
             token = getToken(i, j);
-            if (!token.mark) {
-//            if (group.length <= 4) {
-                TweenLite.to(token, EXPLODE_DURATION_MS / 1000, {alpha:0});
-//            } else if (token.mark is Point) {
-//                var focus:Point; // TODO
-//                var dx:Number = (focus.x - i) * width / Constants.BOARD_SIZE;
-//                var dy:Number = (focus.y - j) * height / Constants.BOARD_SIZE;
-//                TweenLite.to(token, GROUP5_COMPACTION_DURATION_MS / 1000, {x:dx.toString(), y:dy.toString()});
-//                duration = GROUP5_COMPACTION_DURATION_MS;
-//            }
-                token.mark = true; // To prevent tween conflicts with a token participating in multiple groups
+            if (token.mark == 0) { // To prevent tween conflicts with a token participating in multiple groups
+                if (group.length <= 4) {
+                    TweenLite.to(token, EXPLODE_DURATION_MS / 1000, {alpha:0});
+                } else {
+                    var dx:Number = (group.midX - i) * width / Constants.BOARD_SIZE;
+                    var dy:Number = (group.midY - j) * height / Constants.BOARD_SIZE;
+                    TweenLite.to(token, GROUP5_COMPACTION_DURATION_MS / 1000, {x:dx.toString(), y:dy.toString()});
+                }
+            }
+            // About marks:
+            // 1 = tokens that will be destroyed
+            // 2 = tokens that will be transformed into super
+            //
+            // Note: mark 2 is prioritary on mark 1
+            if (group.length >= 5 && i == group.midX && j == group.midY) {
+                token.mark = 2;
+            } else if (token.mark != 2) {
+                token.mark = 1;
             }
         }
-        return EXPLODE_DURATION_MS;
+        return (group.length <= 4) ? EXPLODE_DURATION_MS : GROUP5_COMPACTION_DURATION_MS;
     }
 
     private function gravity():void {
@@ -774,7 +778,7 @@ public class BoardView extends UIComponent {
             for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
                 var token:Token = getToken(i, j);
                 if (token != null) {
-                    token.mark = false;
+                    token.mark = 0;
                 }
             }
         }

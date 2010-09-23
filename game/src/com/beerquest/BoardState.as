@@ -1,6 +1,5 @@
 package com.beerquest {
 import com.beerquest.events.BoardEvent;
-import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 
@@ -41,6 +40,14 @@ public class BoardState {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
                 setCell(i, j, cells[j][i], allSupers);
+            }
+        }
+    }
+
+    private function clearSupers():void {
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                setCell(i, j, getCell(i, j), false);
             }
         }
     }
@@ -93,6 +100,7 @@ public class BoardState {
             generateFullRandom();
             normalize(true);
         } while (computeMoves().length == 0);
+        clearSupers();
     }
 
     internal function generateRandomKeepingSomeVomit():void {
@@ -422,7 +430,7 @@ public class BoardState {
     }
 
     public function isLegalMove(type:String, startX:int, startY:int):Boolean {
-        // TODO optimize
+        // Note: this function could be optimized by returning prematurely in case of success
         for each (var move:Object in computeMoves()) {
             if (move.type == type && move.startX == startX && move.startY == startY) {
                 return true;
@@ -433,13 +441,18 @@ public class BoardState {
 
     private function destroyGroups(groups:Array):Array {
         for each (var group:Group in groups) {
-            if (group.direction == "horizontal") {
-                for (var di:int = 0; di < group.length; di++) {
-                    setCell(group.x + di, group.y, TokenType.NONE, false);
+            for (var k:int = 0; k < group.length; k++) {
+                var i:int = group.x;
+                var j:int = group.y;
+                if (group.direction == "horizontal") {
+                    i += k;
+                } else {
+                    j += k;
                 }
-            } else {
-                for (var dj:int = 0; dj < group.length; dj++) {
-                    setCell(group.x, group.y + dj, TokenType.NONE, false);
+                if (group.length >= 5 && i == group.midX && j == group.midY) {
+                    setCell(i, j, getCell(i, j), true);
+                } else {
+                    setCell(i, j, TokenType.NONE, false);
                 }
             }
         }

@@ -16,7 +16,7 @@ public class Token extends Sprite {
 
         _superToken = superToken;
         _type = type;
-        _mark = false;
+        _mark = 0;
 
         var hit:Sprite = new Sprite();
         hit.graphics.drawRect(0, 0, 100, 100);
@@ -110,11 +110,11 @@ public class Token extends Sprite {
         _falling = value;
     }
 
-    public function get mark():Object {
+    public function get mark():int {
         return _mark;
     }
 
-    public function set mark(value:Object):void {
+    public function set mark(value:int):void {
         _mark = value;
     }
 
@@ -147,7 +147,7 @@ public class Token extends Sprite {
     private var _superToken:Boolean = false;
     private var _boardX:int = int.MIN_VALUE;
     private var _boardY:int = int.MIN_VALUE;
-    private var _mark:Object = null;
+    private var _mark:int = 0;
     private var _hint:Boolean = false;
     private var _hintTween:TweenLite;
     private var _superTween:TweenLite;
