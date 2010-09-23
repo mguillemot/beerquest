@@ -6,6 +6,7 @@ import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
 import com.beerquest.ui.events.UiCapacityExecutionEvent;
+import com.beerquest.ui.events.UiGameEvent;
 import com.beerquest.ui.events.UiGameOverEvent;
 import com.beerquest.ui.events.UiScoreEvent;
 import com.beerquest.ui.events.UiTokenEvent;
@@ -139,6 +140,7 @@ public class BoardView extends UIComponent {
                 default:
                     throw "Unkown event buffered: " + e.type;
             }
+            dispatchEvent(new UiGameEvent(e));
         } else {
             trace(e.type + " received while " + _currentAction + " is in progress: buffering");
             _eventBuffer.push(e);
@@ -524,7 +526,6 @@ public class BoardView extends UIComponent {
                     endAction("swapping");
                 });
                 timer.start();
-                Constants.STATS.invalidMoves++;
             }
         });
         timer.start();

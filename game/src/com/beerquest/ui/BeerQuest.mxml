@@ -38,11 +38,12 @@
         import com.adobe.serialization.json.JSON;
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
-        import com.beerquest.Game;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
+        import com.beerquest.events.CapacityEvent;
         import com.beerquest.events.GameEvent;
         import com.beerquest.ui.events.UiCapacityExecutionEvent;
+        import com.beerquest.ui.events.UiGameEvent;
         import com.beerquest.ui.events.UiGameOverEvent;
         import com.beerquest.ui.events.UiScoreEvent;
         import com.beerquest.ui.events.UiTokenEvent;
@@ -80,18 +81,18 @@
             }
             trace("Starting in mode: " + _mode);
 
-            _token = FlexGlobals.topLevelApplication.parameters.token;
-            if (_token == null) {
+            token = FlexGlobals.topLevelApplication.parameters.token;
+            if (token == null) {
                 trace("WARN: No 'token' found");
-                _token = "none";
+                token = "none";
                 _allowStart = false;
                 startGame(_mode, new PlayerData(Constants.GAME), Math.random());
             }
-            trace("Using the following API token: " + _token);
+            trace("Using the following API token: " + token);
 
             // Retrieve game info from server using token
             if (Constants.GAME == null) {
-                var request:URLRequest = new URLRequest("/start?token=" + _token);
+                var request:URLRequest = new URLRequest("/start?token=" + token);
                 request.method = URLRequestMethod.GET;
                 _tokenLoader = new URLLoader();
                 _tokenLoader.addEventListener(Event.COMPLETE, onStartInfoReceived);
@@ -107,12 +108,18 @@
         }
 
         private function startGame(mode:String, me:PlayerData, seed:int):void {
-            var game:Game = Constants.GAME;
-            game.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onCurrentTurnChanged);
-            game.start(mode, me, seed);
+            Constants.GAME.addEventListener(GameEvent.VOMIT, onInstantGameEvent);
+            Constants.GAME.addEventListener(GameEvent.PISS, onInstantGameEvent);
+            Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, onInstantGameEvent);
+            Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onInstantGameEvent);
+            Constants.GAME.start(mode, me, seed);
             if (!_allowStart && !Constants.DEBUG) {
-                game.endOfGame();
+                Constants.GAME.endOfGame();
             }
+        }
+
+        private function onInstantGameEvent(e:Event):void {
+            dispatchEvent(new UiGameEvent(e));
         }
 
         private function onStartInfoReceived(e:Event):void {
@@ -124,39 +131,8 @@
             startGame(_mode, new PlayerData(Constants.GAME), data.seed);
         }
 
-        private function onCurrentTurnChanged(e:GameEvent):void {
-            uploadScore();
-        }
-
         private function onGameOver(e:UiGameOverEvent):void {
             TweenLite.to(gameover, 2, {y:0});
-            if (!_scoresSent) {
-                uploadScore();
-                _scoresSent = true;
-            }
-        }
-
-        private function uploadScore():void {
-            var data:URLVariables = Constants.STATS.getForSerialization();
-            data.mode = Constants.GAME.mode;
-            data.token = _token;
-            data.game_version = Constants.VERSION.toString();
-            data.score = Constants.GAME.me.fullBeers;
-            data.flash_version = Capabilities.version;
-
-            var request:URLRequest = new URLRequest("/postscore");
-            request.method = URLRequestMethod.POST;
-            request.data = data;
-            var loader:URLLoader = new URLLoader();
-            loader.addEventListener(Event.COMPLETE, onScorePosted);
-            try {
-                loader.load(request);
-                trace("Score posted.");
-            } catch (e:ArgumentError) {
-                trace("Post score: an ArgumentError has occurred.");
-            } catch (e:SecurityError) {
-                trace("Post score: a SecurityError has occurred.");
-            }
         }
 
         private function onScoreGained(e:UiScoreEvent):void {
@@ -183,10 +159,6 @@
             timer.start();
         }
 
-        private function onScorePosted(e:Event):void {
-            //Alert.show("Score uploaded.");
-        }
-
         private function onAskForExecution(e:UiCapacityExecutionEvent):void {
             if (e.capacity == Capacity.BIG_BANG) {
                 boardView.processEvent(e);
@@ -195,11 +167,20 @@
             }
         }
 
+        [Bindable]
+        public function get token():String {
+            return _token;
+        }
+
+        [Bindable]
+        public function set token(value:String):void {
+            _token = value;
+        }
+
         private var _token:String;
         private var _tokenLoader:URLLoader;
         private var _mode:String;
         private var _allowStart:Boolean;
-        private var _scoresSent:Boolean = false;
         ]]></fx:Script>
 
     <!-- board -->
@@ -217,6 +198,7 @@
 
     <!-- modules -->
     <ui:SoundModule/>
+    <ui:StatsModule token="token"/>
 
     <!-- vfx layer -->
     <ui:EffectLayer id="vfxLayer" width="100%" height="100%"/>

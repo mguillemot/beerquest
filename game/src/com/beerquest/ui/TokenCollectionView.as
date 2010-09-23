@@ -9,7 +9,6 @@ import flash.utils.Timer;
 
 import mx.core.BitmapAsset;
 import mx.core.UIComponent;
-import mx.events.CollectionEvent;
 
 public class TokenCollectionView extends UIComponent {
 
@@ -145,7 +144,6 @@ public class TokenCollectionView extends UIComponent {
             trace("TokenView EXPLUSE");
             s = _stack.shift();
             removeChild(s);
-            Constants.STATS.stackEjected++;
         }
     }
 

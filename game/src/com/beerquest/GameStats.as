@@ -1,6 +1,5 @@
 package com.beerquest {
 import com.adobe.serialization.json.JSON;
-import com.beerquest.BoardState;
 
 import flash.net.URLVariables;
 
@@ -264,8 +263,8 @@ public class GameStats {
     public var pissLevels:Array = new Array();
     public var maxVomitOnBoard:Number = 0;
     public var vomitsOnBoard:Array = new Array();
-    public var invalidMoves:Number = 0;
-    public var stackEjected:Number = 0;
+    public var invalidMoves:Number = 0; // TODO probablement inutilisé
+    public var stackEjected:Number = 0; // TODO probablement inutilisé
     public var stackCollected:Number = 0;
     public var gameOver:Boolean = false;
 

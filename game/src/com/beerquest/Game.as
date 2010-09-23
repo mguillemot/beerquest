@@ -46,7 +46,6 @@ public class Game extends EventDispatcher {
 
     public function endOfGame():void {
         _gameOver = true;
-        Constants.STATS.gameOver = true;
         dispatchEvent(new Event("gameOverChanged"));
         dispatchEvent(new GameEvent(GameEvent.GAME_OVER));
     }
@@ -76,8 +75,6 @@ public class Game extends EventDispatcher {
         dispatchEvent(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
         if (remainingTurns <= 0) {
             endOfGame();
-        } else {
-            Constants.STATS.startTurn(this);
         }
     }
 
@@ -151,15 +148,11 @@ public class Game extends EventDispatcher {
         if (group.length >= 4) {
             me.gainCapacity(Capacity.fromToken(group.token));
         }
-        if (group.length >= 5) {
-            // TODO create super
-        }
 
         me.piss += group.pissGain;
         me.vomit += group.vomitGain;
         me.fullBeers += group.beerGain;
         gainAdditionalTurns(group.turnsGain);
-        Constants.STATS.addCollectedGroup(group.token, group.length);
     }
 
     public function generateTestBoard():void {
@@ -171,7 +164,6 @@ public class Game extends EventDispatcher {
     }
 
     public function swapCells(sx:int, sy:int, dx:int, dy:int):void {
-        Constants.STATS.gemsSwapped(sx, sy, dx, dy);
         _board.swapCells(sx, sy, dx, dy);
     }
 

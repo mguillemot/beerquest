@@ -15,21 +15,48 @@ import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
+import com.beerquest.ui.events.UiGameEvent;
 
+import flash.events.Event;
 import flash.media.Sound;
 
 import mx.core.UIComponent;
 
 public class SoundModule extends UIComponent {
     public function SoundModule() {
-        Constants.GAME.addEventListener(GameEvent.PISS, onPiss);
-        Constants.GAME.addEventListener(GameEvent.VOMIT, onVomit);
-        Constants.GAME.addEventListener(GameEvent.GAME_OVER, onGameOver);
-        Constants.GAME.addEventListener(PissLevelEvent.PISS_LEVEL_CHANGED, onPissLevelChanged);
-        Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, onBoardReset);
-        Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, onGroupCollected);
-        Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, onCapacityGained);
-        Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
+        addEventListener(Event.ADDED_TO_STAGE, function(e:Event):void {
+            stage.addEventListener(UiGameEvent.UI_GAME_EVENT, onUiGameEvent);
+        });
+    }
+
+    private function onUiGameEvent(e:UiGameEvent):void {
+        var ge:Event = e.event;
+        switch (ge.type) {
+            case GameEvent.PISS:
+                onPiss(ge as GameEvent);
+                break;
+            case GameEvent.VOMIT:
+                onVomit(ge as GameEvent);
+                break;
+            case GameEvent.GAME_OVER:
+                onGameOver(ge as GameEvent);
+                break;
+            case PissLevelEvent.PISS_LEVEL_CHANGED:
+                onPissLevelChanged(ge as PissLevelEvent);
+                break;
+            case BoardEvent.BOARD_RESET:
+                onBoardReset(ge as BoardEvent);
+                break;
+            case GroupCollectionEvent.GROUPS_COLLECTED:
+                onGroupCollected(ge as GroupCollectionEvent);
+                break;
+            case CapacityEvent.CAPACITY_GAINED:
+                onCapacityGained(ge as CapacityEvent);
+                break;
+            case CapacityEvent.CAPACITY_EXECUTED:
+                onCapacityExecuted(ge as CapacityEvent);
+                break;
+        }
     }
 
     private function onPiss(e:GameEvent):void {

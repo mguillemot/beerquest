@@ -86,7 +86,6 @@ public class PlayerData extends EventDispatcher {
         if (vomit > 100) {
             _game.board.createVomit(5);
             _game.dispatchEvent(new GameEvent(GameEvent.VOMIT));
-            Constants.STATS.vomitCount++;
             vomit = 30;
         }
     }
@@ -105,7 +104,6 @@ public class PlayerData extends EventDispatcher {
         for (var i:int = Constants.MAX_CAPACITIES - 1; i >= 0; i--) {
             if (_capacities.getItemAt(i) == c) {
                 _capacities.setItemAt(Capacity.NONE, i);
-                Constants.STATS.capacityUsed(c);
                 _game.dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_EXECUTED, c));
                 return true;
             }
@@ -114,7 +112,7 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function collectBeer():void {
-        Constants.STATS.stackCollected++;
+        // TODO Constants.STATS.stackCollected++;
     }
 
     public function get partialBeers():ArrayCollection {
@@ -164,7 +162,6 @@ public class PlayerData extends EventDispatcher {
     public function doPiss():void {
         piss *= 0.4;
         _game.dispatchEvent(new GameEvent(GameEvent.PISS));
-        Constants.STATS.pissed();
         _game.newTurn();
     }
 
