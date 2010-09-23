@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f48027e-07ce-4b9f-9c55-b89931362e9f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/BeerQuest.iml" afterPath="$PROJECT_DIR$/.idea/BeerQuest.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/beerquest_development.sqlite" afterPath="$PROJECT_DIR$/db/beerquest_development.sqlite" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/swf/BeerQuest-0.91.swf" afterPath="$PROJECT_DIR$/public/swf/BeerQuest-0.91.swf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/BeerQuest.iml" afterPath="$PROJECT_DIR$/.idea/BeerQuest.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/facebook_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/facebook_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/bar.rb" afterPath="$PROJECT_DIR$/app/models/bar.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/barship.rb" afterPath="$PROJECT_DIR$/app/models/barship.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/account.rb" afterPath="$PROJECT_DIR$/app/models/account.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/bar.html.haml" afterPath="$PROJECT_DIR$/app/views/home/bar.html.haml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.yml" afterPath="$PROJECT_DIR$/config/database.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/redis.rb" afterPath="$PROJECT_DIR$/config/initializers/redis.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/session_store.rb" afterPath="$PROJECT_DIR$/config/initializers/session_store.rb" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="BeerQuest.iws" />
@@ -78,28 +79,51 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" highlightNonProjectFiles="true" nonProjectFilesColor="ffffe4" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="database.yml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <file leaf-file-name="bar.html.haml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/home/bar.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="32" selection-start="244" selection-end="244" vertical-scroll-proportion="0.41530946">
+            <state line="145" column="50" selection-start="5766" selection-end="5781" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="facebook_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
+      <file leaf-file-name="home_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="33" selection-start="933" selection-end="933" vertical-scroll-proportion="0.0">
+            <state line="22" column="85" selection-start="589" selection-end="589" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="connection.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://C:/Ruby187/lib/ruby/gems/1.8/gems/data_objects-0.10.2/lib/data_objects/connection.rb">
+      <file leaf-file-name="account.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/account.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="57" selection-start="2231" selection-end="2231" vertical-scroll-proportion="0.0">
+            <state line="43" column="46" selection-start="1150" selection-end="1150" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logo-bar1.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/images/logo-bar1.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logo-BQ4.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/images/logo-BQ4.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="crossdomain.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/crossdomain.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="68" selection-start="204" selection-end="204" vertical-scroll-proportion="0.121753246">
               <folding />
             </state>
           </provider>
@@ -135,7 +159,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="GIT_EXECUTABLE" value="C:\Program Files (x86)\Git\bin\git.exe" />
+    <option name="GIT_EXECUTABLE" value="/usr/bin/git" />
     <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
     <option name="UPDATE_CHANGES_POLICY" value="STASH" />
     <option name="LINE_SEPARATORS_CONVERSION_ASK" value="false" />
@@ -143,22 +167,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/home/bar.html.haml" />
-        <option value="$PROJECT_DIR$/app/controllers/scores_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/replay.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/config/environments/production.rb" />
         <option value="$PROJECT_DIR$/config/initializers/secret_token.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/config/initializers/session_store.rb" />
         <option value="C:/Ruby187/lib/ruby/gems/1.8/gems/redis-store-1.0.0.beta3/lib/action_controller/session/redis_session_store.rb" />
-        <option value="$PROJECT_DIR$/app/models/account.rb" />
         <option value="$PROJECT_DIR$/app/controllers/facebook_controller.rb" />
         <option value="$PROJECT_DIR$/config/initializers/redis.rb" />
         <option value="$PROJECT_DIR$/app/models/bar.rb" />
         <option value="$PROJECT_DIR$/app/models/barship.rb" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/config/initializers/session_store.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/config/database.yml" />
+        <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/home/bar.html.haml" />
+        <option value="$PROJECT_DIR$/app/models/account.rb" />
       </list>
     </option>
   </component>
@@ -204,8 +228,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -234,7 +256,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -249,24 +271,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="initializers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -323,6 +327,24 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -344,7 +366,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Favorites" />
+      <pane id="RailsProjectView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -368,7 +392,7 @@
       <recent name="E:\Boulot\beerquest\www\config\locales" />
     </key>
   </component>
-  <component name="RunManager" selected="Rails.Development: BeerQuest">
+  <component name="RunManager" selected="Rake.db:automigrate">
     <configuration default="false" name="db:automigrate" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
       <module name="BeerQuest" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e STDOUT.sync=true;STDERR.sync=true;load($0=ARGV.shift)" />
@@ -551,7 +575,7 @@
       <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
       <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" track_test_folders="true" runner="rcov" />
       <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SCRIPT_ARGS" VALUE="" />
-      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="PORT" VALUE="81" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="PORT" VALUE="8081" />
       <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="IP" VALUE="0.0.0.0" />
       <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="CHOOSE_MANUALLY" VALUE="true" />
       <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RAILS_SERVER_TYPE" VALUE="default" />
@@ -599,9 +623,9 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Rake.db:automigrate" />
-      <item index="1" class="java.lang.String" itemvalue="Rails.Production: BeerQuest" />
-      <item index="2" class="java.lang.String" itemvalue="Rails.Development: BeerQuest" />
+      <item index="0" class="java.lang.String" itemvalue="Rails.Production: BeerQuest" />
+      <item index="1" class="java.lang.String" itemvalue="Rails.Development: BeerQuest" />
+      <item index="2" class="java.lang.String" itemvalue="Rake.db:automigrate" />
       <item index="3" class="java.lang.String" itemvalue="Rake.test" />
       <item index="4" class="java.lang.String" itemvalue="Rake.spec" />
     </list>
@@ -620,7 +644,7 @@
     <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
-    <configuration useDefault="true">C:\Users\Erhune\AppData\Roaming\Subversion</configuration>
+    <configuration useDefault="true">$USER_HOME$/.subversion_IDEA</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
     <supportedVersion>125</supportedVersion>
   </component>
@@ -633,16 +657,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="0" y="24" width="1920" height="1032" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2948295" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2935378" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19441517" sideWeight="0.7051705" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19145569" sideWeight="0.7064622" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933994" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33553356" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33515882" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -706,90 +730,100 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="39" selection-start="564" selection-end="564" vertical-scroll-proportion="0.663837" />
+        <state line="146" column="24" selection-start="7263" selection-end="7263" vertical-scroll-proportion="0.6814815" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+    <entry file="file://$PROJECT_DIR$/.idea/BeerQuest.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="51" selection-start="892" selection-end="892" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/bar.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="64" selection-start="3897" selection-end="3897" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/initializers/redis.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="24" selection-start="119" selection-end="119" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/account.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="18" selection-start="369" selection-end="369" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/bar.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="50" selection-start="443" selection-end="443" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/friendship.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="29" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/barship.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="99" selection-start="516" selection-end="516" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/replay.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="46" selection-start="2413" selection-end="2413" vertical-scroll-proportion="1.6499133" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/scores_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="27" selection-start="299" selection-end="299" vertical-scroll-proportion="0.26516464" />
+        <state line="203" column="38" selection-start="7546" selection-end="7546" vertical-scroll-proportion="0.119349" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="33" selection-start="933" selection-end="933" vertical-scroll-proportion="0.0" />
+        <state line="45" column="42" selection-start="1372" selection-end="1372" vertical-scroll-proportion="0.024311183" />
       </provider>
     </entry>
-    <entry file="file://C:/Ruby187/lib/ruby/gems/1.8/gems/data_objects-0.10.2/lib/data_objects/connection.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/scores_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="57" selection-start="2231" selection-end="2231" vertical-scroll-proportion="0.0" />
+        <state line="14" column="10" selection-start="444" selection-end="448" vertical-scroll-proportion="0.1458671" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.ru">
+    <entry file="file://$PROJECT_DIR$/config/initializers/redis.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="159" selection-end="159" vertical-scroll-proportion="0.11785095">
-          <folding />
-        </state>
+        <state line="6" column="26" selection-start="119" selection-end="119" vertical-scroll-proportion="0.1458671" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README">
+    <entry file="file://$USER_HOME$/.rvm/gems/ree-1.8.7-2010.02/gems/data_objects-0.10.2/lib/data_objects/connection.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="64" selection-start="1145" selection-end="1145" vertical-scroll-proportion="-6.866551">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="21" selection-start="509" selection-end="509" vertical-scroll-proportion="0.4714038">
+        <state line="75" column="0" selection-start="2660" selection-end="2660" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/database.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="32" selection-start="244" selection-end="244" vertical-scroll-proportion="0.41530946">
+        <state line="7" column="12" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="74" selection-start="1094" selection-end="1094" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/session_store.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="575" selection-end="575" vertical-scroll-proportion="0.25906736">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script/rails">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="53" selection-start="298" selection-end="298" vertical-scroll-proportion="0.12953368">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="85" selection-start="589" selection-end="589" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/home/bar.html.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="145" column="50" selection-start="5766" selection-end="5781" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/account.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="46" selection-start="1150" selection-end="1150" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/images/logo-bar1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/images/logo-BQ4.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/crossdomain.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="68" selection-start="204" selection-end="204" vertical-scroll-proportion="0.121753246">
           <folding />
         </state>
       </provider>

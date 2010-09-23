@@ -5,11 +5,10 @@ defaults: &defaults
 
 development:
   adapter: mysql
-  database: beerquest_production
+  database: beerquest_development
   username: beerquest
   password: glouglou
-  host: 127.0.0.1
-  port: 3307
+  host: 192.168.1.100
   <<: *defaults
 
 test:
@@ -22,7 +21,7 @@ test:
 
 production:
   adapter: mysql
-  database: beerquest_production
+  database: beerquest
   username: beerquest
   password: glouglou
   host: localhost

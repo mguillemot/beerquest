@@ -40,4 +40,8 @@ class Account
   def last_bar
     barships.first(:order => :updated_at.desc).bar
   end
+
+  def profile_picture
+    attribute_get(:profile_picture) || "http://static.ak.fbcdn.net/rsrc.php/z1LUW/hash/eu00g0eh.gif"
+  end
 end

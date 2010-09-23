@@ -3,6 +3,8 @@ source 'http://rubygems.org'
 RAILS_VERSION = '3.0.0'
 DM_VERSION = '1.0.2'
 
+gem 'mongrel'
+
 #gem 'rails',                RAILS_VERSION
 #gem 'activerecord',         RAILS_VERSION
 #gem 'activeresource',       RAILS_VERSION
@@ -12,7 +14,7 @@ gem 'actionmailer',         RAILS_VERSION
 gem 'railties',             RAILS_VERSION
 
 gem 'dm-rails',             '1.0.3'
-gem 'dm-sqlite-adapter',    DM_VERSION
+#gem 'dm-sqlite-adapter',    DM_VERSION
 gem 'dm-mysql-adapter',     DM_VERSION
 #gem 'dm-redis-adapter',     '0.2.1'
 gem 'dm-migrations',        DM_VERSION
@@ -26,8 +28,9 @@ gem 'dm-observer',          DM_VERSION
 gem 'dm-serializer',        DM_VERSION
 gem 'dm-adjust',            DM_VERSION
 
+gem 'system_timer'
 gem 'redis'
-gem 'redis-store',          '1.0.0.beta3' # ATTENTION! si changement de version, penser à reporter le fix pour le SID des sessions
+gem 'redis-store',          '1.0.0.beta3' # ATTENTION! si changement de version, penser ï¿½ reporter le fix pour le SID des sessions
 
 gem 'haml'
 
