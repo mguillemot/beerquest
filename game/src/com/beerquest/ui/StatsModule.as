@@ -80,7 +80,7 @@ public class StatsModule extends UIComponent {
     public function uploadScore():void {
         var data:URLVariables = _stats.getForSerialization();
         data.mode = Constants.GAME.mode;
-        data.token = _token;
+        data.token = token;
         data.game_version = Constants.VERSION.toString();
         data.score = Constants.GAME.me.fullBeers;
         data.flash_version = Capabilities.version;
@@ -102,10 +102,12 @@ public class StatsModule extends UIComponent {
         }
     }
 
+    [Bindable]
     public function get token():String {
         return _token;
     }
 
+    [Bindable]
     public function set token(value:String):void {
         _token = value;
     }
