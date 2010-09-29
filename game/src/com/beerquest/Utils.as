@@ -3,9 +3,9 @@ public class Utils {
     function Utils() {
     }
 
-    public static function randomizeArray(array:Array, rand:MersenneTwister = null):Array {
+    public static function randomizeArray(array:Array, rand:DeadBeefRandom = null):Array {
         if (rand == null) {
-            rand = MersenneTwister.generate();
+            rand = DeadBeefRandom.generate();
         }
         var newArray:Array = new Array();
         while (array.length > 0) {

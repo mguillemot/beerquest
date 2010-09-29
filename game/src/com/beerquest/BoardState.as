@@ -6,8 +6,8 @@ import com.beerquest.events.GroupCollectionEvent;
 import flash.geom.Point;
 
 public class BoardState {
-    public function BoardState(rand:MersenneTwister = null) {
-        _rand = (rand == null) ? MersenneTwister.generate() : rand;
+    public function BoardState(rand:DeadBeefRandom = null) {
+        _rand = (rand == null) ? DeadBeefRandom.generate() : rand;
         for (var i:int = 0; i < Constants.BOARD_SIZE * Constants.BOARD_SIZE; i++) {
             _state.push(TokenType.NONE);
             _supers.push(false);
@@ -525,7 +525,7 @@ public class BoardState {
     private var _state:Array = new Array();
     private var _supers:Array = new Array();
     private var _pissLevel:int = 0;
-    private var _rand:MersenneTwister;
+    private var _rand:DeadBeefRandom;
 
 }
 }

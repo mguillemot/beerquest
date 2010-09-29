@@ -15,7 +15,7 @@ public class Game extends EventDispatcher {
         _mode = mode;
         _me = me;
         dispatchEvent(new Event("meChanged"));
-        _rand = new MersenneTwister(seed);
+        _rand = new DeadBeefRandom(seed);
         _board = new BoardState(_rand);
         _board.game = this;
         _board.generateRandomWithoutGroups();
@@ -182,7 +182,7 @@ public class Game extends EventDispatcher {
     private var _currentTurn:int = 0;
     private var _board:BoardState;
     private var _gameOver:Boolean = false;
-    private var _rand:MersenneTwister;
+    private var _rand:DeadBeefRandom;
 
 }
 }

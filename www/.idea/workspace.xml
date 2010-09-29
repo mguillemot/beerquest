@@ -2,14 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f48027e-07ce-4b9f-9c55-b89931362e9f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/game/group.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/game/mersenne_twister.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../game/src/com/beerquest/DeadBeefRandom.as" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/game/dead_beef_random.rb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../game/src/com/beerquest/MersenneTwister.as" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/game/mersenne_twister.rb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../game/out/BeerQuest.swf" afterPath="$PROJECT_DIR$/../game/out/BeerQuest.swf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../game/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../game/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../game/src/com/beerquest/BoardState.as" afterPath="$PROJECT_DIR$/../game/src/com/beerquest/BoardState.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../game/src/com/beerquest/Game.as" afterPath="$PROJECT_DIR$/../game/src/com/beerquest/Game.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../game/src/com/beerquest/Utils.as" afterPath="$PROJECT_DIR$/../game/src/com/beerquest/Utils.as" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../game/src/com/beerquest/ui/BeerQuest.mxml" afterPath="$PROJECT_DIR$/../game/src/com/beerquest/ui/BeerQuest.mxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/BeerQuest.iml" afterPath="$PROJECT_DIR$/.idea/BeerQuest.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/game/board.rb" afterPath="$PROJECT_DIR$/app/models/game/board.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/facebook/test.haml" afterPath="$PROJECT_DIR$/app/views/facebook/test.haml" />
     </list>
     <ignored path=".idea/workspace.xml" />
@@ -87,10 +90,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mersenne_twister.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/models/game/mersenne_twister.rb">
+      <file leaf-file-name="dead_beef_random.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/game/dead_beef_random.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="9" selection-start="118" selection-end="118" vertical-scroll-proportion="0.15410958">
+            <state line="6" column="68" selection-start="112" selection-end="112" vertical-scroll-proportion="0.15410958">
               <folding />
             </state>
           </provider>
@@ -117,7 +120,7 @@
       <file leaf-file-name="test.haml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/facebook/test.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0">
+            <state line="8" column="20" selection-start="115" selection-end="115" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -240,6 +243,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -354,8 +359,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
       <pane id="RailsProjectView" />
       <pane id="PackagesPane" />
     </panes>
@@ -363,13 +366,13 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -473,13 +476,6 @@
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -501,6 +497,13 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
@@ -611,9 +614,9 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Rails.Production: BeerQuest" />
-      <item index="1" class="java.lang.String" itemvalue="Rails.Development: BeerQuest" />
-      <item index="2" class="java.lang.String" itemvalue="Rake.db:automigrate" />
+      <item index="0" class="java.lang.String" itemvalue="Rake.db:automigrate" />
+      <item index="1" class="java.lang.String" itemvalue="Rails.Production: BeerQuest" />
+      <item index="2" class="java.lang.String" itemvalue="Rails.Development: BeerQuest" />
       <item index="3" class="java.lang.String" itemvalue="Rake.test" />
       <item index="4" class="java.lang.String" itemvalue="Rake.spec" />
     </list>
@@ -668,9 +671,9 @@
     <frame x="-3" y="24" width="1926" height="1034" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32968238" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32968238" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32858709" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32964134" sideWeight="0.67031765" order="0" side_tool="false" content_ui="tabs" />
@@ -681,9 +684,9 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32858709" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -703,7 +706,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="débug vérif règles coté serveur" />
+    <option name="LAST_COMMIT_MESSAGE" value="débug vérif règles coté serveur dont mersenne twister" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -728,6 +731,7 @@
     <MESSAGE value="session redis + bundle package" />
     <MESSAGE value="fix 091 pour mise en ligne" />
     <MESSAGE value="débug vérif règles coté serveur" />
+    <MESSAGE value="débug vérif règles coté serveur dont mersenne twister" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -785,51 +789,39 @@
         <state line="9" column="51" selection-start="402" selection-end="402" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/game/token.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="26" selection-start="545" selection-end="545" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="42" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/game/board.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="197" column="21" selection-start="4637" selection-end="4637" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/game/group.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="30" selection-start="592" selection-end="592" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/facebook/test.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="197" column="21" selection-start="4637" selection-end="4637" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ree-1.8.7-2010.02/gems/haml-3.0.18/lib/haml/buffer.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="26" selection-start="4675" selection-end="4675" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="143" column="26" selection-start="4675" selection-end="4675" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/game/mersenne_twister.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/game/group.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="9" selection-start="118" selection-end="118" vertical-scroll-proportion="0.15410958">
+        <state line="32" column="30" selection-start="592" selection-end="592" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/facebook/test.haml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="20" selection-start="115" selection-end="115" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/game/token.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="26" selection-start="545" selection-end="545" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/facebook_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="42" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/game/dead_beef_random.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="68" selection-start="112" selection-end="112" vertical-scroll-proportion="0.15410958">
           <folding />
         </state>
       </provider>

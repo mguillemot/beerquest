@@ -38,6 +38,7 @@
         import com.adobe.serialization.json.JSON;
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
+        import com.beerquest.DeadBeefRandom;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
         import com.beerquest.events.CapacityEvent;
