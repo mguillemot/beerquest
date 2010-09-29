@@ -43,4 +43,5 @@ class HomeController < FacebookController
 
   def tos
   end
+
 end

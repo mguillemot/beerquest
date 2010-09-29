@@ -1,12 +1,12 @@
 class FacebookController < ApplicationController
-  before_filter :user_details, :except => [:session_login, :session_logout, :hack_login]
+  before_filter :user_details, :except => [:session_login, :session_logout, :hack_login, :test]
 
   def session_login
     reset_session
     session[:access_token] = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, login_url, BeerQuest::FB_SECRET, params[:code])['access_token']
     session[:user_id] = MiniFB.get(session[:access_token], 'me').id
     #bust_iframe(BeerQuest::FB_APP_URL)
-    # TODO tester et voir si ça convient
+    # TODO tester et voir si ï¿½a convient
     redirect_to home_url
   end
 
@@ -29,6 +29,19 @@ class FacebookController < ApplicationController
     session[:account_id] = params[:id]
 
     redirect_to home_url
+  end
+
+  def test
+    @board = Game::Board.new
+    @board.decode "brrwbbaf" \
+                  "rlbtwabf" \
+                  "rrrlfrwr" \
+                  "bltaraar" \
+                  "rrabwrwl" \
+                  "tbaltwrt" \
+                  "rarfftrb" \
+                  "lbalatlr"
+    render :layout => false
   end
 
   private
@@ -66,7 +79,7 @@ class FacebookController < ApplicationController
       @account.first_name = @me[:first_name]
       @account.last_name = @me[:last_name]
       @account.gender = @me[:gender]
-      #@account.email = @me[:email] # demandé avec les droits supplémentantes
+      #@account.email = @me[:email] # demandï¿½ avec les droits supplï¿½mentantes
       @account.locale = @me[:locale] # ex: fr_FR
       @account.timezone = @me[:timezone] # 9
       @account.profile_picture = "http://graph.facebook.com/#{@user_id}/picture"

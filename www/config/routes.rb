@@ -3,7 +3,7 @@ BeerQuest::Application.routes.draw do
   # Facebook integration
   get "session_login", :to => "facebook#session_login", :as => 'login'
   get "session_logout", :to => "facebook#session_logout", :as => 'logout'
-  get "play/:id", :to => "facebook#hack_login" # TODO virer quand vraie intégration FB
+  get "play/:id", :to => "facebook#hack_login" # TODO virer quand vraie intï¿½gration FB
 
   # Game pages
   root :to => "home#index", :as => 'home'
@@ -17,5 +17,8 @@ BeerQuest::Application.routes.draw do
   # Game integration
   get "start", :to => "scores#start", :as => 'game_start'
   post "postscore", :to => "scores#postscore", :as => 'post_score'
+
+  # Test pages
+  get "debug", :to => "facebook#test"
 
 end
