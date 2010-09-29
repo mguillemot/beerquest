@@ -7,3 +7,10 @@
 %h1 Moves
 %code
   = debug @board.moves
+
+%ol
+  - mt = Game::MersenneTwister.new(5483)
+  = debug mt
+  - 1000.times do
+    %li
+      = "#{mt.next_int(1, 1000)}"

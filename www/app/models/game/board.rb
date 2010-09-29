@@ -3,6 +3,8 @@ module Game
 
     SIZE = 8
 
+    attr_accessor :pisslevel
+
     def initialize
       @cells = Token::NONE * (SIZE * SIZE)
       @pisslevel = 0
@@ -49,7 +51,7 @@ module Game
               di += 1
             end
             if di >= 3
-              groups.push({:x => i, :y => j, :direction => "horizontal", :length => di, :token => token.downcase, :supers => supers})
+              groups.push(Group.new(i, j, "horizontal", di, token.downcase, supers))
             end
             i += di - 1
           end
@@ -73,7 +75,7 @@ module Game
               dj += 1
             end
             if dj >= 3
-              groups.push({:x => i, :y => j, :direction => "vertical", :length => dj, :token => token.downcase, :supers => supers})
+              groups.push(Group.new(i, j, "vertical", dj, token.downcase, supers))
             end
             j += dj - 1
           end
@@ -101,12 +103,12 @@ module Game
           self[i, j] = right
           self[i + 1, j] = Token::NONE
           if groups?
-            moves.push({:type => "horizontal", :start => [i, j], :end => [i + 1, j]})
+            moves.push({:start => [i, j], :end => [i + 1, j]})
           else
             self[i, j] = Token::NONE
             self[i + 1, j] = left
             if groups?
-              moves.push({:type => "horizontal", :start => [i, j], :end => [i + 1, j]})
+              moves.push({:start => [i, j], :end => [i + 1, j]})
             end
           end
           self[i, j] = left
@@ -122,12 +124,12 @@ module Game
           self[i, j] = bottom
           self[i, j + 1] = Token::NONE
           if groups?
-            moves.push({:type => "vertical", :start => [i, j], :end => [i, j + 1]})
+            moves.push({:start => [i, j], :end => [i, j + 1]})
           else
             self[i, j] = Token::NONE
             self[i, j + 1] = top
             if groups?
-              moves.push({:type => "vertical", :start => [i, j], :end => [i, j + 1]})
+              moves.push({:start => [i, j], :end => [i, j + 1]})
             end
           end
           self[i, j] = top
@@ -138,14 +140,63 @@ module Game
       moves
     end
 
+    def legal_move?(move)
+      # Note: this function could be optimized by returning prematurely in case of success
+      moves.each do |legal|
+        if move == legal
+          return true
+        end
+      end
+      false
+    end
+
     private
 
-    def iterate_cells
-      (0...SIZE).each do |i|
-        (0...SIZE).each do |j|
+    def each_cell_from_bottom
+      (SIZE - 1).downto(0) do |j|
+        0.upto(SIZE - 1) do |i|
           yield i, j
         end
       end
+    end
+
+    def destroy_groups(groups)
+      # Warning: this operation is tricky since we have to make sure that super-gems that are also members of a <=4 group stay
+      # on board without any influence of the group destroy orders. To this prupose, destroy is implemented as a multiple pass
+      # process.
+      groups.each do |group|
+        group.each_cell do |i, j|
+          self[i, j] = Token::NONE
+        end
+      end
+      groups.each do |group|
+        if group.length >= 5
+          self[group.midx, group.midy] = group.token.upcase
+        end
+      end
+    end
+
+    def compact
+      compacted = true
+      while compacted
+        compacted = false
+        each_cell_from_bottom do |i, j|
+          if self[i, j] == Token::NONE
+            self[i, j] = self[i, j - 1]
+            self[i, j - 1] = Token::NONE
+            compacted = true
+          end
+        end
+        (0...SIZE).each do |i|
+          if self[i, 0] == Token::NONE
+            self[i, 0] = generate_cell
+          end
+        end
+      end
+    end
+
+    def generate_cell
+
     end
 
   end

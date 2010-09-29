@@ -14,7 +14,6 @@
       <requirement>
         <dependency name="actionmailer" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
       </requirement>
-      <source manual="true" />
       <source from="Gemfile" />
     </requirement>
     <requirement>
@@ -25,40 +24,9 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="activemodel" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activerecord" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activeresource" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="activesupport" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
       </requirement>
-      <source manual="true" />
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="arel" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="bundler" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
@@ -158,12 +126,6 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="rails" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="railties" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
@@ -185,12 +147,6 @@
         <dependency name="system_timer" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="tzinfo" version="0" bound="GREATER_OR_EQUAL" git="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
