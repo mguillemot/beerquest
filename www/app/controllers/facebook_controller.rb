@@ -32,7 +32,7 @@ class FacebookController < ApplicationController
   end
 
   def test
-    @board = Game::Board.new
+    @board = Game::Board.new(12345)
     @board.decode "brrwbbaf" \
                   "rlbtwabf" \
                   "rrrlfrwr" \

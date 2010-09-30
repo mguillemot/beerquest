@@ -5,9 +5,11 @@ module Game
 
     attr_accessor :pisslevel
 
-    def initialize
+    def initialize(seed = rand(), group_collection_callback = nil)
       @cells = Token::NONE * (SIZE * SIZE)
       @pisslevel = 0
+      @rand = DeadBeefRandom.new(seed)
+      @group_collection_callback = group_collection_callback
     end
 
     def decode(encoded_board)
@@ -152,11 +154,33 @@ module Game
 
     private
 
+    def each_cell_from_top
+      0.upto(SIZE - 1) do |j|
+        0.upto(SIZE - 1) do |i|
+          yield i, j
+        end
+      end
+    end
+
     def each_cell_from_bottom
       (SIZE - 1).downto(0) do |j|
         0.upto(SIZE - 1) do |i|
           yield i, j
         end
+      end
+    end
+
+    def normalize(inhibit_events = false)
+      while groups?
+        gs = groups
+        destroy_groups gs
+        if !inhibit_events && @group_collection_callback
+          gs.each { |g| @group_collection_callback.call(g) }
+        end
+        compact
+      end
+      if !inhibit_events && moves.empty?
+        generate_random_keeping_some_vomit
       end
     end
 
@@ -196,8 +220,82 @@ module Game
     end
 
     def generate_cell
-
+      r = @rand.next_int(1, 17)
+      if r <= 3
+        Token::BLOND_BEER
+      elsif r <= 6
+        Token::BROWN_BEER
+      elsif r <= 9
+        Token::AMBER_BEER
+      elsif r <= 11
+        Token::FOOD
+      elsif r <= 13
+        Token::WATER
+      elsif r <= 15
+        Token::LIQUOR
+      else
+        Token::TOMATO_JUICE
+      end
     end
 
+    def clear_supers
+      @cells.downcase!
+    end
+
+    def generate_full_random
+      each_cell_from_top do |i, j|
+        self[i, j] = generate_cell
+      end
+    end
+
+    def generate_random_without_groups
+      begin
+        generate_full_random
+        normalize(true)
+      end while moves.empty?
+      clear_supers
+    end
+
+    def generate_random_keeping_some_vomit
+      vomits = cells_of_type(Token::VOMIT)
+      unless vomits.empty?
+        vomits = vomits.randomize(@rand)
+        to_remove = (vomits.length * 0.25).floor
+        vomits[to_remove, -1] = nil
+      end
+      begin
+        generate_full_random
+        normalize(true)
+        vomits.each do |v|
+          self[v[0], v[1]] = Token::VOMIT
+        end
+      end while moves.empty?
+    end
+    # TODO skip 3 turns
+  end
+
+  def cells_of_type(token)
+    token = token.downcase
+    result = []
+    each_cell_from_top do |i, j|
+      if self[i, j].downcase == token
+        result.push [i, j]
+      end
+    end
+    result
+  end
+
+end
+
+class Array
+  def randomize(rand)
+    clone = dup
+    result = []
+    while !clone.empty?
+      i = rand.next_int(0, clone.length - 1)
+      result.push(clone[i])
+      clone[i] = nil
+    end
+    result
   end
 end
