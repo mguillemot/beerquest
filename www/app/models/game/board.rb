@@ -5,11 +5,11 @@ module Game
 
     attr_accessor :pisslevel
 
-    def initialize(seed = rand(), group_collection_callback = nil)
+    def initialize(seed = nil, group_collection_handler = nil)
       @cells = Token::NONE * (SIZE * SIZE)
       @pisslevel = 0
-      @rand = DeadBeefRandom.new(seed)
-      @group_collection_callback = group_collection_callback
+      @rand = DeadBeefRandom.new(seed || rand())
+      @group_collection_handler = group_collection_handler
     end
 
     def decode(encoded_board)
@@ -152,7 +152,98 @@ module Game
       false
     end
 
+    def generate_random_keeping_some_vomit
+      vomits = cells_of_type(Token::VOMIT)
+      unless vomits.empty?
+        vomits = vomits.randomize(@rand)
+        to_remove = (vomits.length * 0.25).floor
+        vomits[to_remove, -1] = nil
+      end
+      begin
+        generate_full_random
+        normalize
+        vomits.each do |v|
+          self[v[0], v[1]] = Token::VOMIT
+        end
+      end while moves.empty?
+    end
+
+    def normalize
+      collected_groups = []
+      while groups?
+        gs = groups
+        destroy_groups(gs)
+        collected_groups += gs
+        compact
+      end
+      if @group_collection_handler
+        collected_groups.each { |g| @group_collection_handler.call(g) }
+      end
+      collected_groups
+    end
+
+    def swap_cells(source, destination)
+      self[source[0], source[1]], self[destination[0], destination[1]] = self[destination[0], destination[1]], self[source[0], source[1]]
+      normalize
+    end
+
+    def create_vomit(count)
+      cells = []
+      count.times do
+        cell = get_random_non_vomit_non_super_cell
+        if cell
+          cells.push(cell)
+        end
+      end
+      transform_cells(cells, Token::VOMIT, true) # impossible to create new groups, so no collection should take place here
+      cells
+    end
+
+    def transform_cells(cells, target, reset_super)
+      cells.each do |cell|
+        token = (!reset_super && self[cell[0], cell[1].super?]) ? target.upcase : target
+        self[cell[0], cell[1]] = token
+      end
+      normalize
+    end
+
+    def transform_tokens_of_type(source, target)
+      cells = []
+      each_cell_from_top do |i, j|
+        cells.push [i, j] if self[i, j].downcase == source
+      end
+      transform_cells(cells, target, false)
+      cells
+    end
+
+    def destroy_tokens_of_type(target)
+      count = supers = 0
+      each_cell_from_top do |i, j|
+        if self[i, j].downcase == target
+          count += 1
+          supers += 1 if self[i, j].super?
+          self[i, j] = Token::NONE
+        end
+      end
+      compact
+      normalize
+      supers * Constants::SUPER_TOKEN_VALUE + count
+    end
+
     private
+
+    def get_random_non_vomit_non_super_cell
+      count = 0
+      each_cell_from_top do |i, j|
+        count += 1 if self[i, j] == Token::VOMIT || self[i, j].super?
+      end
+      return nil if count == SIZE * SIZE
+      while true
+        x = @rand.next_int(0, SIZE - 1)
+        y = @rand.next_int(0, SIZE - 1)
+        return [x, y] if self[x, y] != Token::VOMIT && !self[x, y].super?
+      end
+    end
 
     def each_cell_from_top
       0.upto(SIZE - 1) do |j|
@@ -167,20 +258,6 @@ module Game
         0.upto(SIZE - 1) do |i|
           yield i, j
         end
-      end
-    end
-
-    def normalize(inhibit_events = false)
-      while groups?
-        gs = groups
-        destroy_groups gs
-        if !inhibit_events && @group_collection_callback
-          gs.each { |g| @group_collection_callback.call(g) }
-        end
-        compact
-      end
-      if !inhibit_events && moves.empty?
-        generate_random_keeping_some_vomit
       end
     end
 
@@ -251,40 +328,23 @@ module Game
     def generate_random_without_groups
       begin
         generate_full_random
-        normalize(true)
+        normalize
       end while moves.empty?
       clear_supers
     end
 
-    def generate_random_keeping_some_vomit
-      vomits = cells_of_type(Token::VOMIT)
-      unless vomits.empty?
-        vomits = vomits.randomize(@rand)
-        to_remove = (vomits.length * 0.25).floor
-        vomits[to_remove, -1] = nil
-      end
-      begin
-        generate_full_random
-        normalize(true)
-        vomits.each do |v|
-          self[v[0], v[1]] = Token::VOMIT
+    def cells_of_type(token)
+      token = token.downcase
+      result = []
+      each_cell_from_top do |i, j|
+        if self[i, j].downcase == token
+          result.push [i, j]
         end
-      end while moves.empty?
-    end
-    # TODO skip 3 turns
-  end
-
-  def cells_of_type(token)
-    token = token.downcase
-    result = []
-    each_cell_from_top do |i, j|
-      if self[i, j].downcase == token
-        result.push [i, j]
       end
+      result
     end
-    result
-  end
 
+  end
 end
 
 class Array

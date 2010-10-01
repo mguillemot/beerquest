@@ -33,5 +33,45 @@ module Game
       (@y + @length / 2).floor
     end
 
+    def collected_token
+      if @token == Token::BLOND_BEER || @token == Token::BROWN_BEER || @token == Token::AMBER_BEER
+        (@length >= 4) ? Token::TRIPLE : @token
+      else
+        nil
+      end
+    end
+
+    def score_gain
+      result = @supers * Constants::SUPER_TOKEN_VALUE
+      if @token == Token::BLOND_BEER || @token == Token::BROWN_BEER || @token == Token::AMBER_BEER
+        result += @length
+      end
+      result
+    end
+
+    def turns_gain
+      (@token == Token::TOMATO_JUICE) ? 1 : 0
+    end
+
+    def piss_gain
+      if @token == Token::BLOND_BEER || @token == Token::BROWN_BEER || @token == Token::AMBER_BEER || @token == Token::WATER
+        3 * @length
+      else
+        0
+      end
+    end
+
+    def vomit_gain
+      if @token == Token::BLOND_BEER || @token == Token::BROWN_BEER || @token == Token::AMBER_BEER
+        3 * @length
+      elsif @token == Token::LIQUOR
+        6 * @length
+      elsif @token == Token::FOOD
+        -7 * @length
+      else
+        0
+      end
+    end
+
   end
 end
