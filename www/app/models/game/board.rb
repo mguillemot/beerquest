@@ -12,22 +12,32 @@ module Game
       @group_collection_handler = group_collection_handler
     end
 
+    def dup
+      result = Board.new
+      result.decode(@cells)
+      result
+    end
+
     def decode(encoded_board)
-      @cells = encoded_board
+      @cells = encoded_board.dup
+    end
+
+    def encoded_state
+      @cells.dup
     end
 
     def [](i, j)
-      @cells[i * SIZE + j].chr
+      @cells[j * SIZE + i].chr
     end
 
     def []=(i, j, v)
-      @cells[i * SIZE + j] = v
+      @cells[j * SIZE + i] = v
     end
 
     def dump
       result = ""
-      (0...SIZE).each do |i|
-        (0...SIZE).each do |j|
+      (0...SIZE).each do |j|
+        (0...SIZE).each do |i|
           result << self[i, j]
         end
         result << "\n"
@@ -47,19 +57,16 @@ module Game
             di = 0
             supers = 0
             while i + di < SIZE && Token.same?(token, self[i + di, j])
-              if self[i + di, j].super?
-                supers += 1
-              end
+              supers += 1 if self[i + di, j].super?
               di += 1
             end
-            if di >= 3
-              groups.push(Group.new(i, j, "horizontal", di, token.downcase, supers))
-            end
+            groups.push(Group.new(i, j, "horizontal", di, token.downcase, supers)) if di >= 3
             i += di - 1
           end
           i += 1
         end
         j += 1
+        i = 0
       end
 
       # Check for horizontal groups
@@ -71,19 +78,16 @@ module Game
             dj = 0
             supers = 0
             while j + dj < SIZE && Token.same?(token, self[i, j + dj])
-              if self[i, j + dj].super?
-                supers += 1
-              end
+              supers += 1 if self[i, j + dj].super?
               dj += 1
             end
-            if dj >= 3
-              groups.push(Group.new(i, j, "vertical", dj, token.downcase, supers))
-            end
+            groups.push(Group.new(i, j, "vertical", dj, token.downcase, supers)) if dj >= 3
             j += dj - 1
           end
           j += 1
         end
         i += 1
+        j = 0
       end
 
       groups
@@ -152,6 +156,14 @@ module Game
       false
     end
 
+    def generate_random_without_groups
+      begin
+        generate_full_random
+        normalize
+      end while moves.empty?
+      clear_supers
+    end
+
     def generate_random_keeping_some_vomit
       vomits = cells_of_type(Token::VOMIT)
       unless vomits.empty?
@@ -170,11 +182,12 @@ module Game
 
     def normalize
       collected_groups = []
-      while groups?
-        gs = groups
+      gs = groups
+      until gs.empty?
         destroy_groups(gs)
         collected_groups += gs
         compact
+        gs = groups
       end
       if @group_collection_handler
         collected_groups.each { |g| @group_collection_handler.call(g) }
@@ -182,8 +195,8 @@ module Game
       collected_groups
     end
 
-    def swap_cells(source, destination)
-      self[source[0], source[1]], self[destination[0], destination[1]] = self[destination[0], destination[1]], self[source[0], source[1]]
+    def swap_cells(src, dst)
+      self[src[0], src[1]], self[dst[0], dst[1]] = self[dst[0], dst[1]], self[src[0], src[1]]
       normalize
     end
 
@@ -281,11 +294,13 @@ module Game
       compacted = true
       while compacted
         compacted = false
-        each_cell_from_bottom do |i, j|
-          if self[i, j] == Token::NONE
-            self[i, j] = self[i, j - 1]
-            self[i, j - 1] = Token::NONE
-            compacted = true
+        (SIZE-1).downto(1) do |j|
+          (0...SIZE).each do |i|
+            if self[i, j] == Token::NONE
+              self[i, j] = self[i, j - 1]
+              self[i, j - 1] = Token::NONE
+              compacted = true
+            end
           end
         end
         (0...SIZE).each do |i|
@@ -323,14 +338,6 @@ module Game
       each_cell_from_top do |i, j|
         self[i, j] = generate_cell
       end
-    end
-
-    def generate_random_without_groups
-      begin
-        generate_full_random
-        normalize
-      end while moves.empty?
-      clear_supers
     end
 
     def cells_of_type(token)

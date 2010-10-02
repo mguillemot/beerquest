@@ -1,16 +1,19 @@
 %h1 Board
-%code
-  = debug @board.dump
+%ul
+  - @steps.each do |step|
+    - if step.class == Game::Board
+      %li= board(step)
+    - else
+      %li= step
+
 %h1 Groups
 %code
   = debug @board.groups
+
 %h1 Moves
 %code
   = debug @board.moves
 
-%ol
-  - mt = Game::DeadBeafRandom.new(5483)
-  = debug mt
-  - 1000.times do
-    %li
-      = "#{mt.next}"
+%h1 Replay
+%code
+  = debug @replay

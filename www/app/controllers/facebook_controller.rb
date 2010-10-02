@@ -32,15 +32,36 @@ class FacebookController < ApplicationController
   end
 
   def test
-    @board = Game::Board.new(12345)
-    @board.decode "brrwbbaf" \
-                  "rlbtwabf" \
-                  "rrrlfrwr" \
-                  "bltaraar" \
-                  "rrabwrwl" \
-                  "tbaltwrt" \
-                  "rarfftrb" \
-                  "lbalatlr"
+    encoded_game = '[{"dx":6,"turn":0,"dy":3,"type":"swap","sy":3,"time":27849,"sx":7},{"piss":9,"stack":"b","type":"status","vomit":9,"turn":1,"time":27897,"capa2":"","board":"blrffbaawrwlawtawaabfbwtflrlarfltwwtabtwfwwarbrwrabfawtaaatrwtfr","capa1":""}]'
+    seed = 1234
+    @board = Game::Board.new(seed)
+    @board.generate_random_without_groups
+    @replay = JSON.parse(encoded_game, :symbolize_names => true)
+    @steps = []
+    @steps.push("Initial status with seed=#{seed}")
+    @steps.push(@board.dup)
+    @replay.each do |r|
+      case r[:type]
+        when "swap"
+          src = [r[:sx], r[:sy]]
+          dst = [r[:dx], r[:dy]]
+          @steps.push("Swapping #{src.inspect} and #{dst.inspect}")
+          @board.swap_cells(src, dst)
+          @steps.push(@board.dup)
+        else
+          @steps.push("Ignoring \"#{r[:type]}\"")
+      end
+    end
+
+
+#    @board.decode "brrwbbaf" \
+#                  "rlbtwabf" \
+#                  "rrrlfrwr" \
+#                  "bltaraar" \
+#                  "rrabwrwl" \
+#                  "tbaltwrt" \
+#                  "rarfftrb" \
+#                  "lbalatlr"
     render :layout => false
   end
 

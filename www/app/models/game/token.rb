@@ -19,9 +19,7 @@ module Game
     end
 
     def self.same?(t1, t2)
-      t1.downcase!
-      t2.downcase!
-      (t1 == t2)
+      (t1.downcase == t2.downcase)
     end
 
   end

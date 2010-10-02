@@ -1,5 +1,5 @@
 module Game
-  class DeadBeafRandom
+  class DeadBeefRandom
 
     def initialize(seed)
       @seed = seed

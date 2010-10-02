@@ -6,7 +6,8 @@ class ScoresController < ApplicationController
     replay = Replay.first(:token => params[:token], :token_use_time => nil, :ip => request.remote_ip)
     result = {}
     if replay
-      replay.seed = rand(2**31-1)
+      #replay.seed = rand(2**31-1) # TODO réactiver
+      replay.seed = 1234
       replay.token_use_time = DateTime.now
       if replay.save
         result[:replay_id] = replay.id

@@ -6,7 +6,7 @@ class HomeController < FacebookController
 
   def bar
     @bar = Bar.get(params[:id])
-    @required_version = "0.91"
+    @required_version = "0.92"
     @mode = "solo"
     @replay = @account.replays.create(:bar => @bar, :token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip)
     unless @replay.saved?
