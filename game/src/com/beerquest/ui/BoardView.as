@@ -108,6 +108,9 @@ public class BoardView extends UIComponent {
     public function processEvent(e:Event):void {
         if (_currentAction == "") {
             switch (e.type) {
+                case GameEvent.RESYNC:
+                    onResync(e as GameEvent);
+                    break;
                 case GameEvent.GAME_START:
                     onGameStart(e as GameEvent);
                     break;
@@ -309,6 +312,12 @@ public class BoardView extends UIComponent {
                 _pissLayer.x = 0;
             }
         }
+    }
+
+    private function onResync(e:GameEvent):void {
+        startAction("resync", e.board);
+        endAction("resync");
+        trace("Board resynched.");
     }
 
     private function onGameStart(e:GameEvent):void {

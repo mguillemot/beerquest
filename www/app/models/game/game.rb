@@ -57,11 +57,11 @@ module Game
         value = 100
       end
       @piss = value
-      if value >= 90
+      if value >= 100
         @board.pisslevel = 3
-      elsif value >= 80
+      elsif value >= 90
         @board.pisslevel = 2
-      elsif value >= 70
+      elsif value >= 80
         @board.pisslevel = 1
       else
         @board.pisslevel = 0

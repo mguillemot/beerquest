@@ -13,6 +13,7 @@ public class GameEvent extends Event {
     public static const GAME_START:String = "GameStart";
     public static const GAME_OVER:String = "GameOver";
     public static const CURRENT_TURN_CHANGED:String = "CurrentTurnChanged";
+    public static const RESYNC:String = "Resync";
 
     public function GameEvent(type:String, board:BoardState = null) {
         super(type, true);

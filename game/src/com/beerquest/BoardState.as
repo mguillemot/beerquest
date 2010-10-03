@@ -1,8 +1,10 @@
 package com.beerquest {
 import com.beerquest.events.BoardEvent;
+import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 
+import flash.events.Event;
 import flash.geom.Point;
 
 public class BoardState {
@@ -271,14 +273,15 @@ public class BoardState {
             destroyGroups(groups);
             trace("[BoardState] groups destroyed");
             if (_game != null && !inhibitEvents) {
+                trace("[BoardState] dispatch collect event for " + groups.length + " groups");
+                _game.dispatchEvent(new GroupCollectionEvent(groups));
                 groups = _game.collectGroups(groups);
             }
             trace("[BoardState] groups collected by the game. Piss level is now " + pissLevel);
             compact();
             trace("[BoardState] compacted");
             if (_game != null && !inhibitEvents) {
-                trace("[BoardState] dispatch collect event for " + groups.length + " groups");
-                _game.dispatchEvent(new GroupCollectionEvent(groups, clone()));
+                _game.dispatchEvent(new GameEvent(GameEvent.RESYNC, clone()));
             }
         }
         if (!inhibitEvents && computeMoves().length == 0) {

@@ -5,7 +5,7 @@ public class GroupCollectionEvent extends GameEvent {
 
     public static const GROUPS_COLLECTED:String = "GroupsCollected";
 
-    public function GroupCollectionEvent(groups:Array, board:BoardState) {
+    public function GroupCollectionEvent(groups:Array) {
         super(GROUPS_COLLECTED, board);
         _groups = groups;
     }
