@@ -111,7 +111,7 @@ public class Game extends EventDispatcher {
                 board.createVomit(3);
                 break;
         }
-        me.useCapacity(capacity);
+        me.useCapacity(capacity, token);
     }
 
     public function collectGroups(groups:Array):Array {

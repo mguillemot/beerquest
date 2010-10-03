@@ -64,7 +64,7 @@ public class GameStats {
         });
     }
 
-    public function capacityUsed(c:Capacity):void {
+    public function capacityUsed(c:Capacity, targetToken:TokenType):void {
         switch (c) {
             case Capacity.AMBER_FURY_BAR:
                 capaAmberUsed++;
@@ -89,7 +89,8 @@ public class GameStats {
             type: "capacity",
             turn: totalTurns,
             time: elapsedTime,
-            capacity: c.encodedState()
+            capacity: c.encodedState(),
+            target: (targetToken != null) ? targetToken.repr : ""
         });
     }
 

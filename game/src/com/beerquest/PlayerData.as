@@ -100,11 +100,11 @@ public class PlayerData extends EventDispatcher {
         }
     }
 
-    public function useCapacity(c:Capacity):Boolean {
+    public function useCapacity(c:Capacity, targetToken:TokenType):Boolean {
         for (var i:int = Constants.MAX_CAPACITIES - 1; i >= 0; i--) {
             if (_capacities.getItemAt(i) == c) {
                 _capacities.setItemAt(Capacity.NONE, i);
-                _game.dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_EXECUTED, c));
+                _game.dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_EXECUTED, c, targetToken));
                 return true;
             }
         }

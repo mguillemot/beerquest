@@ -44,7 +44,7 @@ public class StatsModule extends UIComponent {
     }
 
     private function onPiss(e:GameEvent):void {
-        _stats.pissCount++;
+        _stats.pissed();
     }
 
     private function onGameOver(e:GameEvent):void {
@@ -74,7 +74,7 @@ public class StatsModule extends UIComponent {
     }
 
     private function onCapacityExecuted(e:CapacityEvent):void {
-        _stats.capacityUsed(e.capacity);
+        _stats.capacityUsed(e.capacity, e.targetToken);
     }
 
     public function uploadScore():void {
