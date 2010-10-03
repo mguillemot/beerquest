@@ -1,5 +1,5 @@
 APP_PATH = "/home/www/www.bq-4.com/www"
-LOG_PATH = "/home/www/www.bq-4.com/www/log"
+LOG_PATH = "/var/log/unicorn"
 SYS_PATH = "/var/run/unicorn"
 
 
