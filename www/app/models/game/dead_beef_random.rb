@@ -2,6 +2,9 @@ module Game
   class DeadBeefRandom
 
     def initialize(seed)
+      if seed.class != Fixnum
+        throw "DeadBeefRandom should be initialized with integer seeds"
+      end
       @seed = seed
       @beef = 0xDEADBEEF
     end

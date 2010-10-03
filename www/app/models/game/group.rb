@@ -8,7 +8,7 @@ module Game
       @y = y
       @direction = direction
       @length = length
-      @token = token
+      @token = token.downcase
       @supers = supers
     end
 

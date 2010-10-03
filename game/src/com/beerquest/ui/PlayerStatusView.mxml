@@ -139,6 +139,7 @@
         <ui:ProgressBar x="12" y="12" width="170" height="16" progress="{Constants.GAME.me.vomit}" emptyColor="0x619f00"
                         fullColorLight="0xbbf900" fullColorDark="0x82d500" alert="true"/>
         <mx:Image source="@Embed(source='../../../assets/image/barre-vomi.png')"/>
+        <mx:Label text="{Constants.GAME.me.vomit}" fontSize="24" color="red"/>
     </mx:Canvas>
 
     <mx:Spacer height="5"/>
@@ -151,6 +152,7 @@
                   mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
                   visible="{Constants.GAME.me.piss >= 80}"/>
         <mx:Image source="@Embed(source='../../../assets/image/barre-pisse.png')"/>
+        <mx:Label text="{Constants.GAME.me.piss}" fontSize="24" color="red"/>
     </mx:Canvas>
 
     <mx:Spacer height="10"/>

@@ -8,7 +8,9 @@ module Game
     def initialize(seed = nil, group_collection_handler = nil)
       @cells = Token::NONE * (SIZE * SIZE)
       @pisslevel = 0
-      @rand = DeadBeefRandom.new(seed || rand())
+      if seed
+        @rand = DeadBeefRandom.new(seed)
+      end
       @group_collection_handler = group_collection_handler
     end
 
@@ -214,7 +216,7 @@ module Game
 
     def transform_cells(cells, target, reset_super)
       cells.each do |cell|
-        token = (!reset_super && self[cell[0], cell[1].super?]) ? target.upcase : target
+        token = (!reset_super && self[cell[0], cell[1]].super?) ? target.upcase : target
         self[cell[0], cell[1]] = token
       end
       normalize
@@ -223,7 +225,7 @@ module Game
     def transform_tokens_of_type(source, target)
       cells = []
       each_cell_from_top do |i, j|
-        cells.push [i, j] if self[i, j].downcase == source
+        cells.push([i, j]) if self[i, j].downcase == source
       end
       transform_cells(cells, target, false)
       cells

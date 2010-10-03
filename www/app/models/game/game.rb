@@ -1,15 +1,32 @@
 module Game
   class Game
 
-
-    def initialize(seed)
-      @board = Board.new(seed, Proc.new { |g| collect(g) })
+    def initialize
       @score = 0
       @collection = []
       @capacities = []
       @piss = 0
       @vomit = 0
       @remaining_turns = Constants::INITIAL_TURNS
+    end
+
+    attr_reader :board, :score, :collection, :capacities, :remaining_turns
+
+    def start(seed)
+      @board = Board.new(seed, Proc.new { |g| collect(g) })
+      @board.generate_random_without_groups
+    end
+
+    def dup
+      result = Game.new
+      result.board = @board.dup
+      result.score = @score
+      result.collection = @collection.dup
+      result.capacities = @capacities.dup
+      result.piss = @piss
+      result.vomit = @vomit
+      result.remaining_turns = @remaining_turns
+      result
     end
 
     def swap_cells(source, destination)
@@ -23,7 +40,7 @@ module Game
         @score += 5
         @collection[-3..-1] = nil
       end
-      excess = 12 - @collection.length + collection_head
+      excess = @collection.length - collection_head - 12
       if excess > 0
         excess.times { @collection.pop }
       end
@@ -52,7 +69,7 @@ module Game
     end
 
     def do_piss
-      self.piss = self.piss * 0.4
+      self.piss *= 0.4
     end
 
     def vomit
@@ -71,28 +88,37 @@ module Game
 
     def execute_capacity(capacity, param)
       case capacity
-        when Capacity::DIVINE_PEANUTS
+        when Token::FOOD
           @board.transform_tokens_of_type(Token::LIQUOR, Token::WATER)
-        when Capacity::WATERFALL
+        when Token::WATER
           @board.destroy_tokens_of_type(Token::VOMIT)
-        when Capacity::BIG_BANG
+        when Token::LIQUOR
           @board.destroy_tokens_of_type(param)
-        when Capacity::BLOND_FURY_BAR
+        when Token::BLOND_BEER
           @score += @board.destroy_tokens_of_type(Token::BLOND_BEER)
-        when Capacity::BROWN_FURY_BAR
+        when Token::BROWN_BEER
           @score += @board.destroy_tokens_of_type(Token::BROWN_BEER)
-        when Capacity::AMBER_FURY_BAR
+        when Token::AMBER_BEER
           @score += @board.destroy_tokens_of_type(Token::AMBER_BEER)
-        when Capacity::BLOODY_MARY
+        when Token::TOMATO_JUICE
           @remaining_turns += 6
           @board.create_vomit(3)
       end
       if @capacities[0] == capacity
-        @capacities[0] = nil
+        @capacities[0..0] = nil
       elsif @capacities[1] == capacity
-        @capacities[1] = nil
+        @capacities[1..1] = nil
       end
     end
+
+    def skip_turns(turns)
+      @remaining_turns -= turns
+      # TODO game over
+    end
+
+    protected
+
+    attr_writer :board, :score, :collection, :capacities, :remaining_turns
 
     private
 
@@ -129,11 +155,6 @@ module Game
       skip_turns(3)
     end
 
-    def skip_turns(turns)
-      @remaining_turns -= turns
-      # TODO game over
-    end
-
     def normalize_board
       @board.normalize
       if @board.moves.empty?
@@ -145,10 +166,13 @@ module Game
       if group.collected_token
         add_collected_token(group.collected_token)
       end
-      @piss += group.piss_gain
-      @vomit += group.vomit_gain
-      @remaining_turns += group.turns_gain
-      @score += group.score_gain
+      self.piss += group.piss_gain
+      self.vomit += group.vomit_gain
+      self.remaining_turns += group.turns_gain
+      self.score += group.score_gain
+      if group.length >= 4
+        gain_capacity(group.token)
+      end
     end
 
   end

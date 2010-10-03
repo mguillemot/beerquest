@@ -19,6 +19,6 @@ BeerQuest::Application.routes.draw do
   post "postscore", :to => "scores#postscore", :as => 'post_score'
 
   # Test pages
-  get "debug", :to => "facebook#test"
+  get "debug/:id", :to => "facebook#test"
 
 end

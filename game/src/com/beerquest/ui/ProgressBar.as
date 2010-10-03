@@ -9,6 +9,7 @@ import flash.events.Event;
 
 import flash.geom.Matrix;
 
+import mx.controls.Label;
 import mx.core.UIComponent;
 
 public class ProgressBar extends UIComponent {

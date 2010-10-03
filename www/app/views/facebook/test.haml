@@ -1,19 +1,11 @@
-%h1 Board
+%h1 Decoded replay
 %ul
   - @steps.each do |step|
-    - if step.class == Game::Board
-      %li= board(step)
+    - if step.class == Game::Game
+      %li= game(step)
     - else
       %li= step
 
-%h1 Groups
-%code
-  = debug @board.groups
-
-%h1 Moves
-%code
-  = debug @board.moves
-
-%h1 Replay
+%h1 Raw replay
 %code
   = debug @replay

@@ -32,22 +32,35 @@ class FacebookController < ApplicationController
   end
 
   def test
-    encoded_game = '[{"dx":6,"turn":0,"dy":3,"type":"swap","sy":3,"time":27849,"sx":7},{"piss":9,"stack":"b","type":"status","vomit":9,"turn":1,"time":27897,"capa2":"","board":"blrffbaawrwlawtawaabfbwtflrlarfltwwtabtwfwwarbrwrabfawtaaatrwtfr","capa1":""}]'
-    seed = 1234
-    @board = Game::Board.new(seed)
-    @board.generate_random_without_groups
-    @replay = JSON.parse(encoded_game, :symbolize_names => true)
+    @replay = Replay.get(params[:id])
+    @game = Game::Game.new
+    @game.start(@replay.seed)
+    decoded_replay = JSON.parse(@replay.replay, :symbolize_names => true)
     @steps = []
-    @steps.push("Initial status with seed=#{seed}")
-    @steps.push(@board.dup)
-    @replay.each do |r|
+    @steps.push("Initial status with seed=#{@replay.seed}")
+    @steps.push(@game.dup)
+    # TODO vérifier que les opérations (ex: swap) sont autorisées
+    decoded_replay.each do |r|
       case r[:type]
         when "swap"
           src = [r[:sx], r[:sy]]
           dst = [r[:dx], r[:dy]]
           @steps.push("Swapping #{src.inspect} and #{dst.inspect}")
-          @board.swap_cells(src, dst)
-          @steps.push(@board.dup)
+          @game.swap_cells(src, dst)
+          @steps.push(@game.dup)
+        when "capacity"
+          @steps.push("Using capacity \"#{r[:capacity]}\" targetting \"#{r[:target]}\"")
+          unless @game.capacities.include? r[:capacity]
+            @steps.push("ERROR: No such capacity is usable")
+          else
+            @game.execute_capacity(r[:capacity], r[:target])
+          end
+        when "piss"
+          before_piss = @game.piss
+          @game.do_piss
+          @steps.push("Pissed: #{before_piss} => #{@game.piss}")
+        when "reset"
+          @steps.push("A reset happened here")
         else
           @steps.push("Ignoring \"#{r[:type]}\"")
       end

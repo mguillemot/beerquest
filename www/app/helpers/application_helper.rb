@@ -13,9 +13,22 @@ module ApplicationHelper
         end
       end
       result += "<br/>"
+      if board.pisslevel > 0 && j == Game::Board::SIZE - 1 - board.pisslevel
+        result += "~~~~~~~~<br/>"
+      end
     end
     result += "</code>"
     @previous_board = board
+    result.html_safe
+  end
+
+  def game(game)
+    result = "<span class=\"score\">Score = #{game.score}</span> "
+    result += "<span class=\"piss-vomit\">Vomit = #{game.vomit} Piss = #{game.piss}</span> "
+    result += "<span class=\"turns\">Remaining turns = #{game.remaining_turns}</span> "
+    result += "<span class=\"score\">Token collection = #{game.collection.inspect}</span> "
+    result += "<span class=\"score\">Capacities = #{game.capacities.inspect}</span> "
+    result += "<div class=\"board\">#{board(game.board)}</div>"
     result.html_safe
   end
 
