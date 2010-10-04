@@ -1,6 +1,7 @@
 package com.beerquest.ui {
 import com.beerquest.*;
 import com.beerquest.events.BoardEvent;
+import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
@@ -95,12 +96,20 @@ public class BoardView extends UIComponent {
         addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
-        Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
+        // Events that should just be resynchro
+        Constants.GAME.addEventListener(GameEvent.PISS, processEvent);
+        Constants.GAME.addEventListener(GameEvent.VOMIT, processEvent);
+        Constants.GAME.addEventListener(GameEvent.BEER_COLLECTED, processEvent);
+        Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, processEvent);
+        Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, processEvent);
         Constants.GAME.addEventListener(GameEvent.GAME_OVER, processEvent);
         Constants.GAME.addEventListener(GameEvent.TURN_BEGIN, processEvent);
-        Constants.GAME.addEventListener(GameEvent.TURN_END, processEvent);
         Constants.GAME.addEventListener(GameEvent.PHASE_BEGIN, processEvent);
         Constants.GAME.addEventListener(GameEvent.PHASE_END, processEvent);
+
+        // Events that are properly processed
+        Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
+        Constants.GAME.addEventListener(GameEvent.TURN_END, processEvent);
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
@@ -110,29 +119,18 @@ public class BoardView extends UIComponent {
     }
 
     public function processEvent(e:Event):void {
-        if (_currentAction == "") {
+        if (_currentAction == "swapping" && e.type == GemsSwappedEvent.GEMS_SWAPPED) {
+            trace("*********** EXECUTE " + e.type);
+            onGemsSwapped(e as GemsSwappedEvent);
+            dispatchEvent(new UiGameEvent(e));
+        } else if (_currentAction == "") {
             trace("*********** EXECUTE " + e.type);
             switch (e.type) {
-                case GameEvent.TURN_BEGIN:
-                    onTurnBegin(e as GameEvent);
-                    break;
-                case GameEvent.TURN_END:
-                    onTurnEnd(e as GameEvent);
-                    break;
-                case GameEvent.PHASE_BEGIN:
-                    onPhaseBegin(e as GameEvent);
-                    break;
-                case GameEvent.PHASE_END:
-                    onPhaseEnd(e as GameEvent);
-                    break;
-                case GameEvent.RESYNC:
-                    onResync(e as GameEvent);
-                    break;
                 case GameEvent.GAME_START:
                     onGameStart(e as GameEvent);
                     break;
-                case GameEvent.GAME_OVER:
-                    onGameOver(e as GameEvent);
+                case GameEvent.TURN_END:
+                    checkSynchro();
                     break;
                 case BoardEvent.BOARD_RESET:
                     onBoardReset(e as BoardEvent);
@@ -146,9 +144,6 @@ public class BoardView extends UIComponent {
                 case GroupCollectionEvent.GROUPS_COLLECTED:
                     onGroupsCollected(e as GroupCollectionEvent);
                     break;
-                case GemsSwappedEvent.GEMS_SWAPPED:
-                    onGemsSwapped(e as GemsSwappedEvent);
-                    break;
                 case PissLevelEvent.PISS_LEVEL_CHANGED:
                     onPissLevelChanged(e as PissLevelEvent);
                     break;
@@ -156,33 +151,15 @@ public class BoardView extends UIComponent {
                     startBigBang();
                     break;
                 default:
-                    throw "Unkown event buffered: " + e.type;
+                    trace("No BoardView action for " + e.type);
+                    break;
             }
             dispatchEvent(new UiGameEvent(e));
         } else {
             trace(e.type + " received while " + _currentAction + " is in progress: buffering");
             _eventBuffer.push(e);
         }
-    }
-
-    private function onTurnBegin(e:GameEvent):void {
-        startAction("onTurnBegin");
-        endAction("onTurnBegin");
-    }
-
-    private function onPhaseBegin(e:GameEvent):void {
-        startAction("onPhaseBegin");
-        endAction("onPhaseBegin");
-    }
-
-    private function onPhaseEnd(e:GameEvent):void {
-        startAction("onPhaseEnd");
-        endAction("onPhaseEnd");
-    }
-
-    private function onTurnEnd(e:GameEvent):void {
-        startAction("onTurnEnd");
-        endAction("onTurnEnd");
+        nextEvent();
     }
 
     private function onMouseUp(e:MouseEvent):void {
@@ -351,22 +328,11 @@ public class BoardView extends UIComponent {
         }
     }
 
-    private function onResync(e:GameEvent):void {
-        startAction("resync", e.board);
-        endAction("resync");
-        trace("Board resynched.");
-    }
-
     private function onGameStart(e:GameEvent):void {
         startAction("gameStart", e.board);
         endAction("gameStart");
         onBoardReset(new BoardEvent(BoardEvent.BOARD_RESET, new Array(), _currentActionBoardView));
         trace("Game started.");
-    }
-
-    private function onGameOver(e:GameEvent):void {
-        dispatchEvent(new UiGameEvent(e));
-        trace("Game ended.");
     }
 
     private function onBoardReset(e:BoardEvent):void {
@@ -477,12 +443,12 @@ public class BoardView extends UIComponent {
     }
 
     private function onGemsSwapped(e:GemsSwappedEvent):void {
-        startAction("onGemsSwapped", e.board);
+        continueAction("swapping", "swapping", e.board);
         var s:Token = getToken(e.sx, e.sy);
         var d:Token = getToken(e.dx, e.dy);
         setToken(e.sx, e.sy, d);
         setToken(e.dx, e.dy, s);
-        endAction("onGemsSwapped");
+        endAction("swapping");
     }
 
     private function generateToken(type:TokenType, superToken:Boolean):Token {
@@ -554,7 +520,6 @@ public class BoardView extends UIComponent {
         timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
             if (valid) {
                 Constants.GAME.swapCells(sx, sy, x, y);
-                endAction("swapping");
             } else {
                 trace("Invalid swap");
                 if (dx != 0) {
@@ -592,7 +557,7 @@ public class BoardView extends UIComponent {
         dispatchEvent(new Event("currentActionChanged"));
     }
 
-    private function continueAction(oldAction:String, action:String):void {
+    private function continueAction(oldAction:String, action:String, boardView:BoardState = null):void {
         if (action == "") {
             throw "Invalid empty action";
         }
@@ -602,6 +567,10 @@ public class BoardView extends UIComponent {
         trace("(frame " + _currentFrame + ") CONTINUE " + oldAction + " => " + action);
         _currentAction = action;
         _currentActionStart = _currentFrame;
+        if (boardView != null) {
+            trace("Updated board view to:\n" + boardView.toString());
+            _currentActionBoardView = boardView;
+        }
         dispatchEvent(new Event("currentActionChanged"));
     }
 
@@ -614,12 +583,14 @@ public class BoardView extends UIComponent {
         _currentActionStart = _currentFrame;
         dispatchEvent(new Event("currentActionChanged"));
         refreshStats();
-        if (_eventBuffer.length > 0) {
+        nextEvent();
+    }
+
+    private function nextEvent():void {
+        if (_currentAction == "" && _eventBuffer.length > 0) {
             var e:Event = _eventBuffer.shift();
             trace("Unstack pending " + e.type);
             processEvent(e);
-        } else if (oldAction != "gameStart") {
-            checkSynchro();
         }
     }
 
@@ -878,18 +849,17 @@ public class BoardView extends UIComponent {
     }
 
     private function refreshStats():void {
-        var moves:Array = boardState.computeMoves();
-        availableMoves = moves.length;
-        if (moves.length > 0) {
-            moves = Utils.randomizeArray(moves);
-            setHint(moves[0].hintX, moves[0].hintY);
-        } else {
-            setHint(-1, -1);
+        var state:BoardState = boardState;
+        var moves:Array = state.computeMoves();
+        if (moves != null) {
+            availableMoves = moves.length;
+            if (moves.length > 0) {
+                moves = Utils.randomizeArray(moves);
+                setHint(moves[0].hintX, moves[0].hintY);
+            } else {
+                setHint(-1, -1);
+            }
         }
-        /*trace("available moves:");
-         for each (var move:Object in state.computeMoves()) {
-         trace("  " + move.type + " of " + move.startX + ":" + move.startY);
-         }*/
     }
 
     private function setHint(x:int, y:int):void {

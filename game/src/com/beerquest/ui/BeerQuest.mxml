@@ -107,19 +107,10 @@
 
         private function startGame(mode:String, me:PlayerData, seed:int):void {
             addEventListener(UiGameEvent.UI_GAME_EVENT, onUiGameEvent);
-            Constants.GAME.addEventListener(GameEvent.VOMIT, onInstantGameEvent);
-            Constants.GAME.addEventListener(GameEvent.PISS, onInstantGameEvent);
-            Constants.GAME.addEventListener(GameEvent.BEER_COLLECTED, onInstantGameEvent);
-            Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, onInstantGameEvent);
-            Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onInstantGameEvent);
             Constants.GAME.start(mode, me, seed);
             if (!_allowStart && !Constants.DEBUG) {
                 Constants.GAME.endOfGame();
             }
-        }
-
-        private function onInstantGameEvent(e:Event):void {
-            dispatchEvent(new UiGameEvent(e));
         }
 
         private function onUiGameEvent(e:UiGameEvent):void {

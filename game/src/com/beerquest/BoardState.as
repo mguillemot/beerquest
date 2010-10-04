@@ -349,6 +349,11 @@ public class BoardState {
     }
 
     public function computeMoves(piss:Boolean = true):Array {
+        if (hasGroups) {
+            trace("WARN: impossible to compute moves on a board that has groups");
+            return null;
+        }
+
         var moves:Array = new Array();
         var i:int, j:int;
         var movePissLevel:int = (piss) ? pissLevel : 0;
