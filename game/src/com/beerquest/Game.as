@@ -1,5 +1,7 @@
 package com.beerquest {
+import com.beerquest.events.BoardEvent;
 import com.beerquest.events.GameEvent;
+import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
 import com.beerquest.ui.events.UiScoreEvent;
@@ -26,13 +28,25 @@ public class Game extends EventDispatcher {
         dispatchEvent(event);
         switch (event.type) {
             case GameEvent.TURN_END:
-                if (_board.computeMoves().length == 0) {
+                if (remainingTurns <= 0) {
+                    endOfGame();
+                } else if (_board.computeMoves().length == 0) {
+                    trace("No more move availables: reset board");
                     _board.generateRandomKeepingSomeVomit(InstantEventBuffer.INSTANCE);
                 }
                 break;
             case GroupCollectionEvent.GROUPS_COLLECTED:
                 var ge:GroupCollectionEvent = event as GroupCollectionEvent;
                 collectGroups(ge.groups);
+                break;
+            case GemsSwappedEvent.GEMS_SWAPPED:
+                newTurn();
+                break;
+            case BoardEvent.BOARD_RESET:
+                skipTurns(3);
+                if (remainingTurns <= 0) {
+                    endOfGame();
+                }
                 break;
         }
     }
@@ -88,9 +102,6 @@ public class Game extends EventDispatcher {
         _currentTurn++;
         dispatchEvent(new Event("remainingTurnsChanged"));
         execute(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
-        if (remainingTurns <= 0) {
-            endOfGame();
-        }
     }
 
     public function executeCapacity(capacity:Capacity, token:TokenType, eventBuffer:EventBuffer):void {

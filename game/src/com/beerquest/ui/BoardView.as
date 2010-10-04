@@ -104,12 +104,12 @@ public class BoardView extends UIComponent {
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, processEvent);
         Constants.GAME.addEventListener(GameEvent.GAME_OVER, processEvent);
         Constants.GAME.addEventListener(GameEvent.TURN_BEGIN, processEvent);
+        Constants.GAME.addEventListener(GameEvent.TURN_END, processEvent);
         Constants.GAME.addEventListener(GameEvent.PHASE_BEGIN, processEvent);
         Constants.GAME.addEventListener(GameEvent.PHASE_END, processEvent);
 
         // Events that are properly processed
         Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
-        Constants.GAME.addEventListener(GameEvent.TURN_END, processEvent);
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
@@ -123,14 +123,13 @@ public class BoardView extends UIComponent {
             trace("*********** EXECUTE " + e.type);
             onGemsSwapped(e as GemsSwappedEvent);
             dispatchEvent(new UiGameEvent(e));
+        } else if (e.type == GameEvent.TURN_END) {
+
         } else if (_currentAction == "") {
             trace("*********** EXECUTE " + e.type);
             switch (e.type) {
                 case GameEvent.GAME_START:
                     onGameStart(e as GameEvent);
-                    break;
-                case GameEvent.TURN_END:
-                    checkSynchro();
                     break;
                 case BoardEvent.BOARD_RESET:
                     onBoardReset(e as BoardEvent);
@@ -583,14 +582,18 @@ public class BoardView extends UIComponent {
         _currentActionStart = _currentFrame;
         dispatchEvent(new Event("currentActionChanged"));
         refreshStats();
-        nextEvent();
+        nextEvent(oldAction != "gameStart");
     }
 
-    private function nextEvent():void {
-        if (_currentAction == "" && _eventBuffer.length > 0) {
-            var e:Event = _eventBuffer.shift();
-            trace("Unstack pending " + e.type);
-            processEvent(e);
+    private function nextEvent(checkSync:Boolean = true):void {
+        if (_currentAction == "") {
+            if (_eventBuffer.length > 0) {
+                var e:Event = _eventBuffer.shift();
+                trace("Unstack pending " + e.type);
+                processEvent(e);
+            } else if (checkSync) {
+                checkSynchro();
+            }
         }
     }
 

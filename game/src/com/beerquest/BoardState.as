@@ -113,7 +113,7 @@ public class BoardState {
         }
         do {
             generateFullRandom();
-            normalize(eventBuffer);
+            normalize(DiscardEventBuffer.INSTANCE);
             for each (var cell:Point in vomit) {
                 setCell(cell.x, cell.y, TokenType.VOMIT, false);
             }
