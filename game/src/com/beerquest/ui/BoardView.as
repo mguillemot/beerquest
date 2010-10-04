@@ -97,6 +97,10 @@ public class BoardView extends UIComponent {
 
         Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
         Constants.GAME.addEventListener(GameEvent.GAME_OVER, processEvent);
+        Constants.GAME.addEventListener(GameEvent.TURN_BEGIN, processEvent);
+        Constants.GAME.addEventListener(GameEvent.TURN_END, processEvent);
+        Constants.GAME.addEventListener(GameEvent.PHASE_BEGIN, processEvent);
+        Constants.GAME.addEventListener(GameEvent.PHASE_END, processEvent);
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
@@ -107,7 +111,20 @@ public class BoardView extends UIComponent {
 
     public function processEvent(e:Event):void {
         if (_currentAction == "") {
+            trace("*********** EXECUTE " + e.type);
             switch (e.type) {
+                case GameEvent.TURN_BEGIN:
+                    onTurnBegin(e as GameEvent);
+                    break;
+                case GameEvent.TURN_END:
+                    onTurnEnd(e as GameEvent);
+                    break;
+                case GameEvent.PHASE_BEGIN:
+                    onPhaseBegin(e as GameEvent);
+                    break;
+                case GameEvent.PHASE_END:
+                    onPhaseEnd(e as GameEvent);
+                    break;
                 case GameEvent.RESYNC:
                     onResync(e as GameEvent);
                     break;
@@ -146,6 +163,26 @@ public class BoardView extends UIComponent {
             trace(e.type + " received while " + _currentAction + " is in progress: buffering");
             _eventBuffer.push(e);
         }
+    }
+
+    private function onTurnBegin(e:GameEvent):void {
+        startAction("onTurnBegin");
+        endAction("onTurnBegin");
+    }
+
+    private function onPhaseBegin(e:GameEvent):void {
+        startAction("onPhaseBegin");
+        endAction("onPhaseBegin");
+    }
+
+    private function onPhaseEnd(e:GameEvent):void {
+        startAction("onPhaseEnd");
+        endAction("onPhaseEnd");
+    }
+
+    private function onTurnEnd(e:GameEvent):void {
+        startAction("onTurnEnd");
+        endAction("onTurnEnd");
     }
 
     private function onMouseUp(e:MouseEvent):void {
@@ -266,7 +303,7 @@ public class BoardView extends UIComponent {
                 break;
             case 86: // v
                 if (Constants.DEBUG) {
-                    Constants.GAME.me.vomit += 10;
+                    Constants.GAME.me.gainVomit(10);
                 }
                 break;
             case 66: // b
@@ -460,7 +497,7 @@ public class BoardView extends UIComponent {
         if (_currentAction == "selectTokenToDestroy") {
             token = getToken(x, y).type;
             if (token.collectible) {
-                Constants.GAME.executeCapacity(Capacity.BIG_BANG, token);
+                Constants.GAME.executeCapacity(Capacity.BIG_BANG, token, InstantEventBuffer.INSTANCE);
                 if (_destroyCursor != 0) {
                     CursorManager.removeCursor(_destroyCursor);
                     _destroyCursor = 0;

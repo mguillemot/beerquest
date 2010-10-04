@@ -75,7 +75,7 @@ public class PlayerData extends EventDispatcher {
         return _vomit;
     }
 
-    public function set vomit(value:Number):void {
+    private function setVomit(value:Number):void {
         _vomit = value;
         if (_vomit < 0) {
             _vomit = 0;
@@ -83,10 +83,14 @@ public class PlayerData extends EventDispatcher {
             _vomit = 101;
         }
         dispatchEvent(new Event("vomitChanged"));
+    }
+
+    public function gainVomit(value:Number):void {
+        setVomit(vomit + value);
         if (vomit > 100) {
-            _game.board.createVomit(5);
-            _game.dispatchEvent(new GameEvent(GameEvent.VOMIT));
-            vomit = 30;
+            _game.board.createVomit(5, InstantEventBuffer.INSTANCE);
+            _game.execute(new GameEvent(GameEvent.VOMIT));
+            setVomit(30);
         }
     }
 
@@ -171,7 +175,7 @@ public class PlayerData extends EventDispatcher {
             c = _capacities.getItemAt(i) as Capacity;
             if (!c.enabled) {
                 _capacities.setItemAt(capacity, i);
-                _game.dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, capacity));
+                _game.execute(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, capacity));
                 return true;
             }
         }

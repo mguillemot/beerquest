@@ -38,7 +38,7 @@
         import com.adobe.serialization.json.JSON;
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
-        import com.beerquest.DeadBeefRandom;
+        import com.beerquest.InstantEventBuffer;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
         import com.beerquest.events.CapacityEvent;
@@ -86,7 +86,7 @@
                 trace("WARN: No 'token' found");
                 token = "none";
                 _allowStart = false;
-                startGame(_mode, new PlayerData(Constants.GAME), Math.random());
+                startGame(_mode, new PlayerData(Constants.GAME), 1234); // TODO ne pas commiter ça
             }
             trace("Using the following API token: " + token);
 
@@ -169,7 +169,7 @@
             if (e.capacity == Capacity.BIG_BANG) {
                 boardView.processEvent(e);
             } else {
-                Constants.GAME.executeCapacity(e.capacity);
+                Constants.GAME.executeCapacity(e.capacity, null, InstantEventBuffer.INSTANCE);
             }
         }
 

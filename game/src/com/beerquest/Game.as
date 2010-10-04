@@ -1,5 +1,6 @@
 package com.beerquest {
 import com.beerquest.events.GameEvent;
+import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
 import com.beerquest.ui.events.UiScoreEvent;
 
@@ -17,9 +18,23 @@ public class Game extends EventDispatcher {
         dispatchEvent(new Event("meChanged"));
         _rand = new DeadBeefRandom(seed);
         _board = new BoardState(_rand);
-        _board.game = this;
-        _board.generateRandomWithoutGroups();
-        dispatchEvent(new GameEvent(GameEvent.GAME_START, _board.clone()));
+        _board.generateRandomWithoutGroups(DiscardEventBuffer.INSTANCE);
+        execute(new GameEvent(GameEvent.GAME_START, _board.clone()));
+    }
+
+    internal function execute(event:Event):void {
+        dispatchEvent(event);
+        switch (event.type) {
+            case GameEvent.TURN_END:
+                if (_board.computeMoves().length == 0) {
+                    _board.generateRandomKeepingSomeVomit(InstantEventBuffer.INSTANCE);
+                }
+                break;
+            case GroupCollectionEvent.GROUPS_COLLECTED:
+                var ge:GroupCollectionEvent = event as GroupCollectionEvent;
+                collectGroups(ge.groups);
+                break;
+        }
     }
 
     public function get mode():String {
@@ -47,7 +62,7 @@ public class Game extends EventDispatcher {
     public function endOfGame():void {
         _gameOver = true;
         dispatchEvent(new Event("gameOverChanged"));
-        dispatchEvent(new GameEvent(GameEvent.GAME_OVER));
+        execute(new GameEvent(GameEvent.GAME_OVER));
     }
 
     [Bindable(event="remainingTurnsChanged")]
@@ -59,7 +74,7 @@ public class Game extends EventDispatcher {
         if (t != 0) {
             _currentTurn -= t;
             dispatchEvent(new Event("remainingTurnsChanged"));
-            dispatchEvent(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
+            execute(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
         }
     }
 
@@ -72,35 +87,35 @@ public class Game extends EventDispatcher {
     public function newTurn():void {
         _currentTurn++;
         dispatchEvent(new Event("remainingTurnsChanged"));
-        dispatchEvent(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
+        execute(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
         if (remainingTurns <= 0) {
             endOfGame();
         }
     }
 
-    public function executeCapacity(capacity:Capacity, token:TokenType = null):void {
+    public function executeCapacity(capacity:Capacity, token:TokenType, eventBuffer:EventBuffer):void {
         switch (capacity) {
             case Capacity.DIVINE_PEANUTS:
-                board.transformTokensOfType(TokenType.LIQUOR, TokenType.WATER);
+                board.transformTokensOfType(TokenType.LIQUOR, TokenType.WATER, eventBuffer);
                 break;
             case Capacity.WATERFALL:
-                board.destroyTokensOfType(TokenType.VOMIT);
+                board.destroyTokensOfType(TokenType.VOMIT, eventBuffer);
                 break;
             case Capacity.BIG_BANG:
-                board.destroyTokensOfType(token);
+                board.destroyTokensOfType(token, eventBuffer);
                 break;
             case Capacity.BLOND_FURY_BAR:
-                var blonds:int = board.destroyTokensOfType(TokenType.BLOND_BEER);
+                var blonds:int = board.destroyTokensOfType(TokenType.BLOND_BEER, eventBuffer);
                 me.fullBeers += blonds;
                 dispatchEvent(new UiScoreEvent(blonds, 0, null, null, capacity));
                 break;
             case Capacity.BROWN_FURY_BAR:
-                var browns:int = board.destroyTokensOfType(TokenType.BROWN_BEER);
+                var browns:int = board.destroyTokensOfType(TokenType.BROWN_BEER, eventBuffer);
                 me.fullBeers += browns;
                 dispatchEvent(new UiScoreEvent(browns, 0, null, null, capacity));
                 break;
             case Capacity.AMBER_FURY_BAR:
-                var ambers:int = board.destroyTokensOfType(TokenType.AMBER_BEER);
+                var ambers:int = board.destroyTokensOfType(TokenType.AMBER_BEER, eventBuffer);
                 me.fullBeers += ambers;
                 dispatchEvent(new UiScoreEvent(ambers, 0, null, null, capacity));
                 break;
@@ -108,7 +123,7 @@ public class Game extends EventDispatcher {
                 var turns:int = 6;
                 gainAdditionalTurns(turns);
                 dispatchEvent(new UiScoreEvent(0, turns, null, null, capacity));
-                board.createVomit(3);
+                board.createVomit(3, InstantEventBuffer.INSTANCE);
                 break;
         }
         me.useCapacity(capacity, token);
@@ -122,17 +137,21 @@ public class Game extends EventDispatcher {
         while (groups2.length > 0) {
             var preferred:TokenType = me.preferredPartialBeer;
             var found:Boolean = false;
+            var kept:Array = new Array();
             for (var i:int = 0; i < groups2.length; i++) {
                 group = groups2[i];
                 var collectedToken:TokenType = group.collectedToken;
                 if (collectedToken != null && TokenType.isCompatible(collectedToken, preferred)) {
                     collectGroup(group);
                     collected.push(group);
-                    groups2.splice(i, 1);
                     found = true;
+                } else {
+                    kept.push(group);
                 }
             }
-            if (!found) {
+            if (found) {
+                groups2 = kept;
+            } else {
                 group = groups2.pop();
                 collectGroup(group);
                 collected.push(group);
@@ -150,21 +169,21 @@ public class Game extends EventDispatcher {
         }
 
         me.piss += group.pissGain;
-        me.vomit += group.vomitGain;
+        me.gainVomit(group.vomitGain);
         me.fullBeers += group.beerGain;
         gainAdditionalTurns(group.turnsGain);
     }
 
     public function generateTestBoard():void {
-        _board.generateTestBoard();
+        _board.generateTestBoard(InstantEventBuffer.INSTANCE);
     }
 
     public function generateRandomKeepingSomeVomit():void {
-        _board.generateRandomKeepingSomeVomit();
+        _board.generateRandomKeepingSomeVomit(InstantEventBuffer.INSTANCE);
     }
 
     public function swapCells(sx:int, sy:int, dx:int, dy:int):void {
-        _board.swapCells(sx, sy, dx, dy);
+        _board.swapCells(sx, sy, dx, dy, InstantEventBuffer.INSTANCE);
     }
 
     public function get pissLevel():int {
@@ -174,7 +193,7 @@ public class Game extends EventDispatcher {
     public function set pissLevel(value:int):void {
         var pissRaise:Boolean = (value > _board.pissLevel);
         _board.pissLevel = value;
-        dispatchEvent(new PissLevelEvent(pissRaise));
+        execute(new PissLevelEvent(pissRaise));
     }
 
     private var _mode:String;

@@ -1,8 +1,8 @@
 package com.beerquest.events {
 import com.beerquest.BoardState;
-import com.beerquest.TokenType;
 
 public class BoardEvent extends GameEvent {
+
     public static const BOARD_RESET:String = "BoardReset";
     public static const CELLS_DESTROYED:String = "CellsDestroyed";
     public static const CELLS_TRANSFORMED:String = "CellsTransformed";

@@ -13,7 +13,7 @@ module Game
     attr_reader :board, :score, :collection, :capacities, :remaining_turns
 
     def start(seed)
-      @board = Board.new(seed, Proc.new { |g| collect(g) })
+      @board = Board.new(seed, Proc.new { |groups| collect(groups) })
       @board.generate_random_without_groups
     end
 
@@ -162,16 +162,35 @@ module Game
       end
     end
 
-    def collect(group)
-      if group.collected_token
-        add_collected_token(group.collected_token)
+    def collect(groups)
+      tokens = []
+      groups.each do |group|
+        tokens.push(group.collected_token) if group.collected_token
+        self.piss += group.piss_gain
+        self.vomit += group.vomit_gain
+        self.remaining_turns += group.turns_gain
+        self.score += group.score_gain
+        gain_capacity(group.token) if group.length >= 4
       end
-      self.piss += group.piss_gain
-      self.vomit += group.vomit_gain
-      self.remaining_turns += group.turns_gain
-      self.score += group.score_gain
-      if group.length >= 4
-        gain_capacity(group.token)
+
+      # Reorder collected tokens
+      until tokens.empty?
+        preferred = self.preferred_token
+        found = false
+        kept = []
+        tokens.each_with_index do |token, i|
+          if Token.compatible?(token, preferred)
+            add_collected_token(token)
+            found = true
+          else
+            kept.push(token)
+          end
+        end
+        if found
+          tokens = kept
+        else
+          add_collected_token(tokens.pop)
+        end
       end
     end
 

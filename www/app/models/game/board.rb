@@ -5,13 +5,13 @@ module Game
 
     attr_accessor :pisslevel
 
-    def initialize(seed = nil, group_collection_handler = nil)
+    def initialize(seed = nil, groups_collection_handler = nil)
       @cells = Token::NONE * (SIZE * SIZE)
       @pisslevel = 0
       if seed
         @rand = DeadBeefRandom.new(seed)
       end
-      @group_collection_handler = group_collection_handler
+      @groups_collection_handler = groups_collection_handler
     end
 
     def dup
@@ -191,8 +191,8 @@ module Game
         compact
         gs = groups
       end
-      if @group_collection_handler
-        collected_groups.each { |g| @group_collection_handler.call(g) }
+      if @groups_collection_handler
+        @groups_collection_handler.call(groups)
       end
       collected_groups
     end
