@@ -209,7 +209,7 @@ public class BoardState {
             }
         }
         destroyCells(toRemove, eventBuffer);
-        return count + Constants.SUPER_TOKEN_VALUE * supers;
+        return count + Constants.SUPER_GEM_VALUE * supers;
     }
 
     internal function transformTokensOfType(source:TokenType, target:TokenType, eventBuffer:EventBuffer):int {

@@ -4,6 +4,7 @@ import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
+import com.beerquest.events.ValueChangedEvent;
 import com.beerquest.ui.events.UiScoreEvent;
 
 import flash.events.Event;
@@ -68,43 +69,39 @@ public class Game extends EventDispatcher {
         return Constants.INITIAL_TOTAL_TURNS;
     }
 
-    [Bindable(event="gameOverChanged")]
     public function get gameOver():Boolean {
         return _gameOver;
     }
 
     public function endOfGame():void {
         _gameOver = true;
-        dispatchEvent(new Event("gameOverChanged"));
         execute(new GameEvent(GameEvent.GAME_OVER));
     }
 
-    [Bindable(event="remainingTurnsChanged")]
     public function get remainingTurns():int {
-        return Math.max(0, totalTurns - _currentTurn);
+        return _remainingTurns;
+    }
+
+    public function set remainingTurns(value:int):void {
+        var previousValue:int = remainingTurns;
+        _remainingTurns = value;
+        execute(new ValueChangedEvent(ValueChangedEvent.REMAINING_TURNS_CHANGED, previousValue, remainingTurns));
     }
 
     public function gainAdditionalTurns(t:int):void {
-        if (t != 0) {
-            _currentTurn -= t;
-            dispatchEvent(new Event("remainingTurnsChanged"));
-            execute(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
-        }
+        remainingTurns += t;
     }
 
     public function skipTurns(t:int):void {
-        for (var i:int = 0; i < t; i++) {
-            newTurn();
-        }
+        remainingTurns -= t;
     }
 
     public function newTurn():void {
-        _currentTurn++;
-        dispatchEvent(new Event("remainingTurnsChanged"));
-        execute(new GameEvent(GameEvent.CURRENT_TURN_CHANGED));
+        remainingTurns -= 1;
     }
 
     public function executeCapacity(capacity:Capacity, token:TokenType, eventBuffer:EventBuffer):void {
+        me.useCapacity(capacity, token);
         switch (capacity) {
             case Capacity.DIVINE_PEANUTS:
                 board.transformTokensOfType(TokenType.LIQUOR, TokenType.WATER, eventBuffer);
@@ -117,17 +114,17 @@ public class Game extends EventDispatcher {
                 break;
             case Capacity.BLOND_FURY_BAR:
                 var blonds:int = board.destroyTokensOfType(TokenType.BLOND_BEER, eventBuffer);
-                me.fullBeers += blonds;
+                me.score += blonds;
                 dispatchEvent(new UiScoreEvent(blonds, 0, null, null, capacity));
                 break;
             case Capacity.BROWN_FURY_BAR:
                 var browns:int = board.destroyTokensOfType(TokenType.BROWN_BEER, eventBuffer);
-                me.fullBeers += browns;
+                me.score += browns;
                 dispatchEvent(new UiScoreEvent(browns, 0, null, null, capacity));
                 break;
             case Capacity.AMBER_FURY_BAR:
                 var ambers:int = board.destroyTokensOfType(TokenType.AMBER_BEER, eventBuffer);
-                me.fullBeers += ambers;
+                me.score += ambers;
                 dispatchEvent(new UiScoreEvent(ambers, 0, null, null, capacity));
                 break;
             case Capacity.BLOODY_MARY:
@@ -137,7 +134,6 @@ public class Game extends EventDispatcher {
                 board.createVomit(3, InstantEventBuffer.INSTANCE);
                 break;
         }
-        me.useCapacity(capacity, token);
     }
 
     public function collectGroups(groups:Array):Array {
@@ -146,7 +142,7 @@ public class Game extends EventDispatcher {
         var collected:Array = new Array();
         var group:Group;
         while (groups2.length > 0) {
-            var preferred:TokenType = me.preferredPartialBeer;
+            var preferred:TokenType = me.preferredToken;
             var found:Boolean = false;
             var kept:Array = new Array();
             for (var i:int = 0; i < groups2.length; i++) {
@@ -173,7 +169,7 @@ public class Game extends EventDispatcher {
 
     public function collectGroup(group:Group):void {
         if (group.collectedToken != null) {
-            me.partialBeers.addItem(group.token);
+            me.addToken(group.collectedToken);
         }
         if (group.length >= 4) {
             me.gainCapacity(Capacity.fromToken(group.token));
@@ -181,7 +177,7 @@ public class Game extends EventDispatcher {
 
         me.piss += group.pissGain;
         me.gainVomit(group.vomitGain);
-        me.fullBeers += group.beerGain;
+        me.score += group.beerGain;
         gainAdditionalTurns(group.turnsGain);
     }
 
@@ -209,7 +205,7 @@ public class Game extends EventDispatcher {
 
     private var _mode:String;
     private var _me:PlayerData;
-    private var _currentTurn:int = 0;
+    private var _remainingTurns:int = Constants.INITIAL_TOTAL_TURNS;
     private var _board:BoardState;
     private var _gameOver:Boolean = false;
     private var _rand:DeadBeefRandom;

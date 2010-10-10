@@ -24,13 +24,85 @@
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
         import com.beerquest.TokenType;
-        import com.beerquest.events.GameEvent;
+        import com.beerquest.events.CapacityEvent;
+        import com.beerquest.events.TokenEvent;
+        import com.beerquest.events.ValueChangedEvent;
+        import com.beerquest.ui.events.UiGameEvent;
         import com.greensock.TweenLite;
 
         private function init():void {
-            Constants.GAME.addEventListener(GameEvent.PARTIAL_BEERS_CHANGED, onPartialBeersChanged);
-            Constants.GAME.addEventListener(GameEvent.FULL_BEERS_CHANGED, onFullBeersChanged);
-            Constants.GAME.addEventListener(GameEvent.BEER_COLLECTED, onBeerCollected);
+            parent.addEventListener(UiGameEvent.UI_GAME_EVENT, onUiGameEvent);
+        }
+
+        private function onUiGameEvent(e:UiGameEvent):void {
+            var event:Event = e.event;
+            switch (event.type) {
+                case TokenEvent.TOKEN_ADDED:
+                    // Note: pas besoin d'ajouter le token puisque c'est le BeerQuestView qui s'en chargera à la fin de l'animation de collecte de token
+                    updateArrow();
+                    break;
+                case TokenEvent.TOKEN_GROUP_COLLECTED:
+                    onBeerCollected();
+                    updateArrow();
+                    break;
+                case TokenEvent.TOKEN_EJECTED:
+                    updateArrow();
+                    break;
+                case ValueChangedEvent.SCORE_CHANGED:
+                    onScoreChanged(event as ValueChangedEvent);
+                    break;
+                case ValueChangedEvent.REMAINING_TURNS_CHANGED:
+                    onRemainingTurnsChanged(event as ValueChangedEvent);
+                    break;
+                case ValueChangedEvent.VOMIT_CHANGED:
+                    onVomitChanged(event as ValueChangedEvent);
+                    break;
+                case ValueChangedEvent.PISS_CHANGED:
+                    onPissChanged(event as ValueChangedEvent);
+                    break;
+                case CapacityEvent.CAPACITY_GAINED:
+                    onCapacityGained(event as CapacityEvent);
+                    break;
+                case CapacityEvent.CAPACITY_EXECUTED:
+                    onCapacityExecuted(event as CapacityEvent);
+                    break;
+            }
+        }
+
+        private function onCapacityGained(e:CapacityEvent):void {
+            if (e.slot == 1) {
+                capa1.capacity = e.capacity;
+                capa1.clickable = true;
+            } else {
+                capa0.capacity = e.capacity;
+                capa0.clickable = true;
+            }
+        }
+
+        private function onCapacityExecuted(e:CapacityEvent):void {
+            if (e.slot == 1) {
+                capa1.capacity = Capacity.NONE;
+                capa1.clickable = false;
+            } else {
+                capa0.capacity = Capacity.NONE;
+                capa0.clickable = false;
+            }
+        }
+
+        private function onRemainingTurnsChanged(e:ValueChangedEvent):void {
+            remainingTurnsBar.progress = e.newValue / Constants.INITIAL_TOTAL_TURNS * 100;
+            remainingTurnsLabel.text = e.newValue.toString();
+        }
+
+        private function onVomitChanged(e:ValueChangedEvent):void {
+            vomitBar.progress = e.newValue;
+            vomitLabel.text = e.newValue.toString();
+        }
+
+        private function onPissChanged(e:ValueChangedEvent):void {
+            pissBar.progress = e.newValue;
+            pissLabel.text = e.newValue.toString();
+            wcButton.visible = (e.newValue >= 80);
         }
 
         public function get tokenEntryPoint():Point {
@@ -38,7 +110,7 @@
         }
 
         public function locateCapacity(capacity:Capacity):Point {
-            if (Constants.GAME.me.capacities.getItemAt(1) == capacity) {
+            if (Constants.GAME.me.capacities[1] == capacity) {
                 return localToGlobal(new Point(capa1.x + capa1.width / 2, capa1.y + capa1.height / 2));
             } else {
                 return localToGlobal(new Point(capa0.x + capa0.width / 2, capa0.y + capa0.height / 2));
@@ -49,13 +121,14 @@
             stack.pushTokenIntoStack(token);
         }
 
-        private function onBeerCollected(e:GameEvent):void {
+        private function onBeerCollected():void {
             vfx.y = -vfx.height / 2 + 30;
             vfx.alpha = 1;
             TweenLite.to(vfx, 1, {alpha:0, y:"-20"});
         }
 
-        private function onPartialBeersChanged(e:GameEvent):void {
+        private function updateArrow():void {
+            // TODO lier au comportement de la stack visuelle, et non de la stack ingame
             switch (Constants.GAME.me.stackCompletion) {
                 case 1:
                     arrow.source = Arrow1;
@@ -72,7 +145,8 @@
             }
         }
 
-        private function onFullBeersChanged(e:GameEvent):void {
+        private function onScoreChanged(e:ValueChangedEvent):void {
+            scoreLabel.text = e.newValue.toString();
             scoreIcon.scaleX = scoreIcon.scaleY = 1;
             var tween:TweenLite = new TweenLite(scoreIcon, 0.3, {scaleX:1.1, scaleY:1.1, onComplete:function():void {
                 tween.reverse();
@@ -122,10 +196,13 @@
 
     <mx:Canvas width="100%"
                toolTip="Tours de jeu restant. Buvez du jus de tomate pour tenir le coup !">
-        <ui:ProgressBar x="12" y="12" width="170" height="16" progress="{Constants.GAME.remainingTurns/Constants.INITIAL_TOTAL_TURNS*100}" emptyColor="0x00789f"
+        <ui:ProgressBar x="12" y="12" width="170" height="16"
+                        id="remainingTurnsBar"
+                        emptyColor="0x00789f"
                         fullColorLight="0x00bbf9" fullColorDark="0x0098d6"/>
         <mx:Image source="@Embed(source='../../../assets/image/barre-tours.png')"/>
-        <mx:Label y="3" width="30" text="{Constants.GAME.remainingTurns}" styleName="remaining-turns">
+        <mx:Label y="3" width="30" id="remainingTurnsLabel" text="{Constants.INITIAL_TOTAL_TURNS}"
+                  styleName="remaining-turns">
             <mx:filters>
                 <mx:GlowFilter blurX="3" blurY="3" alpha="1" color="0x000000" quality="3"/>
             </mx:filters>
@@ -136,23 +213,27 @@
 
     <mx:Canvas width="100%"
                toolTip="Attention, à 100% : vomito (bloque 5 cases) ! Mangez des Cahouètes !">
-        <ui:ProgressBar x="12" y="12" width="170" height="16" progress="{Constants.GAME.me.vomit}" emptyColor="0x619f00"
+        <ui:ProgressBar x="12" y="12" width="170" height="16"
+                        id="vomitBar"
+                        emptyColor="0x619f00"
                         fullColorLight="0xbbf900" fullColorDark="0x82d500" alert="true"/>
         <mx:Image source="@Embed(source='../../../assets/image/barre-vomi.png')"/>
-        <mx:Label text="{Constants.GAME.me.vomit}" fontSize="24" color="red"/>
+        <mx:Label id="vomitLabel" text="0" fontSize="24" color="red" visible="{Constants.DEBUG}"/>
     </mx:Canvas>
 
     <mx:Spacer height="5"/>
 
     <mx:Canvas width="100%"
                toolTip="Attention, à partir de 80% : innondation (bloque les lignes du fond) !">
-        <ui:ProgressBar x="12" y="12" width="170" height="16" progress="{Constants.GAME.me.piss}" emptyColor="0x9f9600"
+        <ui:ProgressBar x="12" y="12" width="170" height="16"
+                        id="pissBar"
+                        emptyColor="0x9f9600"
                         fullColorLight="0xfbe400" fullColorDark="0xcd1be00"/>
         <mx:Image x="60" y="3" id="wcButton" source="{WcIcon}" mouseOver="onMouseOverPiss(event)"
                   mouseOut="onMouseOutPiss(event)" click="onClickPiss(event)"
-                  visible="{Constants.GAME.me.piss >= 80}"/>
+                  visible="false"/>
         <mx:Image source="@Embed(source='../../../assets/image/barre-pisse.png')"/>
-        <mx:Label text="{Constants.GAME.me.piss}" fontSize="24" color="red"/>
+        <mx:Label id="pissLabel" text="0" fontSize="24" color="red" visible="{Constants.DEBUG}"/>
     </mx:Canvas>
 
     <mx:Spacer height="10"/>
@@ -161,7 +242,7 @@
         <mx:Image source="@Embed(source='../../../assets/image/fond-score-srack.png')"/>
         <mx:Canvas toolTip="Ton score. Il augmente de 1 pour chaque bière bue.">
             <mx:Canvas x="5" y="2" width="120">
-                <mx:Label id="collectedBeers" text="{Constants.GAME.me.fullBeers}" width="100%" styleName="score">
+                <mx:Label id="scoreLabel" text="0" width="100%" styleName="score">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                     </mx:filters>
@@ -179,9 +260,6 @@
 
     <mx:Spacer height="10"/>
 
-    <ui:CapacityView id="capa0" capacity="{Constants.GAME.me.capacities.getItemAt(0) as Capacity}"
-                     clickable="{!Constants.GAME.gameOver}"/>
-    <!--<mx:Spacer height="4"/>-->
-    <ui:CapacityView id="capa1" capacity="{Constants.GAME.me.capacities.getItemAt(1) as Capacity}"
-                     clickable="{!Constants.GAME.gameOver}"/>
+    <ui:CapacityView id="capa0" capacity="{Capacity.NONE}" clickable="false"/>
+    <ui:CapacityView id="capa1" capacity="{Capacity.NONE}" clickable="false"/>
 </mx:VBox>

@@ -37,9 +37,9 @@ public class GameStats {
             board: game.board.encodedState(),
             piss: game.me.piss,
             vomit: game.me.vomit,
-            capa1: game.me.capacities.getItemAt(0).encodedState(),
-            capa2: game.me.capacities.getItemAt(1).encodedState(),
-            stack: game.me.partialBeersEncodedState()
+            capa1: game.me.capacities[0].encodedState(),
+            capa2: game.me.capacities[1].encodedState(),
+            stack: game.me.stackEncodedState()
         });
     }
 

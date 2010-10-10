@@ -6,6 +6,8 @@ import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
+import com.beerquest.events.TokenEvent;
+import com.beerquest.events.ValueChangedEvent;
 import com.beerquest.ui.events.UiCapacityExecutionEvent;
 import com.beerquest.ui.events.UiGameEvent;
 import com.beerquest.ui.events.UiScoreEvent;
@@ -99,14 +101,19 @@ public class BoardView extends UIComponent {
         // Events that should just be resynchro
         Constants.GAME.addEventListener(GameEvent.PISS, processEvent);
         Constants.GAME.addEventListener(GameEvent.VOMIT, processEvent);
-        Constants.GAME.addEventListener(GameEvent.BEER_COLLECTED, processEvent);
+        Constants.GAME.addEventListener(TokenEvent.TOKEN_ADDED, processEvent);
+        Constants.GAME.addEventListener(TokenEvent.TOKEN_EJECTED, processEvent);
+        Constants.GAME.addEventListener(TokenEvent.TOKEN_GROUP_COLLECTED, processEvent);
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_GAINED, processEvent);
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, processEvent);
         Constants.GAME.addEventListener(GameEvent.GAME_OVER, processEvent);
         Constants.GAME.addEventListener(GameEvent.TURN_BEGIN, processEvent);
         Constants.GAME.addEventListener(GameEvent.TURN_END, processEvent);
         Constants.GAME.addEventListener(GameEvent.PHASE_BEGIN, processEvent);
-        Constants.GAME.addEventListener(GameEvent.PHASE_END, processEvent);
+        Constants.GAME.addEventListener(ValueChangedEvent.REMAINING_TURNS_CHANGED, processEvent);
+        Constants.GAME.addEventListener(ValueChangedEvent.PISS_CHANGED, processEvent);
+        Constants.GAME.addEventListener(ValueChangedEvent.SCORE_CHANGED, processEvent);
+        Constants.GAME.addEventListener(ValueChangedEvent.VOMIT_CHANGED, processEvent);
 
         // Events that are properly processed
         Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
@@ -116,6 +123,7 @@ public class BoardView extends UIComponent {
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, processEvent);
         Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, processEvent);
         Constants.GAME.addEventListener(PissLevelEvent.PISS_LEVEL_CHANGED, processEvent);
+        Constants.GAME.addEventListener(GameEvent.PHASE_END, processEvent);
     }
 
     public function processEvent(e:Event):void {
@@ -123,8 +131,8 @@ public class BoardView extends UIComponent {
             trace("*********** EXECUTE " + e.type);
             onGemsSwapped(e as GemsSwappedEvent);
             dispatchEvent(new UiGameEvent(e));
-        } else if (e.type == GameEvent.TURN_END) {
-
+//        } else if (e.type == GameEvent.TURN_END) {
+//            trace("*********** EXECUTE " + e.type);
         } else if (_currentAction == "") {
             trace("*********** EXECUTE " + e.type);
             switch (e.type) {
@@ -142,6 +150,9 @@ public class BoardView extends UIComponent {
                     break;
                 case GroupCollectionEvent.GROUPS_COLLECTED:
                     onGroupsCollected(e as GroupCollectionEvent);
+                    break;
+                case GameEvent.PHASE_END:
+                    onPhaseEnd(e as GameEvent);
                     break;
                 case PissLevelEvent.PISS_LEVEL_CHANGED:
                     onPissLevelChanged(e as PissLevelEvent);
@@ -224,22 +235,22 @@ public class BoardView extends UIComponent {
                 break;
             case 84: // t
                 if (Constants.DEBUG) {
-                    Constants.GAME.me.addPartialBeer(TokenType.BLOND_BEER);
+                    Constants.GAME.me.addToken(TokenType.BLOND_BEER);
                 }
                 break;
             case 89: // y
                 if (Constants.DEBUG) {
-                    Constants.GAME.me.addPartialBeer(TokenType.BROWN_BEER);
+                    Constants.GAME.me.addToken(TokenType.BROWN_BEER);
                 }
                 break;
             case 85: // u
                 if (Constants.DEBUG) {
-                    Constants.GAME.me.addPartialBeer(TokenType.AMBER_BEER);
+                    Constants.GAME.me.addToken(TokenType.AMBER_BEER);
                 }
                 break;
             case 73: // i
                 if (Constants.DEBUG) {
-                    Constants.GAME.me.addPartialBeer(TokenType.TRIPLE);
+                    Constants.GAME.me.addToken(TokenType.TRIPLE);
                 }
                 break;
             case 49: // 1
@@ -678,8 +689,7 @@ public class BoardView extends UIComponent {
                     }
                 }
             }
-            continueAction("onGroupsCollected", "gravity");
-            gravity();
+            endAction("onGroupsCollected");
         });
         timer.start();
     }
@@ -732,6 +742,11 @@ public class BoardView extends UIComponent {
             }
         }
         return (group.length <= 4) ? EXPLODE_DURATION_MS : GROUP5_COMPACTION_DURATION_MS;
+    }
+
+    private function onPhaseEnd(e:GameEvent):void {
+        startAction("gravity");
+        gravity();
     }
 
     private function gravity():void {

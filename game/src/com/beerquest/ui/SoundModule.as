@@ -14,6 +14,7 @@ import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
+import com.beerquest.events.TokenEvent;
 import com.beerquest.ui.events.UiGameEvent;
 
 import flash.events.Event;
@@ -40,8 +41,8 @@ public class SoundModule extends UIComponent {
             case GameEvent.GAME_OVER:
                 onGameOver(ge as GameEvent);
                 break;
-            case GameEvent.BEER_COLLECTED:
-                onBeerCollected(ge as GameEvent);
+            case TokenEvent.TOKEN_GROUP_COLLECTED:
+                onTokenGroupCollected(ge as TokenEvent);
                 break;
             case PissLevelEvent.PISS_LEVEL_CHANGED:
                 onPissLevelChanged(ge as PissLevelEvent);
@@ -69,7 +70,7 @@ public class SoundModule extends UIComponent {
         playSound(GameOverFX);
     }
 
-    private function onBeerCollected(e:GameEvent):void {
+    private function onTokenGroupCollected(e:TokenEvent):void {
         playSound(StackFX);
     }
 

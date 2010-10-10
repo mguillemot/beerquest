@@ -1,49 +1,36 @@
 package com.beerquest {
 import com.beerquest.events.CapacityEvent;
 import com.beerquest.events.GameEvent;
-import com.beerquest.ui.EffectLayer;
-import com.beerquest.ui.TokenCollectionView;
+import com.beerquest.events.TokenEvent;
+import com.beerquest.events.ValueChangedEvent;
 
-import flash.events.Event;
 import flash.events.EventDispatcher;
-import flash.events.TimerEvent;
-import flash.utils.Timer;
-
-import mx.collections.ArrayCollection;
-import mx.events.CollectionEvent;
 
 public class PlayerData extends EventDispatcher {
 
     public function PlayerData(game:Game) {
         _game = game;
-        _capacities = new ArrayCollection();
+        _capacities = new Array();
         for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
-            _capacities.addItem(Capacity.NONE);
+            _capacities.push(Capacity.NONE);
         }
-        _partialBeers = new ArrayCollection();
-        _partialBeers.addEventListener(CollectionEvent.COLLECTION_CHANGE, onPartialBeerCollectionChanged);
+        _stack = new Array();
     }
 
-    private function onPartialBeerCollectionChanged(e:CollectionEvent):void {
-        _game.dispatchEvent(new GameEvent(GameEvent.PARTIAL_BEERS_CHANGED));
+    public function get score():Number {
+        return _score;
     }
 
-    [Bindable(event="FullBeersChanged")]
-    public function get fullBeers():Number {
-        return _fullBeers;
+    public function set score(value:Number):void {
+        var previousValue:Number = score;
+        _score = value;
+        _game.dispatchEvent(new ValueChangedEvent(ValueChangedEvent.SCORE_CHANGED, previousValue, score));
     }
 
-    public function set fullBeers(value:Number):void {
-        _fullBeers = value;
-        dispatchEvent(new GameEvent(GameEvent.FULL_BEERS_CHANGED));
-    }
-
-    [Bindable(event="pissChanged")]
     public function get piss():Number {
         return _piss;
     }
 
-    [Bindable(event="pissChanged")]
     internal function get pissLevel():int {
         if (_piss >= 100) {
             return 3;
@@ -56,6 +43,7 @@ public class PlayerData extends EventDispatcher {
     }
 
     public function set piss(value:Number):void {
+        var previousPiss:Number = piss;
         var previousPissLevel:int = pissLevel;
         if (value < 0) {
             _piss = 0;
@@ -64,25 +52,25 @@ public class PlayerData extends EventDispatcher {
         } else {
             _piss = value;
         }
-        dispatchEvent(new Event("pissChanged"));
+        _game.dispatchEvent(new ValueChangedEvent(ValueChangedEvent.PISS_CHANGED, previousPiss, piss));
         if (pissLevel != previousPissLevel) {
             _game.pissLevel = pissLevel;
         }
     }
 
-    [Bindable(event="vomitChanged")]
     public function get vomit():Number {
         return _vomit;
     }
 
     private function setVomit(value:Number):void {
+        var oldValue:Number = vomit;
         _vomit = value;
         if (_vomit < 0) {
             _vomit = 0;
         } else if (_vomit > 101) {
             _vomit = 101;
         }
-        dispatchEvent(new Event("vomitChanged"));
+        _game.dispatchEvent(new ValueChangedEvent(ValueChangedEvent.VOMIT_CHANGED, oldValue, vomit));
     }
 
     public function gainVomit(value:Number):void {
@@ -94,88 +82,88 @@ public class PlayerData extends EventDispatcher {
         }
     }
 
-    public function get capacities():ArrayCollection {
+    public function get capacities():Array {
         return _capacities;
-    }
-
-    public function clearCapacities():void {
-        for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
-            _capacities.setItemAt(Capacity.NONE, i);
-        }
     }
 
     public function useCapacity(c:Capacity, targetToken:TokenType):Boolean {
         for (var i:int = Constants.MAX_CAPACITIES - 1; i >= 0; i--) {
-            if (_capacities.getItemAt(i) == c) {
-                _capacities.setItemAt(Capacity.NONE, i);
-                _game.dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_EXECUTED, c, targetToken));
+            if (_capacities[i] == c) {
+                _capacities[i] = Capacity.NONE;
+                _game.dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_EXECUTED, c, i, targetToken));
                 return true;
             }
         }
         return false;
     }
 
-    public function collectBeer():void {
-        _game.dispatchEvent(new GameEvent(GameEvent.BEER_COLLECTED));
-    }
-
-    public function get partialBeers():ArrayCollection {
-        return _partialBeers;
+    public function get stack():Array {
+        return _stack;
     }
 
     public function get stackCompletion():int {
-        if (_partialBeers.length <= 1) {
-            return _partialBeers.length;
+        if (_stack.length <= 1) {
+            return _stack.length;
         } else {
-            return (_partialBeers.getItemAt(_partialBeers.length - 1) == _partialBeers.getItemAt(_partialBeers.length - 2)) ? 2 : 1;
+            return (_stack[_stack.length - 1] == _stack[_stack.length - 2]) ? 2 : 1;
         }
     }
 
-    public function partialBeersEncodedState():String {
+    public function stackEncodedState():String {
         var res:String = "";
-        for each (var pb:TokenType in partialBeers) {
+        for each (var pb:TokenType in stack) {
             res += pb.repr;
         }
         return res;
     }
 
-    public function get preferredPartialBeer():TokenType {
-        if (_partialBeers.length == 0) {
+    public function get preferredToken():TokenType {
+        if (_stack.length == 0) {
             return TokenType.NONE;
-        } else if (_partialBeers.length == 1) {
-            return _partialBeers.getItemAt(0) as TokenType;
-        } else if (_partialBeers.getItemAt(0) == TokenType.TRIPLE) {
-            return _partialBeers.getItemAt(_partialBeers.length - 2) as TokenType;
+        } else if (_stack.length == 1) {
+            return _stack[0];
+        } else if (_stack[0] == TokenType.TRIPLE) {
+            return _stack[_stack.length - 2];
         } else {
-            return _partialBeers.getItemAt(_partialBeers.length - 1) as TokenType;
+            return _stack[_stack.length - 1];
         }
     }
 
-    public function addPartialBeer(type:TokenType):void {
-        // TODO virer le timer et le mettre dans l'UI
-        var timer:Timer = new Timer(EffectLayer.TOKEN_EFFECT_TIME_MS, 1);
-        timer.addEventListener(TimerEvent.TIMER, function():void {
-            if (_partialBeers.length == TokenCollectionView.MAX_STACK) {
-                _partialBeers.removeItemAt(0);
-            }
-            _partialBeers.addItem(type);
-        });
-        timer.start();
+    public function addToken(type:TokenType):void {
+        // Add token
+        _stack.push(type);
+        _game.dispatchEvent(new TokenEvent(TokenEvent.TOKEN_ADDED, type));
+
+        // Check for completion
+        if (_stack.length >= 3
+                && TokenType.isCompatible(_stack[_stack.length - 1], _stack[_stack.length - 2])
+                && TokenType.isCompatible(_stack[_stack.length - 2], _stack[_stack.length - 3])) {
+            _stack.pop();
+            _stack.pop();
+            _stack.pop();
+            score += Constants.TOKEN_GROUP_VALUE;
+            _game.dispatchEvent(new TokenEvent(TokenEvent.TOKEN_GROUP_COLLECTED, null));
+        }
+
+        // Check for overflow
+        while (_stack.length + 3 - stackCompletion > Constants.MAX_STACK) {
+            var overflowToken:TokenType = _stack.shift();
+            _game.dispatchEvent(new TokenEvent(TokenEvent.TOKEN_EJECTED, overflowToken));
+        }
     }
 
     public function doPiss():void {
-        piss *= 0.4;
+        piss = Math.floor(piss * 0.4);
         _game.dispatchEvent(new GameEvent(GameEvent.PISS));
         _game.newTurn();
     }
 
     public function gainCapacity(capacity:Capacity):Boolean {
-        var i:int, c:Capacity;
-        for (i = 0; i < Constants.MAX_CAPACITIES; i++) {
-            c = _capacities.getItemAt(i) as Capacity;
+        for (var i:int = 0; i < Constants.MAX_CAPACITIES; i++) {
+            var c:Capacity = _capacities[i];
             if (!c.enabled) {
-                _capacities.setItemAt(capacity, i);
-                _game.execute(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, capacity));
+                _capacities[i] = capacity;
+                _game.execute(new CapacityEvent(CapacityEvent.CAPACITY_GAINED, capacity, i));
                 return true;
             }
         }
@@ -183,11 +171,11 @@ public class PlayerData extends EventDispatcher {
     }
 
     private var _game:Game;
-    private var _fullBeers:Number = 0;
+    private var _score:Number = 0;
     private var _piss:Number = 0;
     private var _vomit:Number = 0;
-    private var _partialBeers:ArrayCollection;
-    private var _capacities:ArrayCollection;
+    private var _stack:Array;
+    private var _capacities:Array;
 
 }
 }

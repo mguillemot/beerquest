@@ -56,7 +56,7 @@ public class Group {
     }
 
     public function get beerGain():int {
-        var result:int = supers * Constants.SUPER_TOKEN_VALUE;
+        var result:int = supers * Constants.SUPER_GEM_VALUE;
         if (token == TokenType.BLOND_BEER || token == TokenType.BROWN_BEER || token == TokenType.AMBER_BEER) {
             result += length;
         }

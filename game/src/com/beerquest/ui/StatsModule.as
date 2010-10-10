@@ -16,6 +16,8 @@ import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
 
+import com.beerquest.events.ValueChangedEvent;
+
 import flash.events.Event;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
@@ -26,11 +28,12 @@ import flash.system.Capabilities;
 import mx.core.UIComponent;
 
 public class StatsModule extends UIComponent {
+
     public function StatsModule() {
         Constants.GAME.addEventListener(GameEvent.PISS, onPiss);
         Constants.GAME.addEventListener(GameEvent.VOMIT, onVomit);
         Constants.GAME.addEventListener(GameEvent.GAME_OVER, onGameOver);
-        Constants.GAME.addEventListener(GameEvent.CURRENT_TURN_CHANGED, onNewTurn);
+        Constants.GAME.addEventListener(ValueChangedEvent.REMAINING_TURNS_CHANGED, onTurnChange);
         Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, onGemsSwapped);
         Constants.GAME.addEventListener(PissLevelEvent.PISS_LEVEL_CHANGED, onPissLevelChanged);
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, onBoardReset);
@@ -38,7 +41,7 @@ public class StatsModule extends UIComponent {
         Constants.GAME.addEventListener(CapacityEvent.CAPACITY_EXECUTED, onCapacityExecuted);
     }
 
-    private function onNewTurn(e:GameEvent):void {
+    private function onTurnChange(e:GameEvent):void {
         _stats.startTurn(Constants.GAME);
         uploadScore();
     }
@@ -82,7 +85,7 @@ public class StatsModule extends UIComponent {
         data.mode = Constants.GAME.mode;
         data.token = token;
         data.game_version = Constants.VERSION.toString();
-        data.score = Constants.GAME.me.fullBeers;
+        data.score = Constants.GAME.me.score;
         data.flash_version = Capabilities.version;
 
         var request:URLRequest = new URLRequest("/postscore");

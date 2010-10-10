@@ -12,7 +12,6 @@ import mx.core.UIComponent;
 public class TokenCollectionView extends UIComponent {
 
     private static const OPERATION_TIME_MS:Number = 200;
-    public static const MAX_STACK:int = 15;
 
     public function TokenCollectionView() {
         width = 170;
@@ -43,7 +42,7 @@ public class TokenCollectionView extends UIComponent {
         if (_casiers.length == 0 && token == TokenType.TRIPLE) {
             // Cas de merde très particulier
             _casiers.push(sprite);
-            TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 3) * 11});
+            TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (Constants.MAX_STACK - 3) * 11});
             timer = new Timer(OPERATION_TIME_MS, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                 startAction("");
@@ -52,7 +51,7 @@ public class TokenCollectionView extends UIComponent {
         } else if (TokenType.isCompatible(currentCasierType, token)) {
             if (_casiers.length == 1) {
                 // Add to middle of casier
-                TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 2) * 11});
+                TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (Constants.MAX_STACK - 2) * 11});
                 timer = new Timer(OPERATION_TIME_MS, 1);
                 timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                     startAction("");
@@ -60,12 +59,11 @@ public class TokenCollectionView extends UIComponent {
                 timer.start();
             } else {
                 // Full casiers: collect them
-                TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 1) * 11});
+                TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (Constants.MAX_STACK - 1) * 11});
                 timer = new Timer(OPERATION_TIME_MS, 1);
                 timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent):void {
                     // Collect!
                     startAction("collecting");
-                    Constants.GAME.me.collectBeer();
                     for each (s in _casiers) {
                         TweenLite.to(s, OPERATION_TIME_MS / 1000, {alpha: 0});
                     }
@@ -121,7 +119,7 @@ public class TokenCollectionView extends UIComponent {
             for each (s in _stack) {
                 TweenLite.to(s, OPERATION_TIME_MS / 1000, {x:"-" + distance});
             }
-            TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (MAX_STACK - 3 + availableSlot) * 11});
+            TweenLite.to(sprite, OPERATION_TIME_MS / 1000, {x:3 + (Constants.MAX_STACK - 3 + availableSlot) * 11});
             _casiers = new Array();
             if (availableSlot == 1) {
                 // Push back the last triple of the stack
@@ -135,7 +133,7 @@ public class TokenCollectionView extends UIComponent {
             timer.start();
         }
         _stack.push(sprite);
-        while ((_stack.length + 3 - _casiers.length) > MAX_STACK) {
+        while ((_stack.length + 3 - _casiers.length) > Constants.MAX_STACK) {
             trace("TokenView EXPLUSE");
             s = _stack.shift();
             removeChild(s);
@@ -143,7 +141,7 @@ public class TokenCollectionView extends UIComponent {
     }
 
     public function get stageEntryPoint():Point {
-        return localToGlobal(new Point(2 + MAX_STACK * 11, 0));
+        return localToGlobal(new Point(2 + Constants.MAX_STACK * 11, 0));
     }
 
     private static function createSprite(token:TokenType):BitmapAsset {
