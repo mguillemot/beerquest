@@ -28,6 +28,9 @@ public class Game extends EventDispatcher {
     internal function execute(event:Event):void {
         dispatchEvent(event);
         switch (event.type) {
+            case GameEvent.PHASE_END:
+                me.checkVomit();
+                break;
             case GameEvent.TURN_END:
                 if (remainingTurns <= 0) {
                     endOfGame();
@@ -128,10 +131,10 @@ public class Game extends EventDispatcher {
                 dispatchEvent(new UiScoreEvent(ambers, 0, null, null, capacity));
                 break;
             case Capacity.BLOODY_MARY:
-                var turns:int = 6;
+                var turns:int = Constants.BLOODY_MARY_TURN_GAIN;
                 gainAdditionalTurns(turns);
                 dispatchEvent(new UiScoreEvent(0, turns, null, null, capacity));
-                board.createVomit(3, InstantEventBuffer.INSTANCE);
+                board.createVomit(Constants.BLOODY_MARY_VOMIT_GAIN, InstantEventBuffer.INSTANCE);
                 break;
         }
     }

@@ -13,7 +13,7 @@ public class Capacity extends EventDispatcher {
     public static const DIVINE_PEANUTS:Capacity = new Capacity("Divine Peanuts", "Transforme la liqueur en eau.", true, TokenType.FOOD);
     public static const BIG_BANG:Capacity = new Capacity("Big Bang", "Choisis un type d'objets sur le plateau et détruis les tous.", true, TokenType.LIQUOR);
     public static const WATERFALL:Capacity = new Capacity("Waterfall", "Nettoie tout le vomito du plateau.", true, TokenType.WATER);
-    public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", "Te fait gagner 6 tours supplémentaires au prix d'un peu de vomito. Burp !", true, TokenType.TOMATO_JUICE);
+    public static const BLOODY_MARY:Capacity = new Capacity("Bloody Mary", "Te fait gagner 5 tours supplémentaires au prix d'un peu de vomito. Burp !", true, TokenType.TOMATO_JUICE);
 
     public static function fromToken(token:TokenType):Capacity {
         switch (token) {

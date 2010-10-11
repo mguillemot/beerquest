@@ -120,6 +120,7 @@ public class BoardView extends UIComponent {
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
+        Constants.GAME.addEventListener(BoardEvent.CELLS_VOMITED, processEvent);
         Constants.GAME.addEventListener(GroupCollectionEvent.GROUPS_COLLECTED, processEvent);
         Constants.GAME.addEventListener(GemsSwappedEvent.GEMS_SWAPPED, processEvent);
         Constants.GAME.addEventListener(PissLevelEvent.PISS_LEVEL_CHANGED, processEvent);
@@ -131,8 +132,6 @@ public class BoardView extends UIComponent {
             trace("*********** EXECUTE " + e.type);
             onGemsSwapped(e as GemsSwappedEvent);
             dispatchEvent(new UiGameEvent(e));
-//        } else if (e.type == GameEvent.TURN_END) {
-//            trace("*********** EXECUTE " + e.type);
         } else if (_currentAction == "") {
             trace("*********** EXECUTE " + e.type);
             switch (e.type) {
@@ -145,6 +144,7 @@ public class BoardView extends UIComponent {
                 case BoardEvent.CELLS_DESTROYED:
                     onCellsDestroyed(e as BoardEvent);
                     break;
+                case BoardEvent.CELLS_VOMITED:
                 case BoardEvent.CELLS_TRANSFORMED:
                     onCellsTransformed(e as BoardEvent);
                     break;

@@ -37,14 +37,6 @@ public class BoardState {
         _supers[x * Constants.BOARD_SIZE + y] = superToken;
     }
 
-    private function setAllCells(cells:Array, allSupers:Boolean):void {
-        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
-            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                setCell(i, j, cells[j][i], allSupers);
-            }
-        }
-    }
-
     private function clearSupers():void {
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
@@ -122,42 +114,44 @@ public class BoardState {
     }
 
     internal function generateTestBoard(eventBuffer:EventBuffer):void {
-        setAllCells([
-            [TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.BROWN_BEER,TokenType.BLOND_BEER,TokenType.BLOND_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.AMBER_BEER,TokenType.AMBER_BEER,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.AMBER_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.VOMIT],
-            [TokenType.VOMIT,TokenType.VOMIT,TokenType.VOMIT,TokenType.BLOND_BEER,TokenType.BROWN_BEER,TokenType.BROWN_BEER,TokenType.VOMIT,TokenType.BROWN_BEER]
-        ], false);
-        setCell(0, 0, TokenType.BLOND_BEER, true);
-        setCell(1, 1, TokenType.BLOND_BEER, true);
+        var repr:String = "" +
+                "fvvvtvvv" +
+                "fvvvrttv" +
+                "vfvbbrrv" +
+                "vvvvrbbv" +
+                "vvvvbrrv" +
+                "vvvvrbbv" +
+                "vvvwbrrv" +
+                "vwwvwbbv";
+        for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
+            for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
+                var tokenRepr:String = repr.substr(j * Constants.BOARD_SIZE + i, 1);
+                setCell(i, j, TokenType.fromRepr(tokenRepr), tokenRepr.toLowerCase() != tokenRepr);
+            }
+        }
         eventBuffer.push(new BoardEvent(BoardEvent.BOARD_RESET, new Array(), clone()));
     }
 
-    private function getRandomNonVomitNonSuperCell():Point {
-        var count:int = 0;
+    internal function createVomit(count:int, eventBuffer:EventBuffer):Array {
+        var cells:Array = getRandomNonVomitNonSuperCells(count);
+        transformCells(cells, TokenType.VOMIT, true, eventBuffer);
+        return cells;
+    }
+
+    private function getRandomNonVomitNonSuperCells(maxCells:int):Array {
+        var available:Array = new Array();
         for (var j:int = 0; j < Constants.BOARD_SIZE; j++) {
             for (var i:int = 0; i < Constants.BOARD_SIZE; i++) {
-                if (getCell(i, j) == TokenType.VOMIT || getSuper(i, j)) {
-                    count++;
+                if (getCell(i, j) != TokenType.VOMIT && !getSuper(i, j)) {
+                    available.push(new Point(i, j));
                 }
             }
         }
-        if (count == Constants.BOARD_SIZE * Constants.BOARD_SIZE) {
-            return null;
+        if (available.length > 0) {
+            available = Utils.randomizeArray(available, _rand);
+            available.splice(maxCells);
         }
-        while (true) {
-            var x:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
-            var y:int = _rand.nextInt(0, Constants.BOARD_SIZE - 1);
-            var token:TokenType = getCell(x, y);
-            if (token != TokenType.VOMIT && !getSuper(x, y)) {
-                return new Point(x, y);
-            }
-        }
-        return null;
+        return available;
     }
 
     internal function swapCells(sx:int, sy:int, dx:int, dy:int, eventBuffer:EventBuffer):void {
@@ -168,21 +162,6 @@ public class BoardState {
         setCell(sx, sy, destType, destSuper);
         eventBuffer.push(new GemsSwappedEvent(sx, sy, dx, dy, clone()));
         normalize(eventBuffer);
-    }
-
-    internal function createVomit(count:int, eventBuffer:EventBuffer):Array {
-        var cells:Array = new Array();
-        for (var i:int = 0; i < count; i++) {
-            var cell:Point = getRandomNonVomitNonSuperCell();
-            if (cell != null) {
-                trace("Creating vomit on " + cell.x + ":" + cell.y);
-                cells.push(cell);
-            } else {
-                trace("WARN: Too much vomit on board")
-            }
-        }
-        transformCells(cells, TokenType.VOMIT, true, eventBuffer);
-        return cells;
     }
 
     private function destroyCells(cells:Array, eventBuffer:EventBuffer):void {
@@ -230,7 +209,7 @@ public class BoardState {
         for each (var cell:Point in cells) {
             setCell(cell.x, cell.y, target, resetSuper ? false : getSuper(cell.x, cell.y));
         }
-        eventBuffer.push(new BoardEvent(BoardEvent.CELLS_TRANSFORMED, cells, clone()));
+        eventBuffer.push(new BoardEvent((target == TokenType.VOMIT) ? BoardEvent.CELLS_VOMITED : BoardEvent.CELLS_TRANSFORMED, cells, clone()));
         normalize(eventBuffer);
     }
 

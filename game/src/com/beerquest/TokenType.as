@@ -16,6 +16,28 @@ public class TokenType {
         return (t1 == t2 || t1 == TokenType.TRIPLE || t2 == TokenType.TRIPLE);
     }
 
+    public static function fromRepr(repr:String):TokenType {
+        switch (repr.toLowerCase()) {
+            case "b":
+                return BLOND_BEER;
+            case "r":
+                return BROWN_BEER;
+            case "a":
+                return AMBER_BEER;
+            case "w":
+                return WATER;
+            case "f":
+                return FOOD;
+            case "l":
+                return LIQUOR;
+            case "t":
+                return TOMATO_JUICE;
+            case "v":
+                return VOMIT;
+        }
+        return NONE;
+    }
+
     function TokenType(repr:String, score:Number = 0, piss:Number = 0, vomit:Number = 0, collectible:Boolean = false) {
         _repr = repr;
         _score = score;

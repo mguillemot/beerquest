@@ -75,9 +75,12 @@ public class PlayerData extends EventDispatcher {
 
     public function gainVomit(value:Number):void {
         setVomit(vomit + value);
+    }
+
+    public function checkVomit():void {
         if (vomit > 100) {
             _game.execute(new GameEvent(GameEvent.VOMIT));
-            _game.board.createVomit(5, InstantEventBuffer.INSTANCE);
+            _game.board.createVomit(Constants.CELLS_CONTAMINATED_ON_VOMIT, InstantEventBuffer.INSTANCE);
             setVomit(30);
         }
     }
