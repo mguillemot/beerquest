@@ -7,13 +7,16 @@ module Game
       @capacities = []
       @piss = 0
       @vomit = 0
-      @remaining_turns = Constants::INITIAL_TURNS
+      @remaining_turns = Constants::INITIAL_TOTAL_TURNS
     end
 
     attr_reader :board, :score, :collection, :capacities, :remaining_turns
 
     def start(seed)
-      @board = Board.new(seed, Proc.new { |groups| collect(groups) })
+      @board = Board.new(seed, Proc.new do |groups|
+        collect(groups)
+        check_vomit
+      end)
       @board.generate_random_without_groups
     end
 
@@ -37,7 +40,7 @@ module Game
     def add_collected_token(token)
       @collection.push(token)
       if @collection.length >= 3 && Token.compatible?(@collection[-1], @collection[-2]) && Token.compatible?(@collection[-2], @collection[-3])
-        @score += 5
+        @score += Constants::TOKEN_GROUP_VALUE
         @collection[-3..-1] = nil
       end
       excess = @collection.length - collection_head - 12
@@ -69,7 +72,7 @@ module Game
     end
 
     def do_piss
-      self.piss *= 0.4
+      self.piss = (self.piss * 0.4).floor
     end
 
     def vomit
@@ -80,10 +83,16 @@ module Game
       if value < 0
         value = 0
       elsif value > 100
-        @board.create_vomit(5)
-        value = 30
+        value = 101
       end
       @vomit = value
+    end
+
+    def check_vomit
+      if self.vomit > 100
+        self.vomit = 30
+        @board.create_vomit(Constants::CELLS_CONTAMINATED_ON_VOMIT)
+      end
     end
 
     def execute_capacity(capacity, param)
@@ -101,8 +110,8 @@ module Game
         when Token::AMBER_BEER
           @score += @board.destroy_tokens_of_type(Token::AMBER_BEER)
         when Token::TOMATO_JUICE
-          @remaining_turns += 6
-          @board.create_vomit(3)
+          @remaining_turns += Constants::BLOODY_MARY_TURN_GAIN
+          @board.create_vomit(Constants::BLOODY_MARY_VOMIT_GAIN)
       end
       if @capacities[0] == capacity
         @capacities[0..0] = nil
@@ -175,10 +184,10 @@ module Game
 
       # Reorder collected tokens
       until tokens.empty?
-        preferred = self.preferred_token
+        preferred = preferred_token
         found = false
         kept = []
-        tokens.each_with_index do |token, i|
+        tokens.each do |token|
           if Token.compatible?(token, preferred)
             add_collected_token(token)
             found = true

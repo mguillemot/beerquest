@@ -189,10 +189,10 @@ module Game
         destroy_groups(gs)
         collected_groups += gs
         compact
+        if @groups_collection_handler
+          @groups_collection_handler.call(gs)
+        end
         gs = groups
-      end
-      if @groups_collection_handler
-        @groups_collection_handler.call(groups)
       end
       collected_groups
     end
@@ -203,13 +203,7 @@ module Game
     end
 
     def create_vomit(count)
-      cells = []
-      count.times do
-        cell = get_random_non_vomit_non_super_cell
-        if cell
-          cells.push(cell)
-        end
-      end
+      cells = get_random_non_vomit_non_super_cells(count)
       transform_cells(cells, Token::VOMIT, true) # impossible to create new groups, so no collection should take place here
       cells
     end
@@ -247,17 +241,16 @@ module Game
 
     private
 
-    def get_random_non_vomit_non_super_cell
-      count = 0
+    def get_random_non_vomit_non_super_cells(count)
+      available = []
       each_cell_from_top do |i, j|
-        count += 1 if self[i, j] == Token::VOMIT || self[i, j].super?
+        available.push([i, j]) if self[i, j] != Token::VOMIT && !self[i, j].super?
       end
-      return nil if count == SIZE * SIZE
-      while true
-        x = @rand.next_int(0, SIZE - 1)
-        y = @rand.next_int(0, SIZE - 1)
-        return [x, y] if self[x, y] != Token::VOMIT && !self[x, y].super?
+      unless available.empty?
+        available = available.randomize(@rand)
+        available[count..-1] = nil
       end
+      available
     end
 
     def each_cell_from_top
@@ -363,7 +356,7 @@ class Array
     while !clone.empty?
       i = rand.next_int(0, clone.length - 1)
       result.push(clone[i])
-      clone[i] = nil
+      clone[i..i] = nil
     end
     result
   end

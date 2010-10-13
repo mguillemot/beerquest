@@ -35,6 +35,16 @@ class FacebookController < ApplicationController
     @replay = Replay.get(params[:id])
     @game = Game::Game.new
     @game.start(@replay.seed)
+
+    @game.board.decode "fvvvtvvv" +
+                               "fvvvrttv" +
+                               "vfvbbrrv" +
+                               "vvvvrbbv" +
+                               "vvvvbrrv" +
+                               "vvvvrbbv" +
+                               "vvvwbrrv" +
+                               "vwwvwbbv"
+
     decoded_replay = JSON.parse(@replay.replay, :symbolize_names => true)
     @steps = []
     @steps.push("Initial status with seed=#{@replay.seed}")
@@ -61,6 +71,12 @@ class FacebookController < ApplicationController
           @steps.push("Pissed: #{before_piss} => #{@game.piss}")
         when "reset"
           @steps.push("A reset happened here")
+        when "status"
+          if r[:board] == @game.board.encoded_state
+            @steps.push("Checked status: expected #{r[:board]} vs actual #{@game.board.encoded_state}")
+          else
+            @steps.push("Failed status check: expected #{r[:board]} vs actual #{@game.board.encoded_state}")
+          end
         else
           @steps.push("Ignoring \"#{r[:type]}\"")
       end
