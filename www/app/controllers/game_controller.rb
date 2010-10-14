@@ -1,4 +1,4 @@
-class ScoresController < ApplicationController
+class GameController < ApplicationController
 
   protect_from_forgery :except => :postscore
 

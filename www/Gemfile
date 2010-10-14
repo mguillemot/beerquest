@@ -37,4 +37,4 @@ gem 'haml'
 gem 'json'
 gem 'mini_fb'
 
-gem 'will_paginate'
+gem 'will_paginate',        '3.0.pre2'

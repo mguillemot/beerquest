@@ -1,0 +1,13 @@
+%table.header
+  %tr
+    %td.bar-count= t 'home.score.tabs.favorites.bar_count', :count => @favorite_bars.length
+    %td.pane-pages
+      = t 'home.score.tabs.pages'
+      = link_to '1', async_favorites_url(1), :remote => true, :class => 'page-link'
+      %a.page-link{:href => '#'} 2
+      %span.page-link.current 3
+      %a.page-link{:href => '#'} 4
+      = "..."
+      %a.page-link{:href => '#'} 9
+-#= will_paginate @favorite_bars, :params => { :controller => 'home', :action => 'index' }
+= render :partial => 'bar', :collection => @favorite_bars

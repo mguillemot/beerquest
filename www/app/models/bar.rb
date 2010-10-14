@@ -13,12 +13,16 @@ class Bar
   has n, :barships, :constraint => :destroy
   has n, :replays, :constraint => :set_nil
 
+  def self.default_bar
+    self.get!(1)
+  end
+
   def total_members
     barships.count
   end
   
   def active_members
-    barships.all(:updated_at.gte => DateTime.now - 1.week).count
+    barships.count(:updated_at.gte => DateTime.now - 1.week)
   end
 
   # TODO
@@ -43,8 +47,18 @@ class Bar
     extract_scores(replays.all(:game_over => true, :order => :score.desc))
   end
 
+  def always_high_score_for(account)
+    best_replay = replays.first(:game_over => true, :account_id => account.id, :order => :score.desc)
+    best_replay ? best_replay.score : 0
+  end
+
   def weekly_high_scores
     extract_scores(weekly_replays.all(:game_over => true, :order => :score.desc))
+  end
+
+  def weekly_high_score_for(account)
+    best_replay = weekly_replays.first(:game_over => true, :account_id => account.id, :order => :score.desc)
+    best_replay ? best_replay.score : 0
   end
 
   def weekly_replays

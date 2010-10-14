@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 %html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml", :lang => I18n.locale}
   %head
-    %title= "Beer Quest - #{@account.full_name}" # TODO enlever
+    %title= "Beer Quest - #{@me.full_name}" # TODO enlever
     %meta{:charset => "utf-8"}
     = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
     = javascript_include_tag 'http://cdn.jquerytools.org/1.2.4/tiny/jquery.tools.min.js'
@@ -47,7 +47,7 @@
             %li.home
               = link_to t('nav.home'), home_url
             %li
-              = link_to t('nav.play'), bar_url(@account.last_bar)
+              = link_to t('nav.play'), bar_url(@me.last_bar)
             %li
               %a{:href => '#'}= t 'nav.challenge'
             %li

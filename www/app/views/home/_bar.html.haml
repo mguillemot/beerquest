@@ -2,24 +2,23 @@
   %table.bar-header
     %tr
       %td.name
-        TechCrunch's BAR
+        = bar.name
       %td.members
-        = t 'home.score.bar.member_count', :count => number_with_delimiter(23_810)
+        = t 'home.score.bar.member_count', :count => number_with_delimiter(bar.total_members)
   %table.bar-content
     %tr
       %td.banner
-        = image_tag 'logo-bar3.png', :alt => "TechCrunch's BAR", :class => 'bar-banner'
+        = image_tag bar.banner, :alt => bar.name, :class => 'bar-banner'
       %td.scores
         .score
           = t 'home.score.bar.score_7d'
           %br
           = image_tag 'mini-biere.png', :alt => t('beers')
-          234
+          = bar.always_high_score_for(@me)
         .score
           = t 'home.score.bar.best_score'
           %br
           = image_tag 'mini-biere.png', :alt => t('beers')
-          520
+          = bar.weekly_high_score_for(@me)
   .button
-    %a{:href => '#'}
-      = t 'home.score.bar.enter_button'
+    = link_to t('home.score.bar.enter_button'), bar_url(bar)

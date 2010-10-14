@@ -16,7 +16,7 @@
         %table.player
           %tr
             %td.portrait{:rowspan => 2}
-              = image_tag @account.profile_picture, :alt => @account.full_name, :class => 'portrait'
+              = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
             %td.score-desc= t 'home.score.best_7d'
             %td.score-value
               = image_tag 'mini-biere.png', :alt => t('beers')
@@ -31,7 +31,7 @@
             %td.description= t 'home.score.play_description_html'
             %td.action
               .button
-                %a{:href => bar_url(@account.last_bar)}= t 'home.score.button_html'
+                %a{:href => bar_url(@me.last_bar)}= t 'home.score.button_html'
         %ul.tabs
           %li
             %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.favorites.title'
@@ -41,20 +41,7 @@
             %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.search.title'
         .panes
           .pane#favorites
-            %table.header
-              %tr
-                %td.bar-count= t 'home.score.tabs.favorites.bar_count', :count => 22
-                %td.pane-pages
-                  = t 'home.score.tabs.pages'
-                  %a.page-link{:href => '#'} 1
-                  %a.page-link{:href => '#'} 2
-                  %span.page-link.current 3
-                  %a.page-link{:href => '#'} 4
-                  = "..."
-                  %a.page-link{:href => '#'} 9
-            = render :partial => 'bar'
-            = render :partial => 'bar'
-            = render :partial => 'bar'
+            = render :partial => 'favorite_bars'
           .pane#bartners
             %table.header
               %tr
@@ -67,7 +54,7 @@
                   %a.page-link{:href => '#'} 4
                   = "..."
                   %a.page-link{:href => '#'} 9
-            = render :partial => 'bar'
+            = render :partial => 'bar', :collection => @partner_bars
           .pane#search
             .search
               .description= t 'home.score.tabs.search.alphabetic_order'
@@ -88,9 +75,7 @@
                   %a.page-link{:href => '#'} 4
                   = "..."
                   %a.page-link{:href => '#'} 9
-            = render :partial => 'bar'
-            = render :partial => 'bar'
-            = render :partial => 'bar'
+            = render :partial => 'bar', :collection => @search_bars
     %td.small.shadow
 
     %td.separator
@@ -102,7 +87,7 @@
         %table.player
           %tr
             %td.portrait{:rowspan => 2}
-              = image_tag @account.profile_picture, :alt => @account.full_name, :class => 'portrait'
+              = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
             %td.score-desc= t 'home.battle.respect_points', :count => number_with_delimiter(3_450)
           %tr
             %td.score-desc= t 'home.battle.shame_points', :count => number_with_delimiter(12)

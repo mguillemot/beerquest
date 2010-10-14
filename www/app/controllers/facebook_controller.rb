@@ -1,5 +1,6 @@
 class FacebookController < ApplicationController
-  before_filter :user_details, :except => [:session_login, :session_logout, :hack_login, :test]
+
+  before_filter :user_details, :except => [:session_login, :session_logout]
 
   def session_login
     reset_session
@@ -15,83 +16,6 @@ class FacebookController < ApplicationController
     session[:user_id] = nil
     session[:account_id] = nil
     redirect_to home_url
-  end
-
-  # For testing purposes (out of Facebook)
-  def hack_login
-    account = Account.get(params[:id])
-    account.last_login = DateTime.now
-    account.login_count += 1
-    account.save
-
-    session[:user_id] = params[:id]
-    session[:access_token] = "none"
-    session[:account_id] = params[:id]
-
-    redirect_to home_url
-  end
-
-  def test
-    @replay = Replay.get(params[:id])
-    @game = Game::Game.new
-    @game.start(@replay.seed)
-
-    @game.board.decode "fvvvtvvv" +
-                               "fvvvrttv" +
-                               "vfvbbrrv" +
-                               "vvvvrbbv" +
-                               "vvvvbrrv" +
-                               "vvvvrbbv" +
-                               "vvvwbrrv" +
-                               "vwwvwbbv"
-
-    decoded_replay = JSON.parse(@replay.replay, :symbolize_names => true)
-    @steps = []
-    @steps.push("Initial status with seed=#{@replay.seed}")
-    @steps.push(@game.dup)
-    # TODO vérifier que les opérations (ex: swap) sont autorisées
-    decoded_replay.each do |r|
-      case r[:type]
-        when "swap"
-          src = [r[:sx], r[:sy]]
-          dst = [r[:dx], r[:dy]]
-          @steps.push("Swapping #{src.inspect} and #{dst.inspect}")
-          @game.swap_cells(src, dst)
-          @steps.push(@game.dup)
-        when "capacity"
-          @steps.push("Using capacity \"#{r[:capacity]}\" targetting \"#{r[:target]}\"")
-          unless @game.capacities.include? r[:capacity]
-            @steps.push("ERROR: No such capacity is usable")
-          else
-            @game.execute_capacity(r[:capacity], r[:target])
-          end
-        when "piss"
-          before_piss = @game.piss
-          @game.do_piss
-          @steps.push("Pissed: #{before_piss} => #{@game.piss}")
-        when "reset"
-          @steps.push("A reset happened here")
-        when "status"
-          if r[:board] == @game.board.encoded_state
-            @steps.push("Checked status: expected #{r[:board]} vs actual #{@game.board.encoded_state}")
-          else
-            @steps.push("Failed status check: expected #{r[:board]} vs actual #{@game.board.encoded_state}")
-          end
-        else
-          @steps.push("Ignoring \"#{r[:type]}\"")
-      end
-    end
-
-
-#    @board.decode "brrwbbaf" \
-#                  "rlbtwabf" \
-#                  "rrrlfrwr" \
-#                  "bltaraar" \
-#                  "rrabwrwl" \
-#                  "tbaltwrt" \
-#                  "rarfftrb" \
-#                  "lbalatlr"
-    render :layout => false
   end
 
   private
@@ -115,36 +39,36 @@ class FacebookController < ApplicationController
     # App user
     if session[:account_id]
       logger.debug "Account was stored in session: #{session[:account_id]}"
-      @account = Account.get(session[:account_id])
+      @me = Account.get(session[:account_id])
     else
       flash.now[:notice] = "Retrieve account info from FB"
       logger.debug "Trying to retrieve user #{@user_id} from DB"
-      @account = Account.first(:facebook_id => @user_id)
-      unless @account
+      @me = Account.first(:facebook_id => @user_id)
+      unless @me
         logger.debug "Account didn't exist, create one"
-        @account = Account.new(:facebook_id => @user_id)
+        @me = Account.new(:facebook_id => @user_id)
       end
       logger.debug "Asking FB for info about user account #{@user_id}"
-      @me = MiniFB.get(@access_token, "me")
-      @account.first_name = @me[:first_name]
-      @account.last_name = @me[:last_name]
-      @account.gender = @me[:gender]
-      #@account.email = @me[:email] # demand� avec les droits suppl�mentantes
-      @account.locale = @me[:locale] # ex: fr_FR
-      @account.timezone = @me[:timezone] # 9
-      @account.profile_picture = "http://graph.facebook.com/#{@user_id}/picture"
-      @account.login_count += 1
-      @account.last_login = DateTime.now
-      @account.save
-      session[:account_id] = @account.id
+      facebook_account = MiniFB.get(@access_token, "me")
+      @me.first_name = facebook_account[:first_name]
+      @me.last_name = facebook_account[:last_name]
+      @me.gender = facebook_account[:gender]
+      #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
+      @me.locale = facebook_account[:locale] # ex: fr_FR
+      @me.timezone = facebook_account[:timezone] # 9
+      @me.profile_picture = "http://graph.facebook.com/#{@user_id}/picture"
+      @me.login_count += 1
+      @me.last_login = DateTime.now
+      @me.save
+      session[:account_id] = @me.id
 
       # Friends
 #      logger.debug "Current friends (before updating):"
-#      @account.friends.each do |f|
+#      @me.friends.each do |f|
 #        logger.debug "== fbid: #{f.facebook_id}"
 #      end
 #
-#      current_friends = @account.friendships.map { |fs| fs.friend_id }
+#      current_friends = @me.friendships.map { |fs| fs.friend_id }
 #      logger.debug "Asking FB for info about user friends"
 #      fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
 #      fb_friends[:data].each do |f|
@@ -152,9 +76,9 @@ class FacebookController < ApplicationController
 #        friend_account = Account.find_by_facebook_id f[:id]
 #        unless friend_account
 #          logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
-#          friend_account = @account.friends.new
+#          friend_account = @me.friends.new
 #          friend_account.facebook_id = f[:id]
-#          friend_account.discovered_through = @account.id
+#          friend_account.discovered_through = @me.id
 #          if f[:name]
 #            friend_name = f[:name].split(' ', 2)
 #            friend_account.first_name = friend_name[0]
@@ -165,7 +89,7 @@ class FacebookController < ApplicationController
 #        else
 #          unless current_friends.reject! f[:id]
 #            logger.debug "Friend #{f[:id]} was already existing but not registered as friend yet"
-#            @account.friends << friend_account
+#            @me.friends << friend_account
 #          else
 #            logger.debug "Friend #{f[:id]} was already existing and registered as friend"
 #          end
@@ -174,14 +98,12 @@ class FacebookController < ApplicationController
       # Remove no-more friends
 #      current_friends.each do |f_id|
 #        logger.debug "Friend #{f_id} is no more a friend: removing him"
-#        @account.friends.delete @account.friends.find_by_id(f_id)
+#        @me.friends.delete @me.friends.find_by_id(f_id)
 #      end
     end
 
     # (facultative) add default bar
-    if @account.barships.empty?
-      @account.barships.create(:bar_id => 1)
-    end
+    @me.barships.create(:bar_id => Bar.default_bar.id) if @me.barships.empty?
 
     true
   end
@@ -227,4 +149,5 @@ class FacebookController < ApplicationController
 
     data
   end
+
 end

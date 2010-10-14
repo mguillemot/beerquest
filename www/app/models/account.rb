@@ -38,7 +38,8 @@ class Account
   end
 
   def last_bar
-    barships.first(:order => :updated_at.desc).bar
+    last_barship = barships.first(:order => :updated_at.desc)
+    last_barship ? last_barship.bar : Bar.default_bar
   end
 
   def profile_picture
