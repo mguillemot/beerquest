@@ -4,7 +4,10 @@ fr:
   beers: "Bières"
   challenge:
     header: "Vite, à %{goal}..."
-    value: "on relance la chasse à la baleine !"
+    value:
+      target1000: "on relance la chasse à la baleine !"
+      target2000: "on tue un chaton !"
+      target5000: "on boit un grand verre d'huile d'arachide !"
   nav:
     home: "Accueil"
     play: "Jouer"

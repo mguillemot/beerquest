@@ -1,6 +1,6 @@
 class StaticController < FacebookController
 
-  def help
+  def support_us
   end
 
   def privacy

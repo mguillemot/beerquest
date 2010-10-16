@@ -5,11 +5,11 @@
     <file url="file://$PROJECT_DIR$/app/controllers/bar_controller.rb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/controllers/static_controller.rb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/controllers/user_controller.rb" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/views/bar/bar.html.haml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/views/layouts/application.html.haml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/views/user/_barscore.html.haml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/views/user/_challenge.html.haml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/views/user/index.html.haml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/bar/_barscore.haml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/bar/index.haml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/layouts/application.haml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/user/_challenge.haml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/user/index.haml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config/locales/fr.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/stylesheets/sass/test.sass" charset="UTF-8" />
   </component>

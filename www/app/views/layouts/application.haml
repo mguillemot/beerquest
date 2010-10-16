@@ -3,7 +3,7 @@
   %head
     %title= "Beer Quest - #{@me.full_name}" # TODO enlever
     %meta{:charset => "utf-8"}
-    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js'
     = javascript_include_tag 'http://cdn.jquerytools.org/1.2.4/tiny/jquery.tools.min.js'
     = javascript_include_tag 'rails'
     = javascript_include_tag 'jquery.swfobject.1-1-1.min'
@@ -29,6 +29,10 @@
         e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
         document.getElementById('fb-root').appendChild(e);
       }());
+
+      function reloadWorldScore() {
+        $.get("#{async_world_score_url}");
+      }
     #main
       #header
         #banner
@@ -38,10 +42,9 @@
             = image_tag 'bt-idrink.png', :alt => t('ilike')
           .stats-container
             .stats
+              #world-score
+                = render :partial => 'partials/world_score'
               = image_tag 'bierre-logo.png', :alt => t('beers'), :class => 'beer'
-              .total-beers= number_with_delimiter(World.total_beers)
-              .challenge-header= t 'challenge.header', :goal => number_with_delimiter(2_500_000_000)
-              .challenge-value= t 'challenge.value'
         #nav
           %ul
             %li.home
@@ -53,9 +56,9 @@
             %li
               %a{:href => '#'}= t 'nav.help'
             %li.special
-              %a{:href => '#'}= t 'nav.support'
+              = link_to t('nav.support'), support_us_url
             %li.last
-              %a{:href => '#'}= t 'nav.blog'
+              %a{:href => 'http://blog.bq-4.com/', :target => '_blank'}= t 'nav.blog'
       #flash
         - if flash[:error]
           .error= flash[:error]

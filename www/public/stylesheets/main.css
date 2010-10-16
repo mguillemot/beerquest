@@ -30,10 +30,16 @@ body {
   clear: both;
 }
 
-@font-face {
-  font-family: "Kronika";
-  src: url("/fonts/KRONIKA_.eot"); /* IE */  
-  src: local("Kronika"), url("/fonts/KRONIKA_.ttf") format("truetype"); /* non-IE */
+@font-face
+{
+  font-family: "Kronika"
+;
+  src: url("/fonts/KRONIKA_.eot")
+;
+/* IE */
+  src: local("Kronika"), url("/fonts/KRONIKA_.ttf") format("truetype")
+;
+/* non-IE */
 }
 
 #main {
@@ -94,7 +100,7 @@ body {
 #banner .stats img.beer {
   position: absolute;
   top: -5px;
-  right: -20px;
+  right: 30px;
 }
 
 #nav {

@@ -1,11 +1,30 @@
 class UserController < FacebookController
 
   BARS_PER_PAGE = 3
+  WORLD_SCORE_TARGETS = [
+          {:score => 1_000, :challenge => 'challenge.value.target1000'},
+          {:score => 2_000, :challenge => 'challenge.value.target2000'},
+          {:score => 5_000, :challenge => 'challenge.value.target5000'}
+  ]
 
   def index
+    async_world_score
     async_favorites
     async_partners
     async_search
+  end
+
+  def async_world_score
+    @world_score = World.total_beers
+    @world_score_increase = World.increase_last_hour / 3600.0
+    target = WORLD_SCORE_TARGETS.find { |t| t[:score] > @world_score }
+    if target
+      @world_score_target = target[:score]
+      @world_score_action = t(target[:challenge])
+    else
+      @world_score_target = 0
+      @world_score_action = ''
+    end
   end
 
   def async_favorites

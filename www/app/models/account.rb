@@ -20,6 +20,7 @@ class Account
   has n, :barships, :constraint => :destroy
   has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
   has n, :replays, :constraint => :set_nil
+  has n, :battles, :constraint => :destroy
 
   def full_name
     "#{first_name} #{last_name}"

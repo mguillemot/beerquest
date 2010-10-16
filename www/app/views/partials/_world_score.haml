@@ -1,0 +1,6 @@
+.total-beers{'data-current' => @world_score, 'data-increase' => @world_score_increase, 'data-delimiter' => t('number.format.delimiter'), 'data-target' => @world_score_target}
+  = number_with_delimiter(@world_score)
+.challenge-header
+  = t'challenge.header', :goal => number_with_delimiter(@world_score_target)
+.challenge-value
+  = @world_score_action

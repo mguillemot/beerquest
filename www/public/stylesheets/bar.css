@@ -1,0 +1,264 @@
+.cols .unique-col {
+  width: 730px;
+  border: 5px solid #ff8800;
+  background: #fff9e1;
+}
+
+table.bar-area {
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 4px;
+}
+
+table.bar-area td {
+  padding: 0;
+  text-align: left;
+}
+
+table.bar-area tr.bottom td.bar-scores {
+  width: 260px;
+}
+
+table.bar-area tr.bottom td.friends-scores {
+  width: 260px;
+}
+
+table.bar-area tr.bottom td.bar-stats {
+  width: 223px;
+  background: #fff4c7;
+  border: 1px solid #ff8800;
+  padding: 4px;
+}
+
+table.bar-area tr.bottom td div.header {
+  font-weight: bold;
+  font-size: 12px;
+  color: #ce0000;
+  margin-bottom: 5px;
+}
+
+table.bar-area tr.bottom td.bar-stats img.portrait {
+  float: left;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #c9700b;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  margin-right: 4px;
+}
+
+table.bar-area tr.bottom td.bar-stats div.stat {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+table.bar-area tr.bottom td.bar-stats div.section {
+  font-weight: bold;
+  font-size: 10px;
+}
+
+table.bar-area tr.bottom td.bar-stats div.value {
+  font-size: 10px;
+  padding-left: 10px;
+}
+
+table.bar-area img.bar-banner {
+  width: 194px;
+  height: 74px;
+  border: 1px solid #9f857c;
+}
+
+td.bar-name {
+  font-size: 14px;
+}
+
+td.bar-name h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+td.bar-name a {
+  color: #0024fe;
+  text-decoration: underline;
+}
+
+#game {
+  width: 520px;
+  height: 320px;
+  overflow: none;
+  /*background: red;*/
+}
+
+ul.rss li {
+  list-style: circle;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+table.barscore-grid {
+}
+
+table.barscore-grid tr.me {
+  background: red;
+}
+
+table.barscore-grid td {
+  border: none;
+  vertical-align: middle;
+  padding: 2px;
+}
+
+table.barscore-grid td.portrait {
+  width: 55px;
+  text-align: center;
+}
+
+table.barscore-grid td.portrait img {
+  width: 50px;
+  height: 50px;
+  border: 3px solid red;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+table.barscore-grid td.description {
+  width: auto;
+  text-align: left;
+}
+
+table.barscore-grid td.description .rank {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+table.barscore-grid td.description .name {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+table.barscore-grid td.description .score {
+  font-size: 12px;
+}
+
+table.barscore-grid td.description .score .value {
+  font-weight: bold;
+}
+
+td.sidebar ul.tabs {
+  margin-top: 8px;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+td.sidebar ul.tabs li {
+  position: relative;
+  top: -2px;
+  display: inline;
+  background: #e4e4e4;
+  padding: 5px 10px;
+}
+
+td.sidebar ul.tabs li {
+  border-top: 1px solid #ff8800;
+  border-left: 1px solid #ff8800;
+}
+
+td.sidebar ul.tabs li.last {
+  border-right: 1px solid #ff8800;
+}
+
+td.sidebar ul.tabs li.current {
+  background: #f6f6f6;
+  border-bottom: 1px solid #f6f6f6;
+}
+
+td.sidebar ul.tabs li a {
+  font-size: 11px;
+}
+
+td.sidebar ul.tabs li.current a {
+  color: #ff6702;
+}
+
+td.sidebar div.pane {
+  background: #f6f6f6;
+  padding: 3px;
+  height: 288px;
+  overflow: auto;
+}
+
+td.sidebar div.pane {
+  border: 1px solid #ff8800;
+}
+
+tr.bottom ul.tabs {
+  margin-top: 8px;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+tr.bottom ul.tabs li {
+  position: relative;
+  top: -3px;
+  display: inline;
+  background: #eee6c4;
+  padding: 5px 10px;
+}
+
+tr.bottom ul.tabs li {
+  border-bottom: 1px solid #ff8800;
+  border-left: 1px solid #ff8800;
+}
+
+tr.bottom ul.tabs li.last {
+  border-right: 1px solid #ff8800;
+}
+
+tr.bottom ul.tabs li.current {
+  background: #fff4c7;
+  border-top: 1px solid #fff4c7;
+}
+
+tr.bottom ul.tabs li a {
+  font-size: 11px;
+}
+
+tr.bottom ul.tabs li.current a {
+  color: #ff6702;
+}
+
+tr.bottom div.pane {
+  background: #fff4c7;
+  padding: 3px;
+}
+
+tr.bottom div.pane {
+  border: 1px solid #ff8800;
+}
+
+tr.bottom table {
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+tr.bottom table td.header {
+  font-weight: bold;
+  font-size: 12px;
+  color: #ce0000;
+}
+
+tr.bottom table td.subnav {
+  text-align: right;
+  font-size: 11px;
+}
+
+tr.bottom table td.subnav a {
+  text-decoration: underline;
+}
+
+tr.bottom table td.subnav a.current {
+  font-weight: bold;
+  text-decoration: none;
+}
