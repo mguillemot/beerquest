@@ -39,7 +39,7 @@
           .stats-container
             .stats
               = image_tag 'bierre-logo.png', :alt => t('beers'), :class => 'beer'
-              .total-beers= number_with_delimiter(2_456_003_234)
+              .total-beers= number_with_delimiter(World.total_beers)
               .challenge-header= t 'challenge.header', :goal => number_with_delimiter(2_500_000_000)
               .challenge-value= t 'challenge.value'
         #nav

@@ -9,7 +9,7 @@ class UserController < FacebookController
   end
 
   def async_favorites
-    results = Bar.all
+    results = @me.favorite_bars
     @favorites_page = (params[:page] || 1).to_i
     @favorites_max_page = (results.count.to_f / BARS_PER_PAGE).ceil
     @favorites_total = results.count

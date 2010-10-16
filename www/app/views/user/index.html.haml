@@ -20,12 +20,12 @@
             %td.score-desc= t 'home.score.best_7d'
             %td.score-value
               = image_tag 'mini-biere.png', :alt => t('beers')
-              = number_with_delimiter(378)
+              = number_with_delimiter(@me.best_score_weekly)
           %tr
             %td.score-desc= t 'home.score.total_beers'
             %td.score-value.total
               = image_tag 'mini-biere.png', :alt => t('beers')
-              = number_with_delimiter(1_324_323)
+              = number_with_delimiter(@me.total_beers)
         %table.action
           %tr
             %td.description= t 'home.score.play_description_html'

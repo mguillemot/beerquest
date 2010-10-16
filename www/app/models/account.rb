@@ -25,24 +25,32 @@ class Account
     "#{first_name} #{last_name}"
   end
 
-  def total_beers
-    replays.all(:game_over => true).sum(:score)
-  end
-
-  def max_beers
-    replays.all(:game_over => true).max(:score)
-  end
-
-  def play_count
-    replays.all(:game_over => true).count
-  end
-
   def last_bar
     last_barship = barships.first(:order => :updated_at.desc)
     last_barship ? last_barship.bar : Bar.default_bar
   end
 
+  def total_beers
+    completed_games.sum(:score) || 0
+  end
+
+  def best_score_weekly
+    weekly_completed_games.max(:score) || 0
+  end
+
   def profile_picture
     attribute_get(:profile_picture) || "http://static.ak.fbcdn.net/rsrc.php/z1LUW/hash/eu00g0eh.gif"
   end
+
+  private
+
+  def completed_games
+    replays.all(:game_over => true)
+  end
+
+  def weekly_completed_games
+    completed_games.all(:created_at.gte => DateTime.now - 1.week)
+  end
+
+
 end

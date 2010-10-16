@@ -8,4 +8,5 @@ class Friendship
 
   belongs_to :account
   belongs_to :friend, :model => Account
+
 end
