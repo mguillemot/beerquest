@@ -76,33 +76,11 @@
             %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.sent.title', :count => 3
         .panes
           .pane#current
-            %table.challenge-grid
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
+            = render :partial => 'current_challenges'
           .pane#received
-            %table.challenge-grid
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
+            = render :partial => 'received_challenges'
           .pane#sent
-            %table.challenge-grid
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-              = render :partial => 'challenge'
-            .battle-warning= t 'home.battle.warning'
+            = render :partial => 'sent_challenges'
     %td.small.shadow
   %tr.small
     %td.small

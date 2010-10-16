@@ -60,7 +60,9 @@ fr:
           title: "Reçus (%{count})"
         sent:
           title: "Envoyés (%{count})"
-      warning: "Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés."
+      warning:
+        received_html: "Les défis reçus sont annulés au bout d'une semaine si vous ne les acceptez pas en cliquant sur <strong>Battle</strong>"
+        sent_html: "Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés."
   bar:
     member_count:
       one: "1 Membre"

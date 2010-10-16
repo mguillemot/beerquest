@@ -3,3 +3,16 @@
   border: 5px solid black;
   background: #fff9e1;
 }
+
+table.main-content td.left-col {
+  width: auto;
+  text-align: left;
+  background: red;
+}
+
+table.main-content td.right-col {
+  width: 150px;
+  text-align: left;
+  background: green;
+}
+
