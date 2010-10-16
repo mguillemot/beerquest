@@ -1,0 +1,6 @@
+%table.header
+  %tr
+    %td.bar-count= t 'home.score.tabs.favorites.bar_count', :count => @favorites_total
+    %td.pane-pages
+      = favorite_pages(@favorites_page, @favorites_max_page)
+= render :partial => 'bar', :collection => @favorites

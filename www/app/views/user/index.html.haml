@@ -43,39 +43,9 @@
           .pane#favorites
             = render :partial => 'favorite_bars'
           .pane#bartners
-            %table.header
-              %tr
-                %td.bar-count= t 'home.score.tabs.bartners.bar_count', :count => 1
-                %td.pane-pages
-                  = t 'home.score.tabs.pages'
-                  %a.page-link{:href => '#'} 1
-                  %a.page-link{:href => '#'} 2
-                  %span.page-link.current 3
-                  %a.page-link{:href => '#'} 4
-                  = "..."
-                  %a.page-link{:href => '#'} 9
-            = render :partial => 'bar', :collection => @partner_bars
+            = render :partial => 'partner_bars'
           .pane#search
-            .search
-              .description= t 'home.score.tabs.search.alphabetic_order'
-              .values
-                %a.page-link{:href => '#'} 123
-                - "A".ord.upto("Z".ord).each do |letter|
-                  - if letter == "M".ord
-                    %br
-                  %a.page-link{:href => '#'}= letter.chr
-            %table.header
-              %tr
-                %td.bar-count= t 'home.score.tabs.search.results', :count => 3, :search => 'A'
-                %td.pane-pages
-                  = t 'home.score.tabs.pages'
-                  %a.page-link{:href => '#'} 1
-                  %a.page-link{:href => '#'} 2
-                  %span.page-link.current 3
-                  %a.page-link{:href => '#'} 4
-                  = "..."
-                  %a.page-link{:href => '#'} 9
-            = render :partial => 'bar', :collection => @search_bars
+            = render :partial => 'search_bars'
     %td.small.shadow
 
     %td.separator
@@ -132,7 +102,7 @@
               = render :partial => 'challenge'
               = render :partial => 'challenge'
               = render :partial => 'challenge'
-            .battle-warning Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés.
+            .battle-warning= t 'home.battle.warning'
     %td.small.shadow
   %tr.small
     %td.small

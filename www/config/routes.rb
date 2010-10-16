@@ -1,23 +1,29 @@
 BeerQuest::Application.routes.draw do
 
+  # User pages
+  root                         :to => "user#index",             :as => 'home'
+  get "favorites/:page",      :to => "user#async_favorites",   :as => 'async_favorites'
+  get "partners/:page",       :to => "user#async_partners",    :as => 'async_partners'
+  get "search/:prefix/:page", :to => "user#async_search",      :as => 'async_search'
+
   # Bar pages
-  root                    :to => "home#index",             :as => 'home'
-  get "async_fav/:page", :to => "home#async_favorites",   :as => 'async_favorites'
-  get "bar/:id",         :to => "home#bar",               :as => 'bar'
-  get "help",            :to => "home#help",              :as => 'help'
-  get "privacy",         :to => "home#privacy",           :as => 'privacy'
-  get "tos",             :to => "home#tos",               :as => 'tos'
+  get "bar/:id",              :to => "bar#index",              :as => 'bar'
+
+  # Static pages
+  get "help",                 :to => "static#help",            :as => 'help'
+  get "privacy",              :to => "static#privacy",         :as => 'privacy'
+  get "tos",                  :to => "static#tos",             :as => 'tos'
 
   # Facebook integration
-  get "session_login",  :to => "facebook#session_login",  :as => 'login'
-  get "session_logout", :to => "facebook#session_logout", :as => 'logout'
+  get "session_login",       :to => "facebook#session_login",  :as => 'login'
+  get "session_logout",      :to => "facebook#session_logout", :as => 'logout'
 
   # Game integration
-  get "start",          :to => "game#start",              :as => 'game_start'
-  post "postscore",     :to => "game#postscore",          :as => 'post_score'
+  get "start",               :to => "game#start",              :as => 'game_start'
+  post "postscore",          :to => "game#postscore",          :as => 'post_score'
 
   # Admin & debug
-  get "play/:id" ,      :to => "admin#hack_login"
-  get "debug/:id",      :to => "admin#check_game"
+  get "play/:id" ,           :to => "admin#hack_login"
+  get "debug/:id",           :to => "admin#check_game"
 
 end

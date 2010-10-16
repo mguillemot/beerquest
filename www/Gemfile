@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-RAILS_VERSION = '3.0.0'
+RAILS_VERSION = '3.0.1'
 DM_VERSION = '1.0.2'
 
 gem 'mongrel'
@@ -37,4 +37,4 @@ gem 'haml'
 gem 'json'
 gem 'mini_fb'
 
-gem 'will_paginate',        '3.0.pre2'
+#gem 'will_paginate',        '3.0.pre2'

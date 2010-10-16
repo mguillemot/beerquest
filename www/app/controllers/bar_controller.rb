@@ -1,26 +1,8 @@
 require 'rss/2.0'
 
-class HomeController < FacebookController
-
-  BARS_PER_PAGE = 3
+class BarController < FacebookController
 
   def index
-    @favorite_bars = WillPaginate::Collection.create(1, BARS_PER_PAGE) do |pager|
-      result = Bar.all(:limit => pager.per_page, :offset => pager.offset)
-      pager.replace(result)
-    end
-
-    @partner_bars = Bar.all
-
-    @search_bars = []
-  end
-
-  def async_favorites
-    @favorite_bars_page = params[:page].to_i
-    @favorite_bars = (Bar.all)[((@favorite_bars_page - 1) * BARS_PER_PAGE)...(@favorite_bars_page * BARS_PER_PAGE)]
-  end
-
-  def bar
     @bar = Bar.get(params[:id])
     @required_version = "0.95"
     @mode = "solo"
@@ -49,15 +31,6 @@ class HomeController < FacebookController
         @rss = nil
       end
     end
-  end
-
-  def help
-  end
-
-  def privacy
-  end
-
-  def tos
   end
 
 end

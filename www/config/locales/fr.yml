@@ -57,6 +57,7 @@ fr:
           title: "Reçus (%{count})"
         sent:
           title: "Envoyés (%{count})"
+      warning: "Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés."
   bar:
     member_count:
       one: "1 Membre"

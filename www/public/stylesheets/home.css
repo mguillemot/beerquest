@@ -175,7 +175,7 @@ div.pane table.header td.pane-pages {
   text-align: right;
 }
 
-div.pane table.header td.pane-pages .page-link.current {
+.page-link.current {
   font-weight: bold;
 }
 

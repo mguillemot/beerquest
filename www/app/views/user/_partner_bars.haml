@@ -1,0 +1,6 @@
+%table.header
+  %tr
+    %td.bar-count= t 'home.score.tabs.bartners.bar_count', :count => @partners_total
+    %td.pane-pages
+      = partner_pages(@partners_page, @partners_max_page)
+= render :partial => 'bar', :collection => @partners

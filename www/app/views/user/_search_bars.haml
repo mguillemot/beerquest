@@ -1,0 +1,11 @@
+.search
+  .description= t 'home.score.tabs.search.alphabetic_order'
+  .values
+    = search_prefixes(@search_prefix)
+- if @search_prefix != '(none)'
+  %table.header
+    %tr
+      %td.bar-count= t 'home.score.tabs.search.results', :count => @search_total, :search => @search_prefix
+      %td.pane-pages
+        = search_pages(@search_prefix, @search_page, @search_max_page)
+  = render :partial => 'bar', :collection => @search
