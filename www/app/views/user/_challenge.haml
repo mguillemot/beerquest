@@ -1,12 +1,24 @@
-%tr.challenge
-  %td.portrait
-    = image_tag 'avatar2.png', :class => 'portrait'
-  %td.description
-    .name Eric Phelippeau
-    .status A gagné son round le 21.08 à 17:30
-  %td.score
-    = image_tag 'mini-biere.png', :alt => t('beers')
-    234
-  %td.action
-    .button
-      %a{:href => '#'} Battle
+- if challenge.account == @me # Received challenge
+  %tr.challenge
+    %td.portrait
+      = image_tag 'avatar2.png', :class => 'portrait'
+    %td.description
+      .name= challenge.sent_by.full_name
+      .status= t(challenge.new? ? 'home.battle.received_challenge.new_description' : 'home.battle.received_challenge.description', :date => l(challenge.created_at, :format => :short))
+    %td.score
+      = image_tag 'mini-biere.png', :alt => t('beers')
+      = challenge.required_score
+    %td.action
+      .button
+        %a{:href => '#'} Battle
+- else # Sent challenge
+  %tr.challenge
+    %td.portrait
+      = image_tag 'avatar2.png', :class => 'portrait'
+    %td.description
+      .name= challenge.account.full_name
+      .status= t(challenge.new? ? 'home.battle.sent_challenge.new_description' : 'home.battle.sent_challenge.description', :date => l(challenge.created_at, :format => :short))
+    %td.score
+      = image_tag 'mini-biere.png', :alt => t('beers')
+      = challenge.required_score
+    %td.action

@@ -126,7 +126,7 @@ class UserController < FacebookController
   end
 
   def set_current_challenges(page)
-    results = Challenge.all
+    results = @me.current_challenges
     @current_challenges_page = page
     @current_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
     @current_challenges_total = results.count
@@ -134,7 +134,7 @@ class UserController < FacebookController
   end
 
   def set_received_challenges(page)
-    results = Challenge.all
+    results = @me.new_received_challenges
     @received_challenges_page = page
     @received_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
     @received_challenges_total = results.count
@@ -142,7 +142,7 @@ class UserController < FacebookController
   end
 
   def set_sent_challenges(page)
-    results = Challenge.all
+    results = @me.new_sent_challenges
     @sent_challenges_page = page
     @sent_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
     @sent_challenges_total = results.count

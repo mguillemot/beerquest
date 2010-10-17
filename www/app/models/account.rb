@@ -47,7 +47,23 @@ class Account
   end
 
   def current_challenges
-    challenges.all(:replay_score => nil)
+    challenges.all(:replay_score => nil, :parent.not => nil) + sent_challenges.all(:replay_score => nil, :parent.not => nil)
+  end
+
+  def new_received_challenges
+    challenges.all(:replay_score => nil, :parent => nil)
+  end
+
+  def new_sent_challenges
+    sent_challenges.all(:replay_score => nil, :parent => nil)
+  end
+
+  def victory_points
+    sent_challenges.count(:replay_score.lt => :required_score)
+  end
+
+  def defeat_points
+    challenges.count(:replay_score.lt => :required_score)
   end
 
   private

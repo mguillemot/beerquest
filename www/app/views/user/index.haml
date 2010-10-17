@@ -58,9 +58,9 @@
           %tr
             %td.portrait{:rowspan => 2}
               = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
-            %td.score-desc= t 'home.battle.respect_points', :count => number_with_delimiter(3_450)
+            %td.score-desc= t 'home.battle.respect_points', :count => number_with_delimiter(@me.victory_points)
           %tr
-            %td.score-desc= t 'home.battle.shame_points', :count => number_with_delimiter(12)
+            %td.score-desc= t 'home.battle.shame_points', :count => number_with_delimiter(@me.defeat_points)
         %table.action
           %tr
             %td.description= t 'home.battle.play_description_html'
@@ -71,9 +71,9 @@
           %li
             %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.current.title'
           %li
-            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.received.title', :count => 12
+            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.received.title', :count => @received_challenges_total
           %li.last
-            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.sent.title', :count => 3
+            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.sent.title', :count => @sent_challenges_total
         .panes
           .pane#current
             = render :partial => 'current_challenges'

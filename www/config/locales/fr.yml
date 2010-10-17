@@ -63,6 +63,12 @@ fr:
       warning:
         received_html: "Les défis reçus sont annulés au bout d'une semaine si vous ne les acceptez pas en cliquant sur <strong>Battle</strong>"
         sent_html: "Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés."
+      received_challenge:
+        new_description: "Défi reçu le %{date}"
+        description: "A gagné son round le %{date}"
+      sent_challenge:
+        new_description: "Défi envoyé le %{date}"
+        description: "Défi renvoyé le %{date}"
   bar:
     member_count:
       one: "1 Membre"

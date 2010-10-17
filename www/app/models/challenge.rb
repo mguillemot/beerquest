@@ -2,7 +2,7 @@ class Challenge
   include DataMapper::Resource
 
   property :id, Serial
-  is :tree
+  is :tree, :order => :created_at
   property :account_id, Integer, :min => 1
   property :sent_by_id, Integer, :min => 1
   property :required_score, Integer
@@ -14,5 +14,9 @@ class Challenge
   belongs_to :account
   belongs_to :sent_by, :model => Account
   belongs_to :replay
+
+  def new?
+    (parent_id == nil)
+  end
 
 end

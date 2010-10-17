@@ -1,4 +1,3 @@
 %table.challenge-grid
-  = render :partial => 'challenge'
-  = render :partial => 'challenge'
+  = render :partial => 'challenge', :collection => @received_challenges
 .battle-warning= t 'home.battle.warning.received_html'
