@@ -61,7 +61,7 @@ class Replay
 
   belongs_to :account
   belongs_to :bar
-  has 1, :battle
+  has 1, :challenge
 
   def self.finished
     self.all(:game_over => true)
