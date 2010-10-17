@@ -19,4 +19,11 @@ BeerQuest::Application.configure do
 
   # Deprecation notices
   config.active_support.deprecation = :log
+
+  # PayPal
+  PAYPAL_API_URL = 'https://api-3t.sandbox.paypal.com/nvp'
+  PAYPAL_USER_URL = 'https://www.sandbox.paypal.com/webscr&cmd=_express-checkout'
+  PAYPAL_USER = 'payment_api1.touhou-shop.com'
+  PAYPAL_PWD = 'KN6K3KLXBDQTLHQ3'
+  PAYPAL_SIGNATURE = 'AbGhBFISPjSS9ZCvaXavWffxEvTzA28ZuQSusINMThFA7UKPV.QVZIXY'
 end

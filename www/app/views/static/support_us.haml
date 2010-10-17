@@ -11,67 +11,27 @@
       %table.main-content
         %tr
           %td.left-col
-            %h1 Beerouare
-            %h2 Offrez-nous à bouare !
+            %h1= t 'support_us.title'
+            %h2= t 'support_us.subtitle'
 
-            .intro
-              BeerQuest est un jeu entièrement gratuit et nous espérons que vous y passez du bon temps. Si vous souhaitez nous encourager à continuer dans nos erreurs et nous aider à faire de pire en pire à cause d'un alcoolisme chronique, alors offrez-nous une bonne bière !
+            .intro= t 'support_us.intro'
 
-            .offer
-              .title
-                .offer-button
-                  Offrir
-                Bière à coudre 0,42 €
-              .description
-                2 cl de bière : pas de quoi nous rassasier, mais faut on va pas refuser pour autant ! La bière c'est sacré ! Vous gagnez 1 pt de notre considération !
+            - (1..7).each do |i|
+              .offer{:id => "offer#{i}"}
+                .title
+                  %a.offer-button{:href => '#'}
+                    .button-text= t('support_us.offers.button')
+                  &gt;
+                  = t "support_us.offers.offer#{i}.title"
+                  .tag= t "support_us.offers.offer#{i}.tag"
+                .description
+                  = t "support_us.offers.offer#{i}.description_html"
 
-            .offer
-              .title
-                .offer-button
-                  Offrir
-                Le demi - 1,5 €
-              .description
-                25 cl de bière : Elle n'est pas vraiment bonne, jamais assez fraîche et pourtant elle nous donnera un peu de réconfort. Vous gagnez 25 pts de notre considération !
-
-            .offer
-              .title
-                .offer-button
-                  Offrir
-                Grosse choppe - 3 €
-              .description
-                50 cl de bière : Pas fameuse, elle se rattrape largement par sa quantité. Et ce verre très épais la garde bien fraîche. Vous gagnez 50 pts de notre considération !
-
-            .offer
-              .title
-                .offer-button
-                  Offrir
-                La belle Belge - 5 €
-              .description
-                33 cl de bière : Belle robe, gouteuse et sensuelle, la bière Belge c'est accéder au sein des saint(e)s. ENFIN DE LA BIERE ! Vous gagnez 66 pts de notre considération !
-
-            .offer
-              .title
-                .offer-button
-                  Offrir
-                Le pack de 6 - 10 €
-              .description
-            6 x 33 cl : Bière de bonne tenue, en boite, par 6. De quoi agrémenter une bonne soirée pour décider des prochaines évolutions de BeerQuest 4. Vous gagnez 202 pts de notre considération !
-
-            .offer
-              .title
-                .offer-button
-                  Offrir
-                Le fût - 100€
-              .description
-                20.000 cl de bière : Grâce à ce fût nous vous promettons de nous programmer un week-end totalement non productif à votre santé. Et vu notre état prévisible à l'arrivée des 20.000 cl, nous préférons notre votre nom sur la page des "Glory bartender" pour ne jamais l'oublier. Et pour que tous les autres sachent en voyant votre nom à qui il ont affaire, il sera changé en "couleur bière". Vous gagnez 20.000 pts de notre considération !
-
-            .offer
-              .title
-                .offer-button
-                  Offrir
-                Brasserie de poche - 99.000€ et plus
-              .description
-                Bière en continue : Grâce à ce système ingénieu, nous allons pouvoir implanter un petit tuyau dans notre estomac qui nous alimentera en permanance de bière jusqu'à notre mort, et même au delà ! Pour que tout se passe bien pendant l'opération chirurgicale que nous devons subir pour cela, nous allons couper BeerQuest pendant 24H, et se sera de VOTRE faute bien entendu ! Votre nom restera pour toujours en haut de nos "Glory Bartender". Vous récupérez TOUTE notre considération ! (vous récupérez donc notre considération distribuée à tous les autres donnateurs)
+            .warning-box
+              - (1..2).each do |i|
+                .warning
+                  %span.title= t "support_us.warnings.warning#{i}.title"
+                  %span.description= t "support_us.warnings.warning#{i}.description_html"
 
           %td.right-col
             .beermeter
@@ -81,34 +41,13 @@
                 %br
                 *Hips* *Hips* *Hips* Ourhaaaaaa !
 
-            .faq
-              .title
-                FAQ Beerouare
-              .item
-                .question
-                  Le Beerouare (beerware) c'est quoi ?
-                .answer
-                  Vous connaissez sans doute le shareware, ou le freeware. Le Beerouare c'est un peu pareil, sauf qu'on vous demande de nous offrir de la bière ;-) En vrai ou plus simplement par internet.
-              .item
-                .question
-                  Vous y croyez vraiment ?
-                .answer
-                  Nous croyons surtout que ça fera rigoler beaucoup de personnes, un peu comme Beer Quest en général. Donc y croire ou pas c'est pas trés important, nous on veux surtout nous amuser !
-              .item
-                .question
-                  Et si ça marche ?
-                .answer
-                  Dans ce cas nous allons nous transformer en alcooliques, et ça sera de VOTRE faute ! Et tout ce que nous ne pourrons pas boire (nous restons des hommes apres tout, et au delà de 5-6 litres par jour, notre organisme ne pourra pas assimiler autant de liquide !), on l'offrira à des pauvres dans la rue, qui ont bien du mal à s'offrir de l'alcool de qualité.
-              .item
-                .question
-                  Avoir "Votre considération", ça sert à quoi ?
-                .answer
-                  A vivre, tout simplement. De plus il n'a pas été prouvé scientifiquement que cela rend plus heureux, plus riche, plus beau et beaucoup plus attractif pour avoir des relations amoureuses nombreuses et passagères pour les hommes, longue et de qualité pour les femmes. Enfin, il n'est même pas possible qu'au delà des 100.000 points de notre considération, ça puisse aider à la repousse des cheveux. ! Dans ces conditions, à votre place, j'essayerai d'en avoir un maximum !
-              .item
-                .question
-                  Pourquoi une démarche aussi louffoque ?
-                .answer
-                  Parceque nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, venez lire notre beer-blog et nous donner vos conseils.
+            #faq
+              .title= t 'support_us.faq.title'
+              %ul.questions
+                - (1..5).each do |i|
+                  %li
+                    .question= t "support_us.faq.entry#{i}.question"
+                    .answer= t "support_us.faq.entry#{i}.answer_html"
 
     %td.small.shadow
   %tr.small

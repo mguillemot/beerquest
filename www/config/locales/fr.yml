@@ -95,6 +95,64 @@ fr:
       best_rank_title: "Meilleur rang dans ce bar"
       best_rank_value: "#%{rank} le %{date}"
       play_count: "Nombre de parties"
+  support_us:
+    title: "Beerouare"
+    subtitle: "Offrez-nous à bouare !"
+    intro: "BeerQuest est un jeu entièrement gratuit et nous espérons que vous y passez du bon temps. Si vous souhaitez nous encourager à continuer dans nos erreurs et nous aider à faire de pire en pire à cause d'un alcoolisme chronique, alors offrez-nous une bonne bière !"
+    offers:
+      button: "Offrir"
+      offer1:
+        title: "Bière à coudre 0,42 €"
+        description_html: "2 cl de bière : pas de quoi nous rassasier, mais faut on va pas refuser pour autant ! La bière c'est sacré ! Vous <u>gagnez 1 pt</u> de notre considération !"
+        tag: ""
+      offer2:
+        title: "Le demi - 1,5 €"
+        description_html: "25 cl de bière : Elle n'est pas vraiment bonne, jamais assez fraîche et pourtant elle nous donnera un peu de réconfort. Vous <u>gagnez 25 pts</u> de notre considération !"
+        tag: ""
+      offer3:
+        title: "Grosse choppe - 3 €"
+        description_html: "50 cl de bière : Pas fameuse, elle se rattrape largement par sa quantité. Et ce verre très épais la garde bien fraîche. Vous <u>gagnez 50 pts</u> de notre considération !"
+        tag: ""
+      offer4:
+        title: "La belle Belge - 5 €"
+        description_html: "33 cl de bière : Belle robe, gouteuse et sensuelle, la bière Belge c'est accéder au sein des saint(e)s. ENFIN DE LA BIERE ! Vous <u>gagnez 66 pts</u> de notre considération !"
+        tag: "conseillée"
+      offer5:
+        title: "Le pack de 6 - 10 €"
+        description_html: "6 x 33 cl : Bière de bonne tenue, en boite, par 6. De quoi agrémenter une bonne soirée pour décider des prochaines évolutions de BeerQuest 4. Vous <u>gagnez 202 pts</u> de notre considération !"
+        tag: ""
+      offer6:
+        title: "Le fût - 100 €"
+        description_html: "20.000 cl de bière : Grâce à ce fût nous vous promettons de nous programmer un week-end totalement non productif à votre santé. Et vu notre état prévisible à l'arrivée des 20.000 cl, nous préférons notre votre nom sur la page des \"Glory bartender\" pour ne jamais l'oublier. Et pour que tous les autres sachent en voyant votre nom à qui il ont affaire, il sera changé en \"couleur bière\". Vous <u>gagnez 20.000 pts</u> de notre considération !"
+        tag: ""
+      offer7:
+        title: "Brasserie de poche - 99.000 € et plus"
+        description_html: "Bière en continu : Grâce à ce système ingénieux, nous allons pouvoir implanter un petit tuyau dans notre estomac qui nous alimentera en permanance de bière jusqu'à notre mort, et même au delà ! Pour que tout se passe bien pendant l'opération chirurgicale que nous devons subir pour cela, nous allons couper BeerQuest pendant 24H, et se sera de VOTRE faute bien entendu ! Votre nom restera pour toujours en haut de nos \"Glory Bartender\". Vous récupérez TOUTE notre considération ! (vous récupérez donc notre considération distribuée à tous les autres donnateurs)"
+        tag: ""
+    warnings:
+      warning1:
+        title: "Mise en garde 1 :"
+        description_html: "Toute bière bue ne pourra être rendue tant qu'elle n'est pas vomie."
+      warning2:
+        title: "Mise en garde 2 :"
+        description_html: "si jamais vous nous faites TROP de dons, il est probable que nous soyons obligés de passer pros. Dans ce cas, vous acceptez de nous imaginer en costume et avec de gros cigares. Une équipe marketing très douée reprendra notre suite..."
+    faq:
+      title: "FAQ Beerouare"
+      entry1:
+        question: "Le Beerouare (beerware) c'est quoi ?"
+        answer_html: "Vous connaissez sans doute le shareware, ou le freeware. Le Beerouare c'est un peu pareil, sauf qu'on vous demande de nous offrir de la bière ;-) En vrai ou plus simplement par internet."
+      entry2:
+        question: "Vous y croyez vraiment ?"
+        answer_html: "Nous croyons surtout que ça fera rigoler beaucoup de personnes, un peu comme Beer Quest en général. Donc y croire ou pas c'est pas trés important, nous on veux surtout nous amuser !"
+      entry3:
+        question: "Et si ça marche ?"
+        answer_html: "Dans ce cas nous allons nous transformer en alcooliques, et ça sera de VOTRE faute ! Et tout ce que nous ne pourrons pas boire (nous restons des hommes apres tout, et au delà de 5-6 litres par jour, notre organisme ne pourra pas assimiler autant de liquide !), on l'offrira à des pauvres dans la rue, qui ont bien du mal à s'offrir de l'alcool de qualité."
+      entry4:
+        question: "Avoir \"Votre considération\", ça sert à quoi ?"
+        answer_html: "A vivre, tout simplement. De plus il n'a pas été prouvé scientifiquement que cela rend plus heureux, plus riche, plus beau et beaucoup plus attractif pour avoir des relations amoureuses nombreuses et passagères pour les hommes, longue et de qualité pour les femmes. Enfin, il n'est même pas possible qu'au delà des 100.000 points de notre considération, ça puisse aider à la repousse des cheveux. ! Dans ces conditions, à votre place, j'essayerai d'en avoir un maximum !"
+      entry5:
+        question: "Pourquoi une démarche aussi loufoque ?"
+        answer_html: "Parce que nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, <a href=\"http://blog.bq-4.com/\" target=\"_blank\">venez lire notre beer-blog</a> et nous donner vos conseils."
 
   # http://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/fr.yml
   # WARNING: some changes below (tagged Erhune)

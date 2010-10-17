@@ -42,4 +42,11 @@ BeerQuest::Application.configure do
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
+
+  # PayPal
+  PAYPAL_API_URL = 'https://api-3t.paypal.com/nvp'
+  PAYPAL_USER_URL = 'https://www.paypal.com/webscr&cmd=_express-checkout'
+  PAYPAL_USER = 'payment_api1.touhou-shop.com'
+  PAYPAL_PWD = 'BPCBELRA6GB5MYJK'
+  PAYPAL_SIGNATURE = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AYWi88AQpbLExmH4rsXaoTubq0Jz'
 end

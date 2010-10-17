@@ -2,17 +2,141 @@
   width: 730px;
   border: 5px solid black;
   background: #fff9e1;
+  padding: 3px;
+  font-size: 10px;
 }
 
 table.main-content td.left-col {
   width: auto;
   text-align: left;
-  background: red;
+  padding: 7px;
 }
 
 table.main-content td.right-col {
-  width: 150px;
+  width: 200px;
   text-align: left;
-  background: green;
 }
 
+h1 {
+  color: #b80000;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+h2 {
+  color: #b80000;
+  font-size: 18px;
+}
+
+.intro {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.offer {
+  background: #fffcd3;
+  margin-bottom: 3px;
+  font-size: 11px;
+  padding: 2px;
+}
+
+.offer .title {
+  color: #b80000;
+  font-size: 16px;
+}
+
+.offer .offer-button {
+  color: black;
+  width: 76px;
+  height: 24px;
+  margin-right: 5px;
+  background: url("/images/offrir.png") no-repeat;
+  font-size: 11px;
+  font-weight: bold;
+  float: left;
+}
+
+.offer .offer-button .button-text {
+  position: relative;
+  left: 34px;
+  top: 4px;
+}
+
+.offer .tag {
+  float: right;
+  font-style: normal;
+  font-size: 10px;
+  margin-right: 5px;
+}
+
+.offer .description {
+  clear: both;
+}
+
+#offer4 {
+  background: #eee6c4;
+}
+
+#offer4 .title {
+  color: red;
+}
+
+.warning-box {
+  background: #ffe88b;
+  border: 2px solid black;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 3px;
+}
+
+.warning-box .warning .title {
+  font-weight: bold;
+}
+
+.beermeter {
+  background: #ffe88b;
+  border: 2px solid black;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#faq .title {
+  display: inline;
+  font-weight: bold;
+  background: #f6f6f6;
+  color: #ff8800;
+  border: 1px solid #ff8800;
+  border-bottom-color: #f6f6f6;
+  padding: 5px;
+}
+
+#faq .questions {
+  background: #f6f6f6;
+  border: 1px solid #ff8800;
+  margin-top: 5px;
+  font-size: 9px;
+  padding: 3px;
+}
+
+#faq .questions li {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#faq .questions li .question {
+  font-weight: bold;
+}
+
+#faq .questions li .answer {
+}
+
+#faq a {
+  color: blue;
+  text-decoration: underline;
+}
+
+#faq a:hover {
+  text-decoration: none;
+}
