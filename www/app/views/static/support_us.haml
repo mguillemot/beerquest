@@ -35,18 +35,17 @@
 
           %td.right-col
             .beermeter
-              %h2 Beer-O-Metre
-              .content
-                Grâce à vous nous avons bu 2.334.123 cl de bière.
-                %br
-                *Hips* *Hips* *Hips* Ourhaaaaaa !
+              %h2= t 'support_us.beermeter.title'
+              .content= t 'support_us.beermeter.content_html', :total => number_with_delimiter(Donation.total)
 
             #faq
               .title= t 'support_us.faq.title'
               %ul.questions
                 - (1..5).each do |i|
                   %li
-                    .question= t "support_us.faq.entry#{i}.question"
+                    .question
+                      = image_tag 'mini-beer-yellow.png'
+                      = t "support_us.faq.entry#{i}.question"
                     .answer= t "support_us.faq.entry#{i}.answer_html"
 
     %td.small.shadow

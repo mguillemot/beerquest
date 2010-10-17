@@ -99,31 +99,38 @@ fr:
     title: "Beerouare"
     subtitle: "Offrez-nous à bouare !"
     intro: "BeerQuest est un jeu entièrement gratuit et nous espérons que vous y passez du bon temps. Si vous souhaitez nous encourager à continuer dans nos erreurs et nous aider à faire de pire en pire à cause d'un alcoolisme chronique, alors offrez-nous une bonne bière !"
+    donation: "Donation BeerQuest"
     offers:
       button: "Offrir"
       offer1:
-        title: "Bière à coudre 0,42 €"
-        description_html: "2 cl de bière : pas de quoi nous rassasier, mais faut on va pas refuser pour autant ! La bière c'est sacré ! Vous <u>gagnez 1 pt</u> de notre considération !"
+        name: "Bière à coudre"
+        title: "Bière à coudre - 0,42 €"
+        description_html: "2 cL de bière : pas de quoi nous rassasier, mais faut on va pas refuser pour autant ! La bière c'est sacré ! Vous <u>gagnez 1 pt</u> de notre considération !"
         tag: ""
       offer2:
-        title: "Le demi - 1,5 €"
-        description_html: "25 cl de bière : Elle n'est pas vraiment bonne, jamais assez fraîche et pourtant elle nous donnera un peu de réconfort. Vous <u>gagnez 25 pts</u> de notre considération !"
+        name: "Le Demi"
+        title: "Le Demi - 1,5 €"
+        description_html: "25 cL de bière : Elle n'est pas vraiment bonne, jamais assez fraîche et pourtant elle nous donnera un peu de réconfort. Vous <u>gagnez 25 pts</u> de notre considération !"
         tag: ""
       offer3:
-        title: "Grosse choppe - 3 €"
-        description_html: "50 cl de bière : Pas fameuse, elle se rattrape largement par sa quantité. Et ce verre très épais la garde bien fraîche. Vous <u>gagnez 50 pts</u> de notre considération !"
+        name: "Grosse Chope"
+        title: "Grosse Chope - 3 €"
+        description_html: "50 cL de bière : Pas fameuse, elle se rattrape largement par sa quantité. Et ce verre très épais la garde bien fraîche. Vous <u>gagnez 50 pts</u> de notre considération !"
         tag: ""
       offer4:
-        title: "La belle Belge - 5 €"
-        description_html: "33 cl de bière : Belle robe, gouteuse et sensuelle, la bière Belge c'est accéder au sein des saint(e)s. ENFIN DE LA BIERE ! Vous <u>gagnez 66 pts</u> de notre considération !"
+        name: "La Belle Belge"
+        title: "La Belle Belge - 5 €"
+        description_html: "33 cL de bière : Belle robe, gouteuse et sensuelle, la bière Belge c'est accéder au sein des saint(e)s. ENFIN DE LA BIERE ! Vous <u>gagnez 66 pts</u> de notre considération !"
         tag: "conseillée"
       offer5:
-        title: "Le pack de 6 - 10 €"
-        description_html: "6 x 33 cl : Bière de bonne tenue, en boite, par 6. De quoi agrémenter une bonne soirée pour décider des prochaines évolutions de BeerQuest 4. Vous <u>gagnez 202 pts</u> de notre considération !"
+        name: "Le Pack de 6"
+        title: "Le Pack de 6 - 10 €"
+        description_html: "6 x 33 cL : Bière de bonne tenue, en boite, par 6. De quoi agrémenter une bonne soirée pour décider des prochaines évolutions de BeerQuest 4. Vous <u>gagnez 202 pts</u> de notre considération !"
         tag: ""
       offer6:
-        title: "Le fût - 100 €"
-        description_html: "20.000 cl de bière : Grâce à ce fût nous vous promettons de nous programmer un week-end totalement non productif à votre santé. Et vu notre état prévisible à l'arrivée des 20.000 cl, nous préférons notre votre nom sur la page des \"Glory bartender\" pour ne jamais l'oublier. Et pour que tous les autres sachent en voyant votre nom à qui il ont affaire, il sera changé en \"couleur bière\". Vous <u>gagnez 20.000 pts</u> de notre considération !"
+        name: "Le Fût"
+        title: "Le Fût - 100 €"
+        description_html: "20 L de bière : Grâce à ce fût nous vous promettons de nous programmer un week-end totalement non productif à votre santé. Et vu notre état prévisible à l'arrivée des 20 L, nous préférons notre votre nom sur la page des \"Glory bartender\" pour ne jamais l'oublier. Et pour que tous les autres sachent en voyant votre nom à qui il ont affaire, il sera changé en \"couleur bière\". Vous <u>gagnez 20.000 pts</u> de notre considération !"
         tag: ""
       offer7:
         title: "Brasserie de poche - 99.000 € et plus"
@@ -136,6 +143,9 @@ fr:
       warning2:
         title: "Mise en garde 2 :"
         description_html: "si jamais vous nous faites TROP de dons, il est probable que nous soyons obligés de passer pros. Dans ce cas, vous acceptez de nous imaginer en costume et avec de gros cigares. Une équipe marketing très douée reprendra notre suite..."
+    beermeter:
+      title: "Beer-O-Mètre"
+      content_html: "Grâce à vous, nous avons bu<br/><strong>%{total} L</strong> de bière.<br/>*Hips* *Hips* *Hips* Ourhaaaaaa !"
     faq:
       title: "FAQ Beerouare"
       entry1:
