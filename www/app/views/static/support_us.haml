@@ -19,7 +19,7 @@
             - (1..7).each do |i|
               .offer{:id => "offer#{i}"}
                 .title
-                  %a.offer-button{:href => '#'}
+                  = link_to donate_url(i), :method => :post, :class => 'offer-button' do
                     .button-text= t('support_us.offers.button')
                   &gt;
                   = t "support_us.offers.offer#{i}.title"

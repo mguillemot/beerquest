@@ -11,7 +11,7 @@
 
 module Paypal
   class ApiResponse
-    attr_reader :success, :warning, :error_message, :error_code, :severity_code, :token, :correlation_id, :timestamp, :version, :build
+    attr_reader :success, :warning, :error_message, :error_code, :severity_code, :token, :correlation_id, :timestamp, :version, :build, :amount, :currency
 
     def initialize(response)
       case response['ACK']
@@ -36,6 +36,8 @@ module Paypal
       @timestamp = response['TIMESTAMP']
       @version = response['VERSION']
       @build = response['BUILD']
+      @amount = response['AMT']
+      @currency = response['CURRENCYCODE']
       @full_response = response
     end
 

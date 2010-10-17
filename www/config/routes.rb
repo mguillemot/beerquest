@@ -26,8 +26,9 @@ BeerQuest::Application.routes.draw do
   get "start",                     :to => "game#start",                      :as => 'game_start'
   post "postscore",                :to => "game#postscore",                  :as => 'post_score'
 
-  # Payment
-  post "support_us/donate/:level", :to => "payment#donate",                   :as => 'donate'
+  # Payments
+  post "support_us/donate/:level",:to => "payment#donate",                   :as => 'donate'
+  get "support_us/enddonate/:id", :to => "payment#end",                      :as => 'end_donate'
 
   # Admin & debug
   get "play/:id" ,                 :to => "admin#hack_login"

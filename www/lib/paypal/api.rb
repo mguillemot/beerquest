@@ -1,27 +1,25 @@
 module Paypal
   class Api
-    def self.set_express_checkout(order, return_url, cancel_url)
+    def self.set_express_checkout(donation, return_url, cancel_url)
       call = ApiCall.new
       call.add_param 'USER', PAYPAL_USER
       call.add_param 'PWD', PAYPAL_PWD
       call.add_param 'SIGNATURE', PAYPAL_SIGNATURE
       call.add_param 'METHOD', 'SetExpressCheckout'
-      call.add_param 'VERSION', '56.0'
-      call.add_param 'PAYMENTACTION', 'Sale'
+      call.add_param 'VERSION', '65.0'
       call.add_param 'NOSHIPPING', '1'
       call.add_param 'LOCALECODE', (I18n.locale == 'fr') ? 'FR' : 'US'
-      call.add_param 'CURRENCYCODE', order.currency.paypal_code
       call.add_param 'RETURNURL', return_url
       call.add_param 'CANCELURL', cancel_url
-      order.order_items.each_with_index do |oi,i|
-        call.add_param "L_NAME#{i}", oi.item.title
-        call.add_param "L_AMT#{i}", '%.2f' % oi.unit_price
-        call.add_param "L_QTY#{i}", "#{oi.quantity}"
-      end
-      call.add_param 'ITEMAMT', '%.2f' % order.items_total_price
-      call.add_param 'SHIPPINGAMT', '%.2f' % order.shipping_price
-      call.add_param 'AMT', '%.2f' % (order.items_total_price + order.shipping_price)
-      call.add_param 'ALLOWNOTE', '1'
+      call.add_param 'ALLOWNOTE', '0'
+      call.add_param 'PAYMENTREQUEST_0_CURRENCYCODE', donation.currency
+      call.add_param 'PAYMENTREQUEST_0_ITEMAMT', '%.2f' % donation.amount
+      call.add_param 'PAYMENTREQUEST_0_SHIPPINGAMT', '%.2f' % 0
+      call.add_param 'PAYMENTREQUEST_0_AMT', '%.2f' % donation.amount
+      call.add_param "L_PAYMENTREQUEST_0_NAME0", donation.name
+      call.add_param "L_PAYMENTREQUEST_0_DESC0", donation.description
+      call.add_param "L_PAYMENTREQUEST_0_AMT0", '%.2f' % donation.amount
+      call.add_param "L_PAYMENTREQUEST_0_QTY0", "1"
       call.send_request
       SetExpressCheckout.new call.response
     end
@@ -32,31 +30,30 @@ module Paypal
       call.add_param 'PWD', PAYPAL_PWD
       call.add_param 'SIGNATURE', PAYPAL_SIGNATURE
       call.add_param 'METHOD', 'GetExpressCheckoutDetails'
-      call.add_param 'VERSION', '56.0'
+      call.add_param 'VERSION', '65.0'
       call.add_param 'TOKEN', token
       call.send_request
       GetExpressCheckoutDetails.new call.response
     end
 
-    def self.do_express_checkout_payment(order)
+    def self.do_express_checkout_payment(donation)
       call = ApiCall.new
       call.add_param 'USER', PAYPAL_USER
       call.add_param 'PWD', PAYPAL_PWD
       call.add_param 'SIGNATURE', PAYPAL_SIGNATURE
       call.add_param 'METHOD', 'DoExpressCheckoutPayment'
-      call.add_param 'VERSION', '56.0'
+      call.add_param 'VERSION', '65.0'
       call.add_param 'PAYMENTACTION', 'Sale'
-      call.add_param 'TOKEN', order.paypal_token
-      call.add_param 'PAYERID', order.paypal_payer_id
-      order.order_items.each_with_index do |oi,i|
-        call.add_param "L_NAME#{i}", oi.item.title
-        call.add_param "L_AMT#{i}", '%.2f' % oi.unit_price
-        call.add_param "L_QTY#{i}", "#{oi.quantity}"
-      end
-      call.add_param 'ITEMAMT', '%.2f' % order.items_total_price
-      call.add_param 'SHIPPINGAMT', '%.2f' % order.shipping_price
-      call.add_param 'AMT', '%.2f' % (order.items_total_price + order.shipping_price)
-      call.add_param 'CURRENCYCODE', order.currency.paypal_code
+      call.add_param 'TOKEN', donation.paypal_token
+      call.add_param 'PAYERID', donation.paypal_payer_id
+      call.add_param 'PAYMENTREQUEST_0_CURRENCYCODE', donation.currency
+      call.add_param 'PAYMENTREQUEST_0_ITEMAMT', '%.2f' % donation.amount
+      call.add_param 'PAYMENTREQUEST_0_SHIPPINGAMT', '%.2f' % 0
+      call.add_param 'PAYMENTREQUEST_0_AMT', '%.2f' % donation.amount
+      call.add_param "L_PAYMENTREQUEST_0_NAME0", donation.name
+      call.add_param "L_PAYMENTREQUEST_0_DESC0", donation.description
+      call.add_param "L_PAYMENTREQUEST_0_AMT0", '%.2f' % donation.amount
+      call.add_param "L_PAYMENTREQUEST_0_QTY0", "1"
       call.send_request
       DoExpressCheckoutPayment.new call.response
     end
