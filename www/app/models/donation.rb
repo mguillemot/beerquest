@@ -26,7 +26,7 @@ class Donation
   belongs_to :account
 
   def self.total
-    self.all().sum(:paypal_amount)
+    sum(:paypal_amount) || 0
   end
 
   def amount
@@ -39,11 +39,11 @@ class Donation
 
   def name
     key = DONATIONS[level][:name]
-    t(key)
+    I18n.t(key)
   end
 
   def description
-    t('support_us.donation')
+    I18n.t('support_us.donation')
   end
 
 end

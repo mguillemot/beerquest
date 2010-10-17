@@ -20,7 +20,8 @@ class Account
   has n, :barships, :constraint => :destroy
   has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
   has n, :replays, :constraint => :set_nil
-  has n, :battles, :constraint => :destroy
+  has n, :challenges, :constraint => :destroy
+  has n, :sent_challenges, :model => Challenge, :child_key => :sent_by_id, :constraint => :destroy
   has n, :donations, :constraint => :set_nil
 
   def full_name
@@ -43,6 +44,10 @@ class Account
   def profile_picture
     attribute_get(:profile_picture) || "http://static.ak.fbcdn.net/rsrc.php/z1LUW/hash/eu00g0eh.gif"
     # TODO héberger asset & gaffe que c'est une icône de femme celle-ci
+  end
+
+  def current_challenges
+    challenges.all(:replay_score => nil)
   end
 
   private

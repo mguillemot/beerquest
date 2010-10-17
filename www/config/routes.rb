@@ -14,7 +14,6 @@ BeerQuest::Application.routes.draw do
   get "bar/:id",                    :to => "bar#index",                      :as => 'bar'
 
   # Static pages
-  get "support_us",                 :to => "static#support_us",              :as => 'support_us'
   get "privacy",                    :to => "static#privacy",                 :as => 'privacy'
   get "tos",                        :to => "static#tos",                     :as => 'tos'
 
@@ -26,9 +25,10 @@ BeerQuest::Application.routes.draw do
   get "start",                     :to => "game#start",                      :as => 'game_start'
   post "postscore",                :to => "game#postscore",                  :as => 'post_score'
 
-  # Payments
-  post "support_us/donate/:level",:to => "payment#donate",                   :as => 'donate'
-  get "support_us/enddonate/:id", :to => "payment#end",                      :as => 'end_donate'
+  # Donations
+  get "support_us",                :to => "payment#index",                   :as => 'support_us'
+  post "support_us/donate/:level", :to => "payment#donate",                  :as => 'donate'
+  get "support_us/enddonate/:id",  :to => "payment#end",                     :as => 'end_donate'
 
   # Admin & debug
   get "play/:id" ,                 :to => "admin#hack_login"

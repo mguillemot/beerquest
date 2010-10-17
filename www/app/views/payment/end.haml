@@ -1,1 +1,25 @@
-= "Meci pour votre donation de #{@donation.amount} #{@donation.currency}"
+- @css = 'support_us'
+%table.cols
+  %tr.small
+    %td.small
+    %td
+    %td.small
+  %tr
+    %td.small
+    %td.unique-col
+
+      %table.main-content
+        %tr
+          %td.left-col
+            %h1= t 'support_us.title'
+            %h2= t 'support_us.subtitle_thanks'
+
+            .thanks-box= t "support_us.offers.offer#{@donation.level}.thanks_html"
+
+          = render :partial => 'right_col'
+
+    %td.small.shadow
+  %tr.small
+    %td.small
+    %td.shadow
+    %td.small.shadow

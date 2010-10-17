@@ -33,20 +33,7 @@
                   %span.title= t "support_us.warnings.warning#{i}.title"
                   %span.description= t "support_us.warnings.warning#{i}.description_html"
 
-          %td.right-col
-            .beermeter
-              %h2= t 'support_us.beermeter.title'
-              .content= t 'support_us.beermeter.content_html', :total => number_with_delimiter(Donation.total)
-
-            #faq
-              .title= t 'support_us.faq.title'
-              %ul.questions
-                - (1..5).each do |i|
-                  %li
-                    .question
-                      = image_tag 'mini-beer-yellow.png'
-                      = t "support_us.faq.entry#{i}.question"
-                    .answer= t "support_us.faq.entry#{i}.answer_html"
+          = render :partial => 'right_col'
 
     %td.small.shadow
   %tr.small
