@@ -6,7 +6,8 @@ class Donation
   property :level, Integer
   property :amount, Decimal
   property :currency, String
-  property :paypal_transaction_id, Integer
+  property :paypal_payer_id, String
+  property :paypal_token, String
   property :created_at, DateTime
   property :updated_at, DateTime
 
