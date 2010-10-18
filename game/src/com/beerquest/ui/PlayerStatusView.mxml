@@ -23,6 +23,7 @@
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
+        import com.beerquest.I18n;
         import com.beerquest.TokenType;
         import com.beerquest.events.CapacityEvent;
         import com.beerquest.events.TokenEvent;
@@ -194,8 +195,7 @@
     <mx:NumberFormatter id="scoreFormatter" useThousandsSeparator="true" decimalSeparatorTo=","
                         thousandsSeparatorTo="."/>
 
-    <mx:Canvas width="100%"
-               toolTip="Tours de jeu restant. Buvez du jus de tomate pour tenir le coup !">
+    <mx:Canvas width="100%" toolTip="{I18n.t('turns-bar.tooltip')}">
         <ui:ProgressBar x="12" y="12" width="170" height="16"
                         id="remainingTurnsBar"
                         emptyColor="0x00789f"
@@ -211,8 +211,7 @@
 
     <mx:Spacer height="5"/>
 
-    <mx:Canvas width="100%"
-               toolTip="Attention, à 100% : vomito (bloque 5 cases) ! Mangez des Cahouètes !">
+    <mx:Canvas width="100%" toolTip="{I18n.t('vomit-bar.tooltip')}">
         <ui:ProgressBar x="12" y="12" width="170" height="16"
                         id="vomitBar"
                         emptyColor="0x619f00"
@@ -223,8 +222,7 @@
 
     <mx:Spacer height="5"/>
 
-    <mx:Canvas width="100%"
-               toolTip="Attention, à partir de 80% : innondation (bloque les lignes du fond) !">
+    <mx:Canvas width="100%" toolTip="{I18n.t('piss-bar.tooltip')}">
         <ui:ProgressBar x="12" y="12" width="170" height="16"
                         id="pissBar"
                         emptyColor="0x9f9600"
@@ -240,7 +238,7 @@
 
     <mx:Canvas width="100%">
         <mx:Image source="@Embed(source='../../../assets/image/fond-score-srack.png')"/>
-        <mx:Canvas toolTip="Ton score. Il augmente de 1 pour chaque bière bue.">
+        <mx:Canvas toolTip="{I18n.t('score.tooltip')}">
             <mx:Canvas x="5" y="2" width="120">
                 <mx:Label id="scoreLabel" text="0" width="100%" styleName="score">
                     <mx:filters>
@@ -251,7 +249,7 @@
             <mx:Image id="scoreIcon" x="130" y="7" source="@Embed(source='../../../assets/image/collected-beer.png')"/>
         </mx:Canvas>
         <mx:Canvas x="4" y="57" width="170" height="11" backgroundColor="0x000000" backgroundAlpha="0"
-                   toolTip="Collecte 3 jetons de la même couleur pour gagner 5 bouteilles supplémentaires !">
+                   toolTip="{I18n.t('tokens.tooltip')}">
             <ui:TokenCollectionView id="stack"/>
         </mx:Canvas>
         <mx:Image id="arrow" x="161" y="33" source="{Arrow0}"/>

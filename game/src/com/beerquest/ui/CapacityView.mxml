@@ -14,7 +14,6 @@
     </mx:Metadata>
     <mx:Script><![CDATA[
         import com.beerquest.Capacity;
-        import com.beerquest.Constants;
         import com.beerquest.ui.events.UiCapacityExecutionEvent;
 
         [Bindable]

@@ -38,6 +38,7 @@
         import com.adobe.serialization.json.JSON;
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
+        import com.beerquest.I18n;
         import com.beerquest.InstantEventBuffer;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
@@ -72,6 +73,13 @@
             } else {
                 trace("WARN: No 'requiredVersion' found");
             }
+
+            I18n.lang = FlexGlobals.topLevelApplication.parameters.lang;
+            if (I18n.lang != "fr" && _mode != "en") {
+                trace("WARN: Wrong language code '" + I18n.lang + "', defaulting to 'en'");
+                I18n.lang = "en";
+            }
+            trace("Language is set to: " + I18n.lang);
 
             _mode = FlexGlobals.topLevelApplication.parameters.mode;
             if (_mode != "vs" && _mode != "solo") {

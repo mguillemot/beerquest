@@ -2,8 +2,10 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
            width="29" height="29"
            mouseOver="onMouseOver(event)" mouseOut="onMouseOut(event)" click="onClick(event)"
-           toolTip="Active/désactive le mode haute qualité.">
+           toolTip="{I18n.t('quality-button.tooltip')}">
     <mx:Script><![CDATA[
+        import com.beerquest.I18n;
+
         private function onMouseOver(e:MouseEvent):void {
             mouseOver = true;
         }
