@@ -26,13 +26,6 @@
             color: black;
             backgroundColor: #ff0000;
         }
-
-        .gameOver {
-            fontFamily: Kro;
-            fontSize: 48;
-            color: #ff0000;
-            textAlign: center;
-        }
     </fx:Style>
     <fx:Script><![CDATA[
         import com.adobe.serialization.json.JSON;
@@ -46,6 +39,7 @@
         import com.beerquest.events.GameEvent;
         import com.beerquest.ui.events.UiCapacityExecutionEvent;
         import com.beerquest.ui.events.UiGameEvent;
+        import com.beerquest.ui.events.UiGameStartEvent;
         import com.beerquest.ui.events.UiScoreEvent;
         import com.beerquest.ui.events.UiTokenEvent;
         import com.greensock.OverwriteManager;
@@ -75,50 +69,32 @@
             }
 
             I18n.lang = FlexGlobals.topLevelApplication.parameters.lang;
-            if (I18n.lang != "fr" && _mode != "en") {
+            if (I18n.lang != "fr" && mode != "en") {
                 trace("WARN: Wrong language code '" + I18n.lang + "', defaulting to 'en'");
                 I18n.lang = "en";
             }
             trace("Language is set to: " + I18n.lang);
 
-            _mode = FlexGlobals.topLevelApplication.parameters.mode;
-            if (_mode != "vs" && _mode != "solo") {
+            mode = FlexGlobals.topLevelApplication.parameters.mode;
+            if (mode != "vs" && mode != "solo") {
                 trace("WARN: No proper 'mode' found");
-                _mode = "solo";
+                mode = "vs";
                 _allowStart = false;
             }
-            trace("Starting in mode: " + _mode);
+            trace("Starting in mode: " + mode);
 
             token = FlexGlobals.topLevelApplication.parameters.token;
             if (token == null) {
                 trace("WARN: No 'token' found");
                 token = "none";
                 _allowStart = false;
-                startGame(_mode, new PlayerData(Constants.GAME), 1234); // TODO ne pas commiter ça
             }
             trace("Using the following API token: " + token);
-
-            // Retrieve game info from server using token
-            var request:URLRequest = new URLRequest("/start?token=" + token);
-            request.method = URLRequestMethod.GET;
-            _tokenLoader = new URLLoader();
-            _tokenLoader.addEventListener(Event.COMPLETE, onStartInfoReceived);
-            try {
-                _tokenLoader.load(request);
-                trace("Load game infos requested.");
-            } catch (e:ArgumentError) {
-                trace("Load game infos: an ArgumentError has occurred.");
-            } catch (e:SecurityError) {
-                trace("Load game infos: a SecurityError has occurred.");
-            }
         }
 
-        private function startGame(mode:String, me:PlayerData, seed:int):void {
+        private function startGame(me:PlayerData, seed:int):void {
             addEventListener(UiGameEvent.UI_GAME_EVENT, onUiGameEvent);
-            Constants.GAME.start(mode, me, seed);
-            if (!_allowStart && !Constants.DEBUG) {
-                Constants.GAME.endOfGame();
-            }
+            Constants.GAME.start(me, seed);
         }
 
         private function onUiGameEvent(e:UiGameEvent):void {
@@ -133,7 +109,27 @@
             trace("Seed is " + data.seed);
             _tokenLoader.removeEventListener(Event.COMPLETE, onStartInfoReceived);
             _tokenLoader = null;
-            startGame(_mode, new PlayerData(Constants.GAME), data.seed);
+            startGame(new PlayerData(Constants.GAME), data.seed);
+        }
+
+        private function onGameStart(e:UiGameStartEvent):void {
+            if (_allowStart) {
+                // Retrieve game info from server using token
+                var request:URLRequest = new URLRequest("/start?token=" + token);
+                request.method = URLRequestMethod.GET;
+                _tokenLoader = new URLLoader();
+                _tokenLoader.addEventListener(Event.COMPLETE, onStartInfoReceived);
+                try {
+                    _tokenLoader.load(request);
+                    trace("Load game infos requested.");
+                } catch (e:ArgumentError) {
+                    trace("Load game infos: an ArgumentError has occurred.");
+                } catch (e:SecurityError) {
+                    trace("Load game infos: a SecurityError has occurred.");
+                }
+            } else if (Constants.DEBUG) {
+                startGame(new PlayerData(Constants.GAME), 1234); // TODO random()
+            }
         }
 
         private function gameOver():void {
@@ -173,33 +169,28 @@
         }
 
         [Bindable]
-        public function get token():String {
-            return _token;
-        }
+        public var token:String;
 
         [Bindable]
-        public function set token(value:String):void {
-            _token = value;
-        }
+        public var mode:String;
 
-        private var _token:String;
         private var _tokenLoader:URLLoader;
-        private var _mode:String;
         private var _allowStart:Boolean;
         ]]></fx:Script>
 
     <!-- board -->
     <mx:Canvas x="200" y="0" width="320" height="320">
         <ui:BoardView id="boardView" UiScoreGained="onScoreGained(event)" UiTokenGained="onTokenGained(event)"/>
-        <mx:Canvas id="gameover" width="100%" height="100%" backgroundColor="black" y="{-boardView.height}">
-            <mx:Label y="120" text="Game Over" width="100%" styleName="gameOver"/>
-        </mx:Canvas>
     </mx:Canvas>
 
     <!-- status bar -->
     <ui:PlayerStatusView id="myStatus" x="5" y="5" AskForExecution="onAskForExecution(event)"/>
     <ui:SoundButton id="soundButton" x="140" y="292" on="true"/>
     <ui:QualityButton x="170" y="292" on="true"/>
+
+    <!-- game overlay -->
+    <ui:GameStartOverlay id="gamestart" mode="{mode}" UiGameStart="onGameStart(event)"/>
+    <ui:GameOverOverlay id="gameover" y="{-height}"/>
 
     <!-- modules -->
     <ui:SoundModule soundEnabled="{soundButton.on}"/>

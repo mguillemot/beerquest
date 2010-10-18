@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="520" height="320"
+           horizontalScrollPolicy="off" verticalScrollPolicy="off">
+    <mx:Metadata>
+        [Event(name="UiGameStart", type="com.beerquest.ui.events.UiGameStartEvent")]
+    </mx:Metadata>
+    <mx:Style>
+        .start-objective {
+            fontFamily: Kro;
+            fontSize: 30;
+            color: white;
+        }
+
+        .start-title {
+            fontFamily: Kro;
+            fontSize: 48;
+            color: white;
+        }
+
+        .start-explaination {
+            fontFamily: Kro;
+            fontSize: 16;
+            color: white;
+        }
+    </mx:Style>
+    <mx:Script><![CDATA[
+        import com.beerquest.Constants;
+        import com.beerquest.I18n;
+        import com.beerquest.ui.events.UiGameStartEvent;
+        import com.greensock.TweenLite;
+
+        private function onStart(e:MouseEvent, scoreRaise:int):void {
+            if (!_started) {
+                TweenLite.to(this, 2, {y:-height});
+                dispatchEvent(new UiGameStartEvent(scoreRaise));
+                _started = true;
+            }
+        }
+
+        [Bindable]
+        public var mode:String;
+
+        private var _started:Boolean = false;
+        ]]></mx:Script>
+    <mx:Image source="@Embed(source='../../../assets/image/rideau.png')"/>
+    <mx:VBox width="100%" horizontalAlign="center" visible="{mode == 'solo'}">
+        <mx:Spacer height="100"/>
+        <mx:Button label="{I18n.t('start.play-button')}" width="230" height="110" click="onStart(event, 0)"/>
+    </mx:VBox>
+    <mx:VBox width="100%" horizontalAlign="center" verticalGap="0" visible="{mode == 'vs'}">
+        <mx:Spacer height="10"/>
+        <mx:HBox horizontalGap="3">
+            <mx:Label text="Objectif >" styleName="start-objective">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+            <mx:Image source="@Embed(source='../../../assets/image/collected-beer.png')"/>
+            <mx:Label text="140" styleName="start-objective">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:HBox>
+        <mx:Label text="Relancer le défi" styleName="start-title">
+            <mx:filters>
+                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+        <mx:Label text="Combien de bières en plus vous pensez"
+                  styleName="start-explaination">
+            <mx:filters>
+                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+        <mx:Label text="être capable de boire en 40 coups ?"
+                  styleName="start-explaination">
+            <mx:filters>
+                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+            </mx:filters>
+        </mx:Label>
+        <mx:Spacer height="10"/>
+        <mx:HBox horizontalGap="15">
+            <mx:Button label="+1" width="100" height="50" click="onStart(event, 1)"/>
+            <mx:Button label="+3" width="100" height="50" click="onStart(event, 3)"/>
+            <mx:Button label="+5" width="100" height="50" click="onStart(event, 5)"/>
+        </mx:HBox>
+        <mx:Spacer height="5"/>
+        <mx:HBox horizontalGap="15">
+            <mx:Button label="+10" width="100" height="50" click="onStart(event, 10)"/>
+            <mx:Button label="+15" width="100" height="50" click="onStart(event, 15)"/>
+            <mx:Button label="+20" width="100" height="50" click="onStart(event, 20)"/>
+        </mx:HBox>
+    </mx:VBox>
+</mx:Canvas>

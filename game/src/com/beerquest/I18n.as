@@ -34,7 +34,8 @@ public class I18n {
             "score.tooltip": "Ton score. Il augmente de 1 pour chaque bière bue.",
             "tokens.tooltip": "Collecte 3 capsules de la même couleur pour gagner 5 de score supplémentaire !",
             "quality-button.tooltip": "Active/désactive le mode haute qualité.",
-            "sound-button.tooltip": "Active/désactive les sons."
+            "sound-button.tooltip": "Active/désactive les sons.",
+            "start.play-button": "JOUER"
         },
         en: {
             "capacity.none.name": "?",
@@ -59,7 +60,8 @@ public class I18n {
             "score.tooltip": "Your score. Increase by 1 for each beer you drink.",
             "tokens.tooltip": "Collect 3 consecutive caps from the same color to increase your score by 5.",
             "quality-button.tooltip": "Enable/disable high quality mode.",
-            "sound-button.tooltip": "Enable/disable sounds."
+            "sound-button.tooltip": "Enable/disable sounds.",
+            "start.play-button": "PLAY"
         }
     };
 

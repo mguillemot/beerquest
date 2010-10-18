@@ -82,7 +82,6 @@ public class StatsModule extends UIComponent {
 
     public function uploadScore():void {
         var data:URLVariables = _stats.getForSerialization();
-        data.mode = Constants.GAME.mode;
         data.token = token;
         data.game_version = Constants.VERSION.toString();
         data.score = Constants.GAME.me.score;
