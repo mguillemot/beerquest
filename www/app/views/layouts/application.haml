@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 %html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml", :lang => I18n.locale}
   %head
-    %title= "Beer Quest - #{@me.full_name}" # TODO enlever
+    %title= "Beer Quest - #{@me.full_name}"
     %meta{:charset => "utf-8"}
     = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js'
-    = javascript_include_tag 'http://cdn.jquerytools.org/1.2.4/tiny/jquery.tools.min.js'
+    = javascript_include_tag 'http://cdn.jquerytools.org/1.2.5/tiny/jquery.tools.min.js'
     = javascript_include_tag 'rails'
     = javascript_include_tag 'jquery.swfobject.1-1-1.min'
+    = javascript_include_tag 'jquery-ui-1.8.5.custom.min'
     = javascript_include_tag 'application'
     = csrf_meta_tag
     = stylesheet_link_tag 'http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css'
     = stylesheet_link_tag 'main'
+    = stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.5.custom'
     - if @css
       = stylesheet_link_tag @css
     <!--[if lte IE 6]>
@@ -20,7 +22,7 @@
     #fb-root
     :javascript
       window.fbAsyncInit = function() {
-        FB.init({appId: "#{BeerQuest::FB_API_KEY}", status: true, cookie: true, xfbml: false});
+        FB.init({appId: "#{BeerQuest::FB_API_KEY}", status: true, cookie: true, xfbml: true});
         FB.Canvas.setAutoResize();
       };
       (function() {
@@ -52,17 +54,18 @@
             %li
               = link_to t('nav.play'), bar_url(@me.last_bar)
             %li
-              %a{:href => '#'}= t 'nav.challenge'
+              = link_to t('nav.challenge'), invite_url
             %li
               %a{:href => '#'}= t 'nav.help'
             %li.special
               = link_to t('nav.support'), support_us_url
             %li.last
               %a{:href => 'http://blog.bq-4.com/', :target => '_blank'}= t 'nav.blog'
-      #flash
-        - if flash[:error]
-          .error= flash[:error]
-        - if flash[:notice]
-          .notice= flash[:notice]
+      - if admin
+        #flash
+          - if flash[:error]
+            .error= flash[:error]
+          - if flash[:notice]
+            .notice= flash[:notice]
       #content
         = yield

@@ -67,6 +67,10 @@ class UserController < FacebookController
     end
   end
 
+  def invite
+    @exclude = @me.already_challenging_people.collect { |account| account.facebook_id }
+  end
+
   protected
 
   def set_world_score

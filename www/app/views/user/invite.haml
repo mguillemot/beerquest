@@ -1,0 +1,13 @@
+%fb:serverFbml
+  %script{:type => 'text/fbml'}
+    %fb:fbml
+      %fb:request-form{:method => 'POST',
+          :type => 'Défi BeerQuest',
+          :content => 'J\'te prends quand tu veux à la picole ! <fb:req-choice url="http://apps.facebook.com/beerquest/accept-challenge" label="On va voir ça !" /><fb:req-choice url="http://apps.facebook.com/beerquest/deny-challenge" label="Oh non, pitié !" />',
+          :action => home_url}
+        %fb:multi-friend-selector{:actiontext => "Défie tes amis à celui qui picolera le plus !",
+          :showborder => 'true',
+          :exclude_ids => @exclude.join(','),
+          :bypass => 'cancel',
+          :email_invite => 'true',
+          :import_external_friends => 'true'}

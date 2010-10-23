@@ -1,6 +1,7 @@
 class GameController < ApplicationController
 
-  protect_from_forgery :except => :postscore
+  #protect_from_forgery :except => :postscore
+  skip_before_filter :verify_authenticity_token
 
   def start
     replay = Replay.first(:token => params[:token], :token_use_time => nil, :ip => request.remote_ip)
@@ -40,6 +41,7 @@ class GameController < ApplicationController
         end
       end
     end
+    replay.game_over = false # TODO filtrer les attributs reçus de tte manière
     replay.update_count += 1
     replay.user_agent = request.env["HTTP_USER_AGENT"]
     unless replay.save
@@ -51,7 +53,7 @@ class GameController < ApplicationController
     render :text => "OK"
   end
 
-  def postscore
+  def end
     replay = Replay.first(:token => params[:token], :game_over => false)
     # TODO check si replay existe bien
     result = {:valid => false, :personalHigh => false, :barHigh => false}
@@ -73,21 +75,22 @@ class GameController < ApplicationController
     replay.update_count += 1
     replay.user_agent = request.env["HTTP_USER_AGENT"]
     replay.game_over = true
+    personal_best = replay.account.best_score_weekly_in_bar(replay.bar)
+    bar_best = replay.bar.weekly_high_score
     if replay.save
       logger.info "Replay #{replay.id} ended with success with score #{replay.score}"
+      result[:valid] = true
 
       # Check for personal high score
-      best = replay.account.best_score_weekly_in_bar(replay.bar)
-      logger.info "Your best weekly score in this bar was #{best}"
-      if replay.score > best
+      logger.info "Your best weekly score in this bar was #{personal_best}"
+      if replay.score > personal_best
         logger.info "New personal record!"
         result[:personalHigh] = true
       end
 
       # Check for bar high score
-      best = replay.bar.weekly_high_score
-      logger.info "General best weekly score in this bar was #{best}"
-      if replay.score > best
+      logger.info "General best weekly score in this bar was #{bar_best}"
+      if replay.score > bar_best
         logger.info "New bar record!"
         result[:barHigh] = true
       end

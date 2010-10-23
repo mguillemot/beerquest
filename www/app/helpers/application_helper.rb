@@ -32,4 +32,8 @@ module ApplicationHelper
     result.html_safe
   end
 
+  def admin
+    @me && (@me.id == 1 || @me.id == 2)
+  end
+
 end

@@ -66,7 +66,7 @@
             %td.description= t 'home.battle.play_description_html'
             %td.action
               .button
-                %a{:href => '#'}= t 'home.battle.button_html'
+                = link_to t('home.battle.button_html'), invite_url
         %ul.tabs
           %li
             %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.current.title'

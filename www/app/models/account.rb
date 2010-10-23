@@ -42,7 +42,7 @@ class Account
   end
 
   def best_score_weekly_in_bar(bar)
-    replays_in_bar(bar).max(:score) || 0
+    weekly_completed_games_in_bar(bar).max(:score) || 0
   end
 
   def profile_picture
@@ -60,6 +60,10 @@ class Account
 
   def new_sent_challenges
     sent_challenges.all(:replay_score => nil, :parent => nil)
+  end
+
+  def already_challenging_people
+    [] # TODO
   end
 
   def victory_points

@@ -39,9 +39,9 @@ class FacebookController < ApplicationController
     # App user
     if session[:account_id]
       logger.debug "Account was stored in session: #{session[:account_id]}"
-      @me = Account.get(session[:account_id])
+      @me = Account.get!(session[:account_id])
     else
-      flash.now[:notice] = "Retrieve account info from FB"
+      flash.now[:notice] = "Retrieved account info from FB: fbid=#{@user_id}"
       logger.debug "Trying to retrieve user #{@user_id} from DB"
       @me = Account.first(:facebook_id => @user_id)
       unless @me
@@ -63,43 +63,43 @@ class FacebookController < ApplicationController
       session[:account_id] = @me.id
 
       # Friends
-#      logger.debug "Current friends (before updating):"
-#      @me.friends.each do |f|
-#        logger.debug "== fbid: #{f.facebook_id}"
-#      end
-#
-#      current_friends = @me.friendships.map { |fs| fs.friend_id }
-#      logger.debug "Asking FB for info about user friends"
-#      fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
-#      fb_friends[:data].each do |f|
-#        logger.debug "friend: #{f[:id]} #{f[:name]}"
-#        friend_account = Account.find_by_facebook_id f[:id]
-#        unless friend_account
-#          logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
-#          friend_account = @me.friends.new
-#          friend_account.facebook_id = f[:id]
-#          friend_account.discovered_through = @me.id
-#          if f[:name]
-#            friend_name = f[:name].split(' ', 2)
-#            friend_account.first_name = friend_name[0]
-#            friend_account.last_name = friend_name[1]
-#          end
-#          friend_account.profile_picture = "http://graph.facebook.com/#{f[:id]}/picture"
-#          friend_account.save!
-#        else
-#          unless current_friends.reject! f[:id]
-#            logger.debug "Friend #{f[:id]} was already existing but not registered as friend yet"
-#            @me.friends << friend_account
-#          else
-#            logger.debug "Friend #{f[:id]} was already existing and registered as friend"
-#          end
-#        end
-#      end
+      logger.debug "Current friends (before updating):"
+      @me.friends.each do |f|
+        logger.debug "== fbid: #{f.facebook_id}"
+      end
+
+      current_friends = @me.friendships.map { |fs| fs.friend_id }
+      logger.debug "Asking FB for info about user friends"
+      fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
+      fb_friends[:data].each do |f|
+        logger.debug "friend: #{f[:id]} #{f[:name]}"
+        friend_account = Account.first(:facebook_id => f[:id])
+        unless friend_account
+          logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
+          friend_account = @me.friends.new
+          friend_account.facebook_id = f[:id]
+          friend_account.discovered_through = @me.id
+          if f[:name]
+            friend_name = f[:name].split(' ', 2)
+            friend_account.first_name = friend_name[0]
+            friend_account.last_name = friend_name[1]
+          end
+          friend_account.profile_picture = "http://graph.facebook.com/#{f[:id]}/picture"
+          friend_account.save
+        else
+          unless current_friends.reject! f[:id]
+            logger.debug "Friend #{f[:id]} was already existing but not registered as friend yet"
+            @me.friends << friend_account
+          else
+            logger.debug "Friend #{f[:id]} was already existing and registered as friend"
+          end
+        end
+      end
       # Remove no-more friends
-#      current_friends.each do |f_id|
-#        logger.debug "Friend #{f_id} is no more a friend: removing him"
-#        @me.friends.delete @me.friends.find_by_id(f_id)
-#      end
+      current_friends.each do |f_id|
+        logger.debug "Friend #{f_id} is no more a friend: removing him"
+        @me.friends.delete @me.friends.find_by_id(f_id)
+      end
     end
 
     # (facultative) add default bar

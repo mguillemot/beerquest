@@ -25,50 +25,36 @@ class Bar
     barships.count(:updated_at.gte => DateTime.now - 1.week)
   end
 
-  # TODO
   def new_active_members
-    0
+    barships.count(:created_at.gte => DateTime.now - 1.week)
   end
 
   def total_beers
-    replays.sum(:score) || 0
+    complete_replays.sum(:score) || 0
   end
 
   def weekly_beers
-    replays.all(:created_at.gte => DateTime.now - 1.week).sum(:score) || 0
+    weekly_complete_replays.sum(:score) || 0
   end
 
-  # TODO
   def rank
-    1
-  end
-
-  def always_high_scores
-    extract_scores(replays.all(:game_over => true, :order => :score.desc))
+    1 # TODO
   end
 
   def always_high_score
-    replays.all(:game_over => true).max(:score) || 0
+    complete_replays.max(:score) || 0
   end
 
   def always_high_score_for(account)
-    replays.all(:game_over => true, :account_id => account.id).max(:score) || 0
-  end
-
-  def weekly_high_scores
-    extract_scores(weekly_replays.all(:game_over => true, :order => :score.desc))
+    complete_replays.all(:account_id => account.id).max(:score) || 0
   end
 
   def weekly_high_score
-    weekly_replays.all(:game_over => true).max(:score) || 0
+    weekly_complete_replays.max(:score) || 0
   end
 
   def weekly_high_score_for(account)
-    weekly_replays.all(:game_over => true, :account_id => account.id).max(:score) || 0
-  end
-
-  def weekly_replays
-    replays.all(:created_at.gte => DateTime.now - 1.week)
+    weekly_complete_replays.all(:account_id => account.id).max(:score) || 0
   end
 
   def weekly_scores
@@ -88,6 +74,14 @@ class Bar
   end
 
   private
+
+  def complete_replays
+    replays.all(:game_over => true)
+  end
+
+  def weekly_complete_replays
+    complete_replays.all(:created_at.gte => DateTime.now - 1.week)
+  end
 
   def scores_for(score_list, account)
     n = score_list.length
@@ -125,4 +119,14 @@ class Bar
     end
     scores
   end
+
+  def always_high_scores
+    extract_scores(complete_replays.all(:game_over => true, :order => :score.desc))
+  end
+
+  def weekly_high_scores
+    extract_scores(weekly_complete_replays.all(:game_over => true, :order => :score.desc))
+  end
+
+
 end
