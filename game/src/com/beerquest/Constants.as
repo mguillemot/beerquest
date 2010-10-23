@@ -5,7 +5,7 @@ public class Constants {
     public static const DEBUG:Boolean = true;
 
     public static const BOARD_SIZE:int = 8;
-    public static const INITIAL_TOTAL_TURNS:int = 40;
+    public static const INITIAL_TOTAL_TURNS:int = 1;
     public static const MAX_CAPACITIES:int = 2;
     public static const TOKEN_GROUP_VALUE:int = 5;
     public static const SUPER_GEM_VALUE:int = 10;

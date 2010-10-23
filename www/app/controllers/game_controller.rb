@@ -48,18 +48,56 @@ class GameController < ApplicationController
         logger.error "ERROR: #{e}"
       end
     end
-
-#    barship = replay.bar.barships.find_by_account_id(replay.account_id)
-#    unless barship
-#      barship = replay.bar.barships.build(:account_id => replay.account_id)
-#    end
-#    barship.total_beers += replay.score
-#    if replay.score > barship.max_beers
-#      barship.max_beers = replay.score
-#    end
-#    barship.save!
-
     render :text => "OK"
+  end
+
+  def postscore
+    replay = Replay.first(:token => params[:token], :game_over => false)
+    # TODO check si replay existe bien
+    result = {:valid => false, :personalHigh => false, :barHigh => false}
+    logger.debug "Found replay #{replay.id} with token #{params[:token]}"
+    # TODO check validité de la partie
+    params.each do |k, v|
+      logger.debug "Received: #{k} => #{v}"
+      if v != "NaN"
+        begin
+          if k[0..3] == 'avg_'
+            v = v.to_f.round(3)
+          end
+          replay.attribute_set(k, v)
+        rescue NoMethodError
+          logger.warn "No attribute #{k}"
+        end
+      end
+    end
+    replay.update_count += 1
+    replay.user_agent = request.env["HTTP_USER_AGENT"]
+    replay.game_over = true
+    if replay.save
+      logger.info "Replay #{replay.id} ended with success with score #{replay.score}"
+
+      # Check for personal high score
+      best = replay.account.best_score_weekly_in_bar(replay.bar)
+      logger.info "Your best weekly score in this bar was #{best}"
+      if replay.score > best
+        logger.info "New personal record!"
+        result[:personalHigh] = true
+      end
+
+      # Check for bar high score
+      best = replay.bar.weekly_high_score
+      logger.info "General best weekly score in this bar was #{best}"
+      if replay.score > best
+        logger.info "New bar record!"
+        result[:barHigh] = true
+      end
+    else
+      logger.error "Impossible to save replay #{replay.id}!"
+      replay.errors.each do |e|
+        logger.error "ERROR: #{e}"
+      end
+    end
+    render :text => result.to_json
   end
 
 end

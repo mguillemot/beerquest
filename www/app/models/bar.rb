@@ -47,18 +47,24 @@ class Bar
     extract_scores(replays.all(:game_over => true, :order => :score.desc))
   end
 
+  def always_high_score
+    replays.all(:game_over => true).max(:score) || 0
+  end
+
   def always_high_score_for(account)
-    best_replay = replays.first(:game_over => true, :account_id => account.id, :order => :score.desc)
-    best_replay ? best_replay.score : 0
+    replays.all(:game_over => true, :account_id => account.id).max(:score) || 0
   end
 
   def weekly_high_scores
     extract_scores(weekly_replays.all(:game_over => true, :order => :score.desc))
   end
 
+  def weekly_high_score
+    weekly_replays.all(:game_over => true).max(:score) || 0
+  end
+
   def weekly_high_score_for(account)
-    best_replay = weekly_replays.first(:game_over => true, :account_id => account.id, :order => :score.desc)
-    best_replay ? best_replay.score : 0
+    weekly_replays.all(:game_over => true, :account_id => account.id).max(:score) || 0
   end
 
   def weekly_replays

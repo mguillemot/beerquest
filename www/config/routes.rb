@@ -1,7 +1,7 @@
 BeerQuest::Application.routes.draw do
 
   # User pages
-  root                               :to => "user#index",                     :as => 'home'
+  root                              :to => "user#index",                     :as => 'home'
   get "world-score",                :to => "user#async_world_score",         :as => 'async_world_score'
   get "bars/favorites/:page",       :to => "user#async_favorites",           :as => 'async_favorites'
   get "bars/partners/:page",        :to => "user#async_partners",            :as => 'async_partners'
@@ -18,20 +18,21 @@ BeerQuest::Application.routes.draw do
   get "tos",                        :to => "static#tos",                     :as => 'tos'
 
   # Facebook integration
-  get "session_login",             :to => "facebook#session_login",          :as => 'login'
-  get "session_logout",            :to => "facebook#session_logout",         :as => 'logout'
+  get "session_login",              :to => "facebook#session_login",         :as => 'login'
+  get "session_logout",             :to => "facebook#session_logout",        :as => 'logout'
 
   # Game integration
-  get "start",                     :to => "game#start",                      :as => 'game_start'
-  post "postscore",                :to => "game#postscore",                  :as => 'post_score'
+  post "start",                     :to => "game#start",                     :as => 'game_start'
+  post "postscore",                 :to => "game#postscore",                 :as => 'post_score'
+  post "end",                       :to => "game#end",                       :as => 'game_end'
 
   # Donations
-  get "support_us",                :to => "payment#index",                   :as => 'support_us'
-  post "support_us/donate/:level", :to => "payment#donate",                  :as => 'donate'
-  get "support_us/enddonate/:id",  :to => "payment#end",                     :as => 'end_donate'
+  get "support_us",                 :to => "payment#index",                  :as => 'support_us'
+  post "support_us/donate/:level",  :to => "payment#donate",                 :as => 'donate'
+  get "support_us/enddonate/:id",   :to => "payment#end",                    :as => 'end_donate'
 
   # Admin & debug
-  get "play/:id" ,                 :to => "admin#hack_login"
-  get "debug/:id",                 :to => "admin#check_game"
+  get "play/:id" ,                  :to => "admin#hack_login"
+  get "debug/:id",                  :to => "admin#check_game"
 
 end

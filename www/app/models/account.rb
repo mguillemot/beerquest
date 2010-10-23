@@ -41,6 +41,10 @@ class Account
     weekly_completed_games.max(:score) || 0
   end
 
+  def best_score_weekly_in_bar(bar)
+    replays_in_bar(bar).max(:score) || 0
+  end
+
   def profile_picture
     attribute_get(:profile_picture) || "http://static.ak.fbcdn.net/rsrc.php/z1LUW/hash/eu00g0eh.gif"
     # TODO héberger asset & gaffe que c'est une icône de femme celle-ci
@@ -76,5 +80,12 @@ class Account
     completed_games.all(:created_at.gte => DateTime.now - 1.week)
   end
 
+  def completed_games_in_bar(bar)
+    completed_games.all(:bar => bar)
+  end
+
+  def weekly_completed_games_in_bar(bar)
+    weekly_completed_games.all(:bar => bar)
+  end
 
 end
