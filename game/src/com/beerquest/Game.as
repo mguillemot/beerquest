@@ -12,10 +12,11 @@ import flash.events.EventDispatcher;
 
 public class Game extends EventDispatcher {
 
-    public function start(me:PlayerData, seed:int):void {
+    public function start(scoreGoal:int, me:PlayerData, seed:int):void {
         if (_me != null) {
             throw "cannot start game multiple times";
         }
+        _scoreGoal = scoreGoal;
         _me = me;
         dispatchEvent(new Event("meChanged"));
         _rand = new DeadBeefRandom(seed);
@@ -201,6 +202,11 @@ public class Game extends EventDispatcher {
         execute(new PissLevelEvent(pissRaise));
     }
 
+    public function get scoreGoal():int {
+        return _scoreGoal;
+    }
+
+    private var _scoreGoal:int;
     private var _me:PlayerData;
     private var _remainingTurns:int = Constants.INITIAL_TOTAL_TURNS;
     private var _board:BoardState;

@@ -6,7 +6,7 @@
     <mx:Style>
         .score {
             fontFamily: Kro;
-            fontSize: 32;
+            fontSize: 28;
             color: white;
             textAlign: right;
         }
@@ -26,6 +26,7 @@
         import com.beerquest.I18n;
         import com.beerquest.TokenType;
         import com.beerquest.events.CapacityEvent;
+        import com.beerquest.events.GameEvent;
         import com.beerquest.events.TokenEvent;
         import com.beerquest.events.ValueChangedEvent;
         import com.beerquest.ui.events.UiGameEvent;
@@ -38,6 +39,13 @@
         private function onUiGameEvent(e:UiGameEvent):void {
             var event:Event = e.event;
             switch (event.type) {
+                case GameEvent.GAME_START:
+                    if (Constants.GAME.scoreGoal > 0) {
+                        scoreLabel.text = "0/" + Constants.GAME.scoreGoal;
+                    } else {
+                        scoreLabel.text = "0";
+                    }
+                    break;
                 case TokenEvent.TOKEN_ADDED:
                     // Note: pas besoin d'ajouter le token puisque c'est le BeerQuestView qui s'en chargera à la fin de l'animation de collecte de token
                     updateArrow();
@@ -147,7 +155,11 @@
         }
 
         private function onScoreChanged(e:ValueChangedEvent):void {
-            scoreLabel.text = e.newValue.toString();
+            if (Constants.GAME.scoreGoal > 0) {
+                scoreLabel.text = e.newValue + "/" + Constants.GAME.scoreGoal;
+            } else {
+                scoreLabel.text = e.newValue.toString();
+            }
             scoreIcon.scaleX = scoreIcon.scaleY = 1;
             var tween:TweenLite = new TweenLite(scoreIcon, 0.3, {scaleX:1.1, scaleY:1.1, onComplete:function():void {
                 tween.reverse();
@@ -239,7 +251,7 @@
     <mx:Canvas width="100%">
         <mx:Image source="@Embed(source='../../../assets/image/fond-score-srack.png')"/>
         <mx:Canvas toolTip="{I18n.t('score.tooltip')}">
-            <mx:Canvas x="5" y="2" width="120">
+            <mx:Canvas x="0" y="2" width="125">
                 <mx:Label id="scoreLabel" text="0" width="100%" styleName="score">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>

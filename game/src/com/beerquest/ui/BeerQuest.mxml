@@ -69,7 +69,7 @@
             }
 
             I18n.lang = FlexGlobals.topLevelApplication.parameters.lang;
-            if (I18n.lang != "fr" && mode != "en") {
+            if (I18n.lang != "fr" && I18n.lang != "en") {
                 trace("WARN: Wrong language code '" + I18n.lang + "', defaulting to 'en'");
                 I18n.lang = "en";
             }
@@ -77,11 +77,21 @@
 
             mode = FlexGlobals.topLevelApplication.parameters.mode;
             if (mode != "vs" && mode != "solo") {
-                trace("WARN: No proper 'mode' found");
+                trace("WARN: No proper 'mode' found, defaulting to 'vs'");
                 mode = "vs";
                 _allowStart = false;
             }
             trace("Starting in mode: " + mode);
+
+            if (mode == "vs") {
+                goal = FlexGlobals.topLevelApplication.parameters.goal;
+                if (goal <= 0) {
+                    trace("WARN: No proper 'goal' found, defaulting to 100");
+                    goal = 100;
+                    _allowStart = false;
+                }
+                trace("Initial goal set to: " + goal);
+            }
 
             token = FlexGlobals.topLevelApplication.parameters.token;
             if (token == null) {
@@ -94,7 +104,7 @@
 
         private function startGame(me:PlayerData, seed:int):void {
             addEventListener(UiGameEvent.UI_GAME_EVENT, onUiGameEvent);
-            Constants.GAME.start(me, seed);
+            Constants.GAME.start(goal, me, seed);
         }
 
         private function onUiGameEvent(e:UiGameEvent):void {
@@ -113,10 +123,16 @@
         }
 
         private function onGameStart(e:UiGameStartEvent):void {
+            goal += e.scoreRaise;
+            trace("Goal raised to: " + goal);
             if (_allowStart) {
                 // Retrieve game info from server using token
-                var request:URLRequest = new URLRequest("/start?token=" + token);
-                request.method = URLRequestMethod.GET;
+                var request:URLRequest = new URLRequest("/start");
+                var data:URLVariables = new URLVariables();
+                data.token = token;
+                data.raise = e.scoreRaise;
+                request.method = URLRequestMethod.POST;
+                request.data = data;
                 _tokenLoader = new URLLoader();
                 _tokenLoader.addEventListener(Event.COMPLETE, onStartInfoReceived);
                 try {
@@ -174,6 +190,9 @@
         [Bindable]
         public var mode:String;
 
+        [Bindable]
+        public var goal:int = 0;
+
         private var _tokenLoader:URLLoader;
         private var _allowStart:Boolean;
         ]]></fx:Script>
@@ -189,7 +208,7 @@
     <ui:QualityButton x="170" y="292" on="true"/>
 
     <!-- game overlay -->
-    <ui:GameStartOverlay id="gamestart" mode="{mode}" UiGameStart="onGameStart(event)"/>
+    <ui:GameStartOverlay id="gamestart" mode="{mode}" scoreGoal="{goal}" UiGameStart="onGameStart(event)"/>
     <ui:GameOverOverlay id="gameover" y="{-height}"/>
 
     <!-- modules -->

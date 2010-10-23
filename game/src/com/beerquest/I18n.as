@@ -35,7 +35,12 @@ public class I18n {
             "tokens.tooltip": "Collecte 3 capsules de la même couleur pour gagner 5 de score supplémentaire !",
             "quality-button.tooltip": "Active/désactive le mode haute qualité.",
             "sound-button.tooltip": "Active/désactive les sons.",
-            "start.play-button": "JOUER"
+            "start.play-button": "JOUER",
+            "start.goal": "Objectif",
+            "start.start-challenge": "Relancer le défi",
+            "start.how-much-more.1": "Combien de bières en plus vous pensez",
+            "start.how-much-more.2": "être capable de boire en 40 coups ?",
+            "": ""
         },
         en: {
             "capacity.none.name": "?",
@@ -61,7 +66,12 @@ public class I18n {
             "tokens.tooltip": "Collect 3 consecutive caps from the same color to increase your score by 5.",
             "quality-button.tooltip": "Enable/disable high quality mode.",
             "sound-button.tooltip": "Enable/disable sounds.",
-            "start.play-button": "PLAY"
+            "start.play-button": "PLAY",
+            "start.goal": "Goal",
+            "start.start-challenge": "Start the challenge",
+            "start.how-much-more.1": "How much more beers you think you can",
+            "start.how-much-more.2": "drink in 40 turns?",
+            "": ""
         }
     };
 
