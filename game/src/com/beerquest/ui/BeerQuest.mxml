@@ -35,7 +35,6 @@
         import com.beerquest.InstantEventBuffer;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
-        import com.beerquest.events.CapacityEvent;
         import com.beerquest.events.GameEvent;
         import com.beerquest.ui.events.UiCapacityExecutionEvent;
         import com.beerquest.ui.events.UiGameEvent;
@@ -149,7 +148,45 @@
         }
 
         private function gameOver():void {
-            TweenLite.to(gameover, 2, {y:0});
+            var data:URLVariables = stats.stats.getForSerialization();
+            data.token = token;
+            data.game_version = Constants.VERSION.toString();
+            data.score = Constants.GAME.me.score;
+            data.flash_version = Capabilities.version;
+
+            var request:URLRequest = new URLRequest("/end");
+            request.method = URLRequestMethod.POST;
+            request.data = data;
+            _tokenLoader = new URLLoader();
+            _tokenLoader.addEventListener(Event.COMPLETE, onEndInfoReceived);
+            try {
+                _tokenLoader.load(request);
+                trace("Start post end...");
+            } catch (e:ArgumentError) {
+                trace("Post end: an ArgumentError has occurred.");
+            } catch (e:SecurityError) {
+                trace("Post end: a SecurityError has occurred.");
+                onEndInfoReceived(null);
+            }
+        }
+
+        private function onEndInfoReceived(e:Event):void {
+            var data:Object;
+            if (e != null) {
+                data = JSON.decode(_tokenLoader.data);
+            } else {
+                data = {valid:true, personalHigh:false, barHigh:false};
+            }
+            _tokenLoader.removeEventListener(Event.COMPLETE, onEndInfoReceived);
+            _tokenLoader = null;
+            trace("Replay received by the server.");
+            if (data.valid) {
+                gameover.setResult(mode, Constants.GAME.me.score, Constants.GAME.scoreGoal, data.personalHigh, data.barHigh);
+                TweenLite.to(gameover, 2, {y:0});
+            } else {
+                TweenLite.to(gameover, 2, {y:0});
+                Alert.show("Server error while uploading score.");
+            }
         }
 
         private function onScoreGained(e:UiScoreEvent):void {
@@ -213,7 +250,7 @@
 
     <!-- modules -->
     <ui:SoundModule soundEnabled="{soundButton.on}"/>
-    <ui:StatsModule token="{token}"/>
+    <ui:StatsModule id="stats" token="{token}"/>
 
     <!-- vfx layer -->
     <ui:EffectLayer id="vfxLayer" width="100%" height="100%"/>

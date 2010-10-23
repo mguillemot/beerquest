@@ -71,6 +71,23 @@ public class I18n {
             "start.start-challenge": "Start the challenge",
             "start.how-much-more.1": "How much more beers you think you can",
             "start.how-much-more.2": "drink in 40 turns?",
+            "end.game-over": "Game Over",
+            "end.you-loose": "You Loose!",
+            "end.congratulations": "Congratulations!",
+            "end.score": "Score",
+            "end.solo.bad-score.1": "This is a pretty awful score, but if you're",
+            "end.solo.bad-score.2": "shameless, you can still brag 'bout it...",
+            "end.personal-record": "New personal record",
+            "end.bar-record": "New bar record",
+            "end.boast-button": "Brag about your score",
+            "end.provoke-button": "Provoke your friend!",
+            "end.play-again-button": "PLAY Again",
+            "end.loose-explaination.1": "You were damn too pretentions on this one.",
+            "end.loose-explaination.2": "Shame on you!",
+            "end.start-another-challenge-button": "Start another challenge (and get more ridiculous)",
+            "end.wall-of-shame-button": "WALL OF SHAME (publish this on my wall)",
+            "end.challenge-success-explaination.1": "You've won this turn.",
+            "end.challenge-success-explaination.2": "Will your friend be able to beat this one?",
             "": ""
         }
     };

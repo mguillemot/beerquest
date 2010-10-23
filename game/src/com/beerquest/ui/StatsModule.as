@@ -15,7 +15,6 @@ import com.beerquest.events.GameEvent;
 import com.beerquest.events.GemsSwappedEvent;
 import com.beerquest.events.GroupCollectionEvent;
 import com.beerquest.events.PissLevelEvent;
-
 import com.beerquest.events.ValueChangedEvent;
 
 import flash.events.Event;
@@ -43,7 +42,7 @@ public class StatsModule extends UIComponent {
 
     private function onTurnChange(e:GameEvent):void {
         _stats.startTurn(Constants.GAME);
-        uploadScore();
+        uploadScoreUpdate();
     }
 
     private function onPiss(e:GameEvent):void {
@@ -52,7 +51,7 @@ public class StatsModule extends UIComponent {
 
     private function onGameOver(e:GameEvent):void {
         _stats.gameOver = true;
-        uploadScore();
+        uploadScoreUpdate();
     }
 
     private function onPissLevelChanged(e:PissLevelEvent):void {
@@ -80,7 +79,7 @@ public class StatsModule extends UIComponent {
         _stats.capacityUsed(e.capacity, e.targetToken);
     }
 
-    public function uploadScore():void {
+    public function uploadScoreUpdate():void {
         var data:URLVariables = _stats.getForSerialization();
         data.token = token;
         data.game_version = Constants.VERSION.toString();
@@ -112,6 +111,10 @@ public class StatsModule extends UIComponent {
     [Bindable]
     public function set token(value:String):void {
         _token = value;
+    }
+
+    public function get stats():GameStats {
+        return _stats;
     }
 
     private var _stats:GameStats = new GameStats();
