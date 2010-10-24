@@ -3,10 +3,10 @@ require 'rss/2.0'
 class BarController < FacebookController
 
   def index
-    @bar = Bar.get(params[:id])
+    @bar = Bar.get!(params[:id])
     @required_version = "0.96"
     @mode = "solo"
-    @replay = @me.replays.create(:bar => @bar, :token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip)
+    @replay = @me.replays.create(:bar => @bar, :token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'solo')
     unless @replay.saved?
       logger.error "Impossible to create replay because of the following errors:"
       @replay.errors.each do |e|

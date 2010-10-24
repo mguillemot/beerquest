@@ -1,0 +1,122 @@
+- @css = 'bar'
+%table.cols
+  %tr.small
+    %td.small
+    %td
+    %td.small
+  %tr
+    %td.small
+    %td.unique-col
+      %table.bar-area
+        %tr
+          %td.bar-name{:colspan => 2}
+            %table.vs
+              %tr
+                %td.player-me
+                  .name= @me.full_name
+                  .scores
+                    %span.loose= t 'challenge.title.loose_count', :count => @me.victory_points
+                    = " / "
+                    %span.respect= t 'challenge.title.respect_count', :count => @me.defeat_points
+                %td.portrait-me
+                  = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
+                %td.vs
+                  %div= t 'challenge.title.vs'
+                  .round= t 'challenge.title.round', :round => 1 # TODO
+                %td.portrait-opponent
+                  = image_tag @challenge.sent_by.profile_picture, :alt => @challenge.sent_by.full_name, :class => 'portrait'
+                %td.player-opponent
+                  .name= @challenge.sent_by.full_name
+                  .scores
+                    %span.loose= t 'challenge.title.loose_count', :count => @challenge.sent_by.victory_points
+                    = " / "
+                    %span.respect= t 'challenge.title.respect_count', :count => @challenge.sent_by.defeat_points
+        %tr
+          %td.play-field{:colspan => 2}
+            #game
+          %td.sidebar
+            %ul.tabs
+              %li.last
+                %a{:href => 'javascript:void(0)'}= t 'challenge.right.history.title'
+            .panes
+              .pane#messages
+                Y'en a pas pour l'instant !
+                Y'en a pas pour l'instant !
+                Y'en a pas pour l'instant !
+        %tr.bottom
+          %td.bar-scores
+          %td.bar-scores
+            .panes
+              .pane#friendsscore-7j
+                %table
+                  %tr
+                    %td.header= t 'bar.scores.friends'
+                    %td.subnav#subtabs1
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
+                      = "-"
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
+                .subpanes#subpanes1
+                  .subpane
+                    %table.barscore-grid
+                      -#= render :partial => 'barscore', :collection => @bar.total_scores
+                  .subpane
+                    %table.barscore-grid
+                      -#= render :partial => 'barscore', :collection => @bar.total_scores_for(@me)
+              .pane#friendsscore-always
+                %table
+                  %tr
+                    %td.header= t 'bar.scores.friends'
+                    %td.subnav#subtabs2
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
+                      = "-"
+                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
+                .subpanes#subpanes2
+                  .subpane
+                    %table.barscore-grid
+                      -#= render :partial => 'barscore', :collection => @bar.total_scores
+                  .subpane
+                    %table.barscore-grid
+                      -#= render :partial => 'barscore', :collection => @bar.total_scores_for(@me)
+            %ul.tabs
+              %li
+                %a{:href => 'javascript:void(0)'}= t 'bar.scores.weekly'
+              %li.last
+                %a{:href => 'javascript:void(0)'}= t 'bar.scores.always'
+          %td.bar-stats
+            .header
+              = t 'challenge.stats.friends_stats'
+            .stat
+              .section
+                Je sais pas quoi mettre ici
+              .value
+                Ah ben zut alors...
+            %br
+            .header
+              = t 'challenge.stats.global_stats'
+            .portrait
+              = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
+            .stat
+              .section
+                Je sais pas quoi mettre là
+              .value
+                Mais t'es nul alors !
+    %td.small.shadow
+  %tr.small
+    %td.small
+    %td.shadow
+    %td.small.shadow
+
+:javascript
+  $(function() {
+    $('#game').flash({
+      swf: "/swf/BeerQuest-#{@required_version}.swf",
+      width: 520,
+      height: 320,
+      flashvars: {
+        mode: "#{@mode}",
+        token: "#{@replay.token}",
+        requiredVersion: #{@required_version},
+        goal: #{@challenge.required_score}
+      }
+    });
+  });

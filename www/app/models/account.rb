@@ -51,27 +51,29 @@ class Account
   end
 
   def current_challenges
-    challenges.all(:replay_score => nil, :parent.not => nil) + sent_challenges.all(:replay_score => nil, :parent.not => nil)
+    challenges.all(:status => 'pending', :parent.not => nil) + sent_challenges.all(:status => 'pending', :parent.not => nil)
   end
 
   def new_received_challenges
-    challenges.all(:replay_score => nil, :parent => nil)
+    challenges.all(:status => 'pending', :parent => nil)
   end
 
   def new_sent_challenges
-    sent_challenges.all(:replay_score => nil, :parent => nil)
+    sent_challenges.all(:status => 'pending', :parent => nil)
   end
 
   def already_challenging_people
-    [] # TODO
+    challenging = challenges.all(:status => 'pending').collect { |c| c.sent_by }
+    challenged = sent_challenges.all(:status => 'pending').collect { |c| c.account }
+    challenging + challenged
   end
 
   def victory_points
-    sent_challenges.count(:replay_score.lt => :required_score)
+    sent_challenges.count(:status => 'lost')
   end
 
   def defeat_points
-    challenges.count(:replay_score.lt => :required_score)
+    challenges.count(:status => 'lost')
   end
 
   private

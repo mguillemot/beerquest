@@ -10,6 +10,7 @@ BeerQuest::Application.routes.draw do
   get "challenges/sent/:page",      :to => "user#async_current_challenges",  :as => 'async_sent_challenges'
   get "challenges/received/:page",  :to => "user#async_received_challenges", :as => 'async_received_challenges'
   get "invite",                     :to => "user#invite",                    :as => 'invite'
+  get "challenge/:id",              :to => "user#challenge",                 :as => 'challenge'
 
   # Bar pages
   get "bar/:id",                    :to => "bar#index",                      :as => 'bar'

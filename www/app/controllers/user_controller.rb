@@ -68,7 +68,17 @@ class UserController < FacebookController
   end
 
   def invite
-    @exclude = @me.already_challenging_people.collect { |account| account.facebook_id }
+    @exclude = []
+    @me.already_challenging_people.each do |account|
+      @exclude.push(account.facebook_id) if account.facebook_id
+    end
+  end
+
+  def challenge
+    @challenge = Challenge.get! params[:id]
+    @required_version = "0.96"
+    @mode = "vs"
+    @replay = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
   end
 
   protected

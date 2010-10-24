@@ -10,7 +10,7 @@
       = challenge.required_score
     %td.action
       .button
-        %a{:href => '#'} Battle
+        = link_to t('home.battle.received_challenge.battle_button'), challenge_url(challenge)
 - else # Sent challenge
   %tr.challenge
     %td.portrait

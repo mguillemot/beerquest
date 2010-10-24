@@ -4,8 +4,9 @@ class Replay
   property :id, Serial
   property :account_id, Integer, :min => 1 # Note: required declaration to have NULLable FK
   property :bar_id, Integer, :min => 1     # Note: required declaration to have NULLable FK
+  property :challenge_id, Integer, :min => 1
   property :score, Integer, :index => true
-  property :mode, String
+  property :mode, String, :required => true # solo, vs
   property :game_version, String
   property :play_time, Integer
   property :avg_time_per_turn, Decimal, :precision => 20, :scale => 10 # Note: need big precision to pass validaitons
@@ -50,18 +51,18 @@ class Replay
   property :stack_collected, Integer
   property :user_agent, String, :length => 255
   property :flash_version, String
-  property :token, String, :length => 32
+  property :token, String, :length => 32, :required => true
   property :token_use_time, DateTime
-  property :ip, String, :length => 15
-  property :seed, Integer
+  property :ip, String, :length => 15, :required => true
+  property :seed, Integer, :required => true
   property :game_over, Boolean, :required => true, :default => false, :index => true
-  property :created_at, DateTime, :index => true
-  property :updated_at, DateTime
-  property :update_count, Integer, :default => 0
+  property :created_at, DateTime, :required => true, :index => true
+  property :updated_at, DateTime, :required => true
+  property :update_count, Integer, :default => 0, :required => true
 
   belongs_to :account
   belongs_to :bar
-  has 1, :challenge
+  belongs_to :challenge
 
   def self.finished
     self.all(:game_over => true)
