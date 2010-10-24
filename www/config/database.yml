@@ -1,5 +1,5 @@
 defaults: &defaults
-  encoding: utf8
+  encoding: UTF-8
   reconnect: false
   pool: 5
 

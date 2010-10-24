@@ -2,15 +2,15 @@ class Account
   include DataMapper::Resource
 
   property :id, Serial
-  property :first_name, String
-  property :last_name, String
-  property :profile_picture, String
+  property :first_name, String, :length => 255, :required => true
+  property :last_name, String, :length => 255, :required => true
+  property :profile_picture, String, :length => 255
   property :gender, String
   property :locale, String
   property :timezone, Integer
   property :discovered_through, Integer
-  property :facebook_id, Integer, :min => 0, :max => 2**64-1
-  property :login_count, Integer, :default => 0
+  property :facebook_id, Integer, :min => 0, :max => 2**64-1, :index => true
+  property :login_count, Integer, :required => true, :default => 0
   property :last_login, DateTime
   property :created_at, DateTime
   property :updated_at, DateTime

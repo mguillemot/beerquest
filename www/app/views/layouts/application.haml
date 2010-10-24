@@ -56,16 +56,16 @@
             %li
               = link_to t('nav.challenge'), invite_url
             %li
-              %a{:href => '#'}= t 'nav.help'
+              = link_to t('nav.help'), privacy_url
             %li.special
               = link_to t('nav.support'), support_us_url
             %li.last
               %a{:href => 'http://blog.bq-4.com/', :target => '_blank'}= t 'nav.blog'
-      - if admin
-        #flash
-          - if flash[:error]
-            .error= flash[:error]
-          - if flash[:notice]
-            .notice= flash[:notice]
+      #flash
+        .notice= "uid=#{@me.id} fbid=#{@me.facebook_id} fn=#{@me.full_name}"
+        - if flash[:error]
+          .error= flash[:error]
+        - if flash[:notice]
+          .notice= flash[:notice]
       #content
         = yield
