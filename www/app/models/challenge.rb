@@ -10,8 +10,8 @@ class Challenge
   property :raise, Integer
   property :accepted_at, DateTime
   property :ended_at, DateTime
-  property :created_at, DateTime, :required => true
-  property :updated_at, DateTime, :required => true
+  property :created_at, DateTime
+  property :updated_at, DateTime
 
   belongs_to :account
   belongs_to :sent_by, :model => Account

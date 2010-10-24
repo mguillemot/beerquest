@@ -54,10 +54,10 @@ class Replay
   property :token, String, :length => 32, :required => true
   property :token_use_time, DateTime
   property :ip, String, :length => 15, :required => true
-  property :seed, Integer, :required => true
+  property :seed, Integer
   property :game_over, Boolean, :required => true, :default => false, :index => true
-  property :created_at, DateTime, :required => true, :index => true
-  property :updated_at, DateTime, :required => true
+  property :created_at, DateTime, :index => true
+  property :updated_at, DateTime
   property :update_count, Integer, :default => 0, :required => true
 
   belongs_to :account
