@@ -194,10 +194,18 @@
 
   function soloBoast(score)
   {
-    alert("J'ai bu " + score + " bières, je suis trop un ouf !");
+    FB.ui(
+    {
+       method: "stream.publish",
+       user_message_prompt: "#{t('bar.endgame.boast.prompt')}",
+       message: "#{t('bar.endgame.boast.default_message_pre')}" + score + "#{t('bar.endgame.boast.default_message_post')}",
+       action_links: [
+         { text: "#{t('bar.endgame.boast.action')}", href: "#{BeerQuest::FB_APP_URL}" }
+       ]
+    });
   }
 
   function soloPlayAgain()
   {
-    alert("Play Again");
+    location.reload();
   }

@@ -76,7 +76,7 @@ class UserController < FacebookController
 
   def challenge
     @challenge = Challenge.get! params[:id]
-    @required_version = "0.96"
+    @required_version = Game::Constants::VERSION
     @mode = "vs"
     @replay = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
   end

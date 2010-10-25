@@ -102,6 +102,12 @@ fr:
       best_rank_title: "Meilleur rang dans ce bar"
       best_rank_value: "#%{rank} le %{date}"
       play_count: "Nombre de parties"
+    endgame:
+      boast:
+        prompt: "Va-y, vante toi à mort !"
+        default_message_pre: "Oh con, je me suis pété "
+        default_message_post: " bières sur BeerQuest IV, c'te folie !"
+        action: "Trinquer"
   challenge:
     title:
       respect_count: "%{count} Respect"

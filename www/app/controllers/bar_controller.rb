@@ -4,7 +4,7 @@ class BarController < FacebookController
 
   def index
     @bar = Bar.get!(params[:id])
-    @required_version = "0.96"
+    @required_version = Game::Constants::VERSION
     @mode = "solo"
     @replay = @me.replays.create(:bar => @bar, :token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'solo')
     unless @replay.saved?
