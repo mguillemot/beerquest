@@ -58,6 +58,8 @@
     <mx:Script><![CDATA[
         import com.beerquest.I18n;
 
+        import mx.controls.Alert;
+
         public function setResult(mode:String, score:int, scoreGoal:int, personalHigh:Boolean, barHigh:Boolean):void {
             _mode = mode;
             _score = score;
@@ -76,6 +78,54 @@
                 } else {
                     vsFailure.visible = true;
                 }
+            }
+        }
+
+        private function onBoast(e:MouseEvent):void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("soloBoast", _score);
+            } else {
+                Alert.show("Error (1)");
+            }
+        }
+
+        private function onPlayAgain(e:MouseEvent):void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("soloPlayAgain");
+            } else {
+                Alert.show("Error (2)");
+            }
+        }
+
+        private function onVsBoastVictory(e:MouseEvent):void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("vsBoastVictory", _score, _scoreGoal);
+            } else {
+                Alert.show("Error (3)");
+            }
+        }
+
+        private function onVsBoastDefeat(e:MouseEvent):void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("vsBoastDefeat", _score, _scoreGoal);
+            } else {
+                Alert.show("Error (4)");
+            }
+        }
+
+        private function onVsProvoke(e:MouseEvent):void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("vsProvoke", _scoreGoal);
+            } else {
+                Alert.show("Error (5)");
+            }
+        }
+
+        private function onVsPlayAgain(e:MouseEvent):void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("vsPlayAgain");
+            } else {
+                Alert.show("Error (6)");
             }
         }
 
@@ -127,8 +177,8 @@
             </mx:filters>
         </mx:Label>
         <mx:HBox horizontalGap="20">
-            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80"/>
-            <mx:Button label="{I18n.t('end.play-again-button')}" width="150" height="80"/>
+            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80" click="onBoast(event)"/>
+            <mx:Button label="{I18n.t('end.play-again-button')}" width="150" height="80" click="onPlayAgain(event)"/>
         </mx:HBox>
     </mx:VBox>
 
@@ -163,8 +213,8 @@
             </mx:filters>
         </mx:Label>
         <mx:HBox horizontalGap="20">
-            <mx:Button label="{I18n.t('end.play-again-button')}" width="150" height="80"/>
-            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80"/>
+            <mx:Button label="{I18n.t('end.play-again-button')}" width="150" height="80" click="onPlayAgain(event)"/>
+            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80" click="onBoast(event)"/>
         </mx:HBox>
     </mx:VBox>
 
@@ -199,8 +249,8 @@
             </mx:filters>
         </mx:Label>
         <mx:HBox horizontalGap="20">
-            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80"/>
-            <mx:Button label="{I18n.t('end.provoke-button')}" width="150" height="80"/>
+            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80" click="onVsBoastVictory(event)"/>
+            <mx:Button label="{I18n.t('end.provoke-button')}" width="150" height="80" click="onVsProvoke(event)"/>
         </mx:HBox>
     </mx:VBox>
 
@@ -235,8 +285,8 @@
             </mx:filters>
         </mx:Label>
         <mx:HBox horizontalGap="20">
-            <mx:Button label="{I18n.t('end.start-another-challenge-button')}" width="150" height="80"/>
-            <mx:Button label="{I18n.t('end.wall-of-shame-button')}" width="150" height="80"/>
+            <mx:Button label="{I18n.t('end.start-another-challenge-button')}" width="150" height="80" click="onVsPlayAgain(event)"/>
+            <mx:Button label="{I18n.t('end.wall-of-shame-button')}" width="150" height="80" click="onVsBoastDefeat(event)"/>
         </mx:HBox>
     </mx:VBox>
 </mx:Canvas>
