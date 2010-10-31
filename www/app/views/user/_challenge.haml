@@ -1,10 +1,10 @@
 - if challenge.account == @me # Received challenge
   %tr.challenge
     %td.portrait
-      = image_tag 'avatar2.png', :class => 'portrait'
+      = image_tag challenge.sent_by.profile_picture, :class => 'portrait'
     %td.description
       .name= challenge.sent_by.full_name
-      .status= t(challenge.new? ? 'home.battle.received_challenge.new_description' : 'home.battle.received_challenge.description', :date => l(challenge.created_at, :format => :short))
+      .status= t(challenge.new_challenge? ? 'home.battle.received_challenge.new_description' : 'home.battle.received_challenge.description', :date => l(challenge.created_at, :format => :short))
     %td.score
       = image_tag 'mini-biere.png', :alt => t('beers')
       = challenge.required_score
@@ -14,10 +14,10 @@
 - else # Sent challenge
   %tr.challenge
     %td.portrait
-      = image_tag 'avatar2.png', :class => 'portrait'
+      = image_tag challenge.account.profile_picture, :class => 'portrait'
     %td.description
       .name= challenge.account.full_name
-      .status= t(challenge.new? ? 'home.battle.sent_challenge.new_description' : 'home.battle.sent_challenge.description', :date => l(challenge.created_at, :format => :short))
+      .status= t(challenge.new_challenge? ? 'home.battle.sent_challenge.new_description' : 'home.battle.sent_challenge.description', :date => l(challenge.created_at, :format => :short))
     %td.score
       = image_tag 'mini-biere.png', :alt => t('beers')
       = challenge.required_score

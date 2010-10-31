@@ -1,6 +1,5 @@
 class GameController < ApplicationController
 
-  #protect_from_forgery :except => :postscore
   skip_before_filter :verify_authenticity_token
 
   def start
@@ -11,6 +10,9 @@ class GameController < ApplicationController
       replay.seed = 1234
       replay.token_use_time = DateTime.now
       replay.save
+      if replay.mode == 'vs'
+        replay.challenge.accept! params[:raise]
+      end
       result[:replay_id] = replay.id
       result[:seed] = replay.seed
       result[:ok] = true
@@ -100,7 +102,7 @@ class GameController < ApplicationController
         logger.info "Replay #{replay.id} ended with success with score #{replay.score}"
 
         # Update corresponding challenge
-        replay.challenge.end!(replay.score)
+        replay.challenge.end!(137)
         if replay.challenge.status == 'won'
           logger.info "Challenge #{replay.challenge.id} won and counter-challenge created!"
         else

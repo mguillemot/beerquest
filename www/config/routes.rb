@@ -10,7 +10,10 @@ BeerQuest::Application.routes.draw do
   get "challenges/sent/:page",      :to => "user#async_current_challenges",  :as => 'async_sent_challenges'
   get "challenges/received/:page",  :to => "user#async_received_challenges", :as => 'async_received_challenges'
   get "invite",                     :to => "user#invite",                    :as => 'invite'
+  post "invite-done",               :to => "user#invite_end",                :as => 'invite_end'
   get "challenge/:id",              :to => "user#challenge",                 :as => 'challenge'
+  get "accept-challenge/:id",       :to => "user#accept_challenge",          :as => 'accept_challenge'
+  get "refuse-challenge/:id",       :to => "user#refuse_challenge",          :as => 'refuse_challenge'
 
   # Bar pages
   get "bar/:id",                    :to => "bar#index",                      :as => 'bar'
@@ -29,9 +32,9 @@ BeerQuest::Application.routes.draw do
   post "end",                       :to => "game#end",                       :as => 'game_end'
 
   # Donations
-  get "support_us",                 :to => "payment#index",                  :as => 'support_us'
-  post "support_us/donate/:level",  :to => "payment#donate",                 :as => 'donate'
-  get "support_us/enddonate/:id",   :to => "payment#end",                    :as => 'end_donate'
+  get "support-us",                 :to => "payment#index",                  :as => 'support_us'
+  post "support-us/donate/:level",  :to => "payment#donate",                 :as => 'donate'
+  get "support-us/enddonate/:id",   :to => "payment#end",                    :as => 'end_donate'
 
   # Admin & debug
   get "play/:id" ,                  :to => "admin#hack_login"

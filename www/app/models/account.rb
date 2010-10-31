@@ -9,7 +9,7 @@ class Account
   property :locale, String
   property :timezone, Integer
   property :discovered_through, Integer
-  property :facebook_id, Integer, :min => 0, :max => 2**64-1, :index => true
+  property :facebook_id, Integer, :min => 0, :max => 2**64-1, :index => true # TODO use :unique_index ?
   property :login_count, Integer, :required => true, :default => 0
   property :last_login, DateTime
   property :created_at, DateTime
@@ -51,7 +51,10 @@ class Account
   end
 
   def current_challenges
-    challenges.all(:status => Challenge::STATUS[:pending], :parent.not => nil) + sent_challenges.all(:status => Challenge::STATUS[:pending], :parent.not => nil)
+    res = []
+    challenges.all(:status => Challenge::STATUS[:pending], :parent.not => nil).each { |c| res.push(c) }
+    sent_challenges.all(:status => Challenge::STATUS[:pending], :parent.not => nil).each { |c| res.push(c) }
+    res
   end
 
   def new_received_challenges
@@ -74,6 +77,10 @@ class Account
 
   def defeat_points
     challenges.count(:status => Challenge::STATUS[:lost])
+  end
+
+  def challenge!(from_account)
+    challenges.create(:sent_by => from_account, :required_score => Challenge::INITIAL_CHALLENGE)
   end
 
   private

@@ -1,7 +1,9 @@
 class UserController < FacebookController
 
-  BARS_PER_PAGE = 3
-  CHALLENGES_PER_PAGE = 8
+  protect_from_forgery :except => [:invite_end]
+
+  BARS_PER_PAGE       = 3
+  CHALLENGES_PER_PAGE = 100 # TODO faire la pagination (dans l'UI) des challenges
   WORLD_SCORE_TARGETS = [
           {:score => 1_000, :challenge => 'challenge.value.target1000'},
           {:score => 2_000, :challenge => 'challenge.value.target2000'},
@@ -74,19 +76,57 @@ class UserController < FacebookController
     end
   end
 
+  def invite_end
+    logger.info "Sending challenges to the following users: #{params[:ids].inspect}"
+    params[:ids].each do |id|
+      account = Account.first(:facebook_id => id)
+      if account
+        if account.challenge!(@me)
+          logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
+        else
+          logger.error "An error occured when challenging user #{account.full_name} (id=#{account.id})"
+        end
+      else
+        logger.error "Impossible to challenge account with fbid=#{id} since it doesn't seem to exist"
+      end
+    end
+    redirect_to home_url
+  end
+
   def challenge
-    @challenge = Challenge.get! params[:id]
+    @challenge        = Challenge.get! params[:id]
+    if @challenge.account != @me
+      raise "wrong account; challenge is for account #{@challenge.account.id}"
+    end
+    logger.debug @challenge.sent_by.inspect
     @required_version = Game::Constants::VERSION
-    @mode = "vs"
-    @replay = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
+    @mode             = "vs"
+    @replay           = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
+  end
+
+  def accept_challenge
+    logger.info "Accepting the challenge sent by user #{params[:id]}"
+    challenge = @me.new_received_challenges.first(:sent_by_id => params[:id])
+    if challenge
+      logger.info "Corresponding challenge found: #{challenge.id}"
+      redirect_to challenge_url(challenge)
+    else
+      logger.error "Could not find corresponding challenge (expired ?)"
+      flash[:error] = "Invalid challenge (expired ?)"
+      redirect_to home_url
+    end
+  end
+
+  def refuse_challenge
+    # TODO
   end
 
   protected
 
   def set_world_score
-    @world_score = World.total_beers
+    @world_score          = World.total_beers
     @world_score_increase = World.increase_last_hour / 3600.0
-    target = WORLD_SCORE_TARGETS.find { |t| t[:score] > @world_score }
+    target                = WORLD_SCORE_TARGETS.find { |t| t[:score] > @world_score }
     if target
       @world_score_target = target[:score]
       @world_score_action = t(target[:challenge])
@@ -97,23 +137,23 @@ class UserController < FacebookController
   end
 
   def set_favorites(page)
-    results = @me.favorite_bars
-    @favorites_page = page
+    results             = @me.favorite_bars
+    @favorites_page     = page
     @favorites_max_page = [1, (results.count.to_f / BARS_PER_PAGE).ceil].max
-    @favorites_total = results.count
-    @favorites = results.all(:limit => BARS_PER_PAGE, :offset => (@favorites_page - 1) * BARS_PER_PAGE)
+    @favorites_total    = results.count
+    @favorites          = results.all(:limit => BARS_PER_PAGE, :offset => (@favorites_page - 1) * BARS_PER_PAGE)
   end
 
   def set_partners(page)
-    results = Bar.all
-    @partners_page = page
+    results            = Bar.all
+    @partners_page     = page
     @partners_max_page = [1, (results.count.to_f / BARS_PER_PAGE).ceil].max
-    @partners_total = results.count
-    @partners = results.all(:limit => BARS_PER_PAGE, :offset => (@partners_page - 1) * BARS_PER_PAGE)
+    @partners_total    = results.count
+    @partners          = results.all(:limit => BARS_PER_PAGE, :offset => (@partners_page - 1) * BARS_PER_PAGE)
   end
 
   def set_search(prefix, page)
-    @search_prefix = prefix
+    @search_prefix   = prefix
     if @search_prefix == '123'
       results = Bar.all(:name.like => "1%") +
               Bar.all(:name.like => "2%") +
@@ -130,37 +170,37 @@ class UserController < FacebookController
     end
 
     @search_max_page = [1, (results.count.to_f / BARS_PER_PAGE).ceil].max
-    @search_page = page
+    @search_page     = page
     if !@search_page || @search_page < 1 || @search_page > @search_max_page
       @search_page = 1
     end
 
-    @search_total = results.count
-    @search = results.all(:limit => BARS_PER_PAGE, :offset => (@search_page - 1) * BARS_PER_PAGE)
+    @search_total    = results.count
+    @search          = results.all(:limit => BARS_PER_PAGE, :offset => (@search_page - 1) * BARS_PER_PAGE)
   end
 
   def set_current_challenges(page)
-    results = @me.current_challenges
-    @current_challenges_page = page
+    results                      = @me.current_challenges
+    @current_challenges_page     = page
     @current_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
-    @current_challenges_total = results.count
-    @current_challenges = results.all(:limit => CHALLENGES_PER_PAGE, :offset => (@current_challenges_page - 1) * CHALLENGES_PER_PAGE)
+    @current_challenges_total    = results.count
+    @current_challenges          = results[((@current_challenges_page - 1) * CHALLENGES_PER_PAGE)...(@current_challenges_page * CHALLENGES_PER_PAGE)]
   end
 
   def set_received_challenges(page)
-    results = @me.new_received_challenges
-    @received_challenges_page = page
+    results                       = @me.new_received_challenges
+    @received_challenges_page     = page
     @received_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
-    @received_challenges_total = results.count
-    @received_challenges = results.all(:limit => CHALLENGES_PER_PAGE, :offset => (@received_challenges_page - 1) * CHALLENGES_PER_PAGE)
+    @received_challenges_total    = results.count
+    @received_challenges          = results.all(:limit => CHALLENGES_PER_PAGE, :offset => (@received_challenges_page - 1) * CHALLENGES_PER_PAGE)
   end
 
   def set_sent_challenges(page)
-    results = @me.new_sent_challenges
-    @sent_challenges_page = page
+    results                   = @me.new_sent_challenges
+    @sent_challenges_page     = page
     @sent_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
-    @sent_challenges_total = results.count
-    @sent_challenges = results.all(:limit => CHALLENGES_PER_PAGE, :offset => (@sent_challenges_page - 1) * CHALLENGES_PER_PAGE)
+    @sent_challenges_total    = results.count
+    @sent_challenges          = results.all(:limit => CHALLENGES_PER_PAGE, :offset => (@sent_challenges_page - 1) * CHALLENGES_PER_PAGE)
   end
 
 end

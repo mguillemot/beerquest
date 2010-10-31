@@ -27,7 +27,7 @@ gem 'dm-timestamps',        DM_VERSION
 gem 'dm-observer',          DM_VERSION
 gem 'dm-serializer',        DM_VERSION
 gem 'dm-adjust',            DM_VERSION
-gem 'dm-is-tree',           DM_VERSION
+#gem 'dm-is-tree',           DM_VERSION
 
 gem 'system_timer'
 gem 'redis'

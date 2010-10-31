@@ -22,7 +22,7 @@
                   = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
                 %td.vs
                   %div= t 'challenge.title.vs'
-                  .round= t 'challenge.title.round', :round => 1 # TODO
+                  .round= t 'challenge.title.round', :round => @challenge.round
                 %td.portrait-opponent
                   = image_tag @challenge.sent_by.profile_picture, :alt => @challenge.sent_by.full_name, :class => 'portrait'
                 %td.player-opponent

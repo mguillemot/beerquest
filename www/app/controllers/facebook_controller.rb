@@ -5,7 +5,7 @@ class FacebookController < ApplicationController
   def session_login
     reset_session
     session[:access_token] = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, login_url, BeerQuest::FB_SECRET, params[:code])['access_token']
-    session[:user_id] = MiniFB.get(session[:access_token], 'me').id
+    session[:user_id]      = MiniFB.get(session[:access_token], 'me').id
     #bust_iframe(BeerQuest::FB_APP_URL)
     # TODO tester et voir si �a convient
     redirect_to home_url
@@ -13,8 +13,8 @@ class FacebookController < ApplicationController
 
   def session_logout
     session[:access_token] = nil
-    session[:user_id] = nil
-    session[:account_id] = nil
+    session[:user_id]      = nil
+    session[:account_id]   = nil
     redirect_to home_url
   end
 
@@ -32,12 +32,12 @@ class FacebookController < ApplicationController
           logger.debug "Resetting account stored in session"
           session[:account_id] = nil
         end
-        session[:facebook_id] = data['user_id']
+        session[:facebook_id]  = data['user_id']
         session[:access_token] = data['oauth_token']
       end
     end
     @access_token = session[:access_token]
-    @facebook_id = session[:facebook_id]
+    @facebook_id  = session[:facebook_id]
     unless @access_token
       logger.debug "No access token found: busting IFrame"
       bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
@@ -50,47 +50,47 @@ class FacebookController < ApplicationController
       @me = Account.get!(session[:account_id])
       logger.debug " => fbid=#{@me.facebook_id}"
     else
-      flash.now[:notice] = "Retrieved account info from FB: fbid=#{@facebook_id}"
+      flash.now[:notice]   = "Retrieved account info from FB: fbid=#{@facebook_id}"
       logger.debug "Trying to retrieve user #{@facebook_id} from DB"
-      @me = Account.first(:facebook_id => @facebook_id)
+      @me                  = Account.first(:facebook_id => @facebook_id)
       unless @me
         logger.debug "Account didn't exist, create one"
         @me = Account.new(:facebook_id => @facebook_id)
       end
       logger.debug "Asking FB for info about user account #{@facebook_id}"
-      facebook_account = MiniFB.get(@access_token, "me")
-      @me.first_name = facebook_account[:first_name]
-      @me.last_name = facebook_account[:last_name]
-      @me.gender = facebook_account[:gender]
+      facebook_account     = MiniFB.get(@access_token, "me")
+      @me.first_name       = facebook_account[:first_name]
+      @me.last_name        = facebook_account[:last_name]
+      @me.gender           = facebook_account[:gender]
       #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
-      @me.locale = facebook_account[:locale] # ex: fr_FR
-      @me.timezone = facebook_account[:timezone] # 9
-      @me.profile_picture = "http://graph.facebook.com/#{@facebook_id}/picture"
-      @me.login_count += 1
-      @me.last_login = DateTime.now
+      @me.locale           = facebook_account[:locale] # ex: fr_FR
+      @me.timezone         = facebook_account[:timezone] # 9
+      @me.profile_picture  = "http://graph.facebook.com/#{@facebook_id}/picture"
+      @me.login_count      += 1
+      @me.last_login       = DateTime.now
       @me.save
       session[:account_id] = @me.id
 
       # Friends
-      current_friends = @me.friendships.collect { |fs| fs.friend_id }
+      current_friends      = @me.friendships.collect { |fs| fs.friend_id }
       logger.debug "Current friends (before updating): #{current_friends.inspect}"
       logger.debug "Asking FB for info about user friends"
-      fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
+      fb_friends           = MiniFB.get(@access_token, "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
-      fb_friends[:data].each do |f|
+      fb_friends.each do |f|
         logger.debug "== friend: #{f.inspect}"
         friend_account = Account.first(:facebook_id => f[:id])
         unless friend_account
           logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
-          friend_account = @me.friends.new
-          friend_account.facebook_id = f[:id]
+          friend_account                    = @me.friends.new
+          friend_account.facebook_id        = f[:id]
           friend_account.discovered_through = @me.id
           if f[:name]
-            friend_name = f[:name].split(' ', 2)
+            friend_name               = f[:name].split(' ', 2)
             friend_account.first_name = friend_name[0]
-            friend_account.last_name = friend_name[1]
+            friend_account.last_name  = friend_name[1]
           end
-          friend_account.profile_picture = "http://graph.facebook.com/#{f[:id]}/picture"
+          friend_account.profile_picture    = "http://graph.facebook.com/#{f[:id]}/picture"
           friend_account.save
         else
           unless current_friends.reject! { |cf| cf == f[:id] }
@@ -140,8 +140,8 @@ class FacebookController < ApplicationController
 
     #decode data
     encoded_sig, payload = signed_request.split('.')
-    sig = str_to_hex(base64_url_decode(encoded_sig))
-    data = ActiveSupport::JSON.decode base64_url_decode(payload)
+    sig          = str_to_hex(base64_url_decode(encoded_sig))
+    data         = ActiveSupport::JSON.decode base64_url_decode(payload)
 
     if data['algorithm'].to_s.upcase != 'HMAC-SHA256'
       logger.error 'Unknown algorithm. Expected HMAC-SHA256'
