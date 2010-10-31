@@ -80,7 +80,7 @@ table.action td {
 
 table.action td.description {
   text-align: left;
-  padding: 5px;  
+  padding: 5px;
 }
 
 table.action td.action {
@@ -257,6 +257,10 @@ div.pane div.search div.description {
   position: relative;
   left: 8px;
   top: 4px;
+}
+
+.empty-challenge-grid {
+  padding: 5px;
 }
 
 table.challenge-grid {

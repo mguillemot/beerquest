@@ -60,6 +60,10 @@ fr:
           title: "Reçus (%{count})"
         sent:
           title: "Envoyés (%{count})"
+      empty:
+        current: "(Aucun défi en cours)"
+        sent: "(Aucun défi envoyé)"
+        received: "(Aucun défi reçu)"
       warning:
         received_html: "Les défis reçus sont annulés au bout d'une semaine si vous ne les acceptez pas en cliquant sur <strong>Battle</strong>"
         sent_html: "Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés."

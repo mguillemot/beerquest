@@ -13,7 +13,7 @@ gem 'actionpack',           RAILS_VERSION
 gem 'actionmailer',         RAILS_VERSION
 gem 'railties',             RAILS_VERSION
 
-gem 'dm-rails',             '1.0.3'
+gem 'dm-rails',             '1.0.4'
 #gem 'dm-sqlite-adapter',    DM_VERSION
 gem 'dm-mysql-adapter',     DM_VERSION
 #gem 'dm-redis-adapter',     '0.2.1'

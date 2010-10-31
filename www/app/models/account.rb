@@ -51,29 +51,29 @@ class Account
   end
 
   def current_challenges
-    challenges.all(:status => 'pending', :parent.not => nil) + sent_challenges.all(:status => 'pending', :parent.not => nil)
+    challenges.all(:status => Challenge::STATUS[:pending], :parent.not => nil) + sent_challenges.all(:status => Challenge::STATUS[:pending], :parent.not => nil)
   end
 
   def new_received_challenges
-    challenges.all(:status => 'pending', :parent => nil)
+    challenges.all(:status => Challenge::STATUS[:pending], :parent => nil)
   end
 
   def new_sent_challenges
-    sent_challenges.all(:status => 'pending', :parent => nil)
+    sent_challenges.all(:status => Challenge::STATUS[:pending], :parent => nil)
   end
 
   def already_challenging_people
-    challenging = challenges.all(:status => 'pending').collect { |c| c.sent_by }
-    challenged = sent_challenges.all(:status => 'pending').collect { |c| c.account }
+    challenging = challenges.all(:status => Challenge::STATUS[:pending]).collect { |c| c.sent_by }
+    challenged = sent_challenges.all(:status => Challenge::STATUS[:pending]).collect { |c| c.account }
     challenging + challenged
   end
 
   def victory_points
-    sent_challenges.count(:status => 'lost')
+    sent_challenges.count(:status => Challenge::STATUS[:lost])
   end
 
   def defeat_points
-    challenges.count(:status => 'lost')
+    challenges.count(:status => Challenge::STATUS[:lost])
   end
 
   private
