@@ -5,19 +5,18 @@ class Challenge
   PENDING_EXPIRATION = 1.week
   ACCEPT_EXPIRATION = 2.hour
   RAISE_VALUES = [1, 3, 5, 10, 15, 20]
-  STATUS = {
-      :pending => 'pending',
-      :accepted => 'accepted',
-      :expired => 'expired',
-      :won => 'won',
-      :lost => 'lost'
-  }
+
+  STATUS_PENDING = 'pending'
+  STATUS_ACCEPTED = 'accepted'
+  STATUS_EXPIRED = 'expired'
+  STATUS_WON = 'won'
+  STATUS_LOST = 'lost'
 
   property :id, Serial
   property :parent_id, Integer, :min => 1, :index => true
   property :account_id, Integer, :min => 1, :required => true, :index => true
   property :sent_by_id, Integer, :min => 1, :required => true, :index => true
-  property :status, String, :default => STATUS[:pending], :required => true, :index => true
+  property :status, String, :default => STATUS_PENDING, :required => true, :index => true
   property :required_score, Integer, :required => true
   property :score_raise, Integer
   property :accepted_at, DateTime
@@ -32,7 +31,7 @@ class Challenge
   has 1, :replay, :constraint => :set_nil
 
   def self.to_expire
-    all(:status => STATUS[:pending], :created_at.lte => DateTime.now - PENDING_EXPIRATION) + all(:status => STATUS[:accepted], :accepted_at.lte => DateTime.now - ACCEPT_EXPIRATION)
+    all(:status => STATUS_PENDING, :created_at.lte => DateTime.now - PENDING_EXPIRATION) + all(:status => STATUS_ACCEPTED, :accepted_at.lte => DateTime.now - ACCEPT_EXPIRATION)
   end
 
   def new_challenge?
@@ -53,7 +52,7 @@ class Challenge
 
   def accept!(score_raise)
     score_raise = score_raise.to_i
-    if status != STATUS[:pending]
+    if status != STATUS_PENDING
       raise "cannot accept a challenge with status '#{status}'"
     end
     if expirable?
@@ -62,24 +61,24 @@ class Challenge
     unless RAISE_VALUES.include?(score_raise)
       raise "invalid raise value: #{score_raise}"
     end
-    self.status = STATUS[:accepted]
+    self.status = STATUS_ACCEPTED
     self.score_raise = score_raise
     self.accepted_at = DateTime.now
     save
   end
 
   def end!(score)
-    if status != STATUS[:accepted]
+    if status != STATUS_ACCEPTED
       raise "cannot end a challenge with status '#{status}'"
     end
     if expirable?
       raise "cannot end expired challenge"
     end
     if score >= target_score
-      self.status = STATUS[:won]
+      self.status = STATUS_WON
       Challenge.create(:account_id => sent_by_id, :sent_by_id => account_id, :required_score => target_score, :parent_id => id)
     else
-      self.status = STATUS[:lost]
+      self.status = STATUS_LOST
     end
     self.ended_at = DateTime.now
     save
@@ -89,7 +88,7 @@ class Challenge
     if !expirable?
       raise "challenge is not expirable"
     end
-    self.status = STATUS[:expired]
+    self.status = STATUS_EXPIRED
     self.ended_at = DateTime.now
     save
   end
@@ -97,7 +96,7 @@ class Challenge
   private
 
   def expirable?
-    (status == STATUS[:pending] && created_at + PENDING_EXPIRATION < DateTime.now) || (status == STATUS[:accepted] && accepted_at + ACCEPT_EXPIRATION < DateTime.now)
+    (status == STATUS_PENDING && created_at + PENDING_EXPIRATION < DateTime.now) || (status == STATUS_ACCEPTED && accepted_at + ACCEPT_EXPIRATION < DateTime.now)
   end
 
 end

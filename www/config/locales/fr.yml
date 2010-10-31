@@ -49,8 +49,12 @@ fr:
         enter_button: "Entrer dans ce Bar"
     battle: 
       mode: "Mode Battle"
-      respect_points: "%{count} Points de respect"
-      shame_points: "%{count} Points de la loose"
+      respect_points_count:
+       one: "1 Point de respect"
+       other: "%{count} Points de respect"
+      shame_points_count:
+        one: "1 Point de la loose"
+        other: "%{count} Points de la loose"
       play_description_html: "<strong>Défiez vos amis</strong> et faites vous respecter pour votre descente !"
       button_html: "Défier mes<br/>Amis"
       tabs:

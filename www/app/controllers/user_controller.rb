@@ -3,7 +3,7 @@ class UserController < FacebookController
   protect_from_forgery :except => [:invite_end]
 
   BARS_PER_PAGE       = 3
-  CHALLENGES_PER_PAGE = 100 # TODO faire la pagination (dans l'UI) des challenges
+  CHALLENGES_PER_PAGE = 999999 # TODO faire la pagination (dans l'UI) des challenges
   WORLD_SCORE_TARGETS = [
           {:score => 1_000, :challenge => 'challenge.value.target1000'},
           {:score => 2_000, :challenge => 'challenge.value.target2000'},
@@ -81,6 +81,7 @@ class UserController < FacebookController
     params[:ids].each do |id|
       account = Account.first(:facebook_id => id)
       if account
+        # TODO vérifier qu'un challenge n'existe déjà pas avec ce compte (race condition si 2 personnes se défient en même temps)
         if account.challenge!(@me)
           logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
         else
@@ -184,7 +185,7 @@ class UserController < FacebookController
     @current_challenges_page     = page
     @current_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
     @current_challenges_total    = results.count
-    @current_challenges          = results[((@current_challenges_page - 1) * CHALLENGES_PER_PAGE)...(@current_challenges_page * CHALLENGES_PER_PAGE)]
+    @current_challenges          = results # TODO réactiver un truc du genre [((@current_challenges_page - 1) * CHALLENGES_PER_PAGE)...(@current_challenges_page * CHALLENGES_PER_PAGE)]
   end
 
   def set_received_challenges(page)

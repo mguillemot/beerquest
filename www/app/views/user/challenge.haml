@@ -123,20 +123,70 @@
 
   function vsBoastVictory(score, goal)
   {
-    alert("Je suis trop fort d'avoir réussi à boire " + goal + " bières !!!");
+
   }
 
   function vsBoastDefeat(score, goal)
   {
-    alert("Je suis trop nul de ne même pas réussire à boire " + goal + " bières !!!");
+    FB.ui(
+    {
+      method: "stream.publish",
+      user_message_prompt: "#{t('bar.endgame.boast.prompt')}",
+      message: "Je me suis fait baiser à " + goal + " bières !!!",
+      target_id: #{@challenge.sent_by.facebook_id},
+      action_links:
+      [{
+        text: "#{t('bar.endgame.boast.action')}",
+        href: "#{BeerQuest::FB_APP_URL}#{home_path}"
+      }],
+      attachement: 
+      {
+        name: "Turlututu",
+        caption: "Titre du turlututu",
+        media:
+        [{
+          'type': "image",
+          'src': "http://erhune.iobb.net:8081/images/bq-75-75.png",
+          'href': "#{BeerQuest::FB_APP_URL}#{home_path}"
+        }],
+        description: "Description du beau turlututu que voici !",
+        href: "#{BeerQuest::FB_APP_URL}#{home_path}"
+      }
+    }, function(response)
+    {
+      if (response && response.post_id)
+      {
+        //alert('Post was published.');
+      }
+      else
+      {
+        //alert('Post was not published.');
+      }
+   });
   }
 
   function vsProvoke(goal)
   {
+    
     alert("Mur de l'ami > T'ES TROP NUL MON POTE !");
   }
 
   function vsPlayAgain(score, goal)
   {
-    alert("Relancer un challenge");
+    FB.ui(
+    {
+      method: "stream.publish",
+      user_message_prompt: "#{t('bar.endgame.boast.prompt')}",
+      message: "Tu m'as bien niqué à " + goal + " bières, mon salaud !!!",
+      target_id: #{@challenge.sent_by.facebook_id},
+      action_links: [
+        { text: "#{t('bar.endgame.boast.action')}", href: "#{BeerQuest::FB_APP_URL}#{home_path}" }
+      ],
+      attachement: {media: [
+      {
+        type: "image",
+        src: "http://erhune.iobb.net:8081/images/bq-75-75.png",
+        href: "#{BeerQuest::FB_APP_URL}#{home_path}"
+      }]}
+    });
   }
