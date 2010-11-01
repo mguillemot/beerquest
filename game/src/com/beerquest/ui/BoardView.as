@@ -300,7 +300,7 @@ public class BoardView extends UIComponent {
                 break;
             case 65: // a
                 if (Constants.DEBUG) {
-                    Constants.GAME.pissLevel = (Constants.GAME.pissLevel + 1) % 4;
+                    Constants.GAME.me.score += 10;
                 }
                 break;
             case 27: // Escape
@@ -314,12 +314,12 @@ public class BoardView extends UIComponent {
                 break;
             case 90: // z
                 if (Constants.DEBUG) {
-                    Constants.GAME.endOfGame();
+                    Constants.GAME.remainingTurns += 1;
                 }
                 break;
             case 69: // e
                 if (Constants.DEBUG) {
-                    Constants.GAME.newTurn();
+                    Constants.GAME.remainingTurns = 1;
                 }
                 break;
             default:

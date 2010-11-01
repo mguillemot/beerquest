@@ -102,7 +102,7 @@ class GameController < ApplicationController
         logger.info "Replay #{replay.id} ended with success with score #{replay.score}"
 
         # Update corresponding challenge
-        replay.challenge.end!(1000) # TODO replay.score
+        replay.challenge.end!(replay.score)
         if replay.challenge.status == 'won'
           logger.info "Challenge #{replay.challenge.id} won and counter-challenge created!"
         else
