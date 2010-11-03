@@ -24,13 +24,13 @@
                   %div= t 'challenge.title.vs'
                   .round= t 'challenge.title.round', :round => @challenge.round
                 %td.portrait-opponent
-                  = image_tag @challenge.sent_by.profile_picture, :alt => @challenge.sent_by.full_name, :class => 'portrait'
+                  = image_tag @challenger.profile_picture, :alt => @challenger.full_name, :class => 'portrait'
                 %td.player-opponent
-                  .name= @challenge.sent_by.full_name
+                  .name= @challenger.full_name
                   .scores
-                    %span.loose= t 'challenge.title.loose_count', :count => @challenge.sent_by.victory_points
+                    %span.loose= t 'challenge.title.loose_count', :count => @challenger.victory_points
                     = " / "
-                    %span.respect= t 'challenge.title.respect_count', :count => @challenge.sent_by.defeat_points
+                    %span.respect= t 'challenge.title.respect_count', :count => @challenger.defeat_points
         %tr
           %td.play-field{:colspan => 2}
             #game
@@ -86,20 +86,30 @@
             .header
               = t 'challenge.stats.friends_stats'
             .stat
-              .section
-                Je sais pas quoi mettre ici
+              .section= t 'challenge.stats.friend_rounds_title'
+              .value= t 'challenge.stats.friend_rounds_always', :count => @me.total_rounds_with(@challenger)
+            .stat
+              .section= t 'challenge.stats.friend_victories_defeats'
+              .value= t 'challenge.stats.friend_victories', :count => @me.total_victories_with(@challenger)
+              .value= t 'challenge.stats.friend_defeats', :count => @me.total_defeats_with(@challenger)
+            .stat
+              .section= t 'challenge.stats.total_beers'
               .value
-                Ah ben zut alors...
+                = image_tag 'mini-biere.png', :alt => t('beers')
+                = number_with_delimiter(@me.total_score_with(@challenger))
             %br
             .header
               = t 'challenge.stats.global_stats'
-            .portrait
-              = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
             .stat
-              .section
-                Je sais pas quoi mettre là
+              .section= t 'challenge.stats.total_beers'
               .value
-                Mais t'es nul alors !
+                = image_tag 'mini-biere.png', :alt => t('beers')
+                = number_with_delimiter(@me.total_score_challenge)
+            .stat
+              .section= t 'challenge.stats.general_stats'
+              .value= t 'challenge.stats.general_challenges', :count => @me.total_challenges
+              .value= t 'challenge.stats.general_won_rounds', :count => @me.total_won_rounds
+              .value= t 'challenge.stats.general_lost_rounds', :count => @me.total_lost_rounds
     %td.small.shadow
   %tr.small
     %td.small

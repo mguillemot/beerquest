@@ -109,6 +109,7 @@ class GameController < ApplicationController
           logger.info "Challenge #{replay.challenge.id} lost!"
         end
       end
+
     else
       logger.error "Token #{params[:token]} invalid for IP #{request.remote_ip}"
     end

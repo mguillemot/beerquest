@@ -28,7 +28,7 @@ class Challenge
   belongs_to :account
   belongs_to :sent_by, :model => Account
   has 1, :child, :model => Challenge, :child_key => :parent_id, :constraint => :destroy
-  has 1, :replay, :constraint => :set_nil
+  has n, :replays, :constraint => :set_nil
 
   def self.to_expire
     all(:status => STATUS_PENDING, :created_at.lte => DateTime.now - PENDING_EXPIRATION) + all(:status => STATUS_ACCEPTED, :accepted_at.lte => DateTime.now - ACCEPT_EXPIRATION)
@@ -44,6 +44,10 @@ class Challenge
       r,p = (r+1),p.parent
     end
     r
+  end
+
+  def main_replay
+    replays.first(:game_over => true)
   end
 
   def target_score

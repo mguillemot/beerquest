@@ -5,9 +5,9 @@ class UserController < FacebookController
   BARS_PER_PAGE       = 3
   CHALLENGES_PER_PAGE = 999999 # TODO faire la pagination (dans l'UI) des challenges
   WORLD_SCORE_TARGETS = [
-          {:score => 1_000, :challenge => 'challenge.value.target1000'},
-          {:score => 2_000, :challenge => 'challenge.value.target2000'},
-          {:score => 5_000, :challenge => 'challenge.value.target5000'}
+          {:score => 1_000, :challenge => 'world_challenge.value.target1000'},
+          {:score => 2_000, :challenge => 'world_challenge.value.target2000'},
+          {:score => 5_000, :challenge => 'world_challenge.value.target5000'}
   ]
 
   def index
@@ -99,7 +99,7 @@ class UserController < FacebookController
     if @challenge.account != @me
       raise "wrong account; challenge is for account #{@challenge.account.id}"
     end
-    logger.debug @challenge.sent_by.inspect
+    @challenger       = @challenge.sent_by
     @required_version = Game::Constants::VERSION
     @mode             = "vs"
     @replay           = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)

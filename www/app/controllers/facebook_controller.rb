@@ -1,6 +1,8 @@
 class FacebookController < ApplicationController
 
   before_filter :user_details, :except => [:session_login, :session_logout]
+  before_filter :set_locale
+  before_filter :check_restrictions
 
   def session_login
     reset_session
@@ -114,6 +116,34 @@ class FacebookController < ApplicationController
     @me.barships.create(:bar_id => Bar.default_bar.id) if @me.barships.empty?
 
     true
+  end
+
+  def set_locale
+    if @me && @me.locale =~ /^fr/
+      I18n.locale = 'fr'
+      logger.debug "Set locale to #{I18n.locale}"
+    else
+      logger.debug "Kept default locale of #{I18n.locale}"
+    end
+  end
+
+  def check_restrictions
+    logger.debug "Checking FB restrictions..."
+    @restrictions = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.getRestrictionInfo', {'format' => 'JSON'})
+    @restrictions.gsub!(/\\(.)/, '\1')
+    @restrictions = @restrictions[1..-2]
+    @restrictions = JSON.parse(@restrictions)
+    logger.debug "Current restrictions are: #{@restrictions.inspect}"
+    true
+  end
+
+  def set_restrictions
+    restrictions = {:type => 'alcohol'}
+    logger.debug "Setting FB restrictions to #{restrictions.to_json}..."
+    res          = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.setRestrictionInfo', {'restriction_str' => restrictions.to_json, 'format' => 'JSON'})
+    unless res == 'true'
+      logger.error "Unable to set FB restrictions"
+    end
   end
 
   def bust_iframe(url)

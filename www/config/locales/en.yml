@@ -1,115 +1,115 @@
-fr:
+en:
   beerquest: "Beer Quest"
   ilike: "I Drink"
-  beers: "Bières"
+  beers: "Beers"
   world_challenge:
-    header: "Vite, à %{goal}..."
+    header: "Quick! At %{goal}..."
     value:
-      target1000: "on relance la chasse à la baleine !"
-      target2000: "on tue un chaton !"
-      target5000: "on boit un grand verre d'huile d'arachide !"
+      target1000: "we'll resume whaling!"
+      target2000: "we'll kill a kitten!"
+      target5000: "we'll drink a big glass of arachid oil!"
   nav:
-    home: "Accueil"
-    play: "Jouer"
-    challenge: "Défie tes amis"
-    help: "Aide & Astuces"
-    support: "Soutenez Beer Quest !"
-    blog: "BLOG Officiel"
+    home: "Home"
+    play: "Play"
+    challenge: "Challenge your friends"
+    help: "Help & Tricks"
+    support: "Support Beer Quest!"
+    blog: "Official BLOG"
   home:
     score:
-      mode: "Mode Score"
-      best_7d: "Best Score 7 j."
-      total_beers: "Total bières bues"
-      play_description_html: "<strong>Votre score</strong> est la preuve de votre savoir-boire ! Alors au bou... goulot !"
-      button_html: "Jouer<br/>Maintenant"
+      mode: "Score Mode"
+      best_7d: "Best Score 7 days"
+      total_beers: "Total drunk beer"
+      play_description_html: "<strong>Your score</strong> is the proof of your drinking skill."
+      button_html: "Play<br/>Now"
       tabs:
         favorites:
-          title: "Favoris"
+          title: "Favorites"
           bar_count:
-            one: "1 bar favori"
-            other: "%{count} bars favoris"
+            one: "1 favorite bar"
+            other: "%{count} favorite bars"
         bartners:
           title: "Bartners"
           bar_count:
-            one: "1 bar partenaire"
-            other: "%{count} bars partenaires"
+            one: "1 partner bar"
+            other: "%{count} partner bars"
         search:
-          title: "Recherche"
-          alphabetic_order: "Par ordre alphabétique"
+          title: "Search"
+          alphabetic_order: "By alphabetic order"
           results:
-            one: "1 Bar pour «%{search}»"
-            other: "%{count} Bars pour «%{search}»"
-        pages: "Pages :"
+            one: "1 Bar for «%{search}»"
+            other: "%{count} Bars for «%{search}»"
+        pages: "Pages:"
       bar:
         member_count:
-          one: "1 Membre"
-          other: "%{count} Membres"
-        score_7d: "Score 7j."
+          one: "1 Member"
+          other: "%{count} Members"
+        score_7d: "Score 7 days"
         best_score: "Best score"
-        enter_button: "Entrer dans ce Bar"
+        enter_button: "Enter this Bar"
     battle: 
-      mode: "Mode Battle"
+      mode: "Battle Mode"
       respect_points_count:
-       one: "1 Point de respect"
-       other: "%{count} Points de respect"
+       one: "1 respect Point"
+       other: "%{count} respect Points"
       shame_points_count:
-        one: "1 Point de la loose"
-        other: "%{count} Points de la loose"
-      play_description_html: "<strong>Défiez vos amis</strong> et faites vous respecter pour votre descente !"
-      button_html: "Défier mes<br/>Amis"
+        one: "1 looser Point"
+        other: "%{count} looser Points"
+      play_description_html: "<strong>Challenge your friends</strong> and make them acknowledge your m4d dr1nk1ng skillZ!"
+      button_html: "Challenge<br/>my Friends"
       tabs:
         current:
-          title: "En cours"
+          title: "Current"
         received:
-          title: "Reçus (%{count})"
+          title: "Received (%{count})"
         sent:
-          title: "Envoyés (%{count})"
+          title: "Sent (%{count})"
       empty:
-        current: "(Aucun défi en cours)"
-        sent: "(Aucun défi envoyé)"
-        received: "(Aucun défi reçu)"
+        current: "(No current challenge)"
+        sent: "(No sent challenge)"
+        received: "(No received challenge)"
       warning:
-        received_html: "Les défis reçus sont annulés au bout d'une semaine si vous ne les acceptez pas en cliquant sur <strong>Battle</strong>"
-        sent_html: "Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés."
+        received_html: "Received challenges are cancelled after one week if you don't accept them by clicking on <strong>Battle</strong>"
+        sent_html: "Challenges are cancelled after one week if they are not accepted."
       received_challenge:
-        new_description: "Défi reçu le %{date}"
-        description: "a gagné son round le %{date}"
+        new_description: "Challenge received on %{date}"
+        description: "won his/her round on %{date}"
         battle_button: "Battle"
       sent_challenge:
-        new_description: "Défi envoyé le %{date}"
-        description: "Défi renvoyé le %{date}"
+        new_description: "Challenge sent on %{date}"
+        description: "Challenge sent back on %{date}"
   bar:
     member_count:
-      one: "1 Membre"
-      other: "%{count} Membres"
-    beer_count: "%{count} bières bues"
+      one: "1 Member"
+      other: "%{count} Members"
+    beer_count: "%{count} drunk beers"
     right:
       news:
-        title: "News bar"
+        title: "Bar news"
       messages:
         title: "Messages"
     scores:
-      bar: "Scores du bar"
-      friends: "Scores de vos amis"
-      all: "Tous"
-      me: "Moi"
-      weekly: "7 jours"
-      always: "Toujours"
+      bar: "Bar scores"
+      friends: "Friend scores"
+      all: "All"
+      me: "Me"
+      weekly: "7 days"
+      always: "Always"
     stats:
-      bar_stats: "Statistiques du bar"
-      bar_rank: "Place du bar"
-      bar_weekly_activity: "Activité Membres 7 jours"
+      bar_stats: "Bar statistics"
+      bar_rank: "Bar rank"
+      bar_weekly_activity: "Member activité last 7 days"
       bar_active_members:
-        one: "1 actif"
-        other: "%{count} actifs"
-      bar_new_active_members: "%{count} en +"
-      my_stats: "Mes stats du bar"
-      total_beers: "Bières au total"
-      weekly_beers: "Bières sur 7 jours"
-      member_since: "Membre du bar depuis"
-      best_rank_title: "Meilleur rang dans ce bar"
-      best_rank_value: "#%{rank} le %{date}"
-      play_count: "Nombre de parties"
+        one: "1 active"
+        other: "%{count} actives"
+      bar_new_active_members: "%{count} more"
+      my_stats: "My bar stats"
+      total_beers: "Total beers"
+      weekly_beers: "Beers last 7 days"
+      member_since: "Member of this bar since"
+      best_rank_title: "Best rank in this bar"
+      best_rank_value: "#%{rank} on %{date}"
+      play_count: "Play count"
     endgame:
       boast:
         prompt: "Va-y, vante toi à mort !"
@@ -225,140 +225,3 @@ fr:
     accept: "On va voir ça !"
     refuse: "Oh non, pitié !"
     selector: "Défie tes amis à celui qui picolera le plus !"
-
-  # http://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/fr.yml
-  # WARNING: some changes below (tagged Erhune)
-  date:
-    formats:
-      default: "%d/%m/%Y"
-      short: "%e %b"
-      long: "%e %B %Y"
-      long_ordinal: "%e %B %Y"
-      only_day: "%e"
-
-    day_names: [dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi]
-    abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]
-    month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
-    abbr_month_names: [~, jan., fév., mar., avr., mai, juin, juil., août, sept., oct., nov., déc.]
-    order: [ :day, :month, :year ]
-
-  time:
-    formats:
-      default: "%d %B %Y %H:%M"
-      time: "%H:%M"
-      short: "%d %b %H:%M"
-      long: "%A %d %B %Y %H:%M:%S %Z"
-      long_ordinal: "%A %d %B %Y %H:%M:%S %Z"
-      only_second: "%S"
-    am: 'am'
-    pm: 'pm'
-
-  datetime:
-    distance_in_words:
-      half_a_minute: "une demi-minute"
-      less_than_x_seconds:
-        zero:  "moins d'une seconde"
-        one:   "moins de 1 seconde"
-        other: "moins de {{count}} secondes"
-      x_seconds:
-        one:   "1 seconde"
-        other: "{{count}} secondes"
-      less_than_x_minutes:
-        zero:  "moins d'une minute"
-        one:   "moins de 1 minute"
-        other: "moins de {{count}} minutes"
-      x_minutes:
-        one:   "1 minute"
-        other: "{{count}} minutes"
-      about_x_hours:
-        one:   "environ une heure"
-        other: "environ {{count}} heures"
-      x_days:
-        one:   "1 jour"
-        other: "{{count}} jours"
-      about_x_months:
-        one:   "environ un mois"
-        other: "environ {{count}} mois"
-      x_months:
-        one:   "1 mois"
-        other: "{{count}} mois"
-      about_x_years:
-        one:   "environ un an"
-        other: "environ {{count}} ans"
-      over_x_years:
-        one:   "plus d'un an"
-        other: "plus de {{count}} ans"
-    prompts:
-      year:   "Année"
-      month:  "Mois"
-      day:    "Jour"
-      hour:   "Heure"
-      minute: "Minute"
-      second: "Seconde"
-
-  number:
-    format:
-      precision: 3
-      separator: ','
-      delimiter: '.' # Erhune: was " "
-    currency:
-      format:
-        unit: '€'
-        precision: 2
-        format: '%n %u'
-    human:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        precision: 2
-      # Rails <= v2.2.2
-      # storage_units: [octet, kb, Mb, Gb, Tb]
-      # Rails >= v2.3
-      storage_units:
-        format: "%n %u"
-        units:
-          byte:
-            one:   "octet"
-            other: "octets"
-          kb: "ko"
-          mb: "Mo"
-          gb: "Go"
-          tb: "To"
-
-  support:
-    array:
-      sentence_connector: 'et'
-      skip_last_comma: true
-      words_connector: ", "
-      two_words_connector: " et "
-      last_word_connector: " et "
-
-  activerecord:
-    errors:
-      template:
-        header:
-          one: "Impossible d'enregistrer {{model}}: 1 erreur"
-          other: "Impossible d'enregistrer {{model}}: {{count}} erreurs."
-        body: "Veuillez vérifier les champs suivants :"
-      messages:
-        inclusion: "n'est pas inclus(e) dans la liste"
-        exclusion: "n'est pas disponible"
-        invalid: "n'est pas valide"
-        confirmation: "ne concorde pas avec la confirmation"
-        accepted: "doit être accepté(e)"
-        empty: "doit être rempli(e)"
-        blank: "doit être rempli(e)"
-        too_long: "est trop long (pas plus de {{count}} caractères)"
-        too_short: "est trop court (au moins {{count}} caractères)"
-        wrong_length: "ne fait pas la bonne longueur (doit comporter {{count}} caractères)"
-        taken: "n'est pas disponible"
-        not_a_number: "n'est pas un nombre"
-        greater_than: "doit être supérieur à {{count}}"
-        greater_than_or_equal_to: "doit être supérieur ou égal à {{count}}"
-        equal_to: "doit être égal à {{count}}"
-        less_than: "doit être inférieur à {{count}}"
-        less_than_or_equal_to: "doit être inférieur ou égal à {{count}}"
-        odd: "doit être impair"
-        even: "doit être pair"
-        record_invalid: "La validation a échoué : {{errors}}"

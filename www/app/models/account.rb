@@ -67,7 +67,7 @@ class Account
 
   def already_challenging_people
     challenging = challenges.all(:status => Challenge::STATUS_PENDING).collect { |c| c.sent_by }
-    challenged = sent_challenges.all(:status => Challenge::STATUS_PENDING).collect { |c| c.account }
+    challenged  = sent_challenges.all(:status => Challenge::STATUS_PENDING).collect { |c| c.account }
     challenging + challenged
   end
 
@@ -81,6 +81,40 @@ class Account
 
   def challenge!(from_account)
     challenges.create(:sent_by => from_account, :required_score => Challenge::INITIAL_CHALLENGE)
+  end
+
+  def total_rounds_with(friend)
+    challenges_with(friend).count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]) +
+            sent_challenges_with(friend).count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
+  end
+
+  def total_victories_with(friend)
+    sent_challenges_with(friend).count(:status => Challenge::STATUS_LOST)
+  end
+
+  def total_defeats_with(friend)
+    challenges_with(friend).count(:status => Challenge::STATUS_LOST)
+  end
+
+  def total_score_with(friend)
+    replays_with(friend).inject(0) { |sum, n| sum + n }
+  end
+
+  def total_score_challenge
+    challenges.all(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]).inject(0) { |sum, c| sum + c.main_replay.score }
+  end
+
+  def total_challenges
+    challenges.count(:parent => nil, :status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]) +
+            sent_challenges.count(:parent => nil, :status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
+  end
+
+  def total_won_rounds
+    challenges.count(:status => Challenge::STATUS_WON) + sent_challenges.count(:status => Challenge::STATUS_LOST)
+  end
+
+  def total_lost_rounds
+    challenges.count(:status => Challenge::STATUS_LOST)
   end
 
   private
@@ -99,6 +133,20 @@ class Account
 
   def weekly_completed_games_in_bar(bar)
     weekly_completed_games.all(:bar => bar)
+  end
+
+  def replays_with(friend)
+    result = []
+    completed_games.all(:mode => 'vs').each { |r| result.push(r) if r.challenge.sent_by == friend }
+    result
+  end
+
+  def challenges_with(friend)
+    challenges.all(:sent_by => friend)
+  end
+
+  def sent_challenges_with(friend)
+    sent_challenges.all(:account => friend)
   end
 
 end
