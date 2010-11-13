@@ -34,6 +34,7 @@ class BarController < FacebookController
 
   def async_challenge_messages
     @bar = Bar.get!(params[:id])
+    logger.debug "Messages for bar #{@bar.inspect}"
     respond_to do |format|
       format.js { render :layout => false }
     end
