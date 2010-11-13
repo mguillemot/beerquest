@@ -1,16 +1,16 @@
 class Challenge
   include DataMapper::Resource
 
-  INITIAL_CHALLENGE = 100
+  INITIAL_CHALLENGE  = 100
   PENDING_EXPIRATION = 1.week
-  ACCEPT_EXPIRATION = 2.hour
-  RAISE_VALUES = [1, 3, 5, 10, 15, 20]
+  ACCEPT_EXPIRATION  = 2.hour
+  RAISE_VALUES       = [1, 3, 5, 10, 15, 20]
 
-  STATUS_PENDING = 'pending'
-  STATUS_ACCEPTED = 'accepted'
-  STATUS_EXPIRED = 'expired'
-  STATUS_WON = 'won'
-  STATUS_LOST = 'lost'
+  STATUS_PENDING     = 'pending'
+  STATUS_ACCEPTED    = 'accepted'
+  STATUS_EXPIRED     = 'expired'
+  STATUS_WON         = 'won'
+  STATUS_LOST        = 'lost'
 
   property :id, Serial
   property :parent_id, Integer, :min => 1, :index => true
@@ -39,9 +39,9 @@ class Challenge
   end
 
   def round
-    r,p = 1,parent
+    r, p = 1, parent
     while p
-      r,p = (r+1),p.parent
+      r, p = (r+1), p.parent
     end
     r
   end
@@ -55,7 +55,7 @@ class Challenge
   end
 
   def accept!(score_raise)
-    score_raise = score_raise.to_i
+    score_raise      = score_raise.to_i
     if status != STATUS_PENDING
       raise "cannot accept a challenge with status '#{status}'"
     end
@@ -65,7 +65,7 @@ class Challenge
     unless RAISE_VALUES.include?(score_raise)
       raise "invalid raise value: #{score_raise}"
     end
-    self.status = STATUS_ACCEPTED
+    self.status      = STATUS_ACCEPTED
     self.score_raise = score_raise
     self.accepted_at = DateTime.now
     save
@@ -92,9 +92,20 @@ class Challenge
     if !expirable?
       raise "challenge is not expirable"
     end
-    self.status = STATUS_EXPIRED
+    self.status   = STATUS_EXPIRED
     self.ended_at = DateTime.now
     save
+  end
+
+  def messages
+    result = []
+    c      = self
+    while c
+      replay = c.main_replay
+      result.push c.main_replay if replay
+      c = c.parent
+    end
+    result
   end
 
   private

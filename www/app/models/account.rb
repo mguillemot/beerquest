@@ -97,7 +97,7 @@ class Account
   end
 
   def total_score_with(friend)
-    replays_with(friend).inject(0) { |sum, n| sum + n }
+    replays_with(friend).inject(0) { |sum, replay| sum + replay.score }
   end
 
   def total_score_challenge

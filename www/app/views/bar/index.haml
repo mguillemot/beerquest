@@ -36,19 +36,7 @@
                       %li
                         %a{:href => rss[:url]}= rss[:title]
               .pane#messages
-                %ul.messages
-                  - @bar.messages.each do |msg|
-                    %li
-                      = image_tag msg.account.profile_picture, :alt => msg.account.full_name, :class => 'mini-portrait'
-                      = image_tag 'mini-biere.png', :alt => t('beers')
-                      %span.score= msg.score
-                      = "-"
-                      %span.date= l(msg.updated_at, :format => :short)
-                      %br
-                      %span.name= msg.account.full_name
-                      &laquo;
-                      = msg.message
-                      &raquo;
+                = render :partial => 'messages'
         %tr.bottom
           %td.bar-scores
             .panes
@@ -192,7 +180,6 @@
 
 #message-dialog{:title => t('bar.endgame.message.title')}
   %textarea#message-content{:rows => 3, :cols => 50}
-  %input#message-token{:type => 'hidden', :value => @replay.token}
 
 :javascript
   $(function() {
@@ -215,18 +202,25 @@
       buttons: {
         "#{t('bar.endgame.message.button')}": function() {
           $.post("#{endgame_message_url}", {
-            token: $('#message-token').val(),
+            token: "#{@replay.token}",
             message: $('#message-content').val()
+          }, function() {
+            $.get("#{async_bar_messages_url(@bar)}");
           });
           $(this).dialog('close');
         }
+      },
+      close: function() {
+        $.get("#{async_bar_messages_url(@bar)}");
       }
     });
   });
 
   function endOfGame()
   {
-    $('#message-dialog').dialog('open');
+    setTimeout(function() {
+      $('#message-dialog').dialog('open');
+    }, 3000);
   }
 
   function soloBoast(score)

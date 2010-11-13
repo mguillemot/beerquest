@@ -12,11 +12,13 @@ BeerQuest::Application.routes.draw do
   get "invite",                     :to => "user#invite",                    :as => 'invite'
   match "invite-done",              :to => "user#invite_end",                :as => 'invite_end'
   get "challenge/:id",              :to => "user#challenge",                 :as => 'challenge'
+  get "challenge/:id/messages",     :to => "user#async_challenge_messages",  :as => 'async_challenge_messages'
   get "accept-challenge/:id",       :to => "user#accept_challenge",          :as => 'accept_challenge'
   get "refuse-challenge/:id",       :to => "user#refuse_challenge",          :as => 'refuse_challenge'
 
   # Bar pages
   get "bar/:id",                    :to => "bar#index",                      :as => 'bar'
+  get "bar/:id/messages",           :to => "bar#async_messages",             :as => 'async_bar_messages'
 
   # Static pages
   get "privacy",                    :to => "static#privacy",                 :as => 'privacy'

@@ -5,9 +5,8 @@ en:
   world_challenge:
     header: "Quick! At %{goal}..."
     value:
-      target1000: "we'll resume whaling!"
-      target2000: "we'll kill a kitten!"
-      target5000: "we'll drink a big glass of arachid oil!"
+      target100k: "we'll take a shower!"
+      target250k: "we'll have some pigs' feet!"
   nav:
     home: "Home"
     play: "Play"
@@ -82,7 +81,7 @@ en:
     member_count:
       one: "1 Member"
       other: "%{count} Members"
-    beer_count: "%{count} drunk beers"
+    beer_count: "%{count} beers drunk"
     right:
       news:
         title: "Bar news"
@@ -98,7 +97,7 @@ en:
     stats:
       bar_stats: "Bar statistics"
       bar_rank: "Bar rank"
-      bar_weekly_activity: "Member activité last 7 days"
+      bar_weekly_activity: "Member activity last 7 days"
       bar_active_members:
         one: "1 active"
         other: "%{count} actives"
@@ -112,13 +111,13 @@ en:
       play_count: "Play count"
     endgame:
       message:
-        title: "Laisser un message dans le bar"
-        button: "Valider"
+        title: "Write a message on the bar walls"
+        button: "Write"
       boast:
-        prompt: "Va-y, vante toi à mort !"
-        default_message_pre: "Oh con, je me suis pété "
-        default_message_post: " bières sur BeerQuest IV, c'te folie !"
-        action: "Trinquer"
+        prompt: "That's the perfect time to be proud of yourself!"
+        default_message_pre: "Oh s*** I've had "
+        default_message_post: " beers on BeerQuest IV, now I'll go and take a nap... zzrhrhzZZZzzzz"
+        action: "Cheers!"
   challenge:
     title:
       respect_count: "%{count} Respect"
@@ -127,30 +126,35 @@ en:
       round: "Round %{round}"
     right:
       history:
-        title: "Historique Battle"
+        title: "Battle History"
+        empty: "The battle has just begun..."
     stats:
-      friends_stats: "Stats Battle ami"
-      global_stats: "Stats Battle global"
-      friend_rounds_title: "Rounds avec cet ami"
-      friend_rounds_always: "Toujours : %{count}"
-      friend_victories_defeats: "Victoires & défaites"
-      friend_victories: "Victoires : %{count}"
-      friend_defeats: "Défaites : %{count}"
-      total_beers: "Bières au total"
-      general_stats: "Stats générales"
+      friends_stats: "Battle Stats (this friend)"
+      global_stats: "Battle Stats (global)"
+      friend_rounds_title: "Rounds with this friend"
+      friend_rounds_always: "Total: %{count}"
+      friend_victories_defeats: "Victories & defeats"
+      friend_victories: "Victories: %{count}"
+      friend_defeats: "Defeats: %{count}"
+      total_beers: "Total beers"
+      general_stats: "General stats"
       general_challenges:
-        one: "1 Défi"
-        other: "%{count} Défis"
+        one: "1 Challenge"
+        other: "%{count} Challenges"
       general_won_rounds:
-        one: "1 Round gagné"
-        other: "%{count} Rounds gagnés"
+        one: "1 Round won"
+        other: "%{count} Rounds won"
       general_lost_rounds:
-        one: "1 Round perdu"
-        other: "%{count} Rounds perdus"
+        one: "1 Round lost"
+        other: "%{count} Rounds lost"
+    endgame:
+      message:
+        title: "Write a message"
+        button: "Write"
   support_us:
-    title: "Beerouare"
-    subtitle: "Offrez-nous à bouare !"
-    subtitle_thanks: "Merci pour la bière !"
+    title: "Beerware"
+    subtitle: "Pay us a drink!"
+    subtitle_thanks: "So long, and thanks for the beer!"
     intro: "BeerQuest est un jeu entièrement gratuit et nous espérons que vous y passez du bon temps. Si vous souhaitez nous encourager à continuer dans nos erreurs et nous aider à faire de pire en pire à cause d'un alcoolisme chronique, alors offrez-nous une bonne bière !"
     donation: "Donation BeerQuest"
     offers:
@@ -223,8 +227,8 @@ en:
         question: "Pourquoi une démarche aussi loufoque ?"
         answer_html: "Parce que nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, <a href=\"http://blog.bq-4.com/\" target=\"_blank\">venez lire notre beer-blog</a> et nous donner vos conseils."
   invite:
-    type: "Défi BeerQuest"
-    message: "J'te prends quand tu veux à la picole !"
-    accept: "On va voir ça !"
-    refuse: "Oh non, pitié !"
-    selector: "Défie tes amis à celui qui picolera le plus !"
+    type: "BeerQuest Challenge"
+    message: "Come get some (beer), dood!"
+    accept: "Ok, let's see!"
+    refuse: "Oh no, pleeease!"
+    selector: "So your friends think they can beat you at drinking?!?"

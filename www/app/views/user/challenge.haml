@@ -40,9 +40,7 @@
                 %a{:href => 'javascript:void(0)'}= t 'challenge.right.history.title'
             .panes
               .pane#messages
-                Y'en a pas pour l'instant !
-                Y'en a pas pour l'instant !
-                Y'en a pas pour l'instant !
+                = render :partial => 'challenge_messages'
         %tr.bottom
           %td.bar-scores
           %td.bar-scores
@@ -116,6 +114,9 @@
     %td.shadow
     %td.small.shadow
 
+#message-dialog{:title => t('challenge.endgame.message.title')}
+  %textarea#message-content{:rows => 3, :cols => 50}
+
 :javascript
   $(function() {
     $('#game').flash({
@@ -130,7 +131,34 @@
         goal: #{@challenge.required_score}
       }
     });
+    $('#message-dialog').dialog({
+      autoOpen: false,
+      modal: true,
+      resizable: false,
+      position: [125, 320],
+      buttons: {
+        "#{t('challenge.endgame.message.button')}": function() {
+          $.post("#{endgame_message_url}", {
+            token: "#{@replay.token}",
+            message: $('#message-content').val()
+          }, function() {
+            $.get("#{async_challenge_messages_url(@challenge)}");
+          });
+          $(this).dialog('close');
+        }
+      },
+      close: function() {
+        $.get("#{async_challenge_messages_url(@challenge)}");
+      }
+    });
   });
+
+  function endOfGame()
+  {
+    setTimeout(function() {
+      $('#message-dialog').dialog('open');
+    }, 3000);
+  }
 
   function vsBoastVictory(score, goal)
   {

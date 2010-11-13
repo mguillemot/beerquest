@@ -7,15 +7,15 @@ class GameController < ApplicationController
     result = {:ok => false}
     if replay
       #replay.seed = rand(2**31-1) # TODO réactiver
-      replay.seed = 1234
+      replay.seed           = 1234
       replay.token_use_time = DateTime.now
       replay.save
       if replay.mode == 'vs'
         replay.challenge.accept! params[:raise]
       end
-      result[:replay_id] = replay.id
-      result[:seed] = replay.seed
-      result[:ok] = true
+      result[:replay_id]    = replay.id
+      result[:seed]         = replay.seed
+      result[:ok]           = true
     else
       logger.error "Token #{params[:token]} invalid for IP #{request.remote_ip}"
     end
@@ -39,9 +39,9 @@ class GameController < ApplicationController
           end
         end
       end
-      replay.game_over = false # TODO filtrer les attributs reçus de tte manière
+      replay.game_over    = false # TODO filtrer les attributs reçus de tte manière
       replay.update_count += 1
-      replay.user_agent = request.env["HTTP_USER_AGENT"]
+      replay.user_agent   = request.env["HTTP_USER_AGENT"]
       unless replay.save
         logger.error "Impossible to save replay!"
         replay.errors.each do |e|
@@ -59,7 +59,7 @@ class GameController < ApplicationController
     replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => false)
     result = {:valid => false, :personalHigh => false, :barHigh => false}
     if replay
-      result[:valid] = true
+      result[:valid]      = true
       logger.debug "Found replay #{replay.id} with token #{params[:token]}"
       # TODO check validité de la partie
       params.each do |k, v|
@@ -76,11 +76,11 @@ class GameController < ApplicationController
         end
       end
       replay.update_count += 1
-      replay.user_agent = request.env["HTTP_USER_AGENT"]
-      replay.game_over = true
+      replay.user_agent   = request.env["HTTP_USER_AGENT"]
+      replay.game_over    = true
       if replay.mode == 'solo'
         personal_best = replay.account.best_score_weekly_in_bar(replay.bar)
-        bar_best = replay.bar.weekly_high_score
+        bar_best      = replay.bar.weekly_high_score
         replay.save
         logger.info "Solo replay #{replay.id} ended with success with score #{replay.score}"
 
@@ -117,10 +117,14 @@ class GameController < ApplicationController
   end
 
   def message
-    replay = Replay.first(:token => params[:token], :ip => request.remote_ip)
-    replay.message = params[:message]
-    replay.save
-    render :text => "OK"
+    replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true, :message => nil)
+    if replay
+      replay.message = params[:message]
+      replay.save
+      render :text => "OK"
+    else
+      render :text => "KO"
+    end
   end
 
 end

@@ -99,6 +99,7 @@ ul.messages li {
   list-style: none;
   font-size: 10px;
   margin-bottom: 10px;
+  clear: both;
 }
 
 ul.messages img.mini-portrait {
@@ -120,6 +121,11 @@ ul.messages .date {
 
 ul.messages .name {
   font-weight: bold;
+}
+
+ul.messages .none {
+  font-size: 12px;
+  font-style: italic;
 }
 
 table.barscore-grid {
@@ -367,7 +373,7 @@ table.vs td.portrait-opponent img {
 }
 
 #message-dialog #message-content {
-  width: 280px;
+  width: 270px;
   height: 60px;
   border: 1px solid black;
 }

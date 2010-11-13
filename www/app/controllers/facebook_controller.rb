@@ -1,8 +1,14 @@
 class FacebookController < ApplicationController
 
+  WORLD_SCORE_TARGETS = [
+          {:score => 100_000, :challenge => 'world_challenge.value.target100k'},
+          {:score => 250_000, :challenge => 'world_challenge.value.target250k'}
+  ]
+
   before_filter :user_details, :except => [:session_login, :session_logout]
   before_filter :set_locale
   before_filter :check_restrictions
+  before_filter :set_world_score
 
   def session_login
     reset_session
@@ -186,6 +192,20 @@ class FacebookController < ApplicationController
     end
 
     data
+  end
+
+  def set_world_score
+    @world_score          = World.total_beers
+    @world_score_increase = World.increase_last_hour / 3600.0
+    target                = WORLD_SCORE_TARGETS.find { |t| t[:score] > @world_score }
+    if target
+      @world_score_target = target[:score]
+      @world_score_action = t(target[:challenge])
+    else
+      @world_score_target = 0
+      @world_score_action = ''
+    end
+    true
   end
 
 end

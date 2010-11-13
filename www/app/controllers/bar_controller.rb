@@ -32,4 +32,11 @@ class BarController < FacebookController
     end
   end
 
+  def async_challenge_messages
+    @bar = Bar.get!(params[:id])
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
+  end
+
 end
