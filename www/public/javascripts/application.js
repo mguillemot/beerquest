@@ -31,7 +31,7 @@ $(function() {
   $("#subtabs3").tabs("#subpanes3 > div.subpane");
   $("#subtabs4").tabs("#subpanes4 > div.subpane");
 
-  setInterval(function() {
+  /*setInterval(function() {
     var node = $("#world-score .total-beers");
     var increase = parseFloat(node.data("increase"));
     var target = parseFloat(node.data("target"));
@@ -43,5 +43,5 @@ $(function() {
     if (next >= target) {
       reloadWorldScore();
     }
-  }, 100);
+  }, 100);*/
 });

@@ -49,11 +49,11 @@ en:
     battle: 
       mode: "Battle Mode"
       respect_points_count:
-       one: "1 respect Point"
-       other: "%{count} respect Points"
+       one: "1 Respect Point"
+       other: "%{count} Respect Points"
       shame_points_count:
-        one: "1 looser Point"
-        other: "%{count} looser Points"
+        one: "1 Looser Point"
+        other: "%{count} Looser Points"
       play_description_html: "<strong>Challenge your friends</strong> and make them acknowledge your m4d dr1nk1ng skillZ!"
       button_html: "Challenge<br/>my Friends"
       tabs:
@@ -121,7 +121,7 @@ en:
   challenge:
     title:
       respect_count: "%{count} Respect"
-      loose_count: "%{count} Loose"
+      loose_count: "%{count} Looser"
       vs: "VERSUS"
       round: "Round %{round}"
     right:
@@ -129,24 +129,16 @@ en:
         title: "Battle History"
         empty: "The battle has just begun..."
     stats:
-      friends_stats: "Battle Stats (this friend)"
+      friends_stats: "Battle Stats (with this friend)"
       global_stats: "Battle Stats (global)"
-      friend_rounds_title: "Rounds with this friend"
-      friend_rounds_always: "Total: %{count}"
-      friend_victories_defeats: "Victories & defeats"
-      friend_victories: "Victories: %{count}"
-      friend_defeats: "Defeats: %{count}"
+      rounds_title: "Rounds"
+      rounds_total: "Total: %{count}"
+      games: "Challenges"
+      victories_friend: "Victories: %{count}"
+      victories_global: "Respect Points: %{count}"
+      defeats_friend: "Defeats: %{count}"
+      defeats_global: "Looser Points: %{count}"
       total_beers: "Total beers"
-      general_stats: "General stats"
-      general_challenges:
-        one: "1 Challenge"
-        other: "%{count} Challenges"
-      general_won_rounds:
-        one: "1 Round won"
-        other: "%{count} Rounds won"
-      general_lost_rounds:
-        one: "1 Round lost"
-        other: "%{count} Rounds lost"
     endgame:
       message:
         title: "Write a message"

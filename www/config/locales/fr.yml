@@ -49,11 +49,11 @@ fr:
     battle: 
       mode: "Mode Battle"
       respect_points_count:
-       one: "1 Point de respect"
-       other: "%{count} Points de respect"
+       one: "1 Point de Respect"
+       other: "%{count} Points de Respect"
       shame_points_count:
-        one: "1 Point de la loose"
-        other: "%{count} Points de la loose"
+        one: "1 Point de Loose"
+        other: "%{count} Points de Loose"
       play_description_html: "<strong>Défiez vos amis</strong> et faites vous respecter pour votre descente !"
       button_html: "Défier mes<br/>Amis"
       tabs:
@@ -129,24 +129,16 @@ fr:
         title: "Historique Battle"
         empty: "La bataille ne fait que commencer..."
     stats:
-      friends_stats: "Stats Battle (cet ami)"
+      friends_stats: "Stats Battle (avec cet ami)"
       global_stats: "Stats Battle (global)"
-      friend_rounds_title: "Rounds avec cet ami"
-      friend_rounds_always: "Total : %{count}"
-      friend_victories_defeats: "Victoires & défaites"
-      friend_victories: "Victoires : %{count}"
-      friend_defeats: "Défaites : %{count}"
+      rounds_title: "Rounds"
+      rounds_total: "Total : %{count}"
+      games: "Défis"
+      victories_friend: "Victoires : %{count}"
+      victories_global: "Points de Respect : %{count}"
+      defeats_friend: "Défaites : %{count}"
+      defeats_global: "Points de Loose : %{count}"
       total_beers: "Bières au total"
-      general_stats: "Stats générales"
-      general_challenges:
-        one: "1 Défi"
-        other: "%{count} Défis"
-      general_won_rounds:
-        one: "1 Round gagné"
-        other: "%{count} Rounds gagnés"
-      general_lost_rounds:
-        one: "1 Round perdu"
-        other: "%{count} Rounds perdus"
     endgame:
       message:
         title: "Laisser un message"

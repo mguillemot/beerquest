@@ -58,9 +58,9 @@
           %tr
             %td.portrait{:rowspan => 2}
               = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
-            %td.score-desc= t 'home.battle.respect_points_count', :count => @me.victory_points
+            %td.score-desc= t 'home.battle.respect_points_count', :count => @me.total_victories
           %tr
-            %td.score-desc= t 'home.battle.shame_points_count', :count => @me.defeat_points
+            %td.score-desc= t 'home.battle.shame_points_count', :count => @me.total_defeats
         %table.action
           %tr
             %td.description= t 'home.battle.play_description_html'

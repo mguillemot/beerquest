@@ -71,16 +71,13 @@ class Account
     challenging + challenged
   end
 
-  def victory_points
-    sent_challenges.count(:status => [Challenge::STATUS_LOST, Challenge::STATUS_ACCEPTED])
-  end
-
-  def defeat_points
-    challenges.count(:status => Challenge::STATUS_LOST)
-  end
-
   def challenge!(from_account)
     challenges.create(:sent_by => from_account, :required_score => Challenge::INITIAL_CHALLENGE)
+  end
+
+  def total_rounds
+    challenges.count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]) +
+            sent_challenges.count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
   end
 
   def total_rounds_with(friend)
@@ -88,33 +85,33 @@ class Account
             sent_challenges_with(friend).count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
   end
 
+  def total_victories
+    sent_challenges.count(:status => Challenge::STATUS_LOST)
+  end
+
   def total_victories_with(friend)
     sent_challenges_with(friend).count(:status => Challenge::STATUS_LOST)
+  end
+
+  def total_defeats
+    challenges.count(:status => Challenge::STATUS_LOST)
   end
 
   def total_defeats_with(friend)
     challenges_with(friend).count(:status => Challenge::STATUS_LOST)
   end
 
-  def total_score_with(friend)
-    replays_with(friend).inject(0) { |sum, replay| sum + replay.score }
-  end
-
   def total_score_challenge
     challenges.all(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]).inject(0) { |sum, c| sum + c.main_replay.score }
+  end
+
+  def total_score_with(friend)
+    replays_with(friend).inject(0) { |sum, replay| sum + replay.score }
   end
 
   def total_challenges
     challenges.count(:parent => nil, :status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]) +
             sent_challenges.count(:parent => nil, :status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
-  end
-
-  def total_won_rounds
-    challenges.count(:status => Challenge::STATUS_WON) + sent_challenges.count(:status => Challenge::STATUS_LOST)
-  end
-
-  def total_lost_rounds
-    challenges.count(:status => Challenge::STATUS_LOST)
   end
 
   private

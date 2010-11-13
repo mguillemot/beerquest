@@ -15,9 +15,9 @@
                 %td.player-me
                   .name= @me.full_name
                   .scores
-                    %span.loose= t 'challenge.title.loose_count', :count => @me.victory_points
+                    %span.loose= t 'challenge.title.loose_count', :count => @me.total_victories
                     = " / "
-                    %span.respect= t 'challenge.title.respect_count', :count => @me.defeat_points
+                    %span.respect= t 'challenge.title.respect_count', :count => @me.total_defeats
                 %td.portrait-me
                   = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
                 %td.vs
@@ -28,9 +28,9 @@
                 %td.player-opponent
                   .name= @challenger.full_name
                   .scores
-                    %span.loose= t 'challenge.title.loose_count', :count => @challenger.victory_points
+                    %span.loose= t 'challenge.title.loose_count', :count => @challenger.total_victories
                     = " / "
-                    %span.respect= t 'challenge.title.respect_count', :count => @challenger.defeat_points
+                    %span.respect= t 'challenge.title.respect_count', :count => @challenger.total_defeats
         %tr
           %td.play-field{:colspan => 2}
             #game
@@ -84,12 +84,12 @@
             .header
               = t 'challenge.stats.friends_stats'
             .stat
-              .section= t 'challenge.stats.friend_rounds_title'
-              .value= t 'challenge.stats.friend_rounds_always', :count => @me.total_rounds_with(@challenger)
+              .section= t 'challenge.stats.games'
+              .value= t 'challenge.stats.victories_friend', :count => @me.total_victories_with(@challenger)
+              .value= t 'challenge.stats.defeats_friend', :count => @me.total_defeats_with(@challenger)
             .stat
-              .section= t 'challenge.stats.friend_victories_defeats'
-              .value= t 'challenge.stats.friend_victories', :count => @me.total_victories_with(@challenger)
-              .value= t 'challenge.stats.friend_defeats', :count => @me.total_defeats_with(@challenger)
+              .section= t 'challenge.stats.rounds_title'
+              .value= t 'challenge.stats.rounds_total', :count => @me.total_rounds_with(@challenger)
             .stat
               .section= t 'challenge.stats.total_beers'
               .value
@@ -99,15 +99,17 @@
             .header
               = t 'challenge.stats.global_stats'
             .stat
+              .section= t 'challenge.stats.games'
+              .value= t 'challenge.stats.victories_global', :count => @me.total_victories
+              .value= t 'challenge.stats.defeats_global', :count => @me.total_defeats
+            .stat
+              .section= t 'challenge.stats.rounds_title'
+              .value= t 'challenge.stats.rounds_total', :count => @me.total_rounds
+            .stat
               .section= t 'challenge.stats.total_beers'
               .value
                 = image_tag 'mini-biere.png', :alt => t('beers')
                 = number_with_delimiter(@me.total_score_challenge)
-            .stat
-              .section= t 'challenge.stats.general_stats'
-              .value= t 'challenge.stats.general_challenges', :count => @me.total_challenges
-              .value= t 'challenge.stats.general_won_rounds', :count => @me.total_won_rounds
-              .value= t 'challenge.stats.general_lost_rounds', :count => @me.total_lost_rounds
     %td.small.shadow
   %tr.small
     %td.small
