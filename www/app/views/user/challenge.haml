@@ -44,42 +44,6 @@
         %tr.bottom
           %td.bar-scores
           %td.bar-scores
-            .panes
-              .pane#friendsscore-7j
-                %table
-                  %tr
-                    %td.header= t 'bar.scores.friends'
-                    %td.subnav#subtabs1
-                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
-                      = "-"
-                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
-                .subpanes#subpanes1
-                  .subpane
-                    %table.barscore-grid
-                      -#= render :partial => 'barscore', :collection => @bar.total_scores
-                  .subpane
-                    %table.barscore-grid
-                      -#= render :partial => 'barscore', :collection => @bar.total_scores_for(@me)
-              .pane#friendsscore-always
-                %table
-                  %tr
-                    %td.header= t 'bar.scores.friends'
-                    %td.subnav#subtabs2
-                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.all'
-                      = "-"
-                      %a{:href => 'javascript:void(0)'}= t 'bar.scores.me'
-                .subpanes#subpanes2
-                  .subpane
-                    %table.barscore-grid
-                      -#= render :partial => 'barscore', :collection => @bar.total_scores
-                  .subpane
-                    %table.barscore-grid
-                      -#= render :partial => 'barscore', :collection => @bar.total_scores_for(@me)
-            %ul.tabs
-              %li
-                %a{:href => 'javascript:void(0)'}= t 'bar.scores.weekly'
-              %li.last
-                %a{:href => 'javascript:void(0)'}= t 'bar.scores.always'
           %td.bar-stats
             .header
               = t 'challenge.stats.friends_stats'
