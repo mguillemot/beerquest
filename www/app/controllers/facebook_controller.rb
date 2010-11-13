@@ -85,7 +85,7 @@ class FacebookController < ApplicationController
       logger.debug "Asking FB for info about user friends"
       fb_friends           = MiniFB.get(@access_token, "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
-      fb_friends.each do |f|
+      fb_friends[:data].each do |f|
         logger.debug "== friend: #{f.inspect}"
         friend_account = Account.first(:facebook_id => f[:id])
         unless friend_account
