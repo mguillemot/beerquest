@@ -90,16 +90,43 @@ td.bar-name a {
 }
 
 ul.rss li {
-  list-style: circle;
+  list-style: url("/images/mini-beer-yellow.png");
   margin-left: 20px;
   margin-bottom: 5px;
+}
+
+ul.messages li {
+  list-style: none;
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+ul.messages img.mini-portrait {
+  float: left;
+  width: 35px;
+  height: 35px;
+  border: 1px solid black;
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+
+ul.messages .score {
+  font-weight: bold;
+}
+
+ul.messages .date {
+  font-style: italic;
+}
+
+ul.messages .name {
+  font-weight: bold;
 }
 
 table.barscore-grid {
 }
 
 table.barscore-grid tr.me {
-  background: red;
+  /*background: red;*/
 }
 
 table.barscore-grid td {
@@ -334,4 +361,13 @@ table.vs td.portrait-opponent img {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+}
+
+#message-dialog {
+}
+
+#message-dialog #message-content {
+  width: 280px;
+  height: 60px;
+  border: 1px solid black;
 }

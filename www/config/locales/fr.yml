@@ -111,6 +111,9 @@ fr:
       best_rank_value: "#%{rank} le %{date}"
       play_count: "Nombre de parties"
     endgame:
+      message:
+        title: "Laisser un message dans le bar"
+        button: "Valider"
       boast:
         prompt: "Va-y, vante toi à mort !"
         default_message_pre: "Oh con, je me suis pété "

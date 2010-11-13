@@ -73,6 +73,10 @@ class Bar
     scores_for(always_high_scores, account)
   end
 
+  def messages
+    complete_replays.all(:order => :created_at.desc, :limit => 10, :message.not => nil)
+  end
+
   private
 
   def complete_replays

@@ -10,7 +10,7 @@ BeerQuest::Application.routes.draw do
   get "challenges/sent/:page",      :to => "user#async_current_challenges",  :as => 'async_sent_challenges'
   get "challenges/received/:page",  :to => "user#async_received_challenges", :as => 'async_received_challenges'
   get "invite",                     :to => "user#invite",                    :as => 'invite'
-  post "invite-done",               :to => "user#invite_end",                :as => 'invite_end'
+  match "invite-done",              :to => "user#invite_end",                :as => 'invite_end'
   get "challenge/:id",              :to => "user#challenge",                 :as => 'challenge'
   get "accept-challenge/:id",       :to => "user#accept_challenge",          :as => 'accept_challenge'
   get "refuse-challenge/:id",       :to => "user#refuse_challenge",          :as => 'refuse_challenge'
@@ -30,6 +30,7 @@ BeerQuest::Application.routes.draw do
   post "start",                     :to => "game#start",                     :as => 'game_start'
   post "postscore",                 :to => "game#postscore",                 :as => 'post_score'
   post "end",                       :to => "game#end",                       :as => 'game_end'
+  post "message",                   :to => "game#message",                   :as => 'endgame_message'
 
   # Donations
   get "support-us",                 :to => "payment#index",                  :as => 'support_us'

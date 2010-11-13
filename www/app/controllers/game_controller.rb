@@ -116,4 +116,11 @@ class GameController < ApplicationController
     render :text => result.to_json
   end
 
+  def message
+    replay = Replay.first(:token => params[:token], :ip => request.remote_ip)
+    replay.message = params[:message]
+    replay.save
+    render :text => "OK"
+  end
+
 end

@@ -78,17 +78,19 @@ class UserController < FacebookController
 
   def invite_end
     logger.info "Sending challenges to the following users: #{params[:ids].inspect}"
-    params[:ids].each do |id|
-      account = Account.first(:facebook_id => id)
-      if account
-        # TODO vérifier qu'un challenge n'existe déjà pas avec ce compte (race condition si 2 personnes se défient en même temps)
-        if account.challenge!(@me)
-          logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
+    if params[:ids]
+      params[:ids].each do |id|
+        account = Account.first(:facebook_id => id)
+        if account
+          # TODO vérifier qu'un challenge n'existe déjà pas avec ce compte (race condition si 2 personnes se défient en même temps)
+          if account.challenge!(@me)
+            logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
+          else
+            logger.error "An error occured when challenging user #{account.full_name} (id=#{account.id})"
+          end
         else
-          logger.error "An error occured when challenging user #{account.full_name} (id=#{account.id})"
+          logger.error "Impossible to challenge account with fbid=#{id} since it doesn't seem to exist"
         end
-      else
-        logger.error "Impossible to challenge account with fbid=#{id} since it doesn't seem to exist"
       end
     end
     redirect_to home_url
@@ -100,7 +102,6 @@ class UserController < FacebookController
       raise "wrong account; challenge is for account #{@challenge.account.id}"
     end
     @challenger       = @challenge.sent_by
-    @required_version = Game::Constants::VERSION
     @mode             = "vs"
     @replay           = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
   end

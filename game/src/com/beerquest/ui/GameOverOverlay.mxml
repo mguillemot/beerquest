@@ -79,6 +79,7 @@
                     vsFailure.visible = true;
                 }
             }
+            endOfGameMessage();
         }
 
         private function onBoast(e:MouseEvent):void {
@@ -126,6 +127,14 @@
                 ExternalInterface.call("vsPlayAgain");
             } else {
                 Alert.show("Error (6)");
+            }
+        }
+
+        private function endOfGameMessage():void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("endOfGame");
+            } else {
+                Alert.show("Error (7)");
             }
         }
 

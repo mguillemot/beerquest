@@ -36,8 +36,20 @@
                       %li
                         %a{:href => rss[:url]}= rss[:title]
               .pane#messages
-                Y'en a pas pour l'instant !
-        %tr.bottom                    
+                %ul.messages
+                  - @bar.messages.each do |msg|
+                    %li
+                      = image_tag msg.account.profile_picture, :alt => msg.account.full_name, :class => 'mini-portrait'
+                      = image_tag 'mini-biere.png', :alt => t('beers')
+                      %span.score= msg.score
+                      = "-"
+                      %span.date= l(msg.updated_at, :format => :short)
+                      %br
+                      %span.name= msg.account.full_name
+                      &laquo;
+                      = msg.message
+                      &raquo;
+        %tr.bottom
           %td.bar-scores
             .panes
               .pane#barscore-7j
@@ -178,19 +190,44 @@
     %td.shadow
     %td.small.shadow
 
+#message-dialog{:title => t('bar.endgame.message.title')}
+  %textarea#message-content{:rows => 3, :cols => 50}
+  %input#message-token{:type => 'hidden', :value => @replay.token}
+
 :javascript
   $(function() {
     $('#game').flash({
-      swf: "/swf/BeerQuest-#{@required_version}.swf",
+      swf: "/swf/BeerQuest-#{Game::Constants::VERSION}.swf",
       width: 520,
       height: 320,
       flashvars: {
         mode: "#{@mode}",
+        lang: "#{I18n.locale}",
         token: "#{@replay.token}",
-        requiredVersion: #{@required_version}
+        requiredVersion: #{Game::Constants::VERSION}
+      }
+    });
+    $('#message-dialog').dialog({
+      autoOpen: false,
+      modal: true,
+      resizable: false,
+      position: [125, 320],
+      buttons: {
+        "#{t('bar.endgame.message.button')}": function() {
+          $.post("#{endgame_message_url}", {
+            token: $('#message-token').val(),
+            message: $('#message-content').val()
+          });
+          $(this).dialog('close');
+        }
       }
     });
   });
+
+  function endOfGame()
+  {
+    $('#message-dialog').dialog('open');
+  }
 
   function soloBoast(score)
   {

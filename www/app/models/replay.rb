@@ -12,6 +12,7 @@ class Replay
   property :avg_time_per_turn, Decimal, :precision => 20, :scale => 10 # Note: need big precision to pass validaitons
   property :total_turns, Integer
   property :replay, Text
+  property :message, Text
   property :collected_blond, Integer
   property :collected_brown, Integer
   property :collected_amber, Integer

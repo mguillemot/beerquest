@@ -119,13 +119,14 @@
 :javascript
   $(function() {
     $('#game').flash({
-      swf: "/swf/BeerQuest-#{@required_version}.swf",
+      swf: "/swf/BeerQuest-#{Game::Constants::VERSION}.swf",
       width: 520,
       height: 320,
       flashvars: {
         mode: "#{@mode}",
+        lang: "#{I18n.locale}",
         token: "#{@replay.token}",
-        requiredVersion: #{@required_version},
+        requiredVersion: #{Game::Constants::VERSION},
         goal: #{@challenge.required_score}
       }
     });
