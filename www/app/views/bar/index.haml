@@ -162,11 +162,11 @@
                 = t 'bar.stats.member_since'
               .value
                 = l(@barship.created_at, :format => :short)
-            .stat
-              .section
-                = t 'bar.stats.best_rank_title'
-              .value
-                = t 'bar.stats.best_rank_value', :rank => @barship.best_rank, :date => l(@barship.best_rank_date, :format => :short)
+            -#.stat
+            -#  .section
+            -#    = t 'bar.stats.best_rank_title'
+            -#  .value
+            -#    = t 'bar.stats.best_rank_value', :rank => @barship.best_rank, :date => l(@barship.best_rank_date, :format => :short)
             .stat
               .section
                 = t 'bar.stats.play_count'
