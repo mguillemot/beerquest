@@ -31,7 +31,8 @@ class Challenge
   has n, :replays, :constraint => :set_nil
 
   def self.to_expire
-    all(:status => STATUS_PENDING, :created_at.lte => DateTime.now - PENDING_EXPIRATION) + all(:status => STATUS_ACCEPTED, :accepted_at.lte => DateTime.now - ACCEPT_EXPIRATION)
+    all(:status => STATUS_PENDING, :created_at.lte => DateTime.now - PENDING_EXPIRATION) +
+            all(:status => STATUS_ACCEPTED, :accepted_at.lte => DateTime.now - ACCEPT_EXPIRATION)
   end
 
   def new_challenge?
@@ -92,7 +93,7 @@ class Challenge
     if !expirable?
       raise "challenge is not expirable"
     end
-    self.status   = STATUS_EXPIRED
+    self.status   = (self.status == STATUS_ACCEPTED || self.parent != nil) ? STATUS_LOST : STATUS_EXPIRED
     self.ended_at = DateTime.now
     save
   end
@@ -103,7 +104,7 @@ class Challenge
     while c
       replay = c.main_replay
       result.push c.main_replay if replay
-      c = c.parent
+      c      = c.parent
     end
     result
   end
@@ -111,7 +112,8 @@ class Challenge
   private
 
   def expirable?
-    (status == STATUS_PENDING && created_at + PENDING_EXPIRATION < DateTime.now) || (status == STATUS_ACCEPTED && accepted_at + ACCEPT_EXPIRATION < DateTime.now)
+    (status == STATUS_PENDING && created_at + PENDING_EXPIRATION < DateTime.now) ||
+            (status == STATUS_ACCEPTED && accepted_at + ACCEPT_EXPIRATION < DateTime.now)
   end
 
 end
