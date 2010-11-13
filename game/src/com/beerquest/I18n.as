@@ -6,9 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.beerquest {
+import mx.controls.Alert;
+import mx.core.FlexGlobals;
+
 public class I18n {
 
-    private static var _lang:String = "en";
+    private static var _lang:String = "";
 
     private static const _strings:Object = {
         fr: {
@@ -92,16 +95,22 @@ public class I18n {
         }
     };
 
+    // Static initializer
+    {
+        _lang = FlexGlobals.topLevelApplication.parameters.lang;
+        if (_lang != "fr" && _lang != "en") {
+            trace("WARN: Wrong language code '" + _lang + "', defaulting to 'en'");
+            _lang = "en";
+        }
+        trace("Language is set to: " + _lang);
+    }
+
     public static function t(key:String):String {
         return _strings[_lang][key];
     }
 
     public static function get lang():String {
         return _lang;
-    }
-
-    public static function set lang(value:String):void {
-        _lang = value;
     }
 
     function I18n() {

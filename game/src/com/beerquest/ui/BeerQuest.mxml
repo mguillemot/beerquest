@@ -67,13 +67,6 @@
                 trace("WARN: No 'requiredVersion' found");
             }
 
-            I18n.lang = FlexGlobals.topLevelApplication.parameters.lang;
-            if (I18n.lang != "fr" && I18n.lang != "en") {
-                trace("WARN: Wrong language code '" + I18n.lang + "', defaulting to 'en'");
-                I18n.lang = "en";
-            }
-            trace("Language is set to: " + I18n.lang);
-
             mode = FlexGlobals.topLevelApplication.parameters.mode;
             if (mode != "vs" && mode != "solo") {
                 trace("WARN: No proper 'mode' found, defaulting to 'vs'");
