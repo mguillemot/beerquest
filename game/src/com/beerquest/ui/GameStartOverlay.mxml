@@ -22,9 +22,15 @@
             fontSize: 16;
             color: white;
         }
+
+        .solo-start-button {
+            fontFamily: Kro;
+            fontSize: 48;
+            color: white;
+            text-align: center;
+        }
     </mx:Style>
     <mx:Script><![CDATA[
-        import com.beerquest.Constants;
         import com.beerquest.I18n;
         import com.beerquest.ui.events.UiGameStartEvent;
         import com.greensock.TweenLite;
@@ -48,7 +54,13 @@
     <mx:Image source="@Embed(source='../../../assets/image/rideau.png')"/>
     <mx:VBox width="100%" horizontalAlign="center" visible="{mode == 'solo'}">
         <mx:Spacer height="100"/>
-        <mx:Button label="{I18n.t('start.play-button')}" width="230" height="110" click="onStart(event, 0)"/>
+        <ui:GenericButton width="230" height="122" click="onStart(event, 0)">
+            <mx:Label text="{I18n.t('start.play-button')}" styleName="solo-start-button" width="100%" y="25">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </ui:GenericButton>
     </mx:VBox>
     <mx:VBox width="100%" horizontalAlign="center" verticalGap="0" visible="{mode == 'vs'}">
         <mx:Spacer height="10"/>

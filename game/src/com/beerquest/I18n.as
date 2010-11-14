@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.beerquest {
-import mx.controls.Alert;
 import mx.core.FlexGlobals;
 
 public class I18n {
@@ -43,17 +42,20 @@ public class I18n {
             "start.start-challenge": "Relancer le défi",
             "start.how-much-more.1": "Combien de bières en plus vous pensez",
             "start.how-much-more.2": "être capable de boire en 40 coups ?",
-            "end.game-over": "Game Over",
+            "end.game-over": "Partie Terminée",
             "end.you-loose": "T'as perdu !",
-            "end.congratulations": "Félicitations !",
+            "end.congratulations": "BRAVO !",
             "end.score": "Score",
             "end.solo.bad-score.1": "C'est un score assez minable, mais si tu n'as",
-            "end.solo.bad-score.2": "aucun honneur, tu peux toujours t'en vanter...",
+            "end.solo.bad-score.2": "honte de rien, tu peux toujours t'en vanter...",
             "end.personal-record": "Nouveau record perso",
             "end.bar-record": "Nouveau record du bar",
-            "end.boast-button": "Se vanter",
+            "end.boast-button.1": "S'la péter",
+            "end.boast-button.2": "(malgré tout)",
+            "end.boast-button.3": "(pour de bon)",
             "end.provoke-button": "Provoquer ses amis",
-            "end.play-again-button": "REJOUER",
+            "end.play-again-button.1": "JOUER",
+            "end.play-again-button.2": "Encore",
             "end.loose-explaination.1": "T'as eu les yeux plus gros que le ventre...",
             "end.loose-explaination.2": "Bouh, quelle honte !",
             "end.start-another-challenge-button": "Relancer un défi (et se ridiculiser encore plus)",
@@ -93,15 +95,18 @@ public class I18n {
             "start.how-much-more.2": "drink in 40 turns?",
             "end.game-over": "Game Over",
             "end.you-loose": "You Loose!",
-            "end.congratulations": "Congratulations!",
+            "end.congratulations": "GRATZ!",
             "end.score": "Score",
-            "end.solo.bad-score.1": "This is a pretty awful score, but if you're",
-            "end.solo.bad-score.2": "shameless, you can still brag 'bout it...",
+            "end.solo.bad-score.1": "That's pretty bad, but if you're dhameless,",
+            "end.solo.bad-score.2": "you can still brag 'bout it...",
             "end.personal-record": "New personal record",
             "end.bar-record": "New bar record",
-            "end.boast-button": "Brag about your score",
+            "end.boast-button.1": "Show them",
+            "end.boast-button.2": "how bad I am",
+            "end.boast-button.3": "I'm the best",
             "end.provoke-button": "Provoke your friend!",
-            "end.play-again-button": "PLAY Again",
+            "end.play-again-button.1": "PLAY",
+            "end.play-again-button.2": "Again",
             "end.loose-explaination.1": "You were damn too pretentions on this one.",
             "end.loose-explaination.2": "Shame on you!",
             "end.start-another-challenge-button": "Start another challenge (and get more ridiculous)",
@@ -118,6 +123,7 @@ public class I18n {
         if (_lang != "fr" && _lang != "en") {
             trace("WARN: Wrong language code '" + _lang + "', defaulting to 'en'");
             _lang = "en";
+//            _lang = "fr"; // TODO remettre en anglais par défaut
         }
         trace("Language is set to: " + _lang);
     }

@@ -31,7 +31,6 @@
         import com.adobe.serialization.json.JSON;
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
-        import com.beerquest.I18n;
         import com.beerquest.InstantEventBuffer;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
@@ -69,8 +68,8 @@
 
             mode = FlexGlobals.topLevelApplication.parameters.mode;
             if (mode != "vs" && mode != "solo") {
-                trace("WARN: No proper 'mode' found, defaulting to 'vs'");
-                mode = "vs";
+                trace("WARN: No proper 'mode' found, defaulting to 'solo'");
+                mode = "solo";
                 _allowStart = false;
             }
             trace("Starting in mode: " + mode);
@@ -169,6 +168,7 @@
                 data = JSON.decode(_tokenLoader.data);
             } else {
                 data = {valid:true, personalHigh:false, barHigh:false};
+//                data = {valid:true, personalHigh:true, barHigh:true}; // TODO debug only
             }
             _tokenLoader.removeEventListener(Event.COMPLETE, onEndInfoReceived);
             _tokenLoader = null;

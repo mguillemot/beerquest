@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="520" height="320">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:ui="com.beerquest.ui.*" width="520" height="320">
     <mx:Style>
         .end-goal {
             fontFamily: Kro;
@@ -16,7 +16,7 @@
         .success-end-goal {
             fontFamily: Kro;
             fontSize: 30;
-            color: #ffd700;
+            color: #fff000;
         }
 
         .end-title {
@@ -28,19 +28,14 @@
         .success-end-title {
             fontFamily: Kro;
             fontSize: 48;
-            color: #ffd700;
-        }
-
-        .failed-end-title {
-            fontFamily: Kro;
-            fontSize: 48;
-            color: red;
+            color: #fff000;
         }
 
         .end-explaination {
             fontFamily: Kro;
             fontSize: 16;
             color: white;
+            text-align: center;
         }
 
         .success-end-explaination {
@@ -49,16 +44,14 @@
             color: #ffd700;
         }
 
-        .failed-end-explaination {
+        .button-text {
             fontFamily: Kro;
-            fontSize: 16;
-            color: red;
+            text-align: center;
+            color: white;
         }
     </mx:Style>
     <mx:Script><![CDATA[
         import com.beerquest.I18n;
-
-        import mx.controls.Alert;
 
         public function setResult(mode:String, score:int, scoreGoal:int, personalHigh:Boolean, barHigh:Boolean):void {
             _mode = mode;
@@ -84,57 +77,71 @@
 
         private function onBoast(e:MouseEvent):void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("soloBoast", _score);
-            } else {
-                Alert.show("Error (1)");
+                try {
+                    ExternalInterface.call("soloBoast", _score);
+                } catch (e:SecurityError) {
+                    trace("Unable to call onBoast()");
+                }
             }
         }
 
         private function onPlayAgain(e:MouseEvent):void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("soloPlayAgain");
-            } else {
-                Alert.show("Error (2)");
+                try {
+                    ExternalInterface.call("soloPlayAgain");
+                } catch (e:SecurityError) {
+                    trace("Unable to call onPlayAgain()");
+                }
             }
         }
 
         private function onVsBoastVictory(e:MouseEvent):void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("vsBoastVictory", _score, _scoreGoal);
-            } else {
-                Alert.show("Error (3)");
+                try {
+                    ExternalInterface.call("vsBoastVictory", _score, _scoreGoal);
+                } catch (e:SecurityError) {
+                    trace("Unable to call onVsBoastVictory()");
+                }
             }
         }
 
         private function onVsBoastDefeat(e:MouseEvent):void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("vsBoastDefeat", _score, _scoreGoal);
-            } else {
-                Alert.show("Error (4)");
+                try {
+                    ExternalInterface.call("vsBoastDefeat", _score, _scoreGoal);
+                } catch (e:SecurityError) {
+                    trace("Unable to call onVsBoastDefeat()");
+                }
             }
         }
 
         private function onVsProvoke(e:MouseEvent):void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("vsProvoke", _scoreGoal);
-            } else {
-                Alert.show("Error (5)");
+                try {
+                    ExternalInterface.call("vsProvoke", _scoreGoal);
+                } catch (e:SecurityError) {
+                    trace("Unable to call onVsProvoke()");
+                }
             }
         }
 
         private function onVsPlayAgain(e:MouseEvent):void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("vsPlayAgain");
-            } else {
-                Alert.show("Error (6)");
+                try {
+                    ExternalInterface.call("vsPlayAgain");
+                } catch (e:SecurityError) {
+                    trace("Unable to call onVsPlayAgain()");
+                }
             }
         }
 
         private function endOfGameMessage():void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("endOfGame");
-            } else {
-                Alert.show("Error (7)");
+                try {
+                    ExternalInterface.call("endOfGame");
+                } catch (e:SecurityError) {
+                    trace("Unable to call endOfGameMessage()");
+                }
             }
         }
 
@@ -156,7 +163,6 @@
     <mx:Image source="@Embed(source='../../../assets/image/rideau.png')"/>
 
     <mx:VBox id="soloNoHigh" width="100%" horizontalAlign="center" visible="false">
-        <mx:Spacer height="10"/>
         <mx:Label text="{I18n.t('end.game-over')}" styleName="end-title">
             <mx:filters>
                 <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
@@ -175,56 +181,127 @@
                 </mx:filters>
             </mx:Label>
         </mx:HBox>
-        <mx:Label text="{I18n.t('end.solo.bad-score.1')}" styleName="end-explaination">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
-        <mx:Label text="{I18n.t('end.solo.bad-score.2')}" styleName="end-explaination">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
-        <mx:HBox horizontalGap="20">
-            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80" click="onBoast(event)"/>
-            <mx:Button label="{I18n.t('end.play-again-button')}" width="150" height="80" click="onPlayAgain(event)"/>
-        </mx:HBox>
+        <mx:Canvas width="100%" height="60">
+            <mx:Label text="{I18n.t('end.solo.bad-score.1')}" styleName="end-explaination" width="100%">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+            <mx:Label text="{I18n.t('end.solo.bad-score.2')}" styleName="end-explaination" width="100%" y="20">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:Canvas>
+        <mx:Canvas width="100%" height="100">
+            <ui:GenericButton x="70" y="12" width="145" height="75" click="onBoast(event)" color="0x6e936c">
+                <mx:Label text="{I18n.t('end.boast-button.1')}" styleName="button-text" fontSize="24" width="100%"
+                          y="0">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1"
+                                             color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+                <mx:Label text="{I18n.t('end.boast-button.2')}" styleName="button-text" fontSize="16" width="100%"
+                          y="40">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1"
+                                             color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+            </ui:GenericButton>
+            <ui:GenericButton x="260" width="185" height="97" click="onPlayAgain(event)">
+                <mx:Label text="{I18n.t('end.play-again-button.1')}" styleName="button-text" fontSize="36" width="100%"
+                          y="0">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+                <mx:Label text="{I18n.t('end.play-again-button.2')}" styleName="button-text" fontSize="36" width="100%"
+                          y="40">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+            </ui:GenericButton>
+        </mx:Canvas>
     </mx:VBox>
 
-    <mx:VBox id="soloHigh" width="100%" horizontalAlign="center" visible="false">
-        <mx:Spacer height="10"/>
-        <mx:Label text="{I18n.t('end.congratulations')}" styleName="success-end-title">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
+    <mx:VBox id="soloHigh" width="100%" horizontalAlign="center" visible="false" verticalGap="0">
+        <mx:Spacer height="5"/>
+        <mx:HBox horizontalGap="20">
+            <mx:Image source="@Embed(source='../../../assets/image/etoiles-reccord-gauche.png')"/>
+            <mx:Label text="{I18n.t('end.congratulations')}" styleName="success-end-title">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+            <mx:Image source="@Embed(source='../../../assets/image/etoiles-reccord-droite.png')"/>
+        </mx:HBox>
         <mx:HBox horizontalGap="3">
             <mx:Label text="{I18n.t('end.score')}" styleName="success-end-goal">
                 <mx:filters>
                     <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
-            <mx:Image source="@Embed(source='../../../assets/image/collected-beer.png')"/>
-            <mx:Label text="{_score}" styleName="end-goal">
+            <mx:Image source="@Embed(source='../../../assets/image/bierre-reccord.png')"/>
+            <mx:Label text="{_score}" styleName="success-end-goal">
                 <mx:filters>
                     <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
         </mx:HBox>
-        <mx:Label text="{I18n.t('end.personal-record')}" styleName="success-end-explaination" visible="{_personalHigh}">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
-        <mx:Label text="{I18n.t('end.bar-record')}" styleName="success-end-explaination" visible="{_barHigh}">
-            <mx:filters>
-                <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
-            </mx:filters>
-        </mx:Label>
-        <mx:HBox horizontalGap="20">
-            <mx:Button label="{I18n.t('end.play-again-button')}" width="150" height="80" click="onPlayAgain(event)"/>
-            <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80" click="onBoast(event)"/>
+        <mx:Spacer height="10"/>
+        <mx:HBox>
+            <mx:Image source="@Embed(source='../../../assets/image/etoile-reccord.png')"/>
+            <mx:Label text="{I18n.t('end.personal-record')}" styleName="success-end-explaination"
+                      visible="{_personalHigh}">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
         </mx:HBox>
+        <mx:HBox>
+            <mx:Image source="@Embed(source='../../../assets/image/etoile-reccord.png')"/>
+            <mx:Label text="{I18n.t('end.bar-record')}" styleName="success-end-explaination" visible="{_barHigh}">
+                <mx:filters>
+                    <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                </mx:filters>
+            </mx:Label>
+        </mx:HBox>
+        <mx:Spacer height="10"/>
+        <mx:Canvas width="100%" height="100">
+            <ui:GenericButton x="70" y="12" width="145" height="75" click="onPlayAgain(event)" color="0x6e936c">
+                <mx:Label text="{I18n.t('end.play-again-button.1')}" styleName="button-text" fontSize="26" width="100%"
+                          y="5">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1"
+                                             color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+                <mx:Label text="{I18n.t('end.play-again-button.2')}" styleName="button-text" fontSize="20" width="100%"
+                          y="35">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1"
+                                             color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+            </ui:GenericButton>
+            <ui:GenericButton x="260" width="185" height="97" click="onBoast(event)">
+                <mx:Label text="{I18n.t('end.boast-button.1')}" styleName="button-text" fontSize="32" width="100%"
+                          y="10">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+                <mx:Label text="{I18n.t('end.boast-button.3')}" styleName="button-text" fontSize="20" width="100%"
+                          y="50">
+                    <mx:filters>
+                        <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
+                    </mx:filters>
+                </mx:Label>
+            </ui:GenericButton>
+        </mx:Canvas>
     </mx:VBox>
 
     <mx:VBox id="vsSuccess" width="100%" horizontalAlign="center" visible="false">
@@ -259,6 +336,7 @@
         </mx:Label>
         <mx:HBox horizontalGap="20">
             <mx:Button label="{I18n.t('end.boast-button')}" width="150" height="80" click="onVsBoastVictory(event)"/>
+            <!--TODO reprendre txt-->
             <mx:Button label="{I18n.t('end.provoke-button')}" width="150" height="80" click="onVsProvoke(event)"/>
         </mx:HBox>
     </mx:VBox>
@@ -294,8 +372,10 @@
             </mx:filters>
         </mx:Label>
         <mx:HBox horizontalGap="20">
-            <mx:Button label="{I18n.t('end.start-another-challenge-button')}" width="150" height="80" click="onVsPlayAgain(event)"/>
-            <mx:Button label="{I18n.t('end.wall-of-shame-button')}" width="150" height="80" click="onVsBoastDefeat(event)"/>
+            <mx:Button label="{I18n.t('end.start-another-challenge-button')}" width="150" height="80"
+                       click="onVsPlayAgain(event)"/>
+            <mx:Button label="{I18n.t('end.wall-of-shame-button')}" width="150" height="80"
+                       click="onVsBoastDefeat(event)"/>
         </mx:HBox>
     </mx:VBox>
 </mx:Canvas>
