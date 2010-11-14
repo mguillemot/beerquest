@@ -11,7 +11,7 @@
   %tr
     %td.small
     %td.left-col
-      = image_tag 'titre-mode-score.png', :alt => t('home.score.mode'), :class => 'col-title'
+      = image_tag "titre-mode-score_#{I18n.locale()}.png", :alt => t('home.score.mode'), :class => 'col-title'
       .col-content
         %table.player
           %tr
@@ -52,7 +52,7 @@
 
     %td.small
     %td.right-col
-      = image_tag 'titre-mode-battle.png', :alt => t('home.battle.mode'), :class => 'col-title'
+      = image_tag "titre-mode-battle_#{I18n.locale}.png", :alt => t('home.battle.mode'), :class => 'col-title'
       .col-content
         %table.player
           %tr
