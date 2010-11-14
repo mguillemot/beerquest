@@ -50,11 +50,11 @@ class PaymentController < FacebookController
             @donation.status = Donation::STATUS_OK
             @donation.save
           else
-            logger.error "Error during payment checkout of donation #{donation.id}: #{checkout.inspect}"
+            logger.error "Error during payment checkout of donation #{@donation.id}: #{checkout.inspect}"
             redirect_to home_url
           end
         else
-          logger.error "Impossible to save transaction completion into the donation object (id=#{donation.id})"
+          logger.error "Impossible to save transaction completion into the donation object (id=#{@donation.id})"
           redirect_to home_url
         end
       end
