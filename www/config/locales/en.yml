@@ -220,7 +220,7 @@ en:
         answer_html: "A vivre, tout simplement. De plus il n'a pas été prouvé scientifiquement que cela rend plus heureux, plus riche, plus beau et beaucoup plus attractif pour avoir des relations amoureuses nombreuses et passagères pour les hommes, longue et de qualité pour les femmes. Enfin, il n'est même pas possible qu'au delà des 100.000 points de notre considération, ça puisse aider à la repousse des cheveux. ! Dans ces conditions, à votre place, j'essayerai d'en avoir un maximum !"
       entry5:
         question: "Pourquoi une démarche aussi loufoque ?"
-        answer_html: "Parce que nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, <a href=\"http://blog.bq-4.com/\" target=\"_blank\">venez lire notre beer-blog</a> et nous donner vos conseils."
+        answer_html: "Parce que nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, <a href=\"http://blog.bq-4.com/?lang=en\" target=\"_blank\">venez lire notre beer-blog</a> et nous donner vos conseils."
   invite:
     type: "BeerQuest Challenge"
     message: "Come get some (beer), dood!"

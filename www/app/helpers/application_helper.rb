@@ -49,4 +49,8 @@ module ApplicationHelper
     end
   end
 
+  def portable_brewery_url
+    blog_url # TODO à faire
+  end
+
 end

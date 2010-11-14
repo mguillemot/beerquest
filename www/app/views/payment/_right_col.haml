@@ -1,7 +1,7 @@
 %td.right-col
   .beermeter
     %h2= t 'support_us.beermeter.title'
-    .content= t 'support_us.beermeter.content_html', :total => number_with_delimiter(Donation.total)
+    .content= t 'support_us.beermeter.content_html', :total => number_with_delimiter(Donation.total_volume)
 
   #faq
     .title= t 'support_us.faq.title'

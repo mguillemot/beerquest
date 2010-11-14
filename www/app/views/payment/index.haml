@@ -19,8 +19,12 @@
             - (1..7).each do |i|
               .offer{:id => "offer#{i}"}
                 .title
-                  = link_to donate_url(i), :method => :post, :class => 'offer-button' do
-                    .button-text= t('support_us.offers.button')
+                  - if i == 7
+                    = link_to(portable_brewery_url, :class => 'offer-button', :target => '_blank') do
+                      .button-text= t('support_us.offers.button')
+                  - else
+                    = link_to donate_url(i), :method => :post, :class => 'offer-button' do
+                      .button-text= t('support_us.offers.button')
                   &gt;
                   = t "support_us.offers.offer#{i}.title"
                   .tag= t "support_us.offers.offer#{i}.tag"

@@ -2,12 +2,12 @@ class Donation
   include DataMapper::Resource
 
   DONATIONS = {
-          1 => {:amount => 0.42, :name => 'support_us.offers.offer1.name'},
-          2 => {:amount => 1.5, :name => 'support_us.offers.offer2.name'},
-          3 => {:amount => 3, :name => 'support_us.offers.offer3.name'},
-          4 => {:amount => 5, :name => 'support_us.offers.offer4.name'},
-          5 => {:amount => 10, :name => 'support_us.offers.offer5.name'},
-          6 => {:amount => 100, :name => 'support_us.offers.offer6.name'}
+          1 => {:amount => 0.42, :name => 'support_us.offers.offer1.name', :volume => 0.02},
+          2 => {:amount => 1.5, :name => 'support_us.offers.offer2.name', :volume => 0.25},
+          3 => {:amount => 3, :name => 'support_us.offers.offer3.name', :volume => 0.50},
+          4 => {:amount => 5, :name => 'support_us.offers.offer4.name', :volume => 0.33},
+          5 => {:amount => 10, :name => 'support_us.offers.offer5.name', :volume => 2.00},
+          6 => {:amount => 100, :name => 'support_us.offers.offer6.name', :volume => 20.00}
   }
 
   STATUS_PENDING = 'pending'
@@ -30,8 +30,10 @@ class Donation
 
   belongs_to :account
 
-  def self.total
-    sum(:paypal_amount) || 0
+  def self.total_volume
+    DONATIONS.to_a.reduce(0) do |s, dtype|
+      s + self.count(:level => dtype[0]) * dtype[1][:volume]
+    end
   end
 
   def amount
