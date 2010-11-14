@@ -3,4 +3,4 @@
 .challenge-header
   = t 'world_challenge.header', :goal => number_with_delimiter(@world_score_target)
 .challenge-value
-  = @world_score_action
+  = link_to @world_score_action, "http://blog.bq-4.com/spip.php?rubrique5&lang=#{I18n.locale}", :target => '_blank'

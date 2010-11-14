@@ -51,8 +51,8 @@
         #banner
           %a{:href => home_url}
             = image_tag 'logo-BQ4.png', :alt => t('beerquest'), :class => 'logo'
-          %a.like-button{:href => '#'}
-            = image_tag 'bt-idrink.png', :alt => t('ilike')
+          .like-button
+            %fb:like{:href => BeerQuest::FB_APP_URL, :layout => 'button_count'}
           .stats-container
             .stats
               #world-score
@@ -67,13 +67,13 @@
             %li
               = link_to t('nav.challenge'), invite_url
             %li
-              = link_to t('nav.help'), privacy_url
+              = link_to t('nav.help'), help_url, :target => '_blank'
             %li.special
               = link_to t('nav.support'), support_us_url
             %li.last
-              %a{:href => 'http://blog.bq-4.com/', :target => '_blank'}= t 'nav.blog'
+              = link_to t('nav.blog'), blog_url, :target => '_blank'
       #flash
-        .notice= "uid=#{@me.id} fbid=#{@me.facebook_id} fn=#{@me.full_name}"
+        -#.notice= "uid=#{@me.id} fbid=#{@me.facebook_id} fn=#{@me.full_name}"
         - if flash[:error]
           .error= flash[:error]
         - if flash[:notice]

@@ -5,6 +5,7 @@ class BarController < FacebookController
   def index
     @bar = Bar.get!(params[:id])
     @mode = "solo"
+    logger.debug "Creating solo replay for user #{@me.inspect} in bar #{@bar.inspect}"
     @replay = @me.replays.create(:bar => @bar, :token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'solo')
     unless @replay.saved?
       logger.error "Impossible to create replay because of the following errors:"

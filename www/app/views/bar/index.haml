@@ -34,7 +34,7 @@
                   %ul.rss
                     - @rss.each do |rss|
                       %li
-                        %a{:href => rss[:url]}= rss[:title]
+                        %a{:href => rss[:url], :target => '_blank'}= rss[:title]
               .pane#messages
                 = render :partial => 'messages'
         %tr.bottom

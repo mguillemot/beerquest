@@ -46,8 +46,7 @@ class Account
   end
 
   def profile_picture
-    attribute_get(:profile_picture) || "http://static.ak.fbcdn.net/rsrc.php/z1LUW/hash/eu00g0eh.gif"
-    # TODO héberger asset & gaffe que c'est une icône de femme celle-ci
+    attribute_get(:profile_picture) || "/images/avatar-neutral-m.gif"
   end
 
   def current_challenges

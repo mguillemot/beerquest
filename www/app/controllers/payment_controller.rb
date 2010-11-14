@@ -23,7 +23,10 @@ class PaymentController < FacebookController
   end
 
   def end
-    @donation         = @me.donations.get! params[:id]
+    @donation         = @me.donations.first(:id => params[:id], :status => Donation::STATUS_PENDING)
+    unless @donation
+      raise "invalid donation id #{params[:id]} for user #{@me.id}"
+    end
     received_token    = params[:token]
     received_payer_id = params[:PayerID]
     logger.info "Checking donation #{@donation.id} on PayPal side..."

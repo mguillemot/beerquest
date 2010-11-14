@@ -92,9 +92,14 @@ body {
   color: #ffe88b;
 }
 
-#banner .stats .challenge-value {
+#banner .stats .challenge-value a {
   color: #ffe88b;
   text-decoration: underline;
+}
+
+#banner .stats .challenge-value a:hover {
+  color: #ffe88b;
+  text-decoration: none;
 }
 
 #banner .stats img.beer {
