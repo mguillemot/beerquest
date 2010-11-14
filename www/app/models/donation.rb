@@ -10,6 +10,10 @@ class Donation
           6 => {:amount => 100, :name => 'support_us.offers.offer6.name'}
   }
 
+  STATUS_PENDING = 'pending'
+  STATUS_AUTHORIZED = 'authorized'
+  STATUS_OK = 'ok'
+
   property :id, Serial
   property :account_id, Integer, :min => 1
   property :level, Integer
@@ -20,6 +24,7 @@ class Donation
   property :paypal_payer_id, String
   property :paypal_correlation_id, String
   property :paypal_token, String
+  property :status, String, :default => STATUS_PENDING
   property :created_at, DateTime
   property :updated_at, DateTime
 

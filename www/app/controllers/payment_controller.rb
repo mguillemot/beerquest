@@ -1,10 +1,10 @@
 class PaymentController < FacebookController
 
   def donate
-    level = params[:level].to_i
+    level    = params[:level].to_i
     donation = @me.donations.create(:level => level)
     logger.info "Starting new PayPal payment for donation #{donation.id}..."
-    response = Paypal::Api.set_express_checkout(donation, end_donate_url(donation), support_us_url)
+    response = Paypal::Api.set_express_checkout(donation, "#{BeerQuest::FB_APP_URL}#{end_donate_path(donation)}", "#{BeerQuest::FB_APP_URL}#{support_us_url}")
     response.log(logger)
     if response.success
       logger.info "SetExpressCheckout success, token is #{response.token}"
@@ -23,11 +23,11 @@ class PaymentController < FacebookController
   end
 
   def end
-    @donation = @me.donations.get! params[:id]
-    received_token = params[:token]
+    @donation         = @me.donations.get! params[:id]
+    received_token    = params[:token]
     received_payer_id = params[:PayerID]
     logger.info "Checking donation #{@donation.id} on PayPal side..."
-    details = Paypal::Api.get_express_checkout_details(received_token)
+    details           = Paypal::Api.get_express_checkout_details(received_token)
     details.log(logger)
     if details.success
       if details.token != received_token || details.token != @donation.paypal_token
@@ -37,13 +37,23 @@ class PaymentController < FacebookController
         logger.error "PayPal returned with a PayerID (#{details.payer_id}) different from the one received in the URL (#{received_payer_id})"
         redirect_to home_url
       else
-        @donation.paypal_name = details.name
-        @donation.paypal_email = details.email
-        @donation.paypal_payer_id = received_payer_id
+        @donation.paypal_name           = details.name
+        @donation.paypal_email          = details.email
+        @donation.paypal_payer_id       = received_payer_id
         @donation.paypal_correlation_id = details.correlation_id
-        @donation.paypal_amount = details.amount
-        @donation.paypal_currency = details.currency
-        unless @donation.save
+        @donation.paypal_amount         = details.amount
+        @donation.paypal_currency       = details.currency
+        @donation.status                = Donation::STATUS_AUTHORIZED
+        if @donation.save
+          checkout = Paypal::Api::do_express_checkout_payment(@donation)
+          if checkout.success
+            @donation.status = Donation::STATUS_OK
+            @donation.save
+          else
+            logger.error "Error during payment checkout of donation #{donation.id}: #{checkout.inspect}"
+            redirect_to home_url
+          end
+        else
           logger.error "Impossible to save transaction completion into the donation object (id=#{donation.id})"
           redirect_to home_url
         end

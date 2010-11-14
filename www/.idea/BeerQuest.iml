@@ -183,7 +183,7 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="mini_fb" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="mini_fb" version="1.1.5" bound="EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
     </requirement>
@@ -349,6 +349,9 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] haml (v3.0.23, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/haml-3.0.23)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.0.13, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.0.13)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.0.13, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.0.13)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.1.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] mini_fb (v1.1.5, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mini_fb-1.1.5)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.1.1)" level="application" />
   </component>
 </module>
 
