@@ -1,6 +1,9 @@
 en:
   beerquest: "Beer Quest"
-  ilike: "I Drink"
+  meta:
+    description: "*Hic* These beers are more tricky than they seem... *Hic* The more I drink them, the more of them I'm seeing... Maybe I'm... imagining... thing.... *Burp*"
+    title: "Beer Quest IV"
+    site_name: "Beer Quest IV"
   beers: "Beers"
   world_challenge:
     header: "Quick! At %{goal}..."

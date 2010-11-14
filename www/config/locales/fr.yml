@@ -1,6 +1,9 @@
 fr:
   beerquest: "Beer Quest"
-  ilike: "I Drink"
+  meta:
+    description: "BEER QUEST 4 ! Affrontez vos amis en buvant un maximum de bière ! Mais attention au vomi et à votre vessie qu'il faut gérer comme il faut !"
+    title: "Beer Quest IV"
+    site_name: "Beer Quest IV"
   beers: "Bières"
   world_challenge:
     header: "Vite, à %{goal}..."

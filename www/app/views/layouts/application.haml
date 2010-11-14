@@ -1,8 +1,15 @@
 <!DOCTYPE html>
-%html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml", :lang => I18n.locale}
+%html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml", 'xmlns:og' => "http://opengraphprotocol.org/schema/", :lang => I18n.locale}
   %head
-    %title= "Beer Quest - #{@me.full_name}"
+    %title= "#{t('meta.title')} - #{@me.full_name}"
     %meta{:charset => "utf-8"}
+    %meta{:property => "og:title", :content => t('meta.title')}
+    %meta{:property => "og:type", :content => "game"}
+    %meta{:property => "og:url", :content => "#{BeerQuest::FB_APP_URL}"}
+    %meta{:property => "og:image", :content => "#{home_url}images/bq-75-75.png"}
+    %meta{:property => "og:site_name", :content => t('meta.site_name')}
+    %meta{:property => "fb:app_id", :content => BeerQuest::FB_APP_ID}
+    %meta{:property => "og:description", :content => t('meta.description')}
     = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js'
     = javascript_include_tag 'http://cdn.jquerytools.org/1.2.5/tiny/jquery.tools.min.js'
     = javascript_include_tag 'rails'
