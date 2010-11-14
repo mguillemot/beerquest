@@ -43,8 +43,8 @@ module Paypal
       call.add_param 'SIGNATURE', PAYPAL_SIGNATURE
       call.add_param 'METHOD', 'DoExpressCheckoutPayment'
       call.add_param 'VERSION', '65.0'
-      call.add_param 'PAYMENTACTION', 'Sale'
       call.add_param 'TOKEN', donation.paypal_token
+      call.add_param 'PAYMENTACTION', 'Sale'
       call.add_param 'PAYERID', donation.paypal_payer_id
       call.add_param 'PAYMENTREQUEST_0_CURRENCYCODE', donation.currency
       call.add_param 'PAYMENTREQUEST_0_ITEMAMT', '%.2f' % donation.amount
