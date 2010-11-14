@@ -6,7 +6,8 @@ class Bar
   property :url, String, :length => 1024, :required => true
   property :rss_fr, String, :length => 1024
   property :rss_en, String, :length => 1024
-  property :banner, String, :length => 1024, :required => true
+  property :banner_big, String, :length => 1024, :required => true
+  property :banner_small, String, :length => 1024, :required => true
   property :contact, String, :length => 255
   property :created_at, DateTime
   property :updated_at, DateTime

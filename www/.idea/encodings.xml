@@ -3,7 +3,6 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/app/controllers/application_controller.rb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/controllers/bar_controller.rb" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/controllers/static_controller.rb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/controllers/user_controller.rb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/bar/_barscore.haml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/bar/index.haml" charset="UTF-8" />
