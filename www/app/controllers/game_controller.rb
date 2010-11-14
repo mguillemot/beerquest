@@ -119,7 +119,7 @@ class GameController < ApplicationController
   def message
     replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true, :message => nil)
     if replay
-      replay.message = params[:message]
+      replay.message = params[:message][0..160] # Limit message size to a Twit' worth
       replay.save
       render :text => "OK"
     else
