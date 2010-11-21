@@ -167,8 +167,7 @@
             if (e != null) {
                 data = JSON.decode(_tokenLoader.data);
             } else {
-                data = {valid:true, personalHigh:false, barHigh:false};
-//                data = {valid:true, personalHigh:true, barHigh:true}; // TODO debug only
+                data = {valid:false, personalHigh:false, barHigh:false};
             }
             _tokenLoader.removeEventListener(Event.COMPLETE, onEndInfoReceived);
             _tokenLoader = null;

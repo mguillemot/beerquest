@@ -32,7 +32,7 @@ public class Game extends EventDispatcher {
                 me.checkVomit();
                 break;
             case GameEvent.TURN_END:
-                if (remainingTurns <= 0) {
+                if (remainingTurns <= 0 || (_scoreGoal > 0 && me.score >= _scoreGoal)) {
                     endOfGame();
                 } else if (_board.computeMoves().length == 0) {
                     trace("No more move availables: reset board");
@@ -87,15 +87,22 @@ public class Game extends EventDispatcher {
         execute(new ValueChangedEvent(ValueChangedEvent.REMAINING_TURNS_CHANGED, previousValue, remainingTurns));
     }
 
+    [Bindable(event="RemainingTurnsChanged")]
+    public function get playedTurns():int {
+        return _playedTurns;
+    }
+
     public function gainAdditionalTurns(t:int):void {
         remainingTurns += t;
     }
 
     public function skipTurns(t:int):void {
+        _playedTurns += t;
         remainingTurns -= t;
     }
 
     public function newTurn():void {
+        _playedTurns += 1;
         remainingTurns -= 1;
     }
 
@@ -209,6 +216,7 @@ public class Game extends EventDispatcher {
     private var _scoreGoal:int;
     private var _me:PlayerData;
     private var _remainingTurns:int = Constants.INITIAL_TOTAL_TURNS;
+    private var _playedTurns:int = 0;
     private var _board:BoardState;
     private var _gameOver:Boolean = false;
     private var _rand:DeadBeefRandom;
