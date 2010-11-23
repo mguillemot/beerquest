@@ -225,14 +225,33 @@
 
   function soloBoast(score)
   {
+    var url = "#{BeerQuest::FB_APP_URL}#{home_path}";
+    var attachment = {
+                       name: "BQ Name",
+                       href: url,
+                       caption: "BQ Caption",
+                       description: "BQ Description",
+                       media: [
+                         {
+                           type: 'image',
+                           src: "http://www.bq-4.com/images/bq-90x90.png",
+                           href: url
+                         }
+                       ]
+                     };
+    var links = [
+                  {
+                    text: "#{t('bar.endgame.boast.action')}",
+                    href: url
+                  }
+                ];
     FB.ui(
     {
        method: "stream.publish",
        user_message_prompt: "#{t('bar.endgame.boast.prompt')}",
        message: "#{t('bar.endgame.boast.default_message_pre')}" + score + "#{t('bar.endgame.boast.default_message_post')}",
-       action_links: [
-         { text: "#{t('bar.endgame.boast.action')}", href: "#{BeerQuest::FB_APP_URL}#{home_path}" }
-       ]
+       attachment: attachment,
+       action_links: links 
     });
   }
 

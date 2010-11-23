@@ -352,6 +352,16 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.1.1)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] mini_fb (v1.1.5, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mini_fb-1.1.5)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.1.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activesupport-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionmailer-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/railties-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] haml (v3.0.24, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/haml-3.0.24)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activesupport-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/railties-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activemodel (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activemodel-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] thor (v0.14.6, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/thor-0.14.6)" level="application" />
   </component>
 </module>
 
