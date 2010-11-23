@@ -55,27 +55,33 @@ class FacebookController < ApplicationController
     # App user
     if session[:account_id]
       logger.debug "Account found in session: #{session[:account_id]}"
-      @me = Account.get!(session[:account_id])
-      logger.debug " => fbid=#{@me.facebook_id}"
-    else
+      @me = Account.get(session[:account_id])
+      if @me
+        logger.debug " => fbid=#{@me.facebook_id}"
+      else
+        logger.warn " => impossible to get corresponding account from DB: resetting session"
+        session[:account_id] = nil
+      end
+    end
+    unless session[:account_id]
       #flash.now[:notice]   = "Retrieved account info from FB: fbid=#{@facebook_id}"
       logger.debug "Trying to retrieve user #{@facebook_id} from DB"
-      @me                  = Account.first(:facebook_id => @facebook_id)
+      @me = Account.first(:facebook_id => @facebook_id)
       unless @me
         logger.debug "Account didn't exist, create one"
         @me = Account.new(:facebook_id => @facebook_id)
       end
       logger.debug "Asking FB for info about user account #{@facebook_id}"
-      facebook_account     = MiniFB.get(@access_token, "me")
-      @me.first_name       = facebook_account[:first_name]
-      @me.last_name        = facebook_account[:last_name]
-      @me.gender           = facebook_account[:gender]
+      facebook_account    = MiniFB.get(@access_token, "me")
+      @me.first_name      = facebook_account[:first_name]
+      @me.last_name       = facebook_account[:last_name]
+      @me.gender          = facebook_account[:gender]
       #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
-      @me.locale           = facebook_account[:locale] # ex: fr_FR
-      @me.timezone         = facebook_account[:timezone] # 9
-      @me.profile_picture  = "http://graph.facebook.com/#{@facebook_id}/picture"
-      @me.login_count      += 1
-      @me.last_login       = DateTime.now
+      @me.locale          = facebook_account[:locale] # ex: fr_FR
+      @me.timezone        = facebook_account[:timezone] # 9
+      @me.profile_picture = "http://graph.facebook.com/#{@facebook_id}/picture"
+      @me.login_count     += 1
+      @me.last_login      = DateTime.now
       @me.save
       session[:account_id] = @me.id
 
@@ -83,7 +89,7 @@ class FacebookController < ApplicationController
       current_friends      = @me.friendships.collect { |fs| fs.friend_id }
       logger.debug "Current friends (before updating): #{current_friends.inspect}"
       logger.debug "Asking FB for info about user friends"
-      fb_friends           = MiniFB.get(@access_token, "me", :type => "friends")
+      fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
       fb_friends[:data].each do |f|
         logger.debug "== friend: #{f.inspect}"
@@ -98,7 +104,7 @@ class FacebookController < ApplicationController
             friend_account.first_name = friend_name[0]
             friend_account.last_name  = friend_name[1]
           end
-          friend_account.profile_picture    = "http://graph.facebook.com/#{f[:id]}/picture"
+          friend_account.profile_picture = "http://graph.facebook.com/#{f[:id]}/picture"
           friend_account.save
         else
           unless current_friends.reject! { |cf| cf == f[:id] }
@@ -153,7 +159,7 @@ class FacebookController < ApplicationController
   def set_restrictions
     restrictions = {:type => 'alcohol'}
     logger.debug "Setting FB restrictions to #{restrictions.to_json}..."
-    res          = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.setRestrictionInfo', {'restriction_str' => restrictions.to_json, 'format' => 'JSON'})
+    res = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.setRestrictionInfo', {'restriction_str' => restrictions.to_json, 'format' => 'JSON'})
     unless res == 'true'
       logger.error "Unable to set FB restrictions"
     end
@@ -183,8 +189,8 @@ class FacebookController < ApplicationController
 
     #decode data
     encoded_sig, payload = signed_request.split('.')
-    sig          = str_to_hex(base64_url_decode(encoded_sig))
-    data         = ActiveSupport::JSON.decode base64_url_decode(payload)
+    sig  = str_to_hex(base64_url_decode(encoded_sig))
+    data = ActiveSupport::JSON.decode base64_url_decode(payload)
 
     if data['algorithm'].to_s.upcase != 'HMAC-SHA256'
       logger.error 'Unknown algorithm. Expected HMAC-SHA256'
