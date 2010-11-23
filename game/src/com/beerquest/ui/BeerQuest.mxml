@@ -28,12 +28,15 @@
         }
     </fx:Style>
     <fx:Script><![CDATA[
+        import com.adobe.crypto.SHA1;
+        import com.adobe.crypto.SHA256;
         import com.adobe.serialization.json.JSON;
         import com.beerquest.Capacity;
         import com.beerquest.Constants;
         import com.beerquest.InstantEventBuffer;
         import com.beerquest.PlayerData;
         import com.beerquest.TokenType;
+        import com.beerquest.Utils;
         import com.beerquest.events.GameEvent;
         import com.beerquest.ui.events.UiCapacityExecutionEvent;
         import com.beerquest.ui.events.UiGameEvent;
@@ -145,6 +148,7 @@
             data.game_version = Constants.VERSION.toString();
             data.score = Constants.GAME.me.score;
             data.flash_version = Capabilities.version;
+            data.validator = SHA256.hash(Constants.GAME.me.score + token + Constants.GAME.initialBoardEncodedState);
 
             var request:URLRequest = new URLRequest("/end");
             request.method = URLRequestMethod.POST;

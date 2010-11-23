@@ -24,7 +24,7 @@ public class PlayerData extends EventDispatcher {
     public function set score(value:Number):void {
         var previousValue:Number = score;
         _score = value;
-        _game.dispatchEvent(new ValueChangedEvent(ValueChangedEvent.SCORE_CHANGED, previousValue, score));
+        _game.execute(new ValueChangedEvent(ValueChangedEvent.SCORE_CHANGED, previousValue, score));
     }
 
     public function get piss():Number {
@@ -52,7 +52,7 @@ public class PlayerData extends EventDispatcher {
         } else {
             _piss = value;
         }
-        _game.dispatchEvent(new ValueChangedEvent(ValueChangedEvent.PISS_CHANGED, previousPiss, piss));
+        _game.execute(new ValueChangedEvent(ValueChangedEvent.PISS_CHANGED, previousPiss, piss));
         if (pissLevel != previousPissLevel) {
             _game.pissLevel = pissLevel;
         }
@@ -70,7 +70,7 @@ public class PlayerData extends EventDispatcher {
         } else if (_vomit > 101) {
             _vomit = 101;
         }
-        _game.dispatchEvent(new ValueChangedEvent(ValueChangedEvent.VOMIT_CHANGED, oldValue, vomit));
+        _game.execute(new ValueChangedEvent(ValueChangedEvent.VOMIT_CHANGED, oldValue, vomit));
     }
 
     public function gainVomit(value:Number):void {
@@ -93,7 +93,7 @@ public class PlayerData extends EventDispatcher {
         for (var i:int = Constants.MAX_CAPACITIES - 1; i >= 0; i--) {
             if (_capacities[i] == c) {
                 _capacities[i] = Capacity.NONE;
-                _game.dispatchEvent(new CapacityEvent(CapacityEvent.CAPACITY_EXECUTED, c, i, targetToken));
+                _game.execute(new CapacityEvent(CapacityEvent.CAPACITY_EXECUTED, c, i, targetToken));
                 return true;
             }
         }
@@ -135,7 +135,7 @@ public class PlayerData extends EventDispatcher {
     public function addToken(type:TokenType):void {
         // Add token
         _stack.push(type);
-        _game.dispatchEvent(new TokenEvent(TokenEvent.TOKEN_ADDED, type));
+        _game.execute(new TokenEvent(TokenEvent.TOKEN_ADDED, type));
 
         // Check for completion
         if (_stack.length >= 3
@@ -145,20 +145,22 @@ public class PlayerData extends EventDispatcher {
             _stack.pop();
             _stack.pop();
             score += Constants.TOKEN_GROUP_VALUE;
-            _game.dispatchEvent(new TokenEvent(TokenEvent.TOKEN_GROUP_COLLECTED, null));
+            _game.execute(new TokenEvent(TokenEvent.TOKEN_GROUP_COLLECTED, null));
         }
 
         // Check for overflow
         while (_stack.length + 3 - stackCompletion > Constants.MAX_STACK) {
             var overflowToken:TokenType = _stack.shift();
-            _game.dispatchEvent(new TokenEvent(TokenEvent.TOKEN_EJECTED, overflowToken));
+            _game.execute(new TokenEvent(TokenEvent.TOKEN_EJECTED, overflowToken));
         }
     }
 
     public function doPiss():void {
+        _game.execute(new GameEvent(GameEvent.TURN_BEGIN)); // for the case of pissing last turn
         piss = Math.floor(piss * 0.4);
-        _game.dispatchEvent(new GameEvent(GameEvent.PISS));
+        _game.execute(new GameEvent(GameEvent.PISS));
         _game.newTurn();
+        _game.execute(new GameEvent(GameEvent.TURN_END)); // for the case of pissing last turn
     }
 
     public function gainCapacity(capacity:Capacity):Boolean {

@@ -91,9 +91,8 @@ public class BoardState {
     internal function generateRandomWithoutGroups(eventBuffer:EventBuffer):void {
         do {
             generateFullRandom();
-            normalize(eventBuffer);
+            normalize(eventBuffer, false);
         } while (computeMoves().length == 0);
-        clearSupers();
     }
 
     internal function generateRandomKeepingSomeVomit(eventBuffer:EventBuffer):void {
@@ -105,7 +104,7 @@ public class BoardState {
         }
         do {
             generateFullRandom();
-            normalize(DiscardEventBuffer.INSTANCE);
+            normalize(DiscardEventBuffer.INSTANCE, false);
             for each (var cell:Point in vomit) {
                 setCell(cell.x, cell.y, TokenType.VOMIT, false);
             }
@@ -161,7 +160,7 @@ public class BoardState {
         setCell(dx, dy, getCell(sx, sy), getSuper(dx, sy));
         setCell(sx, sy, destType, destSuper);
         eventBuffer.push(new GemsSwappedEvent(sx, sy, dx, dy, clone()));
-        normalize(eventBuffer);
+        normalize(eventBuffer, true);
     }
 
     private function destroyCells(cells:Array, eventBuffer:EventBuffer):void {
@@ -170,7 +169,7 @@ public class BoardState {
         }
         compact();
         eventBuffer.push(new BoardEvent(BoardEvent.CELLS_DESTROYED, cells, clone()));
-        normalize(eventBuffer);
+        normalize(eventBuffer, true);
     }
 
     internal function destroyTokensOfType(targetType:TokenType, eventBuffer:EventBuffer):int {
@@ -201,7 +200,7 @@ public class BoardState {
             }
         }
         transformCells(cells, target, false, eventBuffer);
-        normalize(eventBuffer);
+        normalize(eventBuffer, true);
         return cells.length;
     }
 
@@ -210,7 +209,7 @@ public class BoardState {
             setCell(cell.x, cell.y, target, resetSuper ? false : getSuper(cell.x, cell.y));
         }
         eventBuffer.push(new BoardEvent((target == TokenType.VOMIT) ? BoardEvent.CELLS_VOMITED : BoardEvent.CELLS_TRANSFORMED, cells, clone()));
-        normalize(eventBuffer);
+        normalize(eventBuffer, true);
     }
 
     public function cellsOfType(token:TokenType):Array {
@@ -225,12 +224,12 @@ public class BoardState {
         return cells;
     }
 
-    private function normalize(eventBuffer:EventBuffer):void {
+    private function normalize(eventBuffer:EventBuffer, generateSupers:Boolean):void {
         eventBuffer.push(new GameEvent(GameEvent.TURN_BEGIN, clone()));
         while (hasGroups) {
             eventBuffer.push(new GameEvent(GameEvent.PHASE_BEGIN, clone()));
             var groups:Array = computeGroups();
-            destroyGroups(groups);
+            destroyGroups(groups, generateSupers);
             compact();
             eventBuffer.push(new GroupCollectionEvent(groups, clone()));
             eventBuffer.push(new GameEvent(GameEvent.PHASE_END, clone()));
@@ -396,7 +395,7 @@ public class BoardState {
         return false;
     }
 
-    private function destroyGroups(groups:Array):Array {
+    private function destroyGroups(groups:Array, generateSupers:Boolean):Array {
         // Warning: this operation is tricky since we have to make sure that super-gems that are also members of a <=4 group stay
         // on board without any influence of the group destroy orders. To this prupose, destroy is implemented as a multiple pass
         // process.
@@ -413,9 +412,11 @@ public class BoardState {
                 setCell(i, j, TokenType.NONE, false);
             }
         }
-        for each (group in groups) {
-            if (group.length >= 5) {
-                setCell(group.midX, group.midY, group.token, true);
+        if (generateSupers) {
+            for each (group in groups) {
+                if (group.length >= 5) {
+                    setCell(group.midX, group.midY, group.token, true);
+                }
             }
         }
         return groups;

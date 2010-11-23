@@ -1,4 +1,6 @@
 package com.beerquest {
+import com.adobe.crypto.SHA1;
+
 public class Utils {
     function Utils() {
     }

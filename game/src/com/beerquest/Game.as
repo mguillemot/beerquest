@@ -22,6 +22,7 @@ public class Game extends EventDispatcher {
         _rand = new DeadBeefRandom(seed);
         _board = new BoardState(_rand);
         _board.generateRandomWithoutGroups(DiscardEventBuffer.INSTANCE);
+        _initialBoardEncodedState = _board.encodedState();
         execute(new GameEvent(GameEvent.GAME_START, _board.clone()));
     }
 
@@ -64,6 +65,10 @@ public class Game extends EventDispatcher {
         return _board;
     }
 
+    public function get initialBoardEncodedState():String {
+        return _initialBoardEncodedState;
+    }
+
     public function get totalTurns():int {
         return Constants.INITIAL_TOTAL_TURNS;
     }
@@ -82,6 +87,9 @@ public class Game extends EventDispatcher {
     }
 
     public function set remainingTurns(value:int):void {
+        if (value < 0) {
+            value = 0;
+        }
         var previousValue:int = remainingTurns;
         _remainingTurns = value;
         execute(new ValueChangedEvent(ValueChangedEvent.REMAINING_TURNS_CHANGED, previousValue, remainingTurns));
@@ -220,6 +228,7 @@ public class Game extends EventDispatcher {
     private var _board:BoardState;
     private var _gameOver:Boolean = false;
     private var _rand:DeadBeefRandom;
+    private var _initialBoardEncodedState:String;
 
 }
 }

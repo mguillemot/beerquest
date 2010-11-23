@@ -255,18 +255,17 @@
             </mx:Label>
         </mx:HBox>
         <mx:Spacer height="10"/>
-        <mx:HBox>
+        <mx:HBox visible="{_personalHigh}">
             <mx:Image source="@Embed(source='../../../assets/image/etoile-reccord.png')"/>
-            <mx:Label text="{I18n.t('end.solo.personal-record')}" styleName="success-end-explaination"
-                      visible="{_personalHigh}">
+            <mx:Label text="{I18n.t('end.solo.personal-record')}" styleName="success-end-explaination">
                 <mx:filters>
                     <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
             </mx:Label>
         </mx:HBox>
-        <mx:HBox>
+        <mx:HBox visible="{_barHigh}">
             <mx:Image source="@Embed(source='../../../assets/image/etoile-reccord.png')"/>
-            <mx:Label text="{I18n.t('end.solo.bar-record')}" styleName="success-end-explaination" visible="{_barHigh}">
+            <mx:Label text="{I18n.t('end.solo.bar-record')}" styleName="success-end-explaination">
                 <mx:filters>
                     <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                 </mx:filters>
@@ -409,19 +408,22 @@
         <mx:Spacer height="10"/>
         <mx:HBox horizontalGap="30">
             <ui:GenericButton width="200" height="97" click="onVsPlayAgain(event)">
-                <mx:Label text="{I18n.t('end.vs.play-again-button.1')}" styleName="button-text" fontSize="28" width="100%"
+                <mx:Label text="{I18n.t('end.vs.play-again-button.1')}" styleName="button-text" fontSize="28"
+                          width="100%"
                           y="0">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                     </mx:filters>
                 </mx:Label>
-                <mx:Label text="{I18n.t('end.vs.play-again-button.2')}" styleName="button-text" fontSize="28" width="100%"
+                <mx:Label text="{I18n.t('end.vs.play-again-button.2')}" styleName="button-text" fontSize="28"
+                          width="100%"
                           y="35">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                     </mx:filters>
                 </mx:Label>
-                <mx:Label text="{I18n.t('end.vs.play-again-button.3')}" styleName="button-text" fontSize="10" width="100%"
+                <mx:Label text="{I18n.t('end.vs.play-again-button.3')}" styleName="button-text" fontSize="10"
+                          width="100%"
                           y="73">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
@@ -429,19 +431,22 @@
                 </mx:Label>
             </ui:GenericButton>
             <ui:GenericButton width="200" height="97" click="onVsBoastDefeat(event)">
-                <mx:Label text="{I18n.t('end.vs.wall-of-shame-button.1')}" styleName="button-text" fontSize="28" width="100%"
+                <mx:Label text="{I18n.t('end.vs.wall-of-shame-button.1')}" styleName="button-text" fontSize="28"
+                          width="100%"
                           y="0">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                     </mx:filters>
                 </mx:Label>
-                <mx:Label text="{I18n.t('end.vs.wall-of-shame-button.2')}" styleName="button-text" fontSize="28" width="100%"
+                <mx:Label text="{I18n.t('end.vs.wall-of-shame-button.2')}" styleName="button-text" fontSize="28"
+                          width="100%"
                           y="35">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>
                     </mx:filters>
                 </mx:Label>
-                <mx:Label text="{I18n.t('end.vs.wall-of-shame-button.3')}" styleName="button-text" fontSize="10" width="100%"
+                <mx:Label text="{I18n.t('end.vs.wall-of-shame-button.3')}" styleName="button-text" fontSize="10"
+                          width="100%"
                           y="73">
                     <mx:filters>
                         <mx:DropShadowFilter distance="2" angle="45" blurX="0" blurY="0" alpha="1" color="0x111111"/>

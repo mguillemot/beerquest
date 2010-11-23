@@ -80,26 +80,28 @@ public class StatsModule extends UIComponent {
     }
 
     public function uploadScoreUpdate():void {
-        var data:URLVariables = _stats.getForSerialization();
-        data.token = token;
-        data.game_version = Constants.VERSION.toString();
-        data.score = Constants.GAME.me.score;
-        data.flash_version = Capabilities.version;
+        if (Constants.DEBUG) {
+            var data:URLVariables = _stats.getForSerialization();
+            data.token = token;
+            data.game_version = Constants.VERSION.toString();
+            data.score = Constants.GAME.me.score;
+            data.flash_version = Capabilities.version;
 
-        var request:URLRequest = new URLRequest("/postscore");
-        request.method = URLRequestMethod.POST;
-        request.data = data;
-        var loader:URLLoader = new URLLoader();
-        loader.addEventListener(Event.COMPLETE, function(e:Event):void {
-            trace("Score posted.");
-        });
-        try {
-            loader.load(request);
-            trace("Start post score...");
-        } catch (e:ArgumentError) {
-            trace("Post score: an ArgumentError has occurred.");
-        } catch (e:SecurityError) {
-            trace("Post score: a SecurityError has occurred.");
+            var request:URLRequest = new URLRequest("/postscore");
+            request.method = URLRequestMethod.POST;
+            request.data = data;
+            var loader:URLLoader = new URLLoader();
+            loader.addEventListener(Event.COMPLETE, function(e:Event):void {
+                trace("Score update posted.");
+            });
+            try {
+                loader.load(request);
+                trace("Start post score update...");
+            } catch (e:ArgumentError) {
+                trace("Post score update: an ArgumentError has occurred.");
+            } catch (e:SecurityError) {
+                trace("Post score update: a SecurityError has occurred.");
+            }
         }
     }
 

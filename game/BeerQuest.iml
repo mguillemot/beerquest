@@ -14,7 +14,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/assets" />
     </content>
-    <orderEntry type="jdk" jdkName="flex_sdk_4.1.0.16076 (player 10.0)" jdkType="Flex SDK Type" />
+    <orderEntry type="jdk" jdkName="flex_sdk (player 10.0)" jdkType="Flex SDK Type" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
