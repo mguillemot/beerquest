@@ -51,27 +51,23 @@ class Account
 
   def current_challenges
     res = []
-    challenges.all(:status => Challenge::STATUS_PENDING, :parent.not => nil).each { |c| res.push(c) }
-    sent_challenges.all(:status => Challenge::STATUS_PENDING, :parent.not => nil).each { |c| res.push(c) }
+    pending_challenges.all(:parent.not => nil).each { |c| res.push(c) }
+    pending_sent_challenges.all(:parent.not => nil).each { |c| res.push(c) }
     res
   end
 
   def new_received_challenges
-    challenges.all(:status => Challenge::STATUS_PENDING, :parent => nil)
+    pending_challenges.all(:parent => nil)
   end
 
   def new_sent_challenges
-    sent_challenges.all(:status => Challenge::STATUS_PENDING, :parent => nil)
+    pending_sent_challenges.all(:parent => nil)
   end
 
   def already_challenging_people
-    challenging = challenges.all(:status => Challenge::STATUS_PENDING).collect { |c| c.sent_by }
-    challenged  = sent_challenges.all(:status => Challenge::STATUS_PENDING).collect { |c| c.account }
+    challenging = pending_challenges.collect { |c| c.sent_by }
+    challenged  = pending_sent_challenges.collect { |c| c.account }
     challenging + challenged
-  end
-
-  def challenge!(from_account)
-    challenges.create(:sent_by => from_account, :required_score => Challenge::INITIAL_CHALLENGE)
   end
 
   def total_rounds
@@ -113,6 +109,27 @@ class Account
             sent_challenges.count(:parent => nil, :status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
   end
 
+  def be_challenged!(from_account)
+    if challenges_with(from_account).count(:status => Challenge::STATUS_PENDING) > 0
+      false
+    else
+      challenges.create(:sent_by => from_account, :required_score => Challenge::INITIAL_CHALLENGE)
+      update_fb_dashboard_count!
+      true
+    end
+  end
+
+  def update_fb_dashboard_count!
+    if facebook_id
+      count = pending_challenges.count
+      MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'dashboard.setCount', 'uid' => facebook_id, 'count' => count)
+      count
+    end
+  rescue
+    # Not so important, after all...
+    -1
+  end
+
   private
 
   def completed_games
@@ -135,6 +152,14 @@ class Account
     result = []
     completed_games.all(:mode => 'vs').each { |r| result.push(r) if r.challenge.sent_by == friend }
     result
+  end
+
+  def pending_challenges
+    challenges.all(:status => Challenge::STATUS_PENDING)
+  end
+
+  def pending_sent_challenges
+    sent_challenges.all(:status => Challenge::STATUS_PENDING)
   end
 
   def challenges_with(friend)

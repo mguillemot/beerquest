@@ -79,13 +79,30 @@ class AdminController < FacebookController
       if bq
         account['name'] = bq.full_name
       end
+
+      db_count = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'dashboard.getCount', 'uid' => account['id'], 'quickreturn' => true)
+      if db_count
+        account['dashboard_count'] = db_count.to_i
+      end
     end
     logger.debug "Augmented data: #{@accounts.inspect}"
+
+    # Set all accounts as mutual friends
+    for i in 0..@accounts.size
+      for j in (i+1)..@accounts.size
+        f1 = @accounts[i]
+        f2 = @accounts[j]
+        logger.debug "Friends: i=#{i} j=#{j} f1=#{f1.inspect} f2=#{f2.inspect}"
+        MiniFB.post(f1['access_token'], f1['id'], :type => 'friends/' + f2['id']) rescue logger.debug("request ko")
+        MiniFB.post(f2['access_token'], f2['id'], :type => 'friends/' + f1['id']) rescue logger.debug("accept ko")
+      end
+    end
+    logger.debug "Friends all done!"
   end
 
   def new_test_account
     cred = MiniFB.authenticate_as_app(BeerQuest::FB_APP_ID, BeerQuest::FB_SECRET)
-    call = MiniFB.post(cred['access_token'], BeerQuest::FB_APP_ID, :type => 'accounts/test-users', :installed => true)
+    call = MiniFB.post(cred['access_token'], BeerQuest::FB_APP_ID, :type => 'accounts/test-users', :installed => 'true', :permissions => 'read_stream,publish_stream')
     if call['id']
       flash[:notice] = "Test account #{call['id']} created"
     else

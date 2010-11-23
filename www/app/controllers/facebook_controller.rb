@@ -116,6 +116,10 @@ class FacebookController < ApplicationController
         logger.debug "Friend #{f_id} is no more a friend: removing him"
         @me.friends.delete @me.friends.find_by_id(f_id)
       end
+
+      # Fix dashboard count value
+      updated = @me.update_fb_dashboard_count!
+      logger.debug "Dashboard count updated to #{updated}"
     end
 
     # check admin status

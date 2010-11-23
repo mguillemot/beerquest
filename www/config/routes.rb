@@ -24,6 +24,9 @@ BeerQuest::Application.routes.draw do
   # Facebook integration
   get "session_login",              :to => "facebook#session_login",         :as => 'login'
   get "session_logout",             :to => "facebook#session_logout",        :as => 'logout'
+  
+  # Monitoring
+  get "health",                     :to => "monitoring#health",              :as => 'monitoring'
 
   # Game integration
   post "start",                     :to => "game#start",                     :as => 'game_start'

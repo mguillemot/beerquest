@@ -70,6 +70,7 @@ class Challenge
     self.score_raise = score_raise
     self.accepted_at = DateTime.now
     save
+    account.update_fb_dashboard_count!
   end
 
   def end!(score)
@@ -87,6 +88,7 @@ class Challenge
     end
     self.ended_at = DateTime.now
     save
+    account.update_fb_dashboard_count!
   end
 
   def expire!
@@ -96,6 +98,7 @@ class Challenge
     self.status   = (self.status == STATUS_ACCEPTED || self.parent != nil) ? STATUS_LOST : STATUS_EXPIRED
     self.ended_at = DateTime.now
     save
+    account.update_fb_dashboard_count!
   end
 
   def messages

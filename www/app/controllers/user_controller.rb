@@ -77,8 +77,7 @@ class UserController < FacebookController
       params[:ids].each do |id|
         account = Account.first(:facebook_id => id)
         if account
-          # TODO vérifier qu'un challenge n'existe déjà pas avec ce compte (race condition si 2 personnes se défient en même temps)
-          if account.challenge!(@me)
+          if account.be_challenged!(@me)
             logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
           else
             logger.error "An error occured when challenging user #{account.full_name} (id=#{account.id})"

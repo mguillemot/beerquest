@@ -3,10 +3,12 @@
     %th ID
     %th Login URL
     %th Name
+    %th Dashboard count
   - @accounts.each do |account|
     %tr
       %td= account['id']
       %td= link_to 'Login', account['login_url']
       %td= account['name']
+      %td= account['dashboard_count']
 
 = button_to "New", :controller => 'admin', :action => 'new_test_account', :method => 'POST'

@@ -195,7 +195,11 @@ module MiniFB
             kwargs.delete("call_id")
         end
 
-        custom_format = kwargs.include?("format") || kwargs.include?("callback")
+        custom_format = kwargs.include?("format") || kwargs.include?("callback")  
+        if kwargs["quickreturn"] # Erhune: added quickreturn
+          custom_format = true
+          kwargs.delete("quickreturn")
+        end
         kwargs["format"] ||= "JSON"
         kwargs["v"] ||= FB_API_VERSION
         kwargs["api_key"]||= api_key
