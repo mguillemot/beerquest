@@ -227,14 +227,14 @@
   {
     var url = "#{BeerQuest::FB_APP_URL}#{home_path}";
     var attachment = {
-                       name: "BQ Name",
+                       name: "#{t('bar.endgame.boast.post_title')}",
                        href: url,
-                       caption: "BQ Caption",
-                       description: "BQ Description",
+                       //caption: "",
+                       description: "#{t('bar.endgame.boast.post_message_pre')}" + score + "#{t('bar.endgame.boast.post_message_post')}",
                        media: [
                          {
                            type: 'image',
-                           src: "http://www.bq-4.com/images/bq-90x90.png",
+                           src: "#{static_asset_url('bq-90x90.png')}",
                            href: url
                          }
                        ]
@@ -249,7 +249,7 @@
     {
        method: "stream.publish",
        user_message_prompt: "#{t('bar.endgame.boast.prompt')}",
-       message: "#{t('bar.endgame.boast.default_message_pre')}" + score + "#{t('bar.endgame.boast.default_message_post')}",
+       //message: "",
        attachment: attachment,
        action_links: links 
     });

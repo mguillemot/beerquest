@@ -36,6 +36,10 @@ module ApplicationHelper
     @me && (@me.id == 1 || @me.id == 2)
   end
 
+  def static_asset_url(asset)
+    "http://www.bq-4.com/images/#{asset}"
+  end
+
   def blog_url
     "http://blog.bq-4.com/?lang=#{I18n.locale}"
   end

@@ -117,9 +117,10 @@ en:
         title: "Write a message on the bar walls"
         button: "Write"
       boast:
-        prompt: "That's the perfect time to be proud of yourself!"
-        default_message_pre: "Oh s*** I've had "
-        default_message_post: " beers on BeerQuest IV, now I'll go and take a nap... zzrhrhzZZZzzzz"
+        prompt: "Now is bragging time!"
+        post_title: "Cheers, guys!"
+        post_message_pre: "Oh s*** I've had "
+        post_message_post: " beers on BeerQuest IV, now I'll take a nap... zzrhrhzZZZzzzz"
         action: "Cheers!"
   challenge:
     title:

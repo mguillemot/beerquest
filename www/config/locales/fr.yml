@@ -118,9 +118,10 @@ fr:
         button: "Valider"
       boast:
         prompt: "Va-y, vante toi à mort !"
-        default_message_pre: "Oh con, je me suis pété "
-        default_message_post: " bières sur BeerQuest IV, c'te folie !"
-        action: "Trinquer"
+        post_title: "Santé, les gars !"
+        post_message_pre: "Oh con, je me suis pété "
+        post_message_post: " bières sur BeerQuest IV, c'te folie !"
+        action: "Trinquer !"
   challenge:
     title:
       respect_count: "%{count} Respect"
