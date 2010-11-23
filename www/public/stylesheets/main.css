@@ -128,11 +128,11 @@ body {
   border-right: 1px solid #330000;
 }
 
-#nav li.home {
+#nav li.current {
   background: #690000;
 }
 
-#nav li.home a {
+#nav li.current a {
   color: white;
 }
 
@@ -162,6 +162,15 @@ body {
 
 #flash div.notice {
   color: green;
+}
+
+#admin {
+  background: yellow;
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  width: 80%;
 }
 
 #content {

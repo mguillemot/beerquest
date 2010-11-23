@@ -6,6 +6,7 @@ class UserController < FacebookController
   CHALLENGES_PER_PAGE = 999999 # TODO faire la pagination (dans l'UI) des challenges
 
   def index
+    @nav = 'home'
     set_favorites(1)
     set_partners(1)
     set_search('(none)', 1)
@@ -63,6 +64,7 @@ class UserController < FacebookController
   end
 
   def invite
+    @nav     = 'challenge'
     @exclude = []
     @me.already_challenging_people.each do |account|
       @exclude.push(account.facebook_id) if account.facebook_id
@@ -90,13 +92,14 @@ class UserController < FacebookController
   end
 
   def challenge
-    @challenge        = Challenge.get! params[:id]
+    @nav       = 'challenge'
+    @challenge = Challenge.get! params[:id]
     if @challenge.account != @me
       raise "wrong account; challenge is for account #{@challenge.account.id}"
     end
-    @challenger       = @challenge.sent_by
-    @mode             = "vs"
-    @replay           = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
+    @challenger = @challenge.sent_by
+    @mode       = "vs"
+    @replay     = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
   end
 
   def async_challenge_messages
@@ -117,13 +120,20 @@ class UserController < FacebookController
       redirect_to challenge_url(challenge)
     else
       logger.error "Could not find corresponding challenge (expired ?)"
-      flash[:error] = "Invalid challenge (expired ?)"
+      flash[:error] = "Invalid challenge (expired ?)" # TODO localiser
       redirect_to home_url
     end
   end
 
   def refuse_challenge
     # TODO
+    redirect_to home_url
+  end
+
+  def start_challenge
+    logger.info "Starting a new challenge with user #{params[:id]}"
+    # TODO
+    redirect_to home_url
   end
 
   protected
@@ -145,7 +155,7 @@ class UserController < FacebookController
   end
 
   def set_search(prefix, page)
-    @search_prefix   = prefix
+    @search_prefix = prefix
     if @search_prefix == '123'
       results = Bar.all(:name.like => "1%") +
               Bar.all(:name.like => "2%") +
@@ -167,8 +177,8 @@ class UserController < FacebookController
       @search_page = 1
     end
 
-    @search_total    = results.count
-    @search          = results.all(:limit => BARS_PER_PAGE, :offset => (@search_page - 1) * BARS_PER_PAGE)
+    @search_total = results.count
+    @search       = results.all(:limit => BARS_PER_PAGE, :offset => (@search_page - 1) * BARS_PER_PAGE)
   end
 
   def set_current_challenges(page)

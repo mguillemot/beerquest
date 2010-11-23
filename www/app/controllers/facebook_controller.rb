@@ -58,7 +58,7 @@ class FacebookController < ApplicationController
       @me = Account.get!(session[:account_id])
       logger.debug " => fbid=#{@me.facebook_id}"
     else
-      flash.now[:notice]   = "Retrieved account info from FB: fbid=#{@facebook_id}"
+      #flash.now[:notice]   = "Retrieved account info from FB: fbid=#{@facebook_id}"
       logger.debug "Trying to retrieve user #{@facebook_id} from DB"
       @me                  = Account.first(:facebook_id => @facebook_id)
       unless @me
@@ -117,6 +117,9 @@ class FacebookController < ApplicationController
         @me.friends.delete @me.friends.find_by_id(f_id)
       end
     end
+
+    # check admin status
+    @admin = (@me.facebook_id == 1308311126 || @me.facebook_id == 674728432) # Matthieu / Joris
 
     # (facultative) add default bar
     @me.barships.create(:bar_id => Bar.default_bar.id) if @me.barships.empty?

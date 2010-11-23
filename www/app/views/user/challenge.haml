@@ -128,70 +128,96 @@
 
   function vsBoastVictory(score, goal)
   {
-
+    var url = "#{BeerQuest::FB_APP_URL}#{home_path}";
+    var attachment = {
+                       name: "#{t('challenge.endgame.boast_victory.post_title')}",
+                       href: url,
+                       description: "#{t('challenge.endgame.boast_victory.post_message_pre')}" + goal + "#{t('challenge.endgame.boast_victory.post_message_post')},
+                       media: [
+                         {
+                           type: 'image',
+                           src: "#{static_asset_url('bq-90x90.png')}",
+                           href: url
+                         }
+                       ]
+                     };
+    var links = [
+                  {
+                    text: "#{t('challenge.endgame.boast_victory.action')}",
+                    href: url
+                  }
+                ];
+    FB.ui(
+    {
+       method: "stream.publish",
+       user_message_prompt: "#{t('challenge.endgame.boast_victory.prompt')}",
+       attachment: attachment,
+       action_links: links
+    });
   }
 
   function vsBoastDefeat(score, goal)
   {
+    var url = "#{BeerQuest::FB_APP_URL}#{home_path}";
+    var attachment = {
+                       name: "#{t('challenge.endgame.boast_defeat.post_title')}",
+                       href: url,
+                       description: "#{t('challenge.endgame.boast_defeat.post_message_pre')}" + goal + "#{t('challenge.endgame.boast_defeat.post_message_mid')}" + score + "#{t('challenge.endgame.boast_defeat.post_message_post')},
+                       media: [
+                         {
+                           type: 'image',
+                           src: "#{static_asset_url('bq-90x90.png')}",
+                           href: url
+                         }
+                       ]
+                     };
+    var links = [
+                  {
+                    text: "#{t('challenge.endgame.boast_defeat.action')}",
+                    href: url
+                  }
+                ];
     FB.ui(
     {
-      method: "stream.publish",
-      user_message_prompt: "#{t('bar.endgame.boast.prompt')}",
-      message: "Je me suis fait baiser à " + goal + " bières !!!",
-      target_id: #{@challenge.sent_by.facebook_id},
-      action_links:
-      [{
-        text: "#{t('bar.endgame.boast.action')}",
-        href: "#{BeerQuest::FB_APP_URL}#{home_path}"
-      }],
-      attachement: 
-      {
-        name: "Turlututu",
-        caption: "Titre du turlututu",
-        media:
-        [{
-          'type': "image",
-          'src': "http://erhune.iobb.net:8081/images/bq-75-75.png",
-          'href': "#{BeerQuest::FB_APP_URL}#{home_path}"
-        }],
-        description: "Description du beau turlututu que voici !",
-        href: "#{BeerQuest::FB_APP_URL}#{home_path}"
-      }
-    }, function(response)
-    {
-      if (response && response.post_id)
-      {
-        //alert('Post was published.');
-      }
-      else
-      {
-        //alert('Post was not published.');
-      }
-   });
+       method: "stream.publish",
+       user_message_prompt: "#{t('challenge.endgame.boast_defeat.prompt')}",
+       attachment: attachment,
+       action_links: links
+    });
   }
 
   function vsProvoke(goal)
   {
-    
-    alert("Mur de l'ami > T'ES TROP NUL MON POTE !");
-  }
-
-  function vsPlayAgain(score, goal)
-  {
+    var url = "#{BeerQuest::FB_APP_URL}#{accept_challenge_path(@me.id)}";
+    var attachment = {
+                       name: "#{t('challenge.endgame.provoke.post_title')}",
+                       href: url,
+                       description: "#{t('challenge.endgame.provoke.post_message_pre')}" + goal + "#{t('challenge.endgame.provoke.post_message_post')},
+                       media: [
+                         {
+                           type: 'image',
+                           src: "#{static_asset_url('bq-90x90.png')}",
+                           href: url
+                         }
+                       ]
+                     };
+    var links = [
+                  {
+                    text: "#{t('challenge.endgame.provoke.action')}",
+                    href: url
+                  }
+                ];
     FB.ui(
     {
-      method: "stream.publish",
-      user_message_prompt: "#{t('bar.endgame.boast.prompt')}",
-      message: "Tu m'as bien niqué à " + goal + " bières, mon salaud !!!",
-      target_id: #{@challenge.sent_by.facebook_id},
-      action_links: [
-        { text: "#{t('bar.endgame.boast.action')}", href: "#{BeerQuest::FB_APP_URL}#{home_path}" }
-      ],
-      attachement: {media: [
-      {
-        type: "image",
-        src: "http://erhune.iobb.net:8081/images/bq-75-75.png",
-        href: "#{BeerQuest::FB_APP_URL}#{home_path}"
-      }]}
+       method: "stream.publish",
+       target_id: #{@challenge.sent_by.facebook_id},
+       user_message_prompt: "#{t('challenge.endgame.provoke.prompt')}",
+       attachment: attachment,
+       action_links: links
     });
+  }
+
+  function vsPlayAgain()
+  {
+    location = "#{BeerQuest::FB_APP_URL}#{start_challenge_path(@challenge.sent_by.id)}";
   }

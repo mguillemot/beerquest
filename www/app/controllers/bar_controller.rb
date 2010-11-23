@@ -3,7 +3,8 @@ require 'rss/2.0'
 class BarController < FacebookController
 
   def index
-    @bar = Bar.get!(params[:id])
+    @nav  = 'bar'
+    @bar  = Bar.get!(params[:id])
     @mode = "solo"
     logger.debug "Creating solo replay for user #{@me.inspect} in bar #{@bar.inspect}"
     @replay = @me.replays.create(:bar => @bar, :token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'solo')
@@ -21,7 +22,7 @@ class BarController < FacebookController
       begin
         open(@bar.rss) do |http|
           response = http.read
-          result = RSS::Parser.parse(response, false)
+          result   = RSS::Parser.parse(response, false)
           result.items[0..10].each do |item|
             @rss << {:title => item.title, :content => item.description, :url => item.link, :date => item.pubDate}
           end

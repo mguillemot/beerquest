@@ -27,15 +27,14 @@ gem 'dm-timestamps',        DM_VERSION
 gem 'dm-observer',          DM_VERSION
 gem 'dm-serializer',        DM_VERSION
 gem 'dm-adjust',            DM_VERSION
-#gem 'dm-is-tree',           DM_VERSION
 
 gem 'system_timer'
 gem 'redis'
-#gem 'redis-store',          '1.0.0.beta3' # ATTENTION! si changement de version, penser � reporter le fix pour le SID des sessions
+gem 'redis-store', '1.0.0.beta3', :path => "#{File.expand_path(__FILE__)}/../vendor/gems/redis-store-1.0.0.beta3"
 
 gem 'haml'
 
 gem 'json'
-gem 'mini_fb',              '1.1.5'
-
-#gem 'will_paginate',        '3.0.pre2'
+gem 'rest-client'
+gem 'hashie'
+gem 'mini_fb', '1.1.5', :path => "#{File.expand_path(__FILE__)}/../vendor/gems/mini_fb-1.1.5"

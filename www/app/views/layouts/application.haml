@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 %html{:xmlns => "http://www.w3.org/1999/xhtml", 'xmlns:fb' => "http://www.facebook.com/2008/fbml", 'xmlns:og' => "http://opengraphprotocol.org/schema/", :lang => I18n.locale}
   %head
-    %title= "#{t('meta.title')} - #{@me.full_name}"
+    %title= t('meta.title')
     %meta{:charset => "utf-8"}
     %meta{:property => "og:title", :content => t('meta.title')}
     %meta{:property => "og:type", :content => "game"}
@@ -46,7 +46,7 @@
       (function() {
         var e = document.createElement('script');
         e.async = true;
-        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        e.src = document.location.protocol + '//connect.facebook.net/#{I18n.locale == :fr ? 'fr_FR' : 'en_US'}/all.js';
         document.getElementById('fb-root').appendChild(e);
       }());
 
@@ -67,23 +67,27 @@
               = image_tag 'bierre-logo.png', :alt => t('beers'), :class => 'beer'
         #nav
           %ul
-            %li.home
+            %li{:class => (@nav == 'home' ? 'current' : '')}
               = link_to t('nav.home'), home_url
-            %li
+            %li{:class => (@nav == 'bar' ? 'current' : '')}
               = link_to t('nav.play'), bar_url(@me.last_bar)
-            %li
+            %li{:class => (@nav == 'challenge' ? 'current' : '')}
               = link_to t('nav.challenge'), invite_url
             %li
               = link_to t('nav.help'), help_url, :target => '_blank'
-            %li.special
+            %li{:class => (@nav == 'support_us' ? 'current' : 'special')}
               = link_to t('nav.support'), support_us_url
             %li.last
               = link_to t('nav.blog'), blog_url, :target => '_blank'
       #flash
-        -#.notice= "uid=#{@me.id} fbid=#{@me.facebook_id} fn=#{@me.full_name}"
         - if flash[:error]
           .error= flash[:error]
         - if flash[:notice]
           .notice= flash[:notice]
+      - if admin?
+        #admin
+          %div= "ADMIN! uid=#{@me.id} fbid=#{@me.facebook_id} fn=#{@me.full_name}"
+          %div
+            = link_to "Test accounts", :controller => 'admin', :action => 'test_accounts'
       #content
         = yield

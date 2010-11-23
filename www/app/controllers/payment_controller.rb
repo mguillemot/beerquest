@@ -1,6 +1,11 @@
 class PaymentController < FacebookController
 
+  def index
+    @nav = 'support_us'
+  end
+
   def donate
+    @nav     = 'support_us'
     level    = params[:level].to_i
     donation = @me.donations.create(:level => level)
     logger.info "Starting new PayPal payment for donation #{donation.id}..."
@@ -23,14 +28,15 @@ class PaymentController < FacebookController
   end
 
   def end
-    @donation         = @me.donations.first(:id => params[:id], :status => Donation::STATUS_PENDING)
+    @nav      = 'support_us'
+    @donation = @me.donations.first(:id => params[:id], :status => Donation::STATUS_PENDING)
     unless @donation
       raise "invalid donation id #{params[:id]} for user #{@me.id}"
     end
     received_token    = params[:token]
     received_payer_id = params[:PayerID]
     logger.info "Checking donation #{@donation.id} on PayPal side..."
-    details           = Paypal::Api.get_express_checkout_details(received_token)
+    details = Paypal::Api.get_express_checkout_details(received_token)
     details.log(logger)
     if details.success
       if details.token != received_token || details.token != @donation.paypal_token

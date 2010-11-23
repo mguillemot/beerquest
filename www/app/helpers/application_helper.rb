@@ -32,8 +32,8 @@ module ApplicationHelper
     result.html_safe
   end
 
-  def admin
-    @me && (@me.id == 1 || @me.id == 2)
+  def admin?
+    @admin
   end
 
   def static_asset_url(asset)

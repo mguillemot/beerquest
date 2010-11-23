@@ -147,6 +147,25 @@ fr:
       message:
         title: "Laisser un message"
         button: "Valider"
+      boast_victory:
+        prompt: "Là, c'est l'occasion d'en faire un max !"
+        post_title: "Santé, les gars !"
+        post_message_pre: "Trop facile de se taper "
+        post_message_post: " bières. La prochaine fois, envoyez-moi un VRAI défi..."
+        action: "Narguer"
+      boast_defeat:
+        prompt: "Si t'as quelque chose à rajouter..."
+        post_title: "Mon foie n'est plus ce qu'il était..."
+        post_message_pre: "Purée, "
+        post_message_mid: " bières c'était un peu trop pour mon petit foie, j'ai calé au bout de "
+        post_message_post: ". Chiotte."
+        action: "Consoler"
+      provoke:
+        prompt: "Et si tu veux en rajouter encore..."
+        post_title: "Trop facile, ton défi..."
+        post_message_pre: "Ha, tu m'as vraiment pris pour un n00b. Essaie un peu de te taper "
+        post_message_post: " bières, ça c'est un VRAI défi !"
+        action: "Répliquer"
   support_us:
     title: "Beerouare"
     subtitle: "Offrez-nous à bouare !"

@@ -1,17 +1,17 @@
-class AdminController < ApplicationController
+class AdminController < FacebookController
 
   before_filter :admin_required
 
-  # For testing purposes (out of Facebook)
-  def hack_login
-    account = Account.get(params[:id])
-    account.last_login = DateTime.now
+  # To log as another user (to see what he sees...)
+  def log_as
+    account             = Account.get(params[:id])
+    account.last_login  = DateTime.now
     account.login_count += 1
     account.save
 
-    session[:user_id] = params[:id]
+    session[:user_id]      = params[:id]
     session[:access_token] = "none"
-    session[:account_id] = params[:id]
+    session[:account_id]   = params[:id]
 
     redirect_to home_url
   end
@@ -19,7 +19,7 @@ class AdminController < ApplicationController
   # To check the validity of a replay
   def check_game
     @replay = Replay.get(params[:id])
-    @game = Game::Game.new
+    @game   = Game::Game.new
     @game.start(@replay.seed)
 #    @game.board.decode "fvvvtvvv" +
 #                               "fvvvrttv" +
@@ -30,7 +30,7 @@ class AdminController < ApplicationController
 #                               "vvvwbrrv" +
 #                               "vwwvwbbv"
     decoded_replay = JSON.parse(@replay.replay, :symbolize_names => true)
-    @steps = []
+    @steps         = []
     @steps.push("Initial status with seed=#{@replay.seed}")
     @steps.push(@game.dup)
     # TODO vérifier que les opérations (ex: swap) sont autorisées
@@ -69,11 +69,35 @@ class AdminController < ApplicationController
     render :layout => false
   end
 
+  def test_accounts
+    cred      = MiniFB.authenticate_as_app(BeerQuest::FB_APP_ID, BeerQuest::FB_SECRET)
+    call      = MiniFB.get(cred['access_token'], BeerQuest::FB_APP_ID, :type => 'accounts')
+    @accounts = call['data']
+    logger.debug "Raw data: #{@accounts.inspect}"
+    @accounts.each do |account|
+      bq = Account.first(:facebook_id => account['id'])
+      if bq
+        account['name'] = bq.full_name
+      end
+    end
+    logger.debug "Augmented data: #{@accounts.inspect}"
+  end
+
+  def new_test_account
+    cred = MiniFB.authenticate_as_app(BeerQuest::FB_APP_ID, BeerQuest::FB_SECRET)
+    call = MiniFB.post(cred['access_token'], BeerQuest::FB_APP_ID, :type => 'accounts/test-users', :installed => true)
+    if call['id']
+      flash[:notice] = "Test account #{call['id']} created"
+    else
+      flash[:error] = call.inspect
+    end
+    redirect_to :controller => 'admin', :action => 'test_accounts'
+  end
+
   private
 
   def admin_required
-    # TODO implémenter restriction par IP ?
-    true
+    @admin
   end
 
 end
