@@ -4,11 +4,13 @@
     %th Login URL
     %th Name
     %th Dashboard count
+    %th Access token
   - @accounts.each do |account|
     %tr
       %td= account['id']
       %td= link_to 'Login', account['login_url']
       %td= account['name']
       %td= account['dashboard_count']
+      %td= account['access_token']
 
 = button_to "New", :controller => 'admin', :action => 'new_test_account', :method => 'POST'
