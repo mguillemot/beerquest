@@ -244,12 +244,6 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="redis-store" version="1.0.0.beta3" bound="EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="system_timer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
