@@ -1,6 +1,6 @@
 class UserController < FacebookController
 
-  protect_from_forgery :except => [:invite_end]
+  protect_from_forgery :except => [:index, :invite_end] # index: canvas POST from Facebook
 
   BARS_PER_PAGE       = 3
   CHALLENGES_PER_PAGE = 999999 # TODO faire la pagination (dans l'UI) des challenges
