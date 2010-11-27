@@ -39,7 +39,7 @@ module ActionDispatch
         def prefixed(sid)
           "#{@default_options[:key_prefix]}#{sid}"
         end
-    
+
         def get_session(env, sid)
           puts "getsession1 #{sid.inspect}"
           sid ||= generate_sid
@@ -56,17 +56,25 @@ module ActionDispatch
         def set_session(env, sid, session_data)
           options = env['rack.session.options']
           expiry  = options[:expire_after] || nil
-      
+
           @pool.pipelined do # Erhune: plus de paramètre de bloc pour pipelined()
             @pool.set(prefixed(sid), Marshal.dump(session_data))
             @pool.expire(prefixed(sid), expiry) if expiry
           end
-        
+
           return sid # Erhune: doit retourner le SID et non true !!!
         rescue Errno::ECONNREFUSED
           return false
         end
-  
+
+        def destroy(env)
+          if sid = current_session_id(env)
+            @pool.del(prefixed(sid))
+          end
+        rescue MemCache::MemCacheError, Errno::ECONNREFUSED
+          false
+        end
+
     end
 end
 end
