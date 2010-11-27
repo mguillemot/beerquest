@@ -44,7 +44,7 @@ class Bar
   end
 
   def rank
-    all_bars = self.all.sort_by { |b| b.total_beers }
+    all_bars = Bar.all.sort_by { |b| b.total_beers }
     all_bars.each_with_index do |b, i|
       return (i + 1) if b == self
     end
