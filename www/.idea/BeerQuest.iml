@@ -189,7 +189,7 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="mini_fb" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$" git="false" path="true" doRequire="true" />
+        <dependency name="mini_fb" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$/vendor/gems/mini_fb-1.1.5" git="false" path="true" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
     </requirement>
@@ -231,7 +231,7 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="rails3-redis-session-store" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$" git="false" path="true" doRequire="true" />
+        <dependency name="rails3-redis-session-store" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$/vendor/gems/rails3-redis-session-store-0.3.0" git="false" path="true" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
     </requirement>

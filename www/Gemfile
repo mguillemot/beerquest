@@ -32,11 +32,11 @@ gem 'dm-adjust', DM_VERSION
 
 gem 'system_timer'
 gem 'redis'
-gem 'rails3-redis-session-store', '0.3.0', :path => "#{File.expand_path(__FILE__)}/../vendor/gems/rails3-redis-session-store-0.3.0"
+gem 'rails3-redis-session-store', '0.3.0', :path => "vendor/gems/rails3-redis-session-store-0.3.0"
 
 gem 'haml'
 
 gem 'json'
 gem 'rest-client'
 gem 'hashie'
-gem 'mini_fb', '1.1.5', :path => "#{File.expand_path(__FILE__)}/../vendor/gems/mini_fb-1.1.5"
+gem 'mini_fb', '1.1.5', :path => "vendor/gems/mini_fb-1.1.5"
