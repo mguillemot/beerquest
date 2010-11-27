@@ -3,7 +3,7 @@ module ApplicationHelper
   @previous_board = nil
 
   def board(board)
-    result          = "<code>"
+    result = "<code>"
     (0...Game::Board::SIZE).each do |j|
       (0...Game::Board::SIZE).each do |i|
         if @previous_board && board[i, j] != @previous_board[i, j]
@@ -50,6 +50,15 @@ module ApplicationHelper
         "http://blog.bq-4.com/spip.php?article2"
       else
         "http://blog.bq-4.com/spip.php?article4"
+    end
+  end
+
+  def support_us_blog_url
+    case I18n.locale
+      when 'fr'
+        "http://blog.bq-4.com/spip.php?article19&lang=fr"
+      else
+        "http://blog.bq-4.com/spip.php?article20&lang=en"
     end
   end
 

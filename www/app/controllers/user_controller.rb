@@ -131,7 +131,9 @@ class UserController < FacebookController
 
   def start_challenge
     logger.info "Starting a new challenge with user #{params[:id]}"
-    # TODO
+    challenged = Account.get(params[:id])
+    challenged.be_challenged!(@me)
+    flash[:notice] = "#{challenged.full_name} has been challenged"
     redirect_to home_url
   end
 

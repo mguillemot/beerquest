@@ -8,6 +8,7 @@
         %fb:multi-friend-selector{:actiontext => t('invite.selector'),
           :showborder => 'true',
           :exclude_ids => @exclude.join(','),
-          :bypass => 'cancel'}
-          -#:email_invite => 'true'
-          -#:import_external_friends => 'true'
+          :max => 35,
+          :bypass => 'cancel',
+          :email_invite => 'false',
+          :import_external_friends => 'false'}
