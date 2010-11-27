@@ -1,7 +1,7 @@
 BeerQuest::Application.routes.draw do
 
   # User pages
-  root                               :to => "user#index",                     :as => 'home', :via => [:get, :post]
+  root                               :to => "user#index",                     :as => 'home', :via => [:get, :post] # Canvas POST
   get "world-score",                :to => "user#async_world_score",         :as => 'async_world_score'
   get "bars/favorites/:page",       :to => "user#async_favorites",           :as => 'async_favorites'
   get "bars/partners/:page",        :to => "user#async_partners",            :as => 'async_partners'
@@ -10,11 +10,11 @@ BeerQuest::Application.routes.draw do
   get "challenges/sent/:page",      :to => "user#async_current_challenges",  :as => 'async_sent_challenges'
   get "challenges/received/:page",  :to => "user#async_received_challenges", :as => 'async_received_challenges'
   get "invite",                     :to => "user#invite",                    :as => 'invite'
-  match "invite-done",              :to => "user#invite_end",                :as => 'invite_end'
+  match "invite-done",              :to => "user#invite_end",                :as => 'invite_end', :via => [:get, :post]
   get "challenge/:id",              :to => "user#challenge",                 :as => 'challenge'
   get "challenge/:id/messages",     :to => "user#async_challenge_messages",  :as => 'async_challenge_messages'
-  get "accept-challenge/:id",       :to => "user#accept_challenge",          :as => 'accept_challenge'
-  get "refuse-challenge/:id",       :to => "user#refuse_challenge",          :as => 'refuse_challenge'
+  match "accept-challenge/:id",       :to => "user#accept_challenge",          :as => 'accept_challenge', :via => [:get, :post] # Canvas POST
+  match "refuse-challenge/:id",       :to => "user#refuse_challenge",          :as => 'refuse_challenge', :via => [:get, :post] # Canvas POST
   post "start-challenge/:id",       :to => "user#start_challenge",           :as => 'start_challenge'
 
   # Bar pages
