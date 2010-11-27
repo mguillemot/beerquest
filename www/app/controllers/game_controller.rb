@@ -118,7 +118,7 @@ class GameController < ApplicationController
 
   def message
     replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true, :message => nil)
-    message = params[:message].chars
+    message = params[:message].mb_chars
     if replay && message.size >= 5
       replay.message = message[0..160] # Limit message size to a Twit' worth
       replay.save
