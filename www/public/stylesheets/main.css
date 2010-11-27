@@ -201,3 +201,13 @@ body {
 .cols td.shadow {
   background: #cccccc;
 }
+
+#footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 10px;
+}
+
+#footer a {
+  color: #0500e1;
+}

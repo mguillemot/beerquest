@@ -76,7 +76,7 @@
             %li
               = link_to t('nav.help'), help_url, :target => '_blank'
             %li{:class => (@nav == 'support_us' ? 'current' : 'special')}
-              = link_to t('nav.support'), support_us_blog_url
+              = link_to t('nav.support'), support_us_blog_url, :target => '_blank'
             %li.last
               = link_to t('nav.blog'), blog_url, :target => '_blank'
       #flash
@@ -91,3 +91,13 @@
             = link_to "Test accounts", :controller => 'admin', :action => 'test_accounts'
       #content
         = yield
+      #footer
+        = link_to t('nav.blog'), blog_url, :target => '_blank'
+        |
+        = link_to t('nav.support'), support_us_blog_url, :target => '_blank'
+        |
+        = link_to t('nav.bartners'), bartners_program_url, :target => '_blank'
+        %br
+        = link_to t('nav.tos'), tos_url, :target => '_blank'
+        |
+        = link_to t('nav.privacy'), privacy_url, :target => '_blank'

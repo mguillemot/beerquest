@@ -62,6 +62,23 @@ module ApplicationHelper
     end
   end
 
+  def bartners_program_url
+    case I18n.locale
+      when 'fr'
+        "http://blog.bq-4.com/spip.php?article13&lang=fr"
+      else
+        "http://blog.bq-4.com/spip.php?article14&lang=en"
+    end
+  end
+
+  def tos_url
+    "http://blog.bq-4.com/spip.php?article8&lang=en"
+  end
+
+  def privacy_url
+    "http://blog.bq-4.com/spip.php?article7&lang=en"
+  end
+
   def portable_brewery_url
     blog_url # TODO à faire
   end

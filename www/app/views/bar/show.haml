@@ -179,7 +179,7 @@
     %td.small.shadow
 
 #message-dialog{:title => t('bar.endgame.message.title')}
-  %textarea#message-content{:rows => 3, :cols => 50}
+  %textarea#message-content.invalid{:rows => 3, :cols => 50}
 
 :javascript
   $(function() {
@@ -212,6 +212,18 @@
       },
       close: function() {
         $.get("#{async_bar_messages_url(@bar)}");
+      }
+    });
+    $('#message-content').bind('keyup change', function()
+    {
+      var len = $(this).val().length;
+      if (len >= 5 && len <= 160)
+      {
+        $(this).removeClass('invalid');
+      }
+      else
+      {
+        $(this).addClass('invalid');
       }
     });
   });

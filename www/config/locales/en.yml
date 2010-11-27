@@ -16,7 +16,11 @@ en:
     challenge: "Challenge your friends"
     help: "Help & Tricks"
     support: "Support Beer Quest!"
+    support_footer: "Give us a Beer!"
     blog: "Official BLOG"
+    bartners: "Bartners (affiliate program)"
+    tos: "Terms of service"
+    privacy: "Privacy policy"
   home:
     score:
       mode: "Score Mode"

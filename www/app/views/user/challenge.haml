@@ -81,7 +81,7 @@
     %td.small.shadow
 
 #message-dialog{:title => t('challenge.endgame.message.title')}
-  %textarea#message-content{:rows => 3, :cols => 50}
+  %textarea#message-content.invalid{:rows => 3, :cols => 50}
 
 = form_tag start_challenge_path(@challenge.sent_by.id), :method => 'post', :id => 'rechallenge-form'
 
@@ -117,6 +117,18 @@
       },
       close: function() {
         $.get("#{async_challenge_messages_url(@challenge)}");
+      }
+    });
+    $('#message-content').bind('keyup change', function()
+    {
+      var len = $(this).val().length;
+      if (len >= 5 && len <= 160)
+      {
+        $(this).removeClass('invalid');
+      }
+      else
+      {
+        $(this).addClass('invalid');
       }
     });
   });

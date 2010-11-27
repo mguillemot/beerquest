@@ -373,7 +373,12 @@ table.vs td.portrait-opponent img {
 }
 
 #message-dialog #message-content {
+  background: white;
   width: 270px;
   height: 60px;
   border: 1px solid black;
+}
+
+#message-dialog #message-content.invalid {
+  background: #f4cbcb;
 }
