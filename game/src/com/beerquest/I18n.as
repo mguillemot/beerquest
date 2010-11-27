@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by IntelliJ IDEA.
  * User: Erhune
  * Date: 18/10/10
@@ -17,23 +17,23 @@ public class I18n {
             "capacity.none.name": "?",
             "capacity.none.tooltip": "",
             "capacity.blond-furybar.name": "Fury Bar",
-            "capacity.blond-furybar.tooltip": "Récolte toutes les bières blondes du plateau, et les ajoute à ton score.",
+            "capacity.blond-furybar.tooltip": "Vidange toutes les bières blondes du plateau, et les ajoute à ton score",
             "capacity.brown-furybar.name": "Fury Bar",
-            "capacity.brown-furybar.tooltip": "Récolte toutes les bières brunes du plateau, et les ajoute à ton score.",
+            "capacity.brown-furybar.tooltip": "Vidange toutes les bières brunes du plateau, et les ajoute à ton score",
             "capacity.amber-furybar.name": "Fury Bar",
-            "capacity.amber-furybar.tooltip": "Récolte toutes les bières ambrées du plateau, et les ajoute à ton score.",
+            "capacity.amber-furybar.tooltip": "Vidange toutes les bières ambrées du plateau, et les ajoute à ton score",
             "capacity.divine-peanuts.name": "Divine Peanuts",
-            "capacity.divine-peanuts.tooltip": "Transforme la liqueur en eau.",
+            "capacity.divine-peanuts.tooltip": "Miracle ! Transforme la liqueur en eau",
             "capacity.big-bang.name": "Big Bang",
-            "capacity.big-bang.description": "Choisis un type d'objets sur le plateau et détruis les tous.",
+            "capacity.big-bang.description": "Choisis un type d'objets sur le plateau et détruis-les tous",
             "capacity.waterfall.name": "Waterfall",
-            "capacity.waterfall.tooltip": "Nettoie tout le vomito du plateau.",
+            "capacity.waterfall.tooltip": "Nettoie tout les vomis du plateau",
             "capacity.bloody-mary.name": "Bloody Mary",
-            "capacity.bloody-mary.tooltip": "Te fait gagner 5 tours supplémentaires au prix d'un peu de vomito. Burp !",
-            "turns-bar.tooltip": "Tours de jeu restant. Buvez du jus de tomate pour tenir le coup !",
-            "vomit-bar.tooltip": "Attention, à 100% : vomito (bloque 5 cases) ! Mangez des Cahouètes !",
+            "capacity.bloody-mary.tooltip": "Fait gagner 5 tours supplémentaires au prix d'un peu de vomi. Burp !",
+            "turns-bar.tooltip": "Tours de jeu restant. Bois du jus de tomate pour tenir le coup !",
+            "vomit-bar.tooltip": "Attention, à 100% : vomito (bloque 5 cases) ! Mange des Cahouètes !",
             "piss-bar.tooltip": "Attention, à partir de 80% : innondation (bloque les lignes du fond) !",
-            "score.tooltip": "Ton score. Il augmente de 1 pour chaque bière bue.",
+            "score.tooltip": "Augmente ton score de 1 pour chaque bière bue.",
             "tokens.tooltip": "Collecte 3 capsules de la même couleur pour gagner 5 de score supplémentaire !",
             "quality-button.tooltip": "Active/désactive le mode haute qualité.",
             "sound-button.tooltip": "Active/désactive les sons.",
@@ -52,7 +52,7 @@ public class I18n {
             "end.solo.boast-button.1": "S'la péter",
             "end.solo.boast-button.2": "(malgré tout)",
             "end.solo.boast-button.3": "(pour de bon)",
-            "end.solo.provoke-button": "Provoquer ses amis",
+            "end.solo.provoke-button": "Provoquer mes amis",
             "end.solo.play-again-button.1": "JOUER",
             "end.solo.play-again-button.2": "Encore",
             "end.vs.you-loose": "T'as perdu !",
@@ -141,7 +141,7 @@ public class I18n {
         if (_lang != "fr" && _lang != "en") {
             trace("WARN: Wrong language code '" + _lang + "', defaulting to 'en'");
             _lang = "en";
-//            _lang = "fr"; // TODO remettre en anglais par défaut
+            // _lang = "fr"; // for test only
         }
         trace("Language is set to: " + _lang);
     }

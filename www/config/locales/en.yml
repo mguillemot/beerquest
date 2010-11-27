@@ -1,7 +1,7 @@
 en:
   beerquest: "Beer Quest"
   meta:
-    description: "*Hic* These beers are more tricky than they seem... *Hic* The more I drink them, the more of them I'm seeing... Maybe I'm... imagining... thing.... *Burp*"
+    description: "Beer Quest IV is a puzzle game you can play on Facebook. Alone or against your friends, you have to drink a maximum of beers without vomiting (too much)."
     title: "Beer Quest IV"
     site_name: "Beer Quest IV"
   beers: "Beers"
@@ -91,7 +91,7 @@ en:
     beer_count: "%{count} beers drunk"
     right:
       news:
-        title: "Bar news"
+        title: "Bartner news"
       messages:
         title: "Messages"
     scores:
@@ -119,13 +119,13 @@ en:
       play_count: "Play count"
     endgame:
       message:
-        title: "Write a message on the bar walls"
+        title: "Leave a mark in this bar"
         button: "Write"
       boast:
         prompt: "Now is bragging time!"
         post_title: "Cheers, guys!"
-        post_message_pre: "Oh s*** I've had "
-        post_message_post: " beers on BeerQuest IV, now I'll take a nap... zzrhrhzZZZzzzz"
+        post_message_pre: "Oh maaaan I just drank "
+        post_message_post: " beers on BeerQuest IV, now I think I'll take a nap... zzrhrhzZZZzzzz *hips*"
         action: "Cheers!"
   challenge:
     title:
@@ -153,24 +153,24 @@ en:
         title: "Write a message"
         button: "Write"
       boast_victory:
-        prompt: "Là, c'est l'occasion d'en faire un max !"
-        post_title: "Santé, les gars !"
-        post_message_pre: "Trop facile de se taper "
-        post_message_post: " bières. La prochaine fois, envoyez-moi un VRAI défi..."
-        action: "Narguer"
+        prompt: "Now, it's SHOW TIME!"
+        post_title: "Cheers, dude!"
+        post_message_pre: "Only "
+        post_message_post: " beers? Next time, send me a REAL challenge!"
+        action: "Take up the challenge"
       boast_defeat:
-        prompt: "Si t'as quelque chose à rajouter..."
-        post_title: "Mon foie n'est plus ce qu'il était..."
-        post_message_pre: "Purée, "
-        post_message_mid: " bières c'était un peu trop pour mon petit foie, j'ai calé au bout de "
-        post_message_post: ". Chiotte."
-        action: "Consoler"
+        prompt: "If you have something to add..."
+        post_title: "I think I caught a cold or something..."
+        post_message_pre: "Damn, "
+        post_message_mid: " was a bit too much for my frail body, I couldn't go past "
+        post_message_post: "."
+        action: "Comfort him/her"
       provoke:
-        prompt: "Et si tu veux en rajouter encore..."
-        post_title: "Trop facile, ton défi..."
-        post_message_pre: "Ha, tu m'as vraiment pris pour un n00b. Essaie un peu de te taper "
-        post_message_post: " bières, ça c'est un VRAI défi !"
-        action: "Répliquer"
+        prompt: "There is never enough boasting..."
+        post_title: "Take it easy, man!"
+        post_message_pre: "Mistook me for a n00b? Try to drink "
+        post_message_post: " beers, THAT is a real challenge!"
+        action: "Reply sharply"
   support_us:
     title: "Beerware"
     subtitle: "Pay us a drink!"
