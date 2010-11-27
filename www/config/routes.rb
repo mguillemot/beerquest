@@ -15,7 +15,7 @@ BeerQuest::Application.routes.draw do
   get "challenge/:id/messages",     :to => "user#async_challenge_messages",  :as => 'async_challenge_messages'
   get "accept-challenge/:id",       :to => "user#accept_challenge",          :as => 'accept_challenge'
   get "refuse-challenge/:id",       :to => "user#refuse_challenge",          :as => 'refuse_challenge'
-  get "start-challenge/:id",        :to => "user#start_challenge",           :as => 'start_challenge'
+  post "start-challenge/:id",       :to => "user#start_challenge",           :as => 'start_challenge'
 
   # Bar pages
   get "bar/:id",                    :to => "bar#index",                      :as => 'bar'
