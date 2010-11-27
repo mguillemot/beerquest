@@ -92,7 +92,7 @@ class Account
   end
 
   def total_score_challenge
-    challenges.all(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]).inject(0) { |sum, c| sum + c.main_replay.score }
+    challenges.all(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]).inject(0) { |sum, c| sum + (c.main_replay ? c.main_replay.score : 0) }
   end
 
   def total_score_with(friend)
