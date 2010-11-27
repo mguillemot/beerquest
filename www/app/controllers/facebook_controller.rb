@@ -16,7 +16,7 @@ class FacebookController < ApplicationController
     session[:user_id]      = MiniFB.get(session[:access_token], 'me').id
     #bust_iframe(BeerQuest::FB_APP_URL)
     # TODO tester et voir si �a convient
-    redirect_to home_url
+    redirect_to BeerQuest::FB_APP_URL
   end
 
   def session_logout
