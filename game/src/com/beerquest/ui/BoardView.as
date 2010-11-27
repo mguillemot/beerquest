@@ -117,6 +117,7 @@ public class BoardView extends UIComponent {
 
         // Events that are properly processed
         Constants.GAME.addEventListener(GameEvent.GAME_START, processEvent);
+        Constants.GAME.addEventListener(GameEvent.GAME_OVER, processEvent);
         Constants.GAME.addEventListener(BoardEvent.BOARD_RESET, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_DESTROYED, processEvent);
         Constants.GAME.addEventListener(BoardEvent.CELLS_TRANSFORMED, processEvent);
@@ -137,6 +138,9 @@ public class BoardView extends UIComponent {
             switch (e.type) {
                 case GameEvent.GAME_START:
                     onGameStart(e as GameEvent);
+                    break;
+                case GameEvent.GAME_OVER:
+                    onGameOver(e as GameEvent);
                     break;
                 case BoardEvent.BOARD_RESET:
                     onBoardReset(e as BoardEvent);
@@ -343,6 +347,13 @@ public class BoardView extends UIComponent {
         endAction("gameStart");
         onBoardReset(new BoardEvent(BoardEvent.BOARD_RESET, new Array(), _currentActionBoardView));
         trace("Game started.");
+    }
+
+    private function onGameOver(e:GameEvent):void {
+        startAction("gameOver", e.board);
+        endAction("gameOver");
+        trace("Game over.");
+        _enabled = false;
     }
 
     private function onBoardReset(e:BoardEvent):void {
@@ -614,6 +625,9 @@ public class BoardView extends UIComponent {
     }
 
     private function selectCell(x:int, y:int):Boolean {
+        if (!_enabled) {
+            return false;
+        }
         if (x < 0 || x >= Constants.BOARD_SIZE || y < 0 || y >= Constants.BOARD_SIZE) {
             throw "invalid select coords: " + x + ":" + y;
         }
@@ -948,7 +962,7 @@ public class BoardView extends UIComponent {
     private var _hint:Token = null;
     private var _currentPissLevel:int = 0;
     private var _destroyCursor:int = 0;
-    private var _resolvingCapacity:Boolean = false;
+    private var _enabled:Boolean = true;
     private var _eventBuffer:Array = new Array();
 
     [Embed(source="../../../assets/image/board.png")]

@@ -181,7 +181,7 @@
                 TweenLite.to(gameover, 2, {y:0});
             } else {
                 TweenLite.to(gameover, 2, {y:0});
-                Alert.show("Server error while uploading score.");
+                //Alert.show("Server error while uploading score."); TODO DO NOT COMMIT
             }
         }
 

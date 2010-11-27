@@ -78,8 +78,10 @@ public class Game extends EventDispatcher {
     }
 
     public function endOfGame():void {
-        _gameOver = true;
-        execute(new GameEvent(GameEvent.GAME_OVER));
+        if (!_gameOver) {
+            _gameOver = true;
+            execute(new GameEvent(GameEvent.GAME_OVER));
+        }
     }
 
     public function get remainingTurns():int {
