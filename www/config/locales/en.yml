@@ -6,7 +6,7 @@ en:
     site_name: "Beer Quest IV"
   beers: "Beers"
   world_challenge:
-    header: "Quick! At %{goal}..."
+    header: "Promise! At %{goal}..."
     value:
       target100k: "we'll take a shower!"
       target250k: "we'll have some pigs' feet!"
@@ -14,7 +14,7 @@ en:
     home: "Home"
     play: "Play"
     challenge: "Challenge your friends"
-    help: "Help & Tricks"
+    help: "Tricks & Tips"
     support: "Support Beer Quest!"
     support_footer: "Give us a Beer!"
     blog: "Official BLOG"
@@ -41,7 +41,7 @@ en:
             other: "%{count} partner bars"
         search:
           title: "Search"
-          alphabetic_order: "By alphabetic order"
+          alphabetic_order: "By first letter"
           results:
             one: "1 Bar for «%{search}»"
             other: "%{count} Bars for «%{search}»"

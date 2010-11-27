@@ -134,6 +134,7 @@ class FacebookController < ApplicationController
       I18n.locale = 'fr'
       logger.debug "Set locale to #{I18n.locale}"
     else
+      I18n.locale = 'en'
       logger.debug "Kept default locale of #{I18n.locale}"
     end
   end
