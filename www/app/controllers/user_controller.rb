@@ -79,7 +79,7 @@ class UserController < FacebookController
         unless account
           name = @me.friends[id.to_i]
           if name
-            account = Account.new(:facebook_id => id, :full_name => name, :discovered_through => @me.id)
+            account = Account.create(:facebook_id => id, :full_name => name, :discovered_through => @me.id)
           end
         end
         if account
