@@ -2,21 +2,20 @@ class Account
   include DataMapper::Resource
 
   property :id, Serial
-  property :first_name, String, :length => 255, :required => true
-  property :last_name, String, :length => 255, :required => true
-  property :profile_picture, String, :length => 255
+  property :facebook_id, Integer, :min => 0, :max => 2**64-1, :index => true # TODO use :unique_index ?
+  property :full_name, String, :length => 255, :required => true
   property :gender, String
   property :locale, String
   property :timezone, Integer
   property :discovered_through, Integer
-  property :facebook_id, Integer, :min => 0, :max => 2**64-1, :index => true # TODO use :unique_index ?
+  property :friends, Text
   property :login_count, Integer, :required => true, :default => 0
   property :last_login, DateTime
   property :created_at, DateTime
   property :updated_at, DateTime
 
-  has n, :friendships, :constraint => :destroy
-  has n, :friends, :model => Account, :through => :friendships, :via => :friend
+#  has n, :friendships, :constraint => :destroy
+#  has n, :friends, :model => Account, :through => :friendships, :via => :friend
   has n, :barships, :constraint => :destroy
   has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
   has n, :replays, :constraint => :set_nil
@@ -24,8 +23,8 @@ class Account
   has n, :sent_challenges, :model => Challenge, :child_key => :sent_by_id, :constraint => :destroy
   has n, :donations, :constraint => :set_nil
 
-  def full_name
-    "#{first_name} #{last_name}"
+  def profile_picture
+    "http://graph.facebook.com/#{facebook_id}/picture"
   end
 
   def last_bar

@@ -7,15 +7,12 @@ class FacebookController < ApplicationController
 
   before_filter :user_details, :except => [:session_login, :session_logout]
   before_filter :set_locale
-  before_filter :check_restrictions
   before_filter :set_world_score
 
   def session_login
     reset_session
     session[:access_token] = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, login_url, BeerQuest::FB_SECRET, params[:code])['access_token']
     session[:user_id]      = MiniFB.get(session[:access_token], 'me').id
-    #bust_iframe(BeerQuest::FB_APP_URL)
-    # TODO tester et voir si �a convient
     redirect_to BeerQuest::FB_APP_URL
   end
 
@@ -73,55 +70,43 @@ class FacebookController < ApplicationController
       end
       logger.debug "Asking FB for info about user account #{@facebook_id}"
       facebook_account    = MiniFB.get(@access_token, "me")
-      @me.first_name      = facebook_account[:first_name]
-      @me.last_name       = facebook_account[:last_name]
+      @me.full_name      = facebook_account[:name]
       @me.gender          = facebook_account[:gender]
       #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
       @me.locale          = facebook_account[:locale] # ex: fr_FR
       @me.timezone        = facebook_account[:timezone] # 9
-      @me.profile_picture = "http://graph.facebook.com/#{@facebook_id}/picture"
       @me.login_count     += 1
       @me.last_login      = DateTime.now
-      @me.save
-      session[:account_id] = @me.id
 
       # Friends
-      current_friends      = @me.friendships.collect { |fs| fs.friend_id }
-      logger.debug "Current friends (before updating): #{current_friends.inspect}"
-      logger.debug "Asking FB for info about user friends"
+      logger.debug "Asking FB for info about friends"
       fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
-      fb_friends[:data].each do |f|
-        logger.debug "== friend: #{f.inspect}"
-        friend_account = Account.first(:facebook_id => f[:id])
-        unless friend_account
-          logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
-          friend_account                    = @me.friends.new
-          friend_account.facebook_id        = f[:id]
-          friend_account.discovered_through = @me.id
-          if f[:name]
-            friend_name               = f[:name].split(' ', 2)
-            friend_account.first_name = friend_name[0]
-            friend_account.last_name  = friend_name[1]
-          end
-          friend_account.profile_picture = "http://graph.facebook.com/#{f[:id]}/picture"
-          friend_account.save
-        else
-          unless current_friends.reject! { |cf| cf == f[:id] }
-            logger.debug "Friend #{f[:id]} was already existing but not registered as friend yet"
-            @me.friends << friend_account
-          else
-            logger.debug "Friend #{f[:id]} was already existing and registered as friend"
-          end
-        end
-      end
-      logger.debug "== (end)"
+      @me.friends = Marshal.dump(fb_friends)
+#      fb_friends[:data].each do |f|
+#        logger.debug "== friend: #{f.inspect}"
+#        friend_account = Account.first(:facebook_id => f[:id])
+#        if friend_account
+#          logger.debug "Friend #{f[:id]} already present in DB: do nothing"
+#        else
+#          logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
+#          friend_account                    = @me.friends.new
+#          friend_account.facebook_id        = f[:id]
+#          friend_account.name               = f[:name]
+#          friend_account.discovered_through = @me.id
+#          friend_account.save
+#        end
+#      end
+#      logger.debug "== (end)"
 
       # Remove no-more friends
-      current_friends.each do |f_id|
-        logger.debug "Friend #{f_id} is no more a friend: removing him"
-        @me.friends.delete @me.friends.find_by_id(f_id)
-      end
+#      current_friends.each do |f_id|
+#        logger.debug "Friend #{f_id} is no more a friend: removing him"
+#        @me.friends.delete @me.friends.find_by_id(f_id)
+#      end
+
+      @me.save
+      session[:account_id] = @me.id
 
       # Fix dashboard count value
       updated = @me.update_fb_dashboard_count!
@@ -143,25 +128,6 @@ class FacebookController < ApplicationController
       logger.debug "Set locale to #{I18n.locale}"
     else
       logger.debug "Kept default locale of #{I18n.locale}"
-    end
-  end
-
-  def check_restrictions
-    logger.debug "Checking FB restrictions..."
-    @restrictions = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.getRestrictionInfo', {'format' => 'JSON'})
-    @restrictions.gsub!(/\\(.)/, '\1')
-    @restrictions = @restrictions[1..-2]
-    @restrictions = JSON.parse(@restrictions)
-    logger.debug "Current restrictions are: #{@restrictions.inspect}"
-    true
-  end
-
-  def set_restrictions
-    restrictions = {:type => 'alcohol'}
-    logger.debug "Setting FB restrictions to #{restrictions.to_json}..."
-    res = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.setRestrictionInfo', {'restriction_str' => restrictions.to_json, 'format' => 'JSON'})
-    unless res == 'true'
-      logger.error "Unable to set FB restrictions"
     end
   end
 

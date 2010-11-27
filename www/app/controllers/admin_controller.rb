@@ -1,6 +1,7 @@
 class AdminController < FacebookController
 
   before_filter :admin_required
+  before_filter :check_restrictions
 
   # To log as another user (to see what he sees...)
   def log_as
@@ -115,6 +116,25 @@ class AdminController < FacebookController
 
   def admin_required
     @admin
+  end
+
+  def check_restrictions
+    logger.debug "Checking FB restrictions..."
+    @restrictions = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.getRestrictionInfo', {'format' => 'JSON'})
+    @restrictions.gsub!(/\\(.)/, '\1')
+    @restrictions = @restrictions[1..-2]
+    @restrictions = JSON.parse(@restrictions)
+    logger.debug "Current restrictions are: #{@restrictions.inspect}"
+    true
+  end
+
+  def set_restrictions
+    restrictions = {:type => 'alcohol'}
+    logger.debug "Setting FB restrictions to #{restrictions.to_json}..."
+    res = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.setRestrictionInfo', {'restriction_str' => restrictions.to_json, 'format' => 'JSON'})
+    unless res == 'true'
+      logger.error "Unable to set FB restrictions"
+    end
   end
 
 end
