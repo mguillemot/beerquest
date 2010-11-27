@@ -119,11 +119,14 @@
     });
   });
 
-  function endOfGame()
+  function endOfGame(mode, score, scoreGoal, personalHigh, barHigh)
   {
-    setTimeout(function() {
-      $('#message-dialog').dialog('open');
-    }, 3000);
+    if (mode == 'vs' && score >= scoreGoal)
+    {
+      setTimeout(function() {
+        $('#message-dialog').dialog('open');
+      }, 3000);
+    }
   }
 
   function vsBoastVictory(score, goal)

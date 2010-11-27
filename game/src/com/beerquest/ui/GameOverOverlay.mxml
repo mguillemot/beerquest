@@ -139,9 +139,9 @@
         private function endOfGameMessage():void {
             if (ExternalInterface.available) {
                 try {
-                    ExternalInterface.call("endOfGame");
+                    ExternalInterface.call("endOfGame", _mode, _score, _scoreGoal, _personalHigh, _barHigh);
                 } catch (e:SecurityError) {
-                    trace("Unable to call endOfGameMessage()");
+                    trace("Unable to call endOfGame()");
                 }
             }
         }
