@@ -47,9 +47,9 @@ module ApplicationHelper
   def help_url
     case I18n.locale.to_s
       when 'fr'
-        "http://blog.bq-4.com/spip.php?article2"
+        "http://blog.bq-4.com/spip.php?article2&lang=fr"
       else
-        "http://blog.bq-4.com/spip.php?article4"
+        "http://blog.bq-4.com/spip.php?article4&lang=en"
     end
   end
 
