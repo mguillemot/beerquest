@@ -83,6 +83,8 @@
 #message-dialog{:title => t('challenge.endgame.message.title')}
   %textarea#message-content{:rows => 3, :cols => 50}
 
+= form_tag start_challenge_path(@challenge.sent_by.id), :method => 'post', :id => 'rechallenge-form'
+
 :javascript
   $(function() {
     $('#game').flash({
@@ -222,5 +224,5 @@
 
   function vsPlayAgain()
   {
-    location = "#{BeerQuest::FB_APP_URL}#{start_challenge_path(@challenge.sent_by.id)}";
+    $('#rechallenge-form').submit();
   }

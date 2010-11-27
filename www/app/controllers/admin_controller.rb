@@ -1,4 +1,4 @@
-class AdminController < FacebookController
+class AdminController < ApplicationController
 
   before_filter :admin_required
   before_filter :check_restrictions
@@ -115,7 +115,7 @@ class AdminController < FacebookController
   private
 
   def admin_required
-    @admin
+    Rails.env == 'development' || @admin
   end
 
   def check_restrictions
