@@ -45,7 +45,7 @@ module ApplicationHelper
   end
 
   def help_url
-    case I18n.locale
+    case I18n.locale.to_s
       when 'fr'
         "http://blog.bq-4.com/spip.php?article2"
       else
@@ -54,7 +54,7 @@ module ApplicationHelper
   end
 
   def support_us_blog_url
-    case I18n.locale
+    case I18n.locale.to_s
       when 'fr'
         "http://blog.bq-4.com/spip.php?article19&lang=fr"
       else
@@ -63,7 +63,7 @@ module ApplicationHelper
   end
 
   def bartners_program_url
-    case I18n.locale
+    case I18n.locale.to_s
       when 'fr'
         "http://blog.bq-4.com/spip.php?article13&lang=fr"
       else
