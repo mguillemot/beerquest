@@ -148,7 +148,7 @@
             data.game_version = Constants.VERSION.toString();
             data.score = Constants.GAME.me.score;
             data.flash_version = Capabilities.version;
-            data.validator = SHA256.hash(Constants.GAME.me.score + token + Constants.GAME.initialBoardEncodedState);
+            data.validator = SHA1.hash(Constants.GAME.me.score + token + Constants.GAME.initialBoardEncodedState);
 
             var request:URLRequest = new URLRequest("/end");
             request.method = URLRequestMethod.POST;

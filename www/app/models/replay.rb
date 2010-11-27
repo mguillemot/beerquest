@@ -13,6 +13,7 @@ class Replay
   property :total_turns, Integer
   property :replay, Text
   property :message, Text, :length => 160
+  property :validator, String, :length => 40
   property :collected_blond, Integer
   property :collected_brown, Integer
   property :collected_amber, Integer
