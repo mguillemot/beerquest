@@ -3,7 +3,7 @@ class Challenge
 
   INITIAL_CHALLENGE  = 100
   PENDING_EXPIRATION = 1.week
-  ACCEPT_EXPIRATION  = 2.hour
+  ACCEPT_EXPIRATION  = 1.hour
   RAISE_VALUES       = [1, 3, 5, 10, 15, 20]
 
   STATUS_PENDING     = 'pending'
