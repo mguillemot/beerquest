@@ -44,10 +44,6 @@ class Account
     weekly_completed_games_in_bar(bar).max(:score) || 0
   end
 
-  def profile_picture
-    attribute_get(:profile_picture) || "/images/avatar-neutral-m.gif"
-  end
-
   def current_challenges
     res = []
     pending_challenges.all(:parent.not => nil).each { |c| res.push(c) }
