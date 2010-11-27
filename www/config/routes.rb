@@ -1,7 +1,7 @@
 BeerQuest::Application.routes.draw do
 
   # User pages
-  root                              :to => "user#index",                     :as => 'home'
+  match "",                         :to => "user#index",                     :as => 'home'
   get "world-score",                :to => "user#async_world_score",         :as => 'async_world_score'
   get "bars/favorites/:page",       :to => "user#async_favorites",           :as => 'async_favorites'
   get "bars/partners/:page",        :to => "user#async_partners",            :as => 'async_partners'
