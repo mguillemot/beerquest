@@ -1,6 +1,7 @@
 .total-beers{'data-current' => @world_score, 'data-increase' => @world_score_increase, 'data-delimiter' => t('number.format.delimiter'), 'data-target' => @world_score_target}
   = number_with_delimiter(@world_score)
+  = image_tag 'bierre-logo.png', :alt => t('beers'), :class => 'beer'
 .challenge-header
   = t 'world_challenge.header', :goal => number_with_delimiter(@world_score_target)
 .challenge-value
-  = link_to @world_score_action, "http://blog.bq-4.com/spip.php?rubrique5&lang=#{I18n.locale}", :target => '_blank'
+  = link_to @world_score_action, world_score_url, :target => '_blank'

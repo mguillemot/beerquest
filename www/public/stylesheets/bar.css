@@ -132,7 +132,6 @@ table.barscore-grid {
 }
 
 table.barscore-grid tr.me {
-  /*background: red;*/
 }
 
 table.barscore-grid td {
@@ -146,13 +145,17 @@ table.barscore-grid td.portrait {
   text-align: center;
 }
 
-table.barscore-grid td.portrait img {
+table.barscore-grid img.portrait {
   width: 50px;
   height: 50px;
   border: 3px solid red;
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+}
+
+table.barscore-grid img.portrait.me {
+  border: 3px solid #c9700b;
 }
 
 table.barscore-grid td.description {

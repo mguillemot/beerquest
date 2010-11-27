@@ -76,20 +76,23 @@ class FacebookController < ApplicationController
         @me = Account.new(:facebook_id => @facebook_id)
       end
       logger.debug "Asking FB for info about user account #{@facebook_id}"
-      facebook_account    = MiniFB.get(@access_token, "me")
-      @me.full_name      = facebook_account[:name]
-      @me.gender          = facebook_account[:gender]
+      facebook_account = MiniFB.get(@access_token, "me")
+      @me.full_name    = facebook_account[:name]
+      @me.gender       = facebook_account[:gender]
       #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
-      @me.locale          = facebook_account[:locale] # ex: fr_FR
-      @me.timezone        = facebook_account[:timezone] # 9
-      @me.login_count     += 1
-      @me.last_login      = DateTime.now
+      @me.locale       = facebook_account[:locale] # ex: fr_FR
+      @me.timezone     = facebook_account[:timezone] # 9
+      @me.login_count  += 1
+      @me.last_login   = DateTime.now
 
       # Friends
       logger.debug "Asking FB for info about friends"
       fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
-      @me.friends = fb_friends[:data].inject("") { |friends,f| "#{friends}#{f[:id]},#{f[:name]}|" }
+      @me.friends = fb_friends[:data].inject({}) do |friends, f|
+        friends[f[:id].to_i] = f[:name]
+        friends
+      end
 #      fb_friends[:data].each do |f|
 #        logger.debug "== friend: #{f.inspect}"
 #        friend_account = Account.first(:facebook_id => f[:id])
@@ -116,7 +119,7 @@ class FacebookController < ApplicationController
       session[:account_id] = @me.id
 
       # Fix dashboard count value
-      updated = @me.update_fb_dashboard_count!
+      updated              = @me.update_fb_dashboard_count!
       logger.debug "Dashboard count updated to #{updated}"
     end
 

@@ -76,6 +76,12 @@ class UserController < FacebookController
     if params[:ids]
       params[:ids].each do |id|
         account = Account.first(:facebook_id => id)
+        unless account
+          name = @me.friends[id.to_i]
+          if name
+            account = Account.new(:facebook_id => id, :name => "", :discovered_through => @me.id)
+          end
+        end
         if account
           if account.be_challenged!(@me)
             logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"

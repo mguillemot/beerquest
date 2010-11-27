@@ -1,7 +1,7 @@
 module Game
   class Constants
 
-    VERSION = 0.992
+    VERSION = "1.0"
     INITIAL_TOTAL_TURNS = 40
     TOKEN_GROUP_VALUE = 5
     SUPER_TOKEN_VALUE = 10

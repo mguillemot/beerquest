@@ -8,7 +8,7 @@ class Account
   property :locale, String
   property :timezone, Integer
   property :discovered_through, Integer
-  property :friends, Text
+  property :friends, Object
   property :login_count, Integer, :required => true, :default => 0
   property :last_login, DateTime
   property :created_at, DateTime

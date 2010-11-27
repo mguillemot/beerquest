@@ -83,4 +83,8 @@ module ApplicationHelper
     blog_url # TODO à faire
   end
 
+  def world_score_url
+    "http://blog.bq-4.com/spip.php?rubrique5&lang=#{I18n.locale}"
+  end
+
 end

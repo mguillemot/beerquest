@@ -11,7 +11,7 @@ class Barship
   belongs_to :bar
 
   def weekly_beers
-    weekly_completed_replays.sum(:score)
+    weekly_completed_replays.sum(:score) || 0
   end
 
   # TODO
@@ -29,11 +29,11 @@ class Barship
   end
 
   def total_beers
-    all_completed_replays.sum(:score)
+    all_completed_replays.sum(:score) || 0
   end
 
   def max_score
-    all_completed_replays.max(:score)
+    all_completed_replays.max(:score) || 0
   end
 
   protected
