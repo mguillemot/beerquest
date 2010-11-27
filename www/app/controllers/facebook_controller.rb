@@ -26,42 +26,37 @@ class FacebookController < ApplicationController
   private
 
   def user_details
-
-    puts "****"
-    session[:toto] = "test"
-    puts session.inspect
-    puts "****end"
-
-
     # Facebook user
     if params[:signed_request]
       logger.debug "Decoding signed request #{params[:signed_request]}"
       data = facebook_signed_request?(params[:signed_request], BeerQuest::FB_SECRET)
       logger.debug " => result is #{data.inspect}"
       if data['user_id'] && data['oauth_token']
-        logger.debug "Updating user_id=#{data['user_id']} and access_token=#{data['oauth_token']} from signed request"
-        if session[:facebook_id] != data['user_id']
-          logger.debug "Resetting account stored in session"
-          session[:account_id] = nil
-        end
+        logger.debug "Resetting session and setting facebook_id=#{data['user_id']} / access_token=#{data['oauth_token']} from signed request"
+        session[:account_id]   = nil
         session[:facebook_id]  = data['user_id']
         session[:access_token] = data['oauth_token']
+      else
+        logger.warn "Invalid signed_request => ignoring it"
       end
     end
-    @access_token = session[:access_token]
-    @facebook_id  = session[:facebook_id]
-    unless @access_token
-      logger.debug "No access token found: busting IFrame"
+    unless session[:access_token]
+      logger.warn "No access token found: busting IFrame"
       bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
       return false
     end
 
     # App user
     if session[:account_id]
+      logger.debug "Session ID is #{cookies['SID']}"
       logger.debug "Account found in session: #{session[:account_id]}"
       @me = Account.get(session[:account_id])
       if @me
-        logger.debug " => fbid=#{@me.facebook_id}"
+        logger.debug "Account retrieved from DB: #{@me.full_name} fbid=#{@me.facebook_id}"
+        if @me.facebook_id != session[:facebook_id]
+          logger.warn "Discrepency between session fbid (#{session[:facebook_id]}) and session account fbid (#{@me.facebook_id}) => re-fetching account"
+          session[:account_id] = nil
+        end
       else
         logger.warn " => impossible to get corresponding account from DB: resetting session"
         session[:account_id] = nil
@@ -69,25 +64,26 @@ class FacebookController < ApplicationController
     end
     unless session[:account_id]
       #flash.now[:notice]   = "Retrieved account info from FB: fbid=#{@facebook_id}"
-      logger.debug "Trying to retrieve user #{@facebook_id} from DB"
-      @me = Account.first(:facebook_id => @facebook_id)
+      logger.debug "Trying to retrieve user #{session[:facebook_id]} from DB"
+      @me = Account.first(:facebook_id => session[:facebook_id])
       unless @me
         logger.debug "Account didn't exist, create one"
-        @me = Account.new(:facebook_id => @facebook_id)
+        @me = Account.new(:facebook_id => session[:facebook_id])
       end
-      logger.debug "Asking FB for info about user account #{@facebook_id}"
-      facebook_account = MiniFB.get(@access_token, "me")
-      @me.full_name    = facebook_account[:name]
-      @me.gender       = facebook_account[:gender]
+      logger.debug "Asking FB for info about user account #{session[:facebook_id]}"
+      facebook_account = MiniFB.get(session[:access_token], "me")
+      logger.debug "Received result is #{facebook_account.inspect}"
+      @me.full_name   = facebook_account[:name]
+      @me.gender      = facebook_account[:gender]
       #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
-      @me.locale       = facebook_account[:locale] # ex: fr_FR
-      @me.timezone     = facebook_account[:timezone] # 9
-      @me.login_count  += 1
-      @me.last_login   = DateTime.now
+      @me.locale      = facebook_account[:locale] # ex: fr_FR
+      @me.timezone    = facebook_account[:timezone] # 9
+      @me.login_count += 1
+      @me.last_login  = DateTime.now
 
       # Friends
       logger.debug "Asking FB for info about friends"
-      fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
+      fb_friends = MiniFB.get(session[:access_token], "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
       @me.friends = fb_friends[:data].inject({}) do |friends, f|
         friends[f[:id].to_i] = f[:name]
@@ -115,6 +111,7 @@ class FacebookController < ApplicationController
 #        @me.friends.delete @me.friends.find_by_id(f_id)
 #      end
 
+      logger.debug "Saving account #{@me.id}"
       @me.save
       session[:account_id] = @me.id
 
@@ -125,9 +122,15 @@ class FacebookController < ApplicationController
 
     # check admin status
     @admin = (@me.facebook_id == 1308311126 || @me.facebook_id == 674728432) # Matthieu / Joris
+    if @admin
+      logger.debug "Account #{@me.id} is ADMIN"
+    end
 
     # (facultative) add default bar
-    @me.barships.create(:bar_id => Bar.default_bar.id) if @me.barships.empty?
+    if @me.barships.empty?
+      logger.debug "Account #{@me.id} has no barship => create default"
+      @me.barships.create(:bar_id => Bar.default_bar.id)
+    end
 
     true
   end
