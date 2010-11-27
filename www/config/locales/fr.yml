@@ -1,21 +1,21 @@
 fr:
-  beerquest: "Beer Quest"
+  beerquest: "Beer Quest IV"
   meta:
-    description: "BEER QUEST 4 ! Affrontez vos amis en buvant un maximum de bière ! Mais attention au vomi et à votre vessie qu'il faut gérer comme il faut !"
+    description: "Beer Quest 4 est un puzzle game qui fonctionne sur Facebook. En solo, ou contre vos amis votre but est de boire un maximum de bières en évitant de vous vomir dessus."
     title: "Beer Quest IV"
     site_name: "Beer Quest IV"
   beers: "Bières"
   world_challenge:
-    header: "Vite, à %{goal}..."
+    header: "Buvez %{goal} bières et..."
     value:
       target100k: "on prend une douche !"
       target250k: "on mange des pieds de cochon !"
   nav:
     home: "Accueil"
     play: "Jouer"
-    challenge: "Défie tes amis"
+    challenge: "Défier mes amis"
     help: "Aide & Astuces"
-    support: "Soutenez Beer Quest !"
+    support: "Beerware"
     support_footer: "Payez nous un coup !"
     blog: "BLOG Officiel"
     bartners: "Bartners (affiliation)"
@@ -53,7 +53,7 @@ fr:
         score_7d: "Score 7j."
         best_score: "Best score"
         enter_button: "Entrer dans ce Bar"
-    battle: 
+    battle:
       mode: "Mode Battle"
       respect_points_count:
        one: "1 Point de Respect"
@@ -61,7 +61,7 @@ fr:
       shame_points_count:
         one: "1 Point de Loose"
         other: "%{count} Points de Loose"
-      play_description_html: "<strong>Défiez vos amis</strong> et faites vous respecter pour votre descente !"
+      play_description_html: "<strong>Défiez vos amis</strong> et gagnez leur respect à coup de bière !"
       button_html: "Défier mes<br/>Amis"
       tabs:
         current:
@@ -91,7 +91,7 @@ fr:
     beer_count: "%{count} bières bues"
     right:
       news:
-        title: "News bar"
+        title: "News Bartner"
       messages:
         title: "Messages"
     scores:
@@ -119,7 +119,7 @@ fr:
       play_count: "Nombre de parties"
     endgame:
       message:
-        title: "Laisser un message dans le bar"
+        title: "Laisser une trace dans ce bar"
         button: "Valider"
       boast:
         prompt: "Va-y, vante toi à mort !"
@@ -150,27 +150,27 @@ fr:
       total_beers: "Bières au total"
     endgame:
       message:
-        title: "Laisser un message"
+        title: "Laisse un message à ton ami"
         button: "Valider"
       boast_victory:
         prompt: "Là, c'est l'occasion d'en faire un max !"
-        post_title: "Santé, les gars !"
+        post_title: "Santé, mon gars !"
         post_message_pre: "Trop facile de se taper "
         post_message_post: " bières. La prochaine fois, envoyez-moi un VRAI défi..."
-        action: "Narguer"
+        action: "Reprendre l'avantage"
       boast_defeat:
         prompt: "Si t'as quelque chose à rajouter..."
         post_title: "Mon foie n'est plus ce qu'il était..."
         post_message_pre: "Purée, "
         post_message_mid: " bières c'était un peu trop pour mon petit foie, j'ai calé au bout de "
-        post_message_post: ". Chiotte."
-        action: "Consoler"
+        post_message_post: ". Quelle honte."
+        action: "Boire plus !"
       provoke:
         prompt: "Et si tu veux en rajouter encore..."
         post_title: "Trop facile, ton défi..."
         post_message_pre: "Ha, tu m'as vraiment pris pour un n00b. Essaie un peu de te taper "
         post_message_post: " bières, ça c'est un VRAI défi !"
-        action: "Répliquer"
+        action: "Boire plus"
   support_us:
     title: "Beerouare"
     subtitle: "Offrez-nous à bouare !"
