@@ -22,11 +22,11 @@ class Bar
   def rss
     attribute_get("rss_#{I18n.locale}") || rss_en
   end
-  
+
   def total_members
     barships.count
   end
-  
+
   def active_members
     barships.count(:updated_at.gte => DateTime.now - 1.week)
   end
@@ -44,7 +44,11 @@ class Bar
   end
 
   def rank
-    1 # TODO
+    all_bars = self.all.sort_by { |b| b.total_beers }
+    all_bars.each_with_index do |b, i|
+      return (i + 1) if b == self
+    end
+    0
   end
 
   def always_high_score
@@ -117,9 +121,9 @@ class Bar
       score_list[-5 .. -1]
     end
   end
-  
+
   def extract_scores(source)
-    scores = []
+    scores  = []
     scorers = {}
     source.each do |replay|
       unless scorers[replay.account_id]

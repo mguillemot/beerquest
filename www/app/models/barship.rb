@@ -10,9 +10,8 @@ class Barship
   belongs_to :account
   belongs_to :bar
 
-  # TODO
   def weekly_beers
-    0
+    weekly_completed_replays.sum(:score)
   end
 
   # TODO
@@ -26,14 +25,25 @@ class Barship
   end
 
   def play_count
-    Replay.all(:bar => bar, :account => account, :game_over => true).count
+    all_completed_replays.count
   end
 
   def total_beers
-    Replay.all(:bar => bar, :account => account, :game_over => true).sum(:score)
+    all_completed_replays.sum(:score)
   end
 
   def max_score
-    Replay.all(:bar => bar, :account => account, :game_over => true).max(:score)
+    all_completed_replays.max(:score)
   end
+
+  protected
+
+  def all_completed_replays
+    Replay.all(:bar => bar, :account => account, :game_over => true)
+  end
+
+  def weekly_completed_replays
+    Replay.all(:bar => bar, :account => account, :game_over => true, :created_at.gte => DateTime.now - 1.week)
+  end
+
 end

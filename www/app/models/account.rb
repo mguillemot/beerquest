@@ -2,7 +2,7 @@ class Account
   include DataMapper::Resource
 
   property :id, Serial
-  property :facebook_id, Integer, :min => 0, :max => 2**64-1, :index => true # TODO use :unique_index ?
+  property :facebook_id, Integer, :min => 0, :max => 2**64-1, :unique_index => true
   property :full_name, String, :length => 255, :required => true
   property :gender, String
   property :locale, String

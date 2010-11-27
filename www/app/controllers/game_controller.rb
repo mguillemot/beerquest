@@ -6,16 +6,16 @@ class GameController < ApplicationController
     replay = Replay.first(:token => params[:token], :token_use_time => nil, :ip => request.remote_ip)
     result = {:ok => false}
     if replay
-      #replay.seed = rand(2**31-1) # TODO réactiver
-      replay.seed           = 1234
+      replay.seed           = rand(2**31-1)
+      #replay.seed           = 1234 # Test only
       replay.token_use_time = DateTime.now
       replay.save
       if replay.mode == 'vs'
         replay.challenge.accept! params[:raise]
       end
-      result[:replay_id]    = replay.id
-      result[:seed]         = replay.seed
-      result[:ok]           = true
+      result[:replay_id] = replay.id
+      result[:seed]      = replay.seed
+      result[:ok]        = true
     else
       logger.error "Token #{params[:token]} invalid for IP #{request.remote_ip}"
     end
@@ -59,7 +59,7 @@ class GameController < ApplicationController
     replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => false)
     result = {:valid => false, :personalHigh => false, :barHigh => false}
     if replay
-      result[:valid]      = true
+      result[:valid] = true
       logger.debug "Found replay #{replay.id} with token #{params[:token]}"
       # TODO check validité de la partie
       params.each do |k, v|
@@ -117,7 +117,7 @@ class GameController < ApplicationController
   end
 
   def message
-    replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true, :message => nil)
+    replay  = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true, :message => nil)
     message = params[:message].mb_chars
     if replay && message.size >= 5
       replay.message = message[0..160] # Limit message size to a Twit' worth
