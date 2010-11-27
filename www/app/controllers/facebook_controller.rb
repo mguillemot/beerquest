@@ -82,7 +82,7 @@ class FacebookController < ApplicationController
       logger.debug "Asking FB for info about friends"
       fb_friends = MiniFB.get(@access_token, "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
-      @me.friends = Marshal.dump(fb_friends)
+      @me.friends = fb_friends[:data].inject("") { |friends,f| "#{friends}#{f[:id]},#{f[:name]}|" }
 #      fb_friends[:data].each do |f|
 #        logger.debug "== friend: #{f.inspect}"
 #        friend_account = Account.first(:facebook_id => f[:id])
