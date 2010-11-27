@@ -49,4 +49,8 @@ BeerQuest::Application.configure do
   PAYPAL_USER = 'give-a-beer_api1.bq-4.com'
   PAYPAL_PWD = 'KR39A42AXSEL35D9'
   PAYPAL_SIGNATURE = 'ArVdpMVnoHAB1wJcXUBJ3rZDw55OAMw6Dxzv3iHFxxAh4QplxiWYWPRj'
+
+  # Redis
+  REDIS_HOST = "127.0.0.1"
+  REDIS_PORT = "6379"
 end

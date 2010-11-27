@@ -231,6 +231,12 @@
     </requirement>
     <requirement>
       <requirement>
+        <dependency name="rails3-redis-session-store" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$" git="false" path="true" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
         <dependency name="railties" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source manual="true" />
@@ -245,12 +251,6 @@
     <requirement>
       <requirement>
         <dependency name="redis" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="redis-store" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$" git="false" path="true" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
     </requirement>
@@ -355,13 +355,13 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] treetop (v1.4.9, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/treetop-1.4.9)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activeresource-3.0.3)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rails-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] hashie (v0.4.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/hashie-0.4.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rest-client (v1.6.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rest-client-1.6.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rails3-redis-session-store (v0.3.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rails3-redis-session-store-0.3.0)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] addressable (v2.2.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/addressable-2.2.2)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] data_objects (v0.10.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/data_objects-0.10.2)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] activemodel (v3.0.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activemodel-3.0.1)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] extlib (v0.9.15, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/extlib-0.9.15)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] mysql (v2.8.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mysql-2.8.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] hashie (v0.4.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/hashie-0.4.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rest-client (v1.6.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rest-client-1.6.1)" level="application" />
   </component>
 </module>
 

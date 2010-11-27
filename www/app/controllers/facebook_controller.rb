@@ -26,6 +26,13 @@ class FacebookController < ApplicationController
   private
 
   def user_details
+
+    puts "****"
+    session[:toto] = "test"
+    puts session.inspect
+    puts "****end"
+
+
     # Facebook user
     if params[:signed_request]
       logger.debug "Decoding signed request #{params[:signed_request]}"
