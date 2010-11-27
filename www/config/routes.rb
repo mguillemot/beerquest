@@ -18,7 +18,7 @@ BeerQuest::Application.routes.draw do
   post "start-challenge/:id",       :to => "user#start_challenge",           :as => 'start_challenge'
 
   # Bar pages
-  get "bar/:id",                    :to => "bar#index",                      :as => 'bar'
+  get "bar/:id",                    :to => "bar#show",                       :as => 'bar'
   get "bar/:id/messages",           :to => "bar#async_messages",             :as => 'async_bar_messages'
 
   # Facebook integration

@@ -2,7 +2,7 @@ require 'rss/2.0'
 
 class BarController < FacebookController
 
-  def index
+  def show
     @nav  = 'bar'
     @bar  = Bar.get!(params[:id])
     @mode = "solo"
@@ -15,7 +15,7 @@ class BarController < FacebookController
       end
     end
 
-    @barship = @me.barships.first(:bar => @bar)
+    @barship = @me.barships.first(:bar => @bar) || @me.barships.create(:bar => @bar)
 
     if @bar.rss
       @rss = []
