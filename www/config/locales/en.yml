@@ -101,6 +101,7 @@ en:
       me: "Me"
       weekly: "7 days"
       always: "Always"
+      coming_soon: "Coming soon..."
     stats:
       bar_stats: "Bar statistics"
       bar_rank: "Bar rank"

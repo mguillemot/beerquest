@@ -101,6 +101,7 @@ fr:
       me: "Moi"
       weekly: "7 jours"
       always: "Toujours"
+      coming_soon: "A venir..."
     stats:
       bar_stats: "Statistiques du bar"
       bar_rank: "Place du bar"

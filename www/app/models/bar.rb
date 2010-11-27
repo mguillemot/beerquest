@@ -67,19 +67,19 @@ class Bar
     weekly_complete_replays.all(:account_id => account.id).max(:score) || 0
   end
 
-  def weekly_scores
+  def weekly_top_scores
     weekly_high_scores[0..4]
   end
 
-  def weekly_scores_for(account)
+  def weekly_centered_scores_for(account)
     scores_for(weekly_high_scores, account)
   end
 
-  def total_scores
+  def total_top_scores
     always_high_scores[0..4]
   end
 
-  def total_scores_for(account)
+  def total_centered_scores_for(account)
     scores_for(always_high_scores, account)
   end
 
