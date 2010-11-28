@@ -11,15 +11,24 @@ class FacebookController < ApplicationController
 
   def session_login
     reset_session
-    session[:access_token] = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, login_url, BeerQuest::FB_SECRET, params[:code])['access_token']
-    session[:user_id]      = MiniFB.get(session[:access_token], 'me').id
-    redirect_to BeerQuest::FB_APP_URL
+    if params[:code]
+      logger.debug "FB login seems successful"
+      fb_oauth               = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, login_url, BeerQuest::FB_SECRET, params[:code])
+      session[:access_token] = fb_oauth['access_token']
+      session[:facebook_id]  = MiniFB.get(session[:access_token], 'me').id
+      logger.debug "Storing session: fbid=#{session[:facebook_id]} access_token=#{session[:access_token]}"
+      redirect_to BeerQuest::FB_APP_URL
+    else
+      logger.error "FB login seems error => bust IFrame and start again"
+      bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
+    end
   end
 
   def session_logout
     session[:access_token] = nil
-    session[:user_id]      = nil
+    session[:facebook_id]  = nil
     session[:account_id]   = nil
+    logger.debug "Session destroyed"
     redirect_to home_url
   end
 
