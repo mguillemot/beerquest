@@ -40,7 +40,9 @@ class FacebookController < ApplicationController
         logger.warn "Invalid signed_request => ignoring it"
       end
     end
-    unless session[:access_token]
+    if session[:access_token]
+      logger.debug "Access token is #{session[:access_token]}"
+    else
       logger.warn "No access token found: busting IFrame"
       bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
       return false
@@ -71,8 +73,15 @@ class FacebookController < ApplicationController
         @me = Account.new(:facebook_id => session[:facebook_id])
       end
       logger.debug "Asking FB for info about user account #{session[:facebook_id]}"
-      facebook_account = MiniFB.get(session[:access_token], "me")
-      logger.debug "Received result is #{facebook_account.inspect}"
+      begin
+        facebook_account = MiniFB.get(session[:access_token], "me")
+        logger.debug "Received result is #{facebook_account.inspect}"
+      rescue MiniFB::FaceBookError => ex
+        logger.error "Facebook raised #{ex.inspect} => cancelling session & busting IFrame"
+        reset_session
+        bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
+        return false
+      end
       @me.full_name   = facebook_account[:name]
       @me.gender      = facebook_account[:gender]
       #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
