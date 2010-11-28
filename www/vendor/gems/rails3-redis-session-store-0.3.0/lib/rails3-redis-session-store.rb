@@ -41,9 +41,7 @@ module ActionDispatch
         end
 
         def get_session(env, sid)
-          puts "getsession1 #{sid.inspect}"
           sid ||= generate_sid
-          puts "getsession2 #{sid.inspect}"
           begin
             data = @pool.get prefixed(sid)
             session = data.nil? ? {} : Marshal.load(data)
