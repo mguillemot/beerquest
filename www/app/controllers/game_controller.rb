@@ -129,7 +129,9 @@ class GameController < ApplicationController
   end
 
   def postwall
-    logger.debug "Receiving wall post notification from user #{@me.id} (#{@me.full_name})"
+    logger.debug "Receiving wall post notification"
+    replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true)
+    logger.debug "Concerned replay is #{replay.id} from user #{replay.account.id} (#{replay.account.full_name})"
     render :text => "OK"
   end
 
