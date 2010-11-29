@@ -139,7 +139,7 @@ class FacebookController < ApplicationController
     end
 
     # check admin status
-    @admin = (@me.facebook_id == 1308311126 || @me.facebook_id == 674728432) # Matthieu / Joris
+    @admin = (@me.facebook_id == 1308311126 || @me.facebook_id == 674728432 || @me.facebook_id == 100001262927553 || @me.facebook_id == 100001227767696) # Matthieu / Joris / Cunégonde / Gérard
     if @admin
       logger.debug "Account #{@me.id} is ADMIN"
     end
