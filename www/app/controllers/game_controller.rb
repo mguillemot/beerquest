@@ -133,8 +133,16 @@ class GameController < ApplicationController
     replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true)
     logger.debug "Concerned replay is #{replay.id} from user #{replay.account.id} (#{replay.account.full_name})"
     post = WallPost.create(:replay_id => replay.id, :post_id => params[:post_id], :from_location => params[:from_location])
-    logger.debug "Created wall post #{post.id}"
-    render :text => "OK"
+    if post.saved?
+      logger.debug "Created wall post #{post.id}"
+      render :text => "OK #{post.id}"
+    else
+      logger.error "Impossible to create wall post because of the following errors:"
+      post.errors.each do |e|
+        logger.error e
+      end
+      render :text => "KO"
+    end
   end
 
 end
