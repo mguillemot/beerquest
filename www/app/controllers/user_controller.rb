@@ -16,7 +16,7 @@ class UserController < FacebookController
         redirect_to bar_url(@me.last_bar)
       else
         challenge = @me.challenges[0]
-        logger.debug "He had #{challenge.size} challenge(s), so sending him to the first one: #{challenge.id}"
+        logger.debug "He had #{@me.challenges.size} challenge(s), so sending him to the first one: #{challenge.id}"
         redirect_to challenge_url(challenge)
       end
       return true
