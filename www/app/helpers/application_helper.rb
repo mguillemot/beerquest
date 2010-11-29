@@ -37,12 +37,13 @@ module ApplicationHelper
   end
 
   def required_version
-    (admin?) ? Game::Constants::RELEASE_VERSION : Game::Constants::DEBUG_VERSION
+    return Game::Constants::DEBUG_VERSION if @admin
+    Game::Constants::RELEASE_VERSION
   end
 
   def client_swf
     file = Game::Constants::RELEASE_VERSION
-    file = "#{Game::Constants::DEBUG_VERSION}-debug" if admin?
+    file = "#{Game::Constants::DEBUG_VERSION}-debug" if @admin
     "/swf/BeerQuest-#{file}.swf"
   end
 
