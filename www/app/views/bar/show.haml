@@ -194,14 +194,14 @@
 :javascript
   $(function() {
     $('#game').flash({
-      swf: "/swf/BeerQuest-#{Game::Constants::VERSION}.swf",
+      swf: "#{client_swf}",
       width: 520,
       height: 320,
       flashvars: {
         mode: "#{@mode}",
         lang: "#{I18n.locale}",
         token: "#{@replay.token}",
-        requiredVersion: #{Game::Constants::VERSION}
+        requiredVersion: #{required_version}
       }
     });
     $('#message-dialog').dialog({

@@ -36,6 +36,16 @@ module ApplicationHelper
     @admin
   end
 
+  def required_version
+    (admin?) ? Game::Constants::RELEASE_VERSION : Game::Constants::DEBUG_VERSION
+  end
+
+  def client_swf
+    file = Game::Constants::RELEASE_VERSION
+    file = "#{Game::Constants::DEBUG_VERSION}-debug" if admin?
+    "/swf/BeerQuest-#{file}.swf"
+  end
+
   def static_asset_url(asset)
     "http://www.bq-4.com/images/#{asset}"
   end
