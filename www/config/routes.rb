@@ -32,6 +32,7 @@ BeerQuest::Application.routes.draw do
   post "postscore",                 :to => "game#postscore",                 :as => 'post_score'
   post "end",                       :to => "game#end",                       :as => 'game_end'
   post "message",                   :to => "game#message",                   :as => 'endgame_message'
+  post "postwall",                  :to => "game#postwall",                  :as => 'postwall'
 
   # Donations
   get "support-us",                 :to => "payment#index",                  :as => 'support_us'

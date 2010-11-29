@@ -128,4 +128,9 @@ class GameController < ApplicationController
     end
   end
 
+  def postwall
+    logger.debug "Receiving wall post notification from user #{@me.id} (#{@me.full_name})"
+    render :text => "OK"
+  end
+
 end
