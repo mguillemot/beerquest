@@ -276,20 +276,11 @@
        action_links: links 
     }, function(response)
     {
-      if (response && response.post_id)
-      {
-        $.post("#{postwall_url}", {
-          token: "#{@replay.token}",
-          mode: "#{@mode}",
-          lang: "#{I18n.locale}",
-          post_id: response.post_id
-        });
-        console.log(response);
-      }
-      else
-      {
-        //alert('Post was not published.');
-      }
+      $.post("#{postwall_url}", {
+        token: "#{@replay.token}",
+        from_location: "soloBoast",
+        post_id: (response && response.post_id) ? response.post_id : null
+      });
     });
   }
 

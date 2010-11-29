@@ -132,6 +132,8 @@ class GameController < ApplicationController
     logger.debug "Receiving wall post notification"
     replay = Replay.first(:token => params[:token], :ip => request.remote_ip, :game_over => true)
     logger.debug "Concerned replay is #{replay.id} from user #{replay.account.id} (#{replay.account.full_name})"
+    post = WallPost.create(:replay_id => replay.id, :post_id => params[:post_id], :from_location => params[:from_location])
+    logger.debug "Created wall post #{post.id}"
     render :text => "OK"
   end
 

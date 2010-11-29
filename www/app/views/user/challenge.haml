@@ -170,6 +170,13 @@
        user_message_prompt: "#{t('challenge.endgame.boast_victory.prompt')}",
        attachment: attachment,
        action_links: links
+    }, function(response)
+    {
+      $.post("#{postwall_url}", {
+        token: "#{@replay.token}",
+        from_location: "vsBoastVictory",
+        post_id: (response && response.post_id) ? response.post_id : null
+      });
     });
   }
 
@@ -200,6 +207,13 @@
        user_message_prompt: "#{t('challenge.endgame.boast_defeat.prompt')}",
        attachment: attachment,
        action_links: links
+    }, function(response)
+    {
+      $.post("#{postwall_url}", {
+        token: "#{@replay.token}",
+        from_location: "vsBoastDefeat",
+        post_id: (response && response.post_id) ? response.post_id : null
+      });
     });
   }
 
@@ -231,6 +245,13 @@
        user_message_prompt: "#{t('challenge.endgame.provoke.prompt')}",
        attachment: attachment,
        action_links: links
+    }, function(response)
+    {
+      $.post("#{postwall_url}", {
+        token: "#{@replay.token}",
+        from_location: "vsProvoke",
+        post_id: (response && response.post_id) ? response.post_id : null
+      });
     });
   }
 
