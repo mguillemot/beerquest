@@ -65,7 +65,7 @@ en:
       button_html: "Challenge<br/>my Friends"
       tabs:
         current:
-          title: "Current"
+          title: "Current (%{count})"
         sent:
           title: "Sent (%{count})"
       empty:

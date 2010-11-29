@@ -65,7 +65,7 @@ fr:
       button_html: "Défier mes<br/>Amis"
       tabs:
         current:
-          title: "En cours"
+          title: "En cours (%{count})"
         sent:
           title: "Envoyés (%{count})"
       empty:
