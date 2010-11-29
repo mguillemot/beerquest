@@ -69,16 +69,12 @@
                 = link_to t('home.battle.button_html'), invite_url
         %ul.tabs
           %li
-            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.current.title'
-          %li
-            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.received.title', :count => @received_challenges_total
+            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.current.title', :count => @pending_challenges_total
           %li.last
             %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.sent.title', :count => @sent_challenges_total
         .panes
           .pane#current
             = render :partial => 'current_challenges'
-          .pane#received
-            = render :partial => 'received_challenges'
           .pane#sent
             = render :partial => 'sent_challenges'
     %td.small.shadow

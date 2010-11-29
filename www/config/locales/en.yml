@@ -66,8 +66,6 @@ en:
       tabs:
         current:
           title: "Current"
-        received:
-          title: "Received (%{count})"
         sent:
           title: "Sent (%{count})"
       empty:
@@ -93,7 +91,7 @@ en:
       news:
         title: "Bartner news"
       messages:
-        title: "Messages"
+        title: "Activity"
     scores:
       bar: "Bar scores"
       friends: "Friend scores"

@@ -362,6 +362,7 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] data_objects (v0.10.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/data_objects-0.10.2)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] activemodel (v3.0.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activemodel-3.0.1)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] extlib (v0.9.15, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/extlib-0.9.15)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] mysql (v2.8.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mysql-2.8.1)" level="application" />
   </component>
 </module>
 

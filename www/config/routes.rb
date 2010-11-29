@@ -8,7 +8,6 @@ BeerQuest::Application.routes.draw do
   get "bars/search/:prefix/:page",  :to => "user#async_search",              :as => 'async_search'
   get "challenges/current/:page",   :to => "user#async_current_challenges",  :as => 'async_current_challenges'
   get "challenges/sent/:page",      :to => "user#async_current_challenges",  :as => 'async_sent_challenges'
-  get "challenges/received/:page",  :to => "user#async_received_challenges", :as => 'async_received_challenges'
   get "invite",                     :to => "user#invite",                    :as => 'invite'
   match "invite-done",              :to => "user#invite_end",                :as => 'invite_end', :via => [:get, :post]
   get "challenge/:id",              :to => "user#challenge",                 :as => 'challenge'

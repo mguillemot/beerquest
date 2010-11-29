@@ -6,12 +6,27 @@ class UserController < FacebookController
   CHALLENGES_PER_PAGE = 999999 # TODO faire la pagination (dans l'UI) des challenges
 
   def index
+    unless @me.first_login
+      # User's first login: send him to a challenge, or by default a bar
+      logger.debug "This is account #{@me.id} (#{@me.full_name}) first time here!"
+      @me.first_login = DateTime.now
+      @me.save
+      if @me.challenges.empty?
+        logger.debug "He has no challenges, so sending him to the default bar #{@me.last_bar.id}"
+        redirect_to bar_url(@me.last_bar)
+      else
+        challenge = @me.challenges[0]
+        logger.debug "He had #{challenge.size} challenge(s), so sending him to the first one: #{challenge.id}"
+        redirect_to challenge_url(challenge)
+      end
+      return true
+    end
+
     @nav = 'home'
     set_favorites(1)
     set_partners(1)
     set_search('(none)', 1)
     set_current_challenges(1)
-    set_received_challenges(1)
     set_sent_challenges(1)
   end
 
@@ -44,13 +59,6 @@ class UserController < FacebookController
 
   def async_current_challenges
     set_current_challenges(params[:page].to_i)
-    respond_to do |format|
-      format.js { render :layout => false }
-    end
-  end
-
-  def async_received_challenges
-    set_received_challenges(params[:page].to_i)
     respond_to do |format|
       format.js { render :layout => false }
     end
@@ -119,7 +127,7 @@ class UserController < FacebookController
 
   def accept_challenge
     logger.info "Accepting the challenge sent by user #{params[:id]}"
-    challenge = @me.new_received_challenges.first(:sent_by_id => params[:id])
+    challenge = @me.challenges.first(:sent_by_id => params[:id])
     if challenge
       logger.info "Corresponding challenge found: #{challenge.id}"
       redirect_to challenge_url(challenge)
@@ -193,15 +201,8 @@ class UserController < FacebookController
     @current_challenges_page     = page
     @current_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
     @current_challenges_total    = results.count
+    @pending_challenges_total    = @me.pending_challenges_count
     @current_challenges          = results # TODO réactiver un truc du genre [((@current_challenges_page - 1) * CHALLENGES_PER_PAGE)...(@current_challenges_page * CHALLENGES_PER_PAGE)]
-  end
-
-  def set_received_challenges(page)
-    results                       = @me.new_received_challenges
-    @received_challenges_page     = page
-    @received_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
-    @received_challenges_total    = results.count
-    @received_challenges          = results.all(:limit => CHALLENGES_PER_PAGE, :offset => (@received_challenges_page - 1) * CHALLENGES_PER_PAGE)
   end
 
   def set_sent_challenges(page)

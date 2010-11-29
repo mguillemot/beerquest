@@ -1,6 +1,0 @@
-- if @received_challenges.empty?
-  .empty-challenge-grid= t 'home.battle.empty.received'
-- else
-  %table.challenge-grid
-    = render :partial => 'challenge', :collection => @received_challenges
-.battle-warning= t 'home.battle.warning.received_html'

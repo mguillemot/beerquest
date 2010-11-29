@@ -9,5 +9,5 @@ listen "#{SYS_PATH}/beerquest.socket", :backlog => 64
 timeout 30
 user "www-data"
 pid "#{SYS_PATH}/beerquest.pid"
-stderr_path "#{LOG_PATH}/unicorn.stderr.log"
-stdout_path "#{LOG_PATH}/unicorn.stdout.log"
+stderr_path "#{LOG_PATH}/beerquest.stderr.log"
+stdout_path "#{LOG_PATH}/beerquest.stdout.log"

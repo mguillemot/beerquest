@@ -10,6 +10,7 @@ class Account
   property :discovered_through, Integer
   property :friends, Object
   property :login_count, Integer, :required => true, :default => 0
+  property :first_login, DateTime
   property :last_login, DateTime
   property :created_at, DateTime
   property :updated_at, DateTime
@@ -45,14 +46,11 @@ class Account
   end
 
   def current_challenges
-    res = []
-    pending_challenges.all(:parent.not => nil).each { |c| res.push(c) }
-    pending_sent_challenges.all(:parent.not => nil).each { |c| res.push(c) }
-    res
+    pending_challenges + pending_sent_challenges.all(:parent.not => nil)
   end
 
-  def new_received_challenges
-    pending_challenges.all(:parent => nil)
+  def pending_challenges_count
+    pending_challenges.size
   end
 
   def new_sent_challenges
