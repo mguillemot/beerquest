@@ -131,7 +131,7 @@ class FacebookController < ApplicationController
 
         # Check the account is registered as friend
         if my_current_friends[friend_account.id]
-          my_current_friends[friend_account.id] = nil
+          my_current_friends.delete(friend_account.id)
         else
           @me.friendships.create(:friend_id => friend_account.id)
         end
