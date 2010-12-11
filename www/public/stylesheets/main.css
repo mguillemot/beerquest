@@ -210,3 +210,27 @@ body {
 #footer a {
   color: #0500e1;
 }
+
+#facebox h1 {
+  font-size: 28px;
+  text-align: center;
+}
+
+#facebox table.nav {
+  width: 100%;
+}
+
+#facebox table.nav td.left {
+  width: 35%;
+  text-align: right;
+}
+
+#facebox table.nav td.center {
+  width: 30%;
+  text-align: center;
+}
+
+#facebox table.nav td.right {
+  width: 35%;
+  text-align: left;
+}
