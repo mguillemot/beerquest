@@ -50,6 +50,7 @@ class Account
 
   def already_invited_friends_fbids
     # TODO ajouter les amis déjà invités mais qui ne jouent pas encore
+    # TODO enlever les amis qui jouent déjà mais qui ont un weekly_top à 0
     friends.map { |f| f.facebook_id }
   end
 

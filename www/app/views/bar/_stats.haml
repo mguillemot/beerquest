@@ -1,8 +1,7 @@
 %table.stats
   %tr
     %td.left
-      .header
-        = t 'bar.stats.bar_stats'
+      %h3= t('bar.stats.bar_stats')
       .stat
         .section
           = t 'bar.stats.bar_rank'
@@ -28,8 +27,7 @@
           = image_tag 'mini-biere.png', :alt => t('beers')
           = number_with_delimiter(@bar.total_beers)
     %td.right
-      .header
-        = t 'bar.stats.my_stats'
+      %h3= t('bar.stats.my_stats')
       .portrait
         = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
       .stat

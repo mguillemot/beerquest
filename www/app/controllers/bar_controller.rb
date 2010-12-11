@@ -17,6 +17,7 @@ class BarController < FacebookController
 
     @barship = @me.barships.first(:bar => @bar) || @me.barships.create(:bar => @bar)
 
+    # TODO limiter à un certain nombre d'entrées (7 affichables actuellement)
     if @bar.rss
       @rss = []
       begin

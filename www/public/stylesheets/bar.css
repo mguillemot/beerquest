@@ -1,3 +1,10 @@
+h3 {
+  font-weight: bold;
+  font-size: 12px;
+  color: #ce0000;
+  margin-bottom: 5px;
+}
+
 .cols .unique-col {
   width: 730px;
   border: 5px solid #ff8800;
@@ -21,33 +28,21 @@ table.bar-area td.bar-name {
 }
 
 table.bar-area td#rss {
-  width: 200px;
-  height: 80px;
+  width: auto;
   background: #fff4c7;
   border: 1px solid #ff8800;
   padding: 4px;
-  overflow: hidden;
-}
-
-table.bar-area tr.bottom1 {
-  height: 50px;
-}
-
-table.bar-area tr.bottom2 {
-  height: 30px;
 }
 
 table.bar-area td#activity {
-  width: 200px;
-  height: 200px;
+  width: 170px;
   background: #fff4c7;
   border: 1px solid #ff8800;
   padding: 4px;
-  overflow: hidden;
 }
 
 table.bar-area td#stats {
-  width: 223px;
+  width: auto;
   background: #fff4c7;
   border: 1px solid #ff8800;
   padding: 4px;
@@ -59,15 +54,12 @@ table.bar-area td#stats {
   right: 5px;
 }
 
-.stats td {
-  width: 50%;
+.stats {
+  width: 100%;
 }
 
-.stats div.header {
-  font-weight: bold;
-  font-size: 12px;
-  color: #ce0000;
-  margin-bottom: 5px;
+.stats td {
+  width: 50%;
 }
 
 .stats img.portrait {
@@ -116,16 +108,30 @@ td.bar-name a {
   text-decoration: underline;
 }
 
+td.bar-name a:hover {
+  text-decoration: none;
+}
+
 #game {
   width: 520px;
   height: 320px;
   overflow: hidden;
 }
 
+ul.rss {
+  height: 120px;
+  overflow-y: hidden;
+}
+
 ul.rss li {
   list-style: url("/images/mini-beer-yellow.png");
   margin-left: 20px;
   margin-bottom: 5px;
+}
+
+ul.messages {
+  height: 318px;
+  overflow: hidden;
 }
 
 ul.messages li {
@@ -205,82 +211,10 @@ td.sidebar ul.tabs li.current a {
 td.sidebar div.pane {
   background: #f6f6f6;
   padding: 3px;
-  height: 500px;
-  overflow: auto;
-}
-
-td.sidebar div.pane {
+  height: 570px;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid #ff8800;
-}
-
-tr.bottom ul.tabs {
-  margin-top: 8px;
-  margin-bottom: 3px;
-  font-weight: bold;
-}
-
-tr.bottom ul.tabs li {
-  position: relative;
-  top: -3px;
-  display: inline;
-  background: #eee6c4;
-  padding: 5px 10px;
-}
-
-tr.bottom ul.tabs li {
-  border-bottom: 1px solid #ff8800;
-  border-left: 1px solid #ff8800;
-}
-
-tr.bottom ul.tabs li.last {
-  border-right: 1px solid #ff8800;
-}
-
-tr.bottom ul.tabs li.current {
-  background: #fff4c7;
-  border-top: 1px solid #fff4c7;
-}
-
-tr.bottom ul.tabs li a {
-  font-size: 11px;
-}
-
-tr.bottom ul.tabs li.current a {
-  color: #ff6702;
-}
-
-tr.bottom div.pane {
-  background: #fff4c7;
-  padding: 3px;
-}
-
-tr.bottom div.pane {
-  border: 1px solid #ff8800;
-}
-
-tr.bottom table {
-  margin-bottom: 5px;
-  width: 100%;
-}
-
-tr.bottom table td.header {
-  font-weight: bold;
-  font-size: 12px;
-  color: #ce0000;
-}
-
-tr.bottom table td.subnav {
-  text-align: right;
-  font-size: 11px;
-}
-
-tr.bottom table td.subnav a {
-  text-decoration: underline;
-}
-
-tr.bottom table td.subnav a.current {
-  font-weight: bold;
-  text-decoration: none;
 }
 
 #message-dialog {

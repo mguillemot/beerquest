@@ -75,7 +75,7 @@ class Bar
   end
 
   def messages
-    complete_replays.all(:order => :created_at.desc, :limit => 20) #, :message.not => nil)
+    complete_replays.all(:order => :created_at.desc, :limit => 8)
   end
 
   private

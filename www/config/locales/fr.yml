@@ -42,7 +42,7 @@ fr:
     beer_count: "%{count} bières bues"
     how_to_play: "Comment jouer ?"
     news:
-      title: "Actualités"
+      title: "Actualités du bartner"
     messages:
       title: "Clients du BAR"
     scores:

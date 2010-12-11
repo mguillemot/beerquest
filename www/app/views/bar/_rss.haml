@@ -1,4 +1,8 @@
+%h3= t('bar.news.title')
 %ul.rss
+  - @rss.each do |rss|
+    %li
+      %a{:href => rss[:url], :target => '_blank'}= rss[:title]
   - @rss.each do |rss|
     %li
       %a{:href => rss[:url], :target => '_blank'}= rss[:title]
