@@ -1,0 +1,14 @@
+.title
+  Classement par :
+%ul.tabs
+  %li
+    %a{:href => 'javascript:void(0)'} Amis
+  %li.last
+    %a{:href => 'javascript:void(0)'} BAR
+.panes
+  .pane#friends-scores
+    %table.barscore-grid
+      = render :partial => 'barscore', :collection => @me.weekly_friends_scores
+  .pane#bar-scores
+    %table.barscore-grid
+      = render :partial => 'barscore', :collection => @bar.weekly_top_scores

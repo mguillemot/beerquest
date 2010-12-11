@@ -3,7 +3,7 @@ class Replay
 
   property :id, Serial
   property :account_id, Integer, :min => 1 # Note: required declaration to have NULLable FK
-  property :bar_id, Integer, :min => 1     # Note: required declaration to have NULLable FK
+  property :bar_id, Integer, :min => 1 # Note: required declaration to have NULLable FK
   property :challenge_id, Integer, :min => 1
   property :score, Integer, :index => true
   property :mode, String, :required => true # solo, vs
@@ -69,4 +69,50 @@ class Replay
   def self.finished
     self.all(:game_over => true)
   end
+
+  def self.extract_friends_scores_of(account)
+    friend_ids = account.friends.map { |f| f.id }
+    friend_ids << account.id
+    min_date = DateTime.now - 2.weeks
+    raw      = repository(:default).adapter.select "SELECT account_id, MAX(score) AS score
+                                                FROM replays
+                                                WHERE game_over = 1
+                                                  AND created_at >= '#{min_date}'
+                                                  AND account_id IN (#{friend_ids.join(',')})
+                                                GROUP BY account_id
+                                                ORDER BY score DESC;"
+    accounts = Account.all(:id => friend_ids).inject({}) do |accs, acc|
+      accs[acc.id] = acc
+      accs
+    end
+    scores = []
+    raw.each do |r|
+      acc = accounts[r.account_id]
+      scores << {:rank => scores.length + 1, :account_id => acc.id, :profile_picture => acc.profile_picture, :name => acc.first_name, :score => r.score}
+    end
+    scores
+  end
+
+  def self.extract_bar_scores_of(bar)
+    min_date = DateTime.now - 2.weeks
+    raw      = repository(:default).adapter.select "SELECT account_id, MAX(score) AS score
+                                                FROM replays
+                                                WHERE game_over = 1
+                                                  AND created_at >= '#{min_date}'
+                                                  AND bar_id = #{bar.id}
+                                                GROUP BY account_id
+                                                ORDER BY score DESC;"
+    client_ids = raw.map { |r| r.account_id }
+    accounts = bar.accounts.inject({}) do |accs, acc|
+      accs[acc.id] = acc
+      accs
+    end
+    scores = []
+    raw.each do |r|
+      acc = accounts[r.account_id]
+      scores << {:rank => scores.length + 1, :account_id => acc.id, :profile_picture => acc.profile_picture, :name => acc.first_name, :score => r.score}
+    end
+    scores
+  end
+
 end

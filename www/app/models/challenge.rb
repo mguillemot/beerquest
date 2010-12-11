@@ -1,3 +1,5 @@
+# TODO classe plus pertinente désormais
+
 class Challenge
   include DataMapper::Resource
 

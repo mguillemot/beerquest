@@ -43,7 +43,7 @@ class Barship
   end
 
   def weekly_completed_replays
-    Replay.all(:bar => bar, :account => account, :game_over => true, :created_at.gte => DateTime.now - 1.week)
+    Replay.all(:bar => bar, :account => account, :game_over => true, :created_at.gte => DateTime.now - 2.weeks)
   end
 
 end

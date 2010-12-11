@@ -115,7 +115,7 @@ class FacebookController < ApplicationController
 #      end
       fb_friends_ids = fb_friends[:data].map { |f| f[:id].to_i }
       logger.debug "Friends fbids are #{fb_friends_ids.inspect}"
-      fb_friends_accounts = Account.all(:facebook_id.in => fb_friends_ids).inject({}) do |accounts, acc|
+      fb_friends_accounts = Account.all(:facebook_id => fb_friends_ids).inject({}) do |accounts, acc|
         accounts[acc.facebook_id] = acc.id
         accounts
       end

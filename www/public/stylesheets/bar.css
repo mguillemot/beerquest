@@ -220,7 +220,7 @@ td.sidebar ul.tabs li.current a {
 td.sidebar div.pane {
   background: #f6f6f6;
   padding: 3px;
-  height: 288px;
+  height: 500px;
   overflow: auto;
 }
 

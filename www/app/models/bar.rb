@@ -14,6 +14,7 @@ class Bar
   property :updated_at, DateTime
 
   has n, :barships, :constraint => :destroy
+  has n, :accounts, :through => :barships
   has n, :replays, :constraint => :set_nil
 
   def self.default_bar
@@ -29,11 +30,11 @@ class Bar
   end
 
   def active_members
-    barships.count(:updated_at.gte => DateTime.now - 1.week)
+    barships.count(:updated_at.gte => DateTime.now - 2.weeks)
   end
 
   def new_active_members
-    barships.count(:created_at.gte => DateTime.now - 1.week)
+    barships.count(:created_at.gte => DateTime.now - 2.weeks)
   end
 
   def total_beers
@@ -69,19 +70,7 @@ class Bar
   end
 
   def weekly_top_scores
-    weekly_high_scores[0..4]
-  end
-
-  def weekly_centered_scores_for(account)
-    scores_for(weekly_high_scores, account)
-  end
-
-  def total_top_scores
-    always_high_scores[0..4]
-  end
-
-  def total_centered_scores_for(account)
-    scores_for(always_high_scores, account)
+    Replay.extract_bar_scores_of(self)
   end
 
   def messages
@@ -95,53 +84,7 @@ class Bar
   end
 
   def weekly_complete_replays
-    complete_replays.all(:created_at.gte => DateTime.now - 1.week)
+    complete_replays.all(:created_at.gte => DateTime.now - 2.weeks)
   end
-
-  def scores_for(score_list, account)
-    n = score_list.length
-    i = score_list.find_index { |score| score[:account_id] == account.id }
-    if i
-      a = 2
-      b = 2
-      if i == 0
-        a -= 2
-        b += 2
-      elsif i == 1
-        a -= 1
-        b += 1
-      elsif i == n-1
-        a += 2
-        b -= 2
-      elsif i == n-2
-        a += 1
-        b -= 1
-      end
-      score_list[[i-a, 0].max .. [i+b, n-1].min]
-    else
-      score_list[-5 .. -1]
-    end
-  end
-
-  def extract_scores(source)
-    scores  = []
-    scorers = {}
-    source.each do |replay|
-      unless scorers[replay.account_id]
-        scores << {:rank => scores.length+1, :account_id => replay.account_id, :full_name => replay.account.full_name, :profile_picture => replay.account.profile_picture, :score => replay.score}
-        scorers[replay.account_id] = true
-      end
-    end
-    scores
-  end
-
-  def always_high_scores
-    extract_scores(complete_replays.all(:game_over => true, :order => :score.desc))
-  end
-
-  def weekly_high_scores
-    extract_scores(weekly_complete_replays.all(:game_over => true, :order => :score.desc))
-  end
-
 
 end

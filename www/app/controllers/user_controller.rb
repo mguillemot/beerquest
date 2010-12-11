@@ -73,10 +73,7 @@ class UserController < FacebookController
 
   def invite
     @nav     = 'challenge'
-    @exclude = []
-    @me.already_challenging_people.each do |account|
-      @exclude.push(account.facebook_id) if account.facebook_id
-    end
+    @exclude = @me.already_invited_friends_fbids
   end
 
   def invite_end

@@ -58,70 +58,30 @@ class Account
     pending_sent_challenges.all(:parent => nil)
   end
 
-  def already_challenging_people
-    challenging = pending_challenges.collect { |c| c.sent_by }
-    challenged  = pending_sent_challenges.collect { |c| c.account }
-    challenging + challenged
-  end
-
-  def total_rounds
-    challenges.count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]) +
-            sent_challenges.count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
-  end
-
-  def total_rounds_with(friend)
-    challenges_with(friend).count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]) +
-            sent_challenges_with(friend).count(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
-  end
-
-  def total_victories
-    sent_challenges.count(:status => Challenge::STATUS_LOST)
-  end
-
-  def total_victories_with(friend)
-    sent_challenges_with(friend).count(:status => Challenge::STATUS_LOST)
-  end
-
-  def total_defeats
-    challenges.count(:status => Challenge::STATUS_LOST)
-  end
-
-  def total_defeats_with(friend)
-    challenges_with(friend).count(:status => Challenge::STATUS_LOST)
-  end
-
-  def total_score_challenge
-    challenges.all(:status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]).inject(0) { |sum, c| sum + (c.main_replay ? c.main_replay.score : 0) }
+  def already_invited_friends_fbids
+    # TODO ajouter les amis déjà invités mais qui ne jouent pas encore
+    friends.map { |f| f.facebook_id }
   end
 
   def total_score_with(friend)
     replays_with(friend).inject(0) { |sum, replay| sum + replay.score }
   end
 
-  def total_challenges
-    challenges.count(:parent => nil, :status => [Challenge::STATUS_WON, Challenge::STATUS_LOST]) +
-            sent_challenges.count(:parent => nil, :status => [Challenge::STATUS_WON, Challenge::STATUS_LOST])
-  end
-
-  def be_challenged!(from_account)
-    if challenges_with(from_account).count(:status => Challenge::STATUS_PENDING) > 0
-      false
-    else
-      challenges.create(:sent_by => from_account, :required_score => Challenge::INITIAL_CHALLENGE)
-      update_fb_dashboard_count!
-      true
-    end
-  end
-
   def update_fb_dashboard_count!
-    if facebook_id
-      count = pending_challenges.count
-      MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'dashboard.setCount', 'uid' => facebook_id, 'count' => count)
-      count
-    end
+    # TODO réactiver d'une autre manière quand ça sera pertinent
+    -1
+#    if facebook_id
+#      count = pending_challenges.count
+#      MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'dashboard.setCount', 'uid' => facebook_id, 'count' => count)
+#      count
+#    end
   rescue
     # Not so important, after all...
     -1
+  end
+
+  def weekly_friends_scores
+    Replay.extract_friends_scores_of(self)
   end
 
   private
@@ -131,7 +91,7 @@ class Account
   end
 
   def weekly_completed_games
-    completed_games.all(:created_at.gte => DateTime.now - 1.week)
+    completed_games.all(:created_at.gte => DateTime.now - 2.weeks)
   end
 
   def completed_games_in_bar(bar)
