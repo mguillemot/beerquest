@@ -76,6 +76,11 @@ en:
         post_message_pre: "Oh maaaan I just drank "
         post_message_post: " beers on BeerQuest IV, now I think I'll take a nap... zzrhrhzZZZzzzz *hips*"
         action: "Cheers!"
+  tutorial:
+    title: "How to play Beer Quest IV"
+    next: "Next"
+    play: "Play"
+    step: "Step %{current} / %{last}"
   challenge:
     title:
       respect_count: "%{count} Respect"

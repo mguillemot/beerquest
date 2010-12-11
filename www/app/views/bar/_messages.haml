@@ -6,9 +6,9 @@
       = image_tag 'mini-biere.png', :alt => t('beers')
       %span.score= msg.score
       = "-"
-      %span.date= l(msg.updated_at, :format => :short)
-      %br
       %span.name= msg.account.first_name
+      %br
+      %span.date= l(msg.updated_at, :format => :short)
       -#&laquo;
       -#= msg.message
       -#&raquo;

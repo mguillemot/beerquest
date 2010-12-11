@@ -98,4 +98,13 @@ module ApplicationHelper
     "http://blog.bq-4.com/spip.php?rubrique5&lang=#{I18n.locale}"
   end
 
+  def capacity_tutorial_url
+    case I18n.locale.to_s
+      when 'fr'
+        "http://blog.bq-4.com/?Capacite-speciales&lang=fr"
+      else
+        "http://blog.bq-4.com/?Special-Ability?lang=en"
+    end
+  end
+
 end

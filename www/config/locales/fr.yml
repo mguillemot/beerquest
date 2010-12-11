@@ -76,6 +76,11 @@ fr:
         post_message_pre: "Oh con, je me suis pété "
         post_message_post: " bières sur BeerQuest IV, c'te folie !"
         action: "Trinquer !"
+  tutorial:
+    title: "Comment jouer à Beer Quest"
+    next: "Suivant"
+    play: "Jouer"
+    step: "Etape %{current} / %{last}"
   challenge:
     title:
       respect_count: "%{count} Respect"

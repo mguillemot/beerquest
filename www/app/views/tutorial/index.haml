@@ -1,18 +1,25 @@
-%h1= "How to play Beer Quest IV"
+%h1= t('tutorial.title')
 .content
-  = image_tag "tutorial/page-#{@page}_#{I18n.locale}.png"
+  - if @page == 2
+    %a{:href => capacity_tutorial_url, :target => '_blank'}
+      = image_tag "tutorial/page-#{@page}_#{I18n.locale}.png"
+  - else
+    = image_tag "tutorial/page-#{@page}_#{I18n.locale}.png"
 %table.nav
   %tr
     %td.left
       - if @page < 5
-        %a.facebox-close{:href => 'javascript:void(0)'} Play
+        %a.facebox-close{:href => 'javascript:void(0)'}
+          = image_tag "tutorial/play_#{I18n.locale}.png", :width => 98, :height => 33, :alt => t('tutorial.play')
     %td.center
-      = "Step #{@page}/5"
+      = t('tutorial.step', :current => @page, :last => 5)
     %td.right
       - if @page < 5
-        %a.facebox-next{:href => 'javascript:void(0)'} Next
+        %a.facebox-next{:href => 'javascript:void(0)'}
+          = image_tag "tutorial/next_#{I18n.locale}.png", :width => 163, :height => 43, :alt => t('tutorial.next')
       - else
-        %a.facebox-close{:href => 'javascript:void(0)'} Play
+        %a.facebox-close{:href => 'javascript:void(0)'}
+          = image_tag "tutorial/play-big_#{I18n.locale}.png", :width => 163, :height => 43, :alt => t('tutorial.play')
 
 :javascript
   $(function()
@@ -23,8 +30,6 @@
     });
     $('.facebox-next').click(function()
     {
-      $.facebox(function() {
-        $.get("#{tutorial_url(@page + 1)}", function(data) { $.facebox(data) });
-      })
+      $.get("#{tutorial_url(@page + 1)}", function(data) { $.facebox(data) });
     });
   });
