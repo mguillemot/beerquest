@@ -77,22 +77,12 @@
         $(this).addClass('invalid');
       }
     });*/
-    /*$('.start-tutorial').click(startTutorial);*/
+    $('.start-tutorial').click(startTutorial);
   });
 
   function startTutorial()
   {
-    /*$.colorbox({
-      width: "514px",
-      height: "380px",
-      iframe: true,
-      href: "#{tutorial_url(1)}"
-    });*/
-  }
-
-  function endTutorial()
-  {
-    $.colorbox.close();
+    $.facebox({ ajax: "#{tutorial_url(1)}" });
   }
 
   function gameStarted()

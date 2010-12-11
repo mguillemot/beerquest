@@ -7,21 +7,26 @@
   %tr
     %td.left
       - if @page < 5
-        %a#close{:href => 'javascript:void(0)'} Play
+        %a.facebox-close{:href => 'javascript:void(0)'} Play
     %td.center
       = "Step #{@page}/5"
     %td.right
       - if @page < 5
-        = link_to 'Next', tutorial_url(@page + 1), :rel => 'facebox'
+        %a.facebox-next{:href => 'javascript:void(0)'} Next
       - else
-        %a#close{:href => 'javascript:void(0)'} Play
+        %a.facebox-close{:href => 'javascript:void(0)'} Play
 
 :javascript
   $(function()
   {
-    $('#close').click(function()
+    $('.facebox-close').click(function()
     {
-      //parent.endTutorial();
-      parent.$(document).trigger('close.facebox');
+      $(document).trigger('close.facebox');
+    });
+    $('.facebox-next').click(function()
+    {
+      $.facebox(function() {
+        $.get("#{tutorial_url(@page + 1)}", function(data) { $.facebox(data) });
+      })
     });
   });

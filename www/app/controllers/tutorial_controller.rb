@@ -1,6 +1,6 @@
 class TutorialController < ApplicationController
 
-  layout 'colorbox'
+  layout false
 
   def index
     @page = params[:page].to_i
