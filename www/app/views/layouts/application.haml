@@ -14,14 +14,14 @@
     = javascript_include_tag 'http://cdn.jquerytools.org/1.2.5/tiny/jquery.tools.min.js'
     = javascript_include_tag 'rails'
     = javascript_include_tag 'jquery.swfobject.1-1-1.min'
-    = javascript_include_tag 'jquery-ui-1.8.5.custom.min'
-    = javascript_include_tag 'jquery.colorbox-min'
+    -#= javascript_include_tag 'jquery-ui-1.8.5.custom.min'
     = javascript_include_tag 'application'
     = csrf_meta_tag
     = stylesheet_link_tag 'http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css'
-    = stylesheet_link_tag 'colorbox'
-    = stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.5.custom'
+    -#= stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.5.custom'
     = stylesheet_link_tag 'main'
+    = stylesheet_link_tag 'facebox'
+    = javascript_include_tag 'facebox'
     - if @css
       = stylesheet_link_tag @css
     <!--[if lte IE 6]>

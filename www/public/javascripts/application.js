@@ -30,6 +30,7 @@ $(function() {
   $("#subtabs2").tabs("#subpanes2 > div.subpane");
   $("#subtabs3").tabs("#subpanes3 > div.subpane");
   $("#subtabs4").tabs("#subpanes4 > div.subpane");
+  $("a[rel*=facebox]").facebox();
 
   /*setInterval(function() {
     var node = $("#world-score .total-beers");

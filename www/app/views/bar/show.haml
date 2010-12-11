@@ -29,8 +29,8 @@
     %td.shadow
     %td.small.shadow
 
-#message-dialog{:title => t('bar.endgame.message.title')}
-  %textarea#message-content.invalid{:rows => 3, :cols => 50}
+-##message-dialog{:title => t('bar.endgame.message.title')}
+-#  %textarea#message-content.invalid{:rows => 3, :cols => 50}
 
 :javascript
   $(function() {
@@ -45,7 +45,7 @@
         requiredVersion: #{required_version}
       }
     });
-    $('#message-dialog').dialog({
+    /*$('#message-dialog').dialog({
       autoOpen: false,
       modal: true,
       resizable: false,
@@ -76,18 +76,18 @@
       {
         $(this).addClass('invalid');
       }
-    });
-    $('.start-tutorial').click(startTutorial);
+    });*/
+    /*$('.start-tutorial').click(startTutorial);*/
   });
 
   function startTutorial()
   {
-    $.colorbox({
+    /*$.colorbox({
       width: "514px",
       height: "380px",
       iframe: true,
       href: "#{tutorial_url(1)}"
-    });
+    });*/
   }
 
   function endTutorial()

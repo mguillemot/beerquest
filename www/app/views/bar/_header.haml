@@ -7,7 +7,7 @@
       = "-"
       = t 'bar.beer_count', :count => number_with_delimiter(@bar.total_beers)
     .help
-      %a.start-tutorial{:href => 'javascript:void(0)'}
+      %a.start-tutorial{:href => tutorial_url(1), :rel => 'facebox'}
         = image_tag "how-to-play_#{I18n.locale}.png", :width => 95, :height => 58, :alt => t('bar.how_to_play')
 %td.bar-logo
   = image_tag @bar.banner_small, :alt => @bar.name, :class => 'bar-banner'

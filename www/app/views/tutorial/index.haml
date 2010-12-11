@@ -12,7 +12,7 @@
       = "Step #{@page}/5"
     %td.right
       - if @page < 5
-        = link_to 'Next', tutorial_url(@page + 1)
+        = link_to 'Next', tutorial_url(@page + 1), :rel => 'facebox'
       - else
         %a#close{:href => 'javascript:void(0)'} Play
 
@@ -21,6 +21,7 @@
   {
     $('#close').click(function()
     {
-      parent.endTutorial();
+      //parent.endTutorial();
+      parent.$(document).trigger('close.facebox');
     });
   });
