@@ -8,6 +8,7 @@ class Account
   property :gender, String
   property :locale, String
   property :timezone, Integer
+  property :nonplaying_friends, Text
   property :discovered_through, Integer
   property :login_count, Integer, :required => true, :default => 0
   property :first_login, DateTime

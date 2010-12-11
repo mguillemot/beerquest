@@ -103,7 +103,9 @@ class FacebookController < ApplicationController
         friends[f.friend_id] = true
         friends
       end
+      nonplaying_friends = {}
       logger.debug "My current friends were #{my_current_friends.inspect}"
+
       logger.debug "Asking FB for info about updated friend list"
       fb_friends = MiniFB.get(session[:access_token], "me", :type => "friends")
       logger.debug "Result: #{fb_friends.inspect}"
@@ -111,52 +113,54 @@ class FacebookController < ApplicationController
 #        friends[f[:id].to_i] = f[:name]
 #        friends
 #      end
+      fb_friends_ids = fb_friends[:data].map { |f| f[:id].to_i }
+      logger.debug "Friends fbids are #{fb_friends_ids.inspect}"
+      fb_friends_accounts = Account.all(:facebook_id.in => fb_friends_ids).inject({}) do |accounts, acc|
+        accounts[acc.facebook_id] = acc.id
+        accounts
+      end
+      logger.debug "Accounts already existing are: #{fb_friends_accounts.inspect}"
       fb_friends[:data].each do |f|
         logger.debug "== friend: #{f.inspect}"
+        fid = f[:id].to_i
 
         # Check the account exists
-        friend_account = Account.first(:facebook_id => f[:id])
-        if friend_account
-          logger.debug "Account fbid=#{f[:id]} already present in DB: do nothing"
+        id  = fb_friends_accounts[fid]
+        if id
+          logger.debug "Account fbid=#{fid} already present in DB as id=#{id}: do nothing"
+          if my_current_friends[id]
+            my_current_friends.delete(id)
+          else
+            @me.friendships.create(:friend_id => id)
+          end
+          logger.debug "Updated friends-to-delete are: #{my_current_friends.inspect}"
         else
-          logger.debug "Account fbid=#{f[:id]} didn't exist in DB: create it"
-          friend_name                       = f[:name].split(' ', 2)
-          friend_account                    = Account.new
-          friend_account.facebook_id        = f[:id]
-          friend_account.first_name         = friend_name[0]
-          friend_account.full_name          = f[:name]
-          friend_account.discovered_through = @me.id
-          friend_account.save
+          logger.debug "Account fbid=#{fid} didn't exist in DB: store it into non-playing friends"
+          nonplaying_friends[fid] = f[:name]
         end
 
-        # Check the account is registered as friend
-        logger.debug "Account is id=#{friend_account.id}"
-        if my_current_friends[friend_account.id]
-          my_current_friends.delete(friend_account.id)
-        else
-          @me.friendships.create(:friend_id => friend_account.id)
-        end
-        logger.debug "Updated friends-to-delete are: #{my_current_friends.inspect}"
       end
       logger.debug "== (end)"
 
       # Remove no-more friends
       logger.debug "Finally, removing no-more friends: #{my_current_friends.inspect}"
-      my_current_friends.each_key do |fid|
-        logger.debug "Removing account #{fid} from friends"
-        friendship = @me.friendships.first(:friend_id => fid)
+      my_current_friends.each_key do |id|
+        logger.debug "Removing account #{id} from friends"
+        friendship = @me.friendships.first(:friend_id => id)
         friendship.destroy
       end
-      logger.debug "In the end, my friends are: #{@me.friends.inspect}"
+      logger.debug "In the end, my playing friends are: #{@me.friends.inspect} and my non-playing friends are: #{nonplaying_friends}"
+      @me.nonplaying_friends = nonplaying_friends
 
       # Account update: done!
-      logger.debug "Saving account #{@me.id}"
-      @me.save
+      if @me.save
+        logger.debug "Account #{@me.id} saved"
+      end
       session[:account_id] = @me.id
 
       # Fix dashboard count value
-      updated              = @me.update_fb_dashboard_count!
-      logger.debug "Dashboard count updated to #{updated}"
+#      updated              = @me.update_fb_dashboard_count!
+#      logger.debug "Dashboard count updated to #{updated}"
     end
 
     # check admin status
