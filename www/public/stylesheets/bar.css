@@ -5,6 +5,10 @@ h3 {
   margin-bottom: 5px;
 }
 
+h3.centered {
+  text-align: center;
+}
+
 .cols .unique-col {
   width: 730px;
   border: 5px solid #ff8800;
@@ -29,14 +33,14 @@ table.bar-area td.bar-name {
 
 table.bar-area td#rss {
   width: auto;
-  background: #fff4c7;
+  background: #f6f6f6;
   border: 1px solid #ff8800;
   padding: 4px;
 }
 
 table.bar-area td#activity {
   width: 170px;
-  background: #fff4c7;
+  background: #f6f6f6;
   border: 1px solid #ff8800;
   padding: 4px;
 }
@@ -119,7 +123,7 @@ td.bar-name a:hover {
 }
 
 ul.rss {
-  height: 120px;
+  height: 140px;
   overflow-y: hidden;
 }
 
@@ -196,7 +200,7 @@ td.sidebar ul.tabs li.last {
 }
 
 td.sidebar ul.tabs li.current {
-  background: #f6f6f6;
+  background: #fff4c7;
   border-bottom: 1px solid #f6f6f6;
 }
 
@@ -209,7 +213,7 @@ td.sidebar ul.tabs li.current a {
 }
 
 td.sidebar div.pane {
-  background: #f6f6f6;
+  background: #fff4c7;
   padding: 3px;
   height: 570px;
   overflow-x: hidden;
