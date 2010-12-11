@@ -9,20 +9,11 @@
     %td.unique-col
       %table.bar-area
         %tr
-          %td.bar-name{:colspan => 2}
-            %h1= @bar.name
-            %a{:href => @bar.url, :target => '_blank'}= @bar.url
-            .member-count
-              = t 'bar.member_count', :count => number_with_delimiter(@bar.total_members)
-              = "-"
-              = t 'bar.beer_count', :count => number_with_delimiter(@bar.total_beers)
-          %td.bar-logo
-            %a.start-tutorial{:href => 'javascript:void(0)'}
-              = image_tag @bar.banner_small, :alt => @bar.name, :class => 'bar-banner'
+          = render :partial => 'header'
         %tr
           %td.play-field{:colspan => 2}
             #game
-          %td.sidebar{:rowspan => 3}
+          %td.sidebar#scores{:rowspan => 3}
             = render :partial => 'scores'
         %tr.bottom1
           %td#rss
@@ -106,7 +97,7 @@
 
   function gameStarted()
   {
-    setTimeout('startTutorial', 2000);
+    setTimeout(startTutorial, 4000);
   }
 
   function endOfGame(mode, score, scoreGoal, personalHigh, barHigh)

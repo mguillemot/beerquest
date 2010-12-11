@@ -84,26 +84,24 @@ fr:
         description: "Défi renvoyé le %{date}"
   bar:
     member_count:
-      one: "1 Membre"
-      other: "%{count} Membres"
+      one: "1 Client"
+      other: "%{count} Clients"
     beer_count: "%{count} bières bues"
-    right:
-      news:
-        title: "News Bartner"
-      messages:
-        title: "Activité"
+    how_to_play: "Comment jouer ?"
+    news:
+      title: "Actualités"
+    messages:
+      title: "Clients du BAR"
     scores:
-      bar: "Scores du bar"
-      friends: "Scores de vos amis"
-      all: "Tous"
-      me: "Moi"
-      weekly: "7 jours"
-      always: "Toujours"
-      coming_soon: "A venir..."
+      title: "Classement :"
+      bar: "BAR"
+      friends: "Amis"
+      score: "Score :"
+      invite: "Invite tes amis et buvez ensemble"
     stats:
       bar_stats: "Statistiques du bar"
       bar_rank: "Place du bar"
-      bar_weekly_activity: "Activité Membres 7 jours"
+      bar_weekly_activity: "Activité clients"
       bar_active_members:
         one: "1 actif"
         other: "%{count} actifs"

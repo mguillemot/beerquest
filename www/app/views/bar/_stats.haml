@@ -1,1 +1,62 @@
-STATS
+%table.stats
+  %tr
+    %td.left
+      .header
+        = t 'bar.stats.bar_stats'
+      .stat
+        .section
+          = t 'bar.stats.bar_rank'
+        .value
+          = "##{@bar.rank}"
+      .stat
+        .section
+          = t 'bar.stats.bar_weekly_activity'
+        .value
+          = t 'bar.stats.bar_active_members', :count => @bar.active_members
+          %br
+          = t 'bar.stats.bar_new_active_members', :count => @bar.new_active_members
+      .stat
+        .section
+          = t 'bar.stats.weekly_beers'
+        .value
+          = image_tag 'mini-biere.png', :alt => t('beers')
+          = number_with_delimiter(@bar.weekly_beers)
+      .stat
+        .section
+          = t 'bar.stats.total_beers'
+        .value
+          = image_tag 'mini-biere.png', :alt => t('beers')
+          = number_with_delimiter(@bar.total_beers)
+    %td.right
+      .header
+        = t 'bar.stats.my_stats'
+      .portrait
+        = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
+      .stat
+        .section
+          = t 'bar.stats.weekly_beers'
+        .value
+          = image_tag 'mini-biere.png', :alt => t('beers')
+          = number_with_delimiter(@barship.weekly_beers)
+      .stat
+        .section
+          = t 'bar.stats.total_beers'
+        .value
+          = image_tag 'mini-biere.png', :alt => t('beers')
+          = number_with_delimiter(@barship.total_beers)
+      .clear
+      .stat
+        .section
+          = t 'bar.stats.member_since'
+        .value
+          = l(@barship.created_at, :format => :short)
+      -#.stat
+      -#  .section
+      -#    = t 'bar.stats.best_rank_title'
+      -#  .value
+      -#    = t 'bar.stats.best_rank_value', :rank => @barship.best_rank, :date => l(@barship.best_rank_date, :format => :short)
+      .stat
+        .section
+          = t 'bar.stats.play_count'
+        .value
+          = number_with_delimiter(@barship.play_count)

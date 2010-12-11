@@ -1,5 +1,4 @@
-.title
-  Classement par :
+.title= t('bar.scores.title')
 %ul.tabs
   %li
     %a{:href => 'javascript:void(0)'} Amis
@@ -11,7 +10,8 @@
       = render :partial => 'barscore', :collection => @me.weekly_friends_scores[0...3]
       %tr
         %td.invite{:colspan => 2}
-          %a{:href => invite_url} INVITE FRIENDS
+          %a{:href => invite_url}
+            = image_tag "invite_#{I18n.locale}.png", :width => 162, :height => 58, :alt => t('bar.scores.invite')
       = render :partial => 'barscore', :collection => @me.weekly_friends_scores[3..-1]
   .pane#bar-scores
     %table.barscore-grid

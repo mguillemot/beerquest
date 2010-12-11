@@ -5,6 +5,6 @@
     .rank= "##{barscore[:rank]}"
     .name= barscore[:name]
     .score
-      Score :
+      = t 'bar.scores.score'
       = image_tag 'mini-biere.png', :alt => t('beers')
       %span.value= barscore[:score]

@@ -84,26 +84,24 @@ en:
         description: "Challenge sent back on %{date}"
   bar:
     member_count:
-      one: "1 Member"
-      other: "%{count} Members"
+      one: "1 Client"
+      other: "%{count} Clients"
     beer_count: "%{count} beers drunk"
-    right:
-      news:
-        title: "Bartner news"
-      messages:
-        title: "Activity"
+    how_to_play: "How to play?"
+    news:
+      title: "Bartner news"
+    messages:
+      title: "Activity"
     scores:
-      bar: "Bar scores"
-      friends: "Friend scores"
-      all: "All"
-      me: "Me"
-      weekly: "7 days"
-      always: "Always"
-      coming_soon: "Coming soon..."
+      title: "Ranking:"
+      bar: "BAR"
+      friends: "Friends"
+      score: "Score:"
+      invite: "Invite friends to drink together"
     stats:
       bar_stats: "Bar statistics"
       bar_rank: "Bar rank"
-      bar_weekly_activity: "Member activity last 7 days"
+      bar_weekly_activity: "Client activity"
       bar_active_members:
         one: "1 active"
         other: "%{count} actives"

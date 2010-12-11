@@ -19,7 +19,7 @@ public class Game extends EventDispatcher {
         _scoreGoal = scoreGoal;
         _me = me;
         dispatchEvent(new Event("meChanged"));
-        remainingTurns = initialTurns;
+        _initialTurns = remainingTurns = initialTurns;
         _rand = new DeadBeefRandom(seed);
         _board = new BoardState(_rand);
         _board.generateRandomWithoutGroups(DiscardEventBuffer.INSTANCE);
@@ -83,6 +83,10 @@ public class Game extends EventDispatcher {
             _gameOver = true;
             execute(new GameEvent(GameEvent.GAME_OVER));
         }
+    }
+
+    public function get initialTurns():int {
+        return _initialTurns;
     }
 
     public function get remainingTurns():int {
@@ -226,6 +230,7 @@ public class Game extends EventDispatcher {
 
     private var _scoreGoal:int;
     private var _me:PlayerData;
+    private var _initialTurns:int;
     private var _remainingTurns:int;
     private var _playedTurns:int = 0;
     private var _board:BoardState;
