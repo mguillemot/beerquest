@@ -10,8 +10,12 @@ class GameController < ApplicationController
       #replay.seed           = 1234 # Test only
       replay.token_use_time = DateTime.now
       replay.save
-      if replay.mode == 'vs'
-        replay.challenge.accept! params[:raise]
+      case replay.mode
+        when 'solo'
+          result[:turns] = replay.bar.turns
+        when 'vs'
+          replay.challenge.accept! params[:raise]
+          result[:turns] = Game::Constants.DEFAULT_INITIAL_TURNS
       end
       result[:replay_id] = replay.id
       result[:seed]      = replay.seed
