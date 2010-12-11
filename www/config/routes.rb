@@ -20,6 +20,9 @@ BeerQuest::Application.routes.draw do
   get "bar/:id",                    :to => "bar#show",                       :as => 'bar'
   get "bar/:id/messages",           :to => "bar#async_messages",             :as => 'async_bar_messages'
 
+  # Tutorial
+  get "tutorial/:page",             :to => "tutorial#index",                 :as => 'tutorial'
+
   # Facebook integration
   get "session_login",              :to => "facebook#session_login",         :as => 'login'
   get "session_logout",             :to => "facebook#session_logout",        :as => 'logout'

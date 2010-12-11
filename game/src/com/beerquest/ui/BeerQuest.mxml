@@ -96,9 +96,9 @@
             trace("Using the following API token: " + token);
         }
 
-        private function startGame(me:PlayerData, seed:int):void {
+        private function startGame(me:PlayerData, seed:int, initialTurns:int):void {
             addEventListener(UiGameEvent.UI_GAME_EVENT, onUiGameEvent);
-            Constants.GAME.start(goal, me, seed);
+            Constants.GAME.start(goal, me, seed, initialTurns);
         }
 
         private function onUiGameEvent(e:UiGameEvent):void {
@@ -113,7 +113,7 @@
             trace("Seed is " + data.seed);
             _tokenLoader.removeEventListener(Event.COMPLETE, onStartInfoReceived);
             _tokenLoader = null;
-            startGame(new PlayerData(Constants.GAME), data.seed);
+            startGame(new PlayerData(Constants.GAME), data.seed, data.turns);
         }
 
         private function onGameStart(e:UiGameStartEvent):void {
@@ -138,7 +138,7 @@
                     trace("Load game infos: a SecurityError has occurred.");
                 }
             } else if (Constants.DEBUG) {
-                startGame(new PlayerData(Constants.GAME), 1234); // TODO random()
+                startGame(new PlayerData(Constants.GAME), 1234, Constants.DEFAULT_INITIAL_TURNS); // TODO random()
             }
         }
 

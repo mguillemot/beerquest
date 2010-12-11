@@ -7,7 +7,7 @@ module Game
       @capacities = []
       @piss = 0
       @vomit = 0
-      @remaining_turns = Constants::INITIAL_TOTAL_TURNS
+      @remaining_turns = Constants::DEFAULT_INITIAL_TURNS
     end
 
     attr_reader :board, :score, :collection, :capacities, :remaining_turns

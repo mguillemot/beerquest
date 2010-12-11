@@ -39,6 +39,13 @@
                 TweenLite.to(this, 2, {y:-height});
                 dispatchEvent(new UiGameStartEvent(scoreRaise));
                 _started = true;
+                if (ExternalInterface.available) {
+                    try {
+                        ExternalInterface.call("gameStarted");
+                    } catch (e:SecurityError) {
+                        trace("Unable to call gameStarted()");
+                    }
+                }
             }
         }
 

@@ -18,7 +18,7 @@ BeerQuest::Application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  config.log_level = :warn
+  config.log_level = :debug
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -50,7 +50,4 @@ BeerQuest::Application.configure do
   PAYPAL_PWD = 'KR39A42AXSEL35D9'
   PAYPAL_SIGNATURE = 'ArVdpMVnoHAB1wJcXUBJ3rZDw55OAMw6Dxzv3iHFxxAh4QplxiWYWPRj'
 
-  # Redis
-  REDIS_HOST = "127.0.0.1"
-  REDIS_PORT = "6379"
 end

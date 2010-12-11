@@ -1,0 +1,26 @@
+%h1= "How to play Beer Quest IV"
+
+#content
+  = image_tag "tutorial/page-#{@page}_#{I18n.locale}.png"
+
+%table.nav
+  %tr
+    %td.left
+      - if @page < 5
+        %a#close{:href => 'javascript:void(0)'} Play
+    %td.center
+      = "Step #{@page}/5"
+    %td.right
+      - if @page < 5
+        = link_to 'Next', tutorial_url(@page + 1)
+      - else
+        %a#close{:href => 'javascript:void(0)'} Play
+
+:javascript
+  $(function()
+  {
+    $('#close').click(function()
+    {
+      parent.endTutorial();
+    });
+  });

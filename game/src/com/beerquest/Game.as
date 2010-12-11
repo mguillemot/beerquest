@@ -12,12 +12,13 @@ import flash.events.EventDispatcher;
 
 public class Game extends EventDispatcher {
 
-    public function start(scoreGoal:int, me:PlayerData, seed:int):void {
+    public function start(scoreGoal:int, me:PlayerData, seed:int, initialTurns:int):void {
         if (_me != null) {
             throw "cannot start game multiple times";
         }
         _scoreGoal = scoreGoal;
         _me = me;
+        _remainingTurns = initialTurns;
         dispatchEvent(new Event("meChanged"));
         _rand = new DeadBeefRandom(seed);
         _board = new BoardState(_rand);
@@ -70,7 +71,7 @@ public class Game extends EventDispatcher {
     }
 
     public function get totalTurns():int {
-        return Constants.INITIAL_TOTAL_TURNS;
+        return Constants.DEFAULT_INITIAL_TURNS;
     }
 
     public function get gameOver():Boolean {
@@ -225,7 +226,7 @@ public class Game extends EventDispatcher {
 
     private var _scoreGoal:int;
     private var _me:PlayerData;
-    private var _remainingTurns:int = Constants.INITIAL_TOTAL_TURNS;
+    private var _remainingTurns:int;
     private var _playedTurns:int = 0;
     private var _board:BoardState;
     private var _gameOver:Boolean = false;

@@ -2,8 +2,8 @@ module Game
   class Constants
 
     RELEASE_VERSION = "1.01"
-    DEBUG_VERSION = "1.01"
-    INITIAL_TOTAL_TURNS = 40
+    DEBUG_VERSION = "1.02"
+    DEFAULT_INITIAL_TURNS = 40
     TOKEN_GROUP_VALUE = 5
     SUPER_TOKEN_VALUE = 10
     MAX_STACK = 15

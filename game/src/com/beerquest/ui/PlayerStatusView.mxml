@@ -99,7 +99,7 @@
         }
 
         private function onRemainingTurnsChanged(e:ValueChangedEvent):void {
-            remainingTurnsBar.progress = e.newValue / Constants.INITIAL_TOTAL_TURNS * 100;
+            remainingTurnsBar.progress = e.newValue / Constants.DEFAULT_INITIAL_TURNS * 100;
             remainingTurnsLabel.text = e.newValue.toString();
         }
 
@@ -213,7 +213,7 @@
                         emptyColor="0x00789f"
                         fullColorLight="0x00bbf9" fullColorDark="0x0098d6"/>
         <mx:Image source="@Embed(source='../../../assets/image/barre-tours.png')"/>
-        <mx:Label y="3" width="30" id="remainingTurnsLabel" text="{Constants.INITIAL_TOTAL_TURNS}"
+        <mx:Label y="3" width="30" id="remainingTurnsLabel" text="{Constants.DEFAULT_INITIAL_TURNS}"
                   styleName="remaining-turns">
             <mx:filters>
                 <mx:GlowFilter blurX="3" blurY="3" alpha="1" color="0x000000" quality="3"/>

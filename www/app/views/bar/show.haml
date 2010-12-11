@@ -17,7 +17,8 @@
               = "-"
               = t 'bar.beer_count', :count => number_with_delimiter(@bar.total_beers)
           %td.bar-logo
-            = image_tag @bar.banner_small, :alt => @bar.name, :class => 'bar-banner'
+            %a.start-tutorial{:href => 'javascript:void(0)'}
+              = image_tag @bar.banner_small, :alt => @bar.name, :class => 'bar-banner'
         %tr
           %td.play-field{:colspan => 2}
             #game
@@ -236,7 +237,28 @@
         $(this).addClass('invalid');
       }
     });
+    $('.start-tutorial').click(startTutorial);
   });
+
+  function startTutorial()
+  {
+    $.colorbox({
+      width: "514px",
+      height: "380px",
+      iframe: true,
+      href: "#{tutorial_url(1)}"
+    });
+  }
+
+  function endTutorial()
+  {
+    $.colorbox.close();
+  }
+
+  function gameStarted()
+  {
+    setTimeout('startTutorial', 2000);
+  }
 
   function endOfGame(mode, score, scoreGoal, personalHigh, barHigh)
   {
