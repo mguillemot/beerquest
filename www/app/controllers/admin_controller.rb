@@ -5,14 +5,17 @@ class AdminController < ApplicationController
 
   # To log as another user (to see what he sees...)
   def log_as
-    account             = Account.get(params[:id])
+    account = Account.get(params[:id])
+    unless account
+      throw "unable to find account id #{params[:id]}"
+    end
     account.last_login  = DateTime.now
     account.login_count += 1
     account.save
 
-    session[:user_id]      = params[:id]
-    session[:access_token] = "none"
     session[:account_id]   = params[:id]
+    session[:facebook_id]  =account.facebook_id
+    session[:access_token] = "none"
 
     redirect_to home_url
   end

@@ -25,9 +25,7 @@ class FacebookController < ApplicationController
   end
 
   def session_logout
-    session[:access_token] = nil
-    session[:facebook_id]  = nil
-    session[:account_id]   = nil
+    reset_session
     logger.debug "Session destroyed"
     redirect_to home_url
   end
@@ -91,44 +89,65 @@ class FacebookController < ApplicationController
         bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
         return false
       end
-      @me.full_name   = facebook_account[:name]
-      @me.gender      = facebook_account[:gender]
-      #@@me.email = me[:email] # demand� avec les droits suppl�mentantes
-      @me.locale      = facebook_account[:locale] # ex: fr_FR
-      @me.timezone    = facebook_account[:timezone] # 9
-      @me.login_count += 1
-      @me.last_login  = DateTime.now
+      @me.first_name     = facebook_account[:first_name]
+      @me.full_name      = facebook_account[:name]
+      @me.gender         = facebook_account[:gender]
+      #@@me.email = me[:email] à demander avec les droits supplémentaires
+      @me.locale         = facebook_account[:locale] # ex: fr_FR
+      @me.timezone       = facebook_account[:timezone] # 9
+      @me.login_count    += 1
+      @me.last_login     = DateTime.now
 
       # Friends
-      logger.debug "Asking FB for info about friends"
-      fb_friends = MiniFB.get(session[:access_token], "me", :type => "friends")
-      logger.debug "Result: #{fb_friends.inspect}"
-      @me.friends = fb_friends[:data].inject({}) do |friends, f|
-        friends[f[:id].to_i] = f[:name]
+      my_current_friends = @me.friendships.inject({}) do |friends, f|
+        friends[f.friend_id] = true
         friends
       end
-#      fb_friends[:data].each do |f|
-#        logger.debug "== friend: #{f.inspect}"
-#        friend_account = Account.first(:facebook_id => f[:id])
-#        if friend_account
-#          logger.debug "Friend #{f[:id]} already present in DB: do nothing"
-#        else
-#          logger.debug "Friend #{f[:id]} didn't exist in DB: create it"
-#          friend_account                    = @me.friends.new
-#          friend_account.facebook_id        = f[:id]
-#          friend_account.name               = f[:name]
-#          friend_account.discovered_through = @me.id
-#          friend_account.save
-#        end
+      logger.debug "My current friends were #{my_current_friends.inspect}"
+      logger.debug "Asking FB for info about updated friend list"
+      fb_friends = MiniFB.get(session[:access_token], "me", :type => "friends")
+      logger.debug "Result: #{fb_friends.inspect}"
+#      @me.friends = fb_friends[:data].inject({}) do |friends, f|
+#        friends[f[:id].to_i] = f[:name]
+#        friends
 #      end
-#      logger.debug "== (end)"
+      fb_friends[:data].each do |f|
+        logger.debug "== friend: #{f.inspect}"
+
+        # Check the account exists
+        friend_account = Account.first(:facebook_id => f[:id])
+        if friend_account
+          logger.debug "Account #{f[:id]} already present in DB: do nothing"
+        else
+          logger.debug "Account #{f[:id]} didn't exist in DB: create it"
+          friend_name                       = f[:name].split(' ', 2)
+          friend_account                    = Account.new
+          friend_account.facebook_id        = f[:id]
+          friend_account.first_name         = friend_name[0]
+          friend_account.full_name          = f[:name]
+          friend_account.discovered_through = @me.id
+          friend_account.save
+        end
+
+        # Check the account is registered as friend
+        if my_current_friends[friend_account.id]
+          my_current_friends[friend_account.id] = nil
+        else
+          @me.friendships.create(:friend_id => friend_account.id)
+        end
+      end
+      logger.debug "== (end)"
 
       # Remove no-more friends
-#      current_friends.each do |f_id|
-#        logger.debug "Friend #{f_id} is no more a friend: removing him"
-#        @me.friends.delete @me.friends.find_by_id(f_id)
-#      end
+      logger.debug "Finally, removing no-more friends: #{my_current_friends.inspect}"
+      my_current_friends.each_key do |fid|
+        logger.debug "Removing account #{fid} from friends"
+        friendship = @me.friendships.first(:friend_id => fid)
+        friendship.destroy
+      end
+      logger.debug "In the end, my friends are: #{@me.friends.inspect}"
 
+      # Account update: done!
       logger.debug "Saving account #{@me.id}"
       @me.save
       session[:account_id] = @me.id

@@ -3,20 +3,20 @@ class Account
 
   property :id, Serial
   property :facebook_id, Integer, :min => 0, :max => 2**64-1, :unique_index => true
+  property :first_name, String, :length => 255, :required => true
   property :full_name, String, :length => 255, :required => true
   property :gender, String
   property :locale, String
   property :timezone, Integer
   property :discovered_through, Integer
-  property :friends, Object
   property :login_count, Integer, :required => true, :default => 0
   property :first_login, DateTime
   property :last_login, DateTime
   property :created_at, DateTime
   property :updated_at, DateTime
 
-#  has n, :friendships, :constraint => :destroy
-#  has n, :friends, :model => Account, :through => :friendships, :via => :friend
+  has n, :friendships, :constraint => :destroy
+  has n, :friends, :model => Account, :through => :friendships, :via => :friend
   has n, :barships, :constraint => :destroy
   has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
   has n, :replays, :constraint => :set_nil
