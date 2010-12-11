@@ -117,9 +117,9 @@ class FacebookController < ApplicationController
         # Check the account exists
         friend_account = Account.first(:facebook_id => f[:id])
         if friend_account
-          logger.debug "Account #{f[:id]} already present in DB: do nothing"
+          logger.debug "Account fbid=#{f[:id]} already present in DB: do nothing"
         else
-          logger.debug "Account #{f[:id]} didn't exist in DB: create it"
+          logger.debug "Account fbid=#{f[:id]} didn't exist in DB: create it"
           friend_name                       = f[:name].split(' ', 2)
           friend_account                    = Account.new
           friend_account.facebook_id        = f[:id]
@@ -130,11 +130,13 @@ class FacebookController < ApplicationController
         end
 
         # Check the account is registered as friend
+        logger.debug "Account is id=#{friend_account.id}"
         if my_current_friends[friend_account.id]
           my_current_friends.delete(friend_account.id)
         else
           @me.friendships.create(:friend_id => friend_account.id)
         end
+        logger.debug "Updated friends-to-delete are: #{my_current_friends.inspect}"
       end
       logger.debug "== (end)"
 
