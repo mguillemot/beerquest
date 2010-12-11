@@ -22,66 +22,16 @@ fr:
     tos: "Conditions d'utilisation"
     privacy: "Politique de confidentialité"
   home:
-    score:
-      mode: "Mode Score"
-      best_7d: "Best Score 7 j."
-      total_beers: "Total bières bues"
-      play_description_html: "<strong>Votre score</strong> est la preuve de votre savoir-boire ! Alors au bou... goulot !"
-      button_html: "Jouer<br/>Maintenant"
-      tabs:
-        favorites:
-          title: "Favoris"
-          bar_count:
-            one: "1 bar favori"
-            other: "%{count} bars favoris"
-        bartners:
-          title: "Bartners"
-          bar_count:
-            one: "1 bar partenaire"
-            other: "%{count} bars partenaires"
-        search:
-          title: "Recherche"
-          alphabetic_order: "Par ordre alphabétique"
-          results:
-            one: "1 Bar pour «%{search}»"
-            other: "%{count} Bars pour «%{search}»"
-        pages: "Pages :"
-      bar:
-        member_count:
-          one: "1 Membre"
-          other: "%{count} Membres"
-        score_7d: "Score 7j."
-        best_score: "Best score"
-        enter_button: "Entrer dans ce Bar"
-    battle:
-      mode: "Mode Battle"
-      respect_points_count:
-       one: "1 Point de Respect"
-       other: "%{count} Points de Respect"
-      shame_points_count:
-        one: "1 Point de Loose"
-        other: "%{count} Points de Loose"
-      play_description_html: "<strong>Défiez vos amis</strong> et gagnez leur respect à coup de bière !"
-      button_html: "Défier mes<br/>Amis"
-      tabs:
-        current:
-          title: "En cours (%{count})"
-        sent:
-          title: "Envoyés (%{count})"
-      empty:
-        current: "(Aucun défi en cours)"
-        sent: "(Aucun défi envoyé)"
-        received: "(Aucun défi reçu)"
-      warning:
-        received_html: "Les défis reçus sont annulés au bout d'une semaine si vous ne les acceptez pas en cliquant sur <strong>Battle</strong>"
-        sent_html: "Les défis sont annulés au bout d'une semaine s'ils ne sont pas acceptés."
-      received_challenge:
-        new_description: "Défi reçu le %{date}"
-        description: "a gagné son round le %{date}"
-        battle_button: "Battle"
-      sent_challenge:
-        new_description: "Défi envoyé le %{date}"
-        description: "Défi renvoyé le %{date}"
+    play_now: "Jouer maintenant"
+    alternative: "Sinon, choisis dans quel bar tu veux jouer :"
+    bar:
+      member_count:
+        one: "1 Client"
+        other: "%{count} Clients"
+      high_score: "Hi Score :"
+      enter_button: "Entrer dans ce Bar"
+    notice_html: "Il est possible de demander la création d'un bar au nom d'un site.<br/>Se reporter à notre %{link} pour plus de détails."
+    notice_link: "page Bartners"
   bar:
     member_count:
       one: "1 Client"

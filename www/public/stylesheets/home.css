@@ -1,109 +1,30 @@
 .cols .left-col {
-  width: 350px;
+  width: 730px;
   border: 5px solid #ff8800;
   background: #fff9e1;
-}
-
-.cols .separator {
-  width: 1px;
-}
-
-.cols .right-col {
-  width: 350px;
-  border: 5px solid #970000;
-  background: #fff9e1;
-}
-
-.col-title {
-  position: relative;
-  top: -15px;
 }
 
 .col-content {
   text-align: left;
 }
 
-table.player {
-  width: 310px;
-  font-family: Kronika, cursive;
-  font-size: 14px;
-  margin-left: auto;
-  margin-right: auto;
+table.home {
+  width: 100%;
 }
 
-table.player td {
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  vertical-align: middle;
-}
-
-table.player td.portrait {
-  width: 50px;
-}
-
-table.player td.portrait img.portrait {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #c9700b;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-}
-
-table.player td.score-desc {
+table.home td.bars {
   width: auto;
-  padding-left: 10px;
 }
 
-table.player td.score-value {
-  width: 80px;
-  padding-left: 10px;
-  color: #753e00;
-}
-
-table.player .total {
-  font-size: 11px;
-}
-
-table.action {
-  width: 330px;
-  margin: 5px auto 30px;
-  background: #ffe88b;
-  border: 1px solid #330000;
-}
-
-table.action td {
-  font-size: 11px;
-  vertical-align: middle;
-}
-
-table.action td.description {
-  text-align: left;
-  padding: 5px;
-}
-
-table.action td.action {
-  text-align: center;
-  font-weight: bold;
-}
-
-table.action td.action a {
-  position: relative;
-  top: 7px;
-  color: #333333;
-}
-
-table.action div.button {
-  width: 99px;
-  height: 42px;
-  background: url("/images/fond-bt-gros.png") no-repeat;
+table.home td.scores {
+  width: 200px;
+  padding-top: 10px;
 }
 
 ul.tabs {
-  margin-left: 20px;
   margin-bottom: 3px;
   font-weight: bold;
+  text-align: left;
 }
 
 ul.tabs li {
@@ -112,24 +33,12 @@ ul.tabs li {
   display: inline;
   background: #eee6c4;
   padding: 5px 10px;
-}
-
-td.left-col ul.tabs li {
   border-top: 1px solid #ff8800;
   border-left: 1px solid #ff8800;
 }
 
-td.right-col ul.tabs li {
-  border-top: 1px solid #330000;
-  border-left: 1px solid #330000;
-}
-
-td.left-col ul.tabs li.last {
+ul.tabs li.last {
   border-right: 1px solid #ff8800;
-}
-
-td.right-col ul.tabs li.last {
-  border-right: 1px solid #330000;
 }
 
 ul.tabs li.current {
@@ -146,117 +55,78 @@ ul.tabs li.current a {
 }
 
 div.pane {
-  width: 344px;
+  width: 200px;
   background: #fff4c7;
   padding: 3px;
-}
-
-td.left-col div.pane {
   border: 1px solid #ff8800;
 }
 
-td.right-col div.pane {
-  border: 1px solid #330000;
-}
-
-div.pane table.header {
+table.bar-grid {
   width: 100%;
-  margin-top: 5px;
-  margin-bottom: 9px;
-  padding-left: 5px;
-  padding-right: 5px;
 }
 
-div.pane table.header td.bar-count {
-  text-align: left;
-}
-
-div.pane table.header td.pane-pages {
-  text-align: right;
-}
-
-.page-link.current {
-  font-weight: bold;
-}
-
-div.pane div.search {
+table.bar-grid td {
+  width: 50%;
   text-align: center;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-div.pane div.search div.description {
-  font-weight: bold;
 }
 
 .bar {
-  background: #fffceb;
-  border: 1px solid #eadbb3;
+  width: 225px;
+  background: #eee6c4;
+  border: 1px solid #c40000;
   padding: 4px;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.bar table.bar-header {
+.bar .title {
+  text-align: left;
+  font-weight: bold;
+  font-size: 16px;
+  color: #c40000;
+  margin-bottom: 4px;
+  padding-left: 4px;
+}
+
+.bar table {
   width: 100%;
 }
 
-.bar table.bar-header td {
+.bar td {
   padding: 0;
   margin: 0;
+  vertical-align: middle;
 }
 
-.bar table.bar-header td.name {
+.bar td img {
+  vertical-align: middle;
+}
+
+.bar td.members {
   text-align: left;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 10px;
 }
 
-.bar table.bar-header td.members {
+.bar td.high-score {
   text-align: right;
+  font-size: 10px;
 }
 
-.bar table.bar-content {
-  width: 100%;
-  margin-top: 4px;
-  margin-bottom: 2px;
-}
-
-.bar table.bar-content td.banner {
-  padding: 0;
-}
-
-.bar table.bar-content td.banner img {
-  width: 223px;
-  height: 74px;
+.bar img.bar-banner {
+  width: 220px;
+  height: 70px;
   border: 1px solid #9f857c;
 }
 
-.bar td.scores {
-  width: 100px;
-  text-align: left;
-  padding-left: 10px;
-}
-
-.bar td.scores .score {
-  font-weight: bold;
-  padding-top: 5px;
-}
-
 .bar .button {
-  width: 143px;
-  height: 24px;
-  background: url("/images/bt-entrer-bar.png") no-repeat;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
   text-align: center;
-  margin-left: 2px;
+  height: 10px;
 }
 
-.bar .button a {
+.bar .button img {
   position: relative;
-  left: 8px;
-  top: 4px;
+  top: 2px;
 }
 
 .empty-challenge-grid {

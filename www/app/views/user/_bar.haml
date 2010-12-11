@@ -1,24 +1,15 @@
 .bar
-  %table.bar-header
+  .title= bar.name
+  .banner
+    = image_tag bar.banner_big, :alt => bar.name, :class => 'bar-banner'
+  %table
     %tr
-      %td.name
-        = bar.name
       %td.members
-        = t 'home.score.bar.member_count', :count => number_with_delimiter(bar.total_members)
-  %table.bar-content
-    %tr
-      %td.banner
-        = image_tag bar.banner_big, :alt => bar.name, :class => 'bar-banner'
-      %td.scores
-        .score
-          = t 'home.score.bar.score_7d'
-          %br
-          = image_tag 'mini-biere.png', :alt => t('beers')
-          = bar.always_high_score_for(@me)
-        .score
-          = t 'home.score.bar.best_score'
-          %br
-          = image_tag 'mini-biere.png', :alt => t('beers')
-          = bar.weekly_high_score_for(@me)
+        = t('home.bar.member_count', :count => number_with_delimiter(bar.total_members))
+      %td.high-score
+        = t('home.bar.high_score')
+        = bar.weekly_high_score
+        = image_tag 'mini-biere.png', :alt => t('beers')
   .button
-    = link_to t('home.score.bar.enter_button'), bar_url(bar)
+    %a{:href => bar_url(bar)}
+      = image_tag "play-in-this-bar_#{I18n.locale}.png", :alt => t('home.bar.enter_button')

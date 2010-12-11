@@ -4,61 +4,63 @@
     %td.small
     %td
     %td.small
-    %td
-    %td.small
-    %td
-    %td.small
   %tr
     %td.small
     %td.left-col
-      = image_tag "titre-mode-score_#{I18n.locale()}.png", :alt => t('home.score.mode'), :class => 'col-title'
       .col-content
-        %table.player
-          %tr
-            %td.portrait{:rowspan => 2}
-              = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
-            %td.score-desc= t 'home.score.best_7d'
-            %td.score-value
-              = image_tag 'mini-biere.png', :alt => t('beers')
-              = number_with_delimiter(@me.best_score_weekly)
-          %tr
-            %td.score-desc= t 'home.score.total_beers'
-            %td.score-value.total
-              = image_tag 'mini-biere.png', :alt => t('beers')
-              = number_with_delimiter(@me.total_beers)
-        %table.action
-          %tr
-            %td.description= t 'home.score.play_description_html'
-            %td.action
-              .button
-                %a{:href => bar_url(@me.last_bar)}= t 'home.score.button_html'
-        %ul.tabs
-          %li
-            %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.favorites.title'
-          %li
-            %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.bartners.title'
-          %li.last
-            %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.search.title'
-        .panes
-          .pane#favorites
-            = render :partial => 'favorite_bars'
-          .pane#bartners
-            = render :partial => 'partner_bars'
-          .pane#search
-            = render :partial => 'search_bars'
-    %td.small.shadow
+        -#%table.player
+        -#  %tr
+        -#    %td.portrait{:rowspan => 2}
+        -#      = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
+        -#    %td.score-desc= t 'home.score.best_7d'
+        -#    %td.score-value
+        -#      = image_tag 'mini-biere.png', :alt => t('beers')
+        -#      = number_with_delimiter(@me.best_score_weekly)
+        -#  %tr
+        -#    %td.score-desc= t 'home.score.total_beers'
+        -#    %td.score-value.total
+        -#      = image_tag 'mini-biere.png', :alt => t('beers')
+        -#      = number_with_delimiter(@me.total_beers)
 
-    %td.separator
+        -#%table.action
+        -#  %tr
+        -#    %td.description= t 'home.score.play_description_html'
+        -#    %td.action
+        -#      .button
 
-    %td.small
-    %td.right-col
-      (nothing...)
+
+        %table.home
+          %tr
+            %td.bars
+              .play
+                %a{:href => bar_url(@me.last_bar)}
+                  = image_tag "play-now_#{I18n.locale}.png", :width => 164, :height => 74, :alt => t('home.play_now')
+              .alternative= t('home.alternative')
+              %table.bar-grid
+                %tr
+                  %td
+                    = render :partial => 'bar', :object => Bar.get(1)
+                  %td
+                    = render :partial => 'bar', :object => Bar.get(2)
+              .notice= t('home.notice_html', :link => link_to(t('home.notice_link'), bartners_program_url, :target => '_blank'))
+            %td.scores
+              = render :partial => 'scores'
+        -#%ul.tabs
+        -#  %li
+        -#    %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.favorites.title'
+        -#  %li
+        -#    %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.bartners.title'
+        -#  %li.last
+        -#    %a{:href => 'javascript:void(0)'}= t 'home.score.tabs.search.title'
+        -#.panes
+        -#  .pane#favorites
+        -#    = render :partial => 'favorite_bars'
+        -#  .pane#bartners
+        -#    = render :partial => 'partner_bars'
+        -#  .pane#search
+        -#    = render :partial => 'search_bars'
     %td.small.shadow
   %tr.small
-    %td.small
-    %td.shadow
-    %td.small.shadow
-    %td
     %td.small
     %td.shadow
     %td.small.shadow

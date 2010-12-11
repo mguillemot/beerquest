@@ -6,13 +6,13 @@
     %a{:href => 'javascript:void(0)'} BAR
 .panes
   .pane#friends-scores
-    %table.barscore-grid
-      = render :partial => 'barscore', :collection => @me.weekly_friends_scores[0...3]
+    %table.score-grid
+      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores[0...3]
       %tr
         %td.invite{:colspan => 2}
           %a{:href => invite_url}
             = image_tag "invite_#{I18n.locale}.png", :width => 162, :height => 58, :alt => t('bar.scores.invite')
-      = render :partial => 'barscore', :collection => @me.weekly_friends_scores[3..-1]
+      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores[3..-1]
   .pane#bar-scores
-    %table.barscore-grid
-      = render :partial => 'barscore', :collection => @bar.weekly_top_scores
+    %table.score-grid
+      = render :partial => 'partials/individual_score', :collection => @bar.weekly_top_scores

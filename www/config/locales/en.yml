@@ -22,70 +22,20 @@ en:
     tos: "Terms of service"
     privacy: "Privacy policy"
   home:
-    score:
-      mode: "Score Mode"
-      best_7d: "Best Score 7 days"
-      total_beers: "Total drunk beer"
-      play_description_html: "<strong>Your score</strong> is the proof of your drinking skill."
-      button_html: "Play<br/>Now"
-      tabs:
-        favorites:
-          title: "Favorites"
-          bar_count:
-            one: "1 favorite bar"
-            other: "%{count} favorite bars"
-        bartners:
-          title: "Bartners"
-          bar_count:
-            one: "1 partner bar"
-            other: "%{count} partner bars"
-        search:
-          title: "Search"
-          alphabetic_order: "By first letter"
-          results:
-            one: "1 Bar for «%{search}»"
-            other: "%{count} Bars for «%{search}»"
-        pages: "Pages:"
-      bar:
-        member_count:
-          one: "1 Member"
-          other: "%{count} Members"
-        score_7d: "Score 7 days"
-        best_score: "Best score"
-        enter_button: "Enter this Bar"
-    battle: 
-      mode: "Battle Mode"
-      respect_points_count:
-       one: "1 Respect Point"
-       other: "%{count} Respect Points"
-      shame_points_count:
-        one: "1 Looser Point"
-        other: "%{count} Looser Points"
-      play_description_html: "<strong>Challenge your friends</strong> and make them acknowledge your m4d dr1nk1ng skillZ!"
-      button_html: "Challenge<br/>my Friends"
-      tabs:
-        current:
-          title: "Current (%{count})"
-        sent:
-          title: "Sent (%{count})"
-      empty:
-        current: "(No current challenge)"
-        sent: "(No sent challenge)"
-        received: "(No received challenge)"
-      warning:
-        received_html: "Received challenges are cancelled after one week if you don't accept them by clicking on <strong>Battle</strong>"
-        sent_html: "Challenges are cancelled after one week if they are not accepted."
-      received_challenge:
-        new_description: "Challenge received on %{date}"
-        description: "won his/her round on %{date}"
-        battle_button: "Battle"
-      sent_challenge:
-        new_description: "Challenge sent on %{date}"
-        description: "Challenge sent back on %{date}"
+    play_now: "Play NOW"
+    alternative: "Or chose in which bar you want to play:"
+    bar:
+      member_count:
+        one: "1 Customer"
+        other: "%{count} Customers"
+      high_score: "Hi Score:"
+      enter_button: "Enter this Bar"
+    notice_html: "You can ask us to create a bar named after your website.<br/>Please see our %{link} for more details."
+    notice_link: "Bartners page"
   bar:
     member_count:
-      one: "1 Client"
-      other: "%{count} Clients"
+      one: "1 Customer"
+      other: "%{count} Customers"
     beer_count: "%{count} beers drunk"
     how_to_play: "How to play?"
     news:
@@ -101,7 +51,7 @@ en:
     stats:
       bar_stats: "Bar statistics"
       bar_rank: "Bar rank"
-      bar_weekly_activity: "Client activity"
+      bar_weekly_activity: "Customer activity"
       bar_active_members:
         one: "1 active"
         other: "%{count} actives"

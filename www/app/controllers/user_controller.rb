@@ -15,9 +15,9 @@ class UserController < FacebookController
     end
 
     @nav = 'home'
-    set_favorites(1)
-    set_partners(1)
-    set_search('(none)', 1)
+#    set_favorites(1)
+#    set_partners(1)
+#    set_search('(none)', 1)
   end
 
   def async_world_score
