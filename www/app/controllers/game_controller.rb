@@ -15,7 +15,7 @@ class GameController < ApplicationController
           result[:turns] = replay.bar.turns
         when 'vs'
           replay.challenge.accept! params[:raise]
-          result[:turns] = Game::Constants.DEFAULT_INITIAL_TURNS
+          result[:turns] = Game::Constants::DEFAULT_INITIAL_TURNS
       end
       result[:replay_id] = replay.id
       result[:seed]      = replay.seed

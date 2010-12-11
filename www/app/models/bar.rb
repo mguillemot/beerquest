@@ -3,7 +3,7 @@ class Bar
 
   property :id, Serial
   property :name, String, :length => 100, :required => true
-  property :turns, Integer, :min => 0, :default => Game::Constants.DEFAULT_INITIAL_TURNS, :required => true
+  property :turns, Integer, :min => 0, :default => Game::Constants::DEFAULT_INITIAL_TURNS, :required => true
   property :url, String, :length => 1024, :required => true
   property :rss_fr, String, :length => 1024
   property :rss_en, String, :length => 1024
