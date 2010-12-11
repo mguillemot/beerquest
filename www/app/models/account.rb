@@ -36,6 +36,10 @@ class Account
     completed_games.sum(:score) || 0
   end
 
+  def best_score_always
+    completed_games.max(:score) || 0
+  end
+
   def best_score_weekly
     weekly_completed_games.max(:score) || 0
   end

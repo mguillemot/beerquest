@@ -87,7 +87,10 @@
 
   function gameStarted()
   {
-    setTimeout(startTutorial, 4000);
+    if (#{@me.best_score_always} < 60)
+    {
+      setTimeout(startTutorial, 4000);
+    }
   }
 
   function endOfGame(mode, score, scoreGoal, personalHigh, barHigh)
