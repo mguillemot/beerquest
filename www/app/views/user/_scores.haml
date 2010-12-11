@@ -1,20 +1,7 @@
 %ul.tabs
   %li.last
-    %a{:href => 'javascript:void(0)'} Amis
+    %a{:href => 'javascript:void(0)'}= t('home.scores.friends.title')
 .panes
   .pane#friends-scores
     %table.score-grid
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
-      = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores
       = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores

@@ -24,6 +24,9 @@ en:
   home:
     play_now: "Play NOW"
     alternative: "Or chose in which bar you want to play:"
+    scores:
+      friends:
+        title: "Friends Ranking"
     bar:
       member_count:
         one: "1 Customer"

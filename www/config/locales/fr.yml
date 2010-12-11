@@ -24,6 +24,9 @@ fr:
   home:
     play_now: "Jouer maintenant"
     alternative: "Sinon, choisis dans quel bar tu veux jouer :"
+    scores:
+      friends:
+        title: "Classement des Amis"
     bar:
       member_count:
         one: "1 Client"
