@@ -1,24 +1,16 @@
 class UserController < FacebookController
 
-  protect_from_forgery :except => [:index, :invite_end, :accept_challenge, :refuse_challenge] # index, *_challenge: canvas POST
+  protect_from_forgery :except => [:index, :invite_end] # index: canvas POST
 
-  BARS_PER_PAGE       = 3
-  CHALLENGES_PER_PAGE = 999999 # TODO faire la pagination (dans l'UI) des challenges
+  BARS_PER_PAGE = 3
 
   def index
     unless @me.first_login
-      # User's first login: send him to a challenge, or by default a bar
+      # User's first login: send him to the default bar
       logger.debug "This is account #{@me.id} (#{@me.full_name}) first time here!"
       @me.first_login = DateTime.now
       @me.save
-      if @me.challenges.empty?
-        logger.debug "He has no challenges, so sending him to the default bar #{@me.last_bar.id}"
-        redirect_to bar_url(@me.last_bar)
-      else
-        challenge = @me.challenges[0]
-        logger.debug "He had #{@me.challenges.size} challenge(s), so sending him to the first one: #{challenge.id}"
-        redirect_to challenge_url(challenge)
-      end
+      redirect_to bar_url(@me.last_bar)
       return true
     end
 
@@ -26,8 +18,6 @@ class UserController < FacebookController
     set_favorites(1)
     set_partners(1)
     set_search('(none)', 1)
-    set_current_challenges(1)
-    set_sent_challenges(1)
   end
 
   def async_world_score
@@ -57,94 +47,35 @@ class UserController < FacebookController
     end
   end
 
-  def async_current_challenges
-    set_current_challenges(params[:page].to_i)
-    respond_to do |format|
-      format.js { render :layout => false }
-    end
-  end
-
-  def async_sent_challenges
-    set_sent_challenges(params[:page].to_i)
-    respond_to do |format|
-      format.js { render :layout => false }
-    end
-  end
-
   def invite
     @nav     = 'challenge'
     @exclude = @me.already_invited_friends_fbids
   end
 
   def invite_end
-    logger.info "Sending challenges to the following users: #{params[:ids].inspect}"
-    if params[:ids]
-      params[:ids].each do |id|
-        account = Account.first(:facebook_id => id)
-        unless account
-          name = @me.friends[id.to_i]
-          if name
-            account = Account.create(:facebook_id => id, :full_name => name, :discovered_through => @me.id)
-          end
-        end
-        if account
-          if account.be_challenged!(@me)
-            logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
-          else
-            logger.error "An error occured when challenging user #{account.full_name} (id=#{account.id})"
-          end
-        else
-          logger.error "Impossible to challenge account with fbid=#{id} since it doesn't seem to exist"
-        end
-      end
-    end
-    redirect_to home_url
-  end
-
-  def challenge
-    @nav       = 'challenge'
-    @challenge = Challenge.get! params[:id]
-    if @challenge.account != @me
-      raise "wrong account; challenge is for account #{@challenge.account.id}"
-    end
-    @challenger = @challenge.sent_by
-    @mode       = "vs"
-    @replay     = @me.replays.create(:token => ActiveSupport::SecureRandom.hex(16), :ip => request.remote_ip, :mode => 'vs', :challenge => @challenge)
-  end
-
-  def async_challenge_messages
-    @challenge = Challenge.get! params[:id]
-    if @challenge.account != @me
-      raise "wrong account; challenge is for account #{@challenge.account.id}"
-    end
-    respond_to do |format|
-      format.js { render :layout => false }
-    end
-  end
-
-  def accept_challenge
-    logger.info "Accepting the challenge sent by user #{params[:id]}"
-    challenge = @me.challenges.first(:sent_by_id => params[:id])
-    if challenge
-      logger.info "Corresponding challenge found: #{challenge.id}"
-      redirect_to challenge_url(challenge)
-    else
-      logger.error "Could not find corresponding challenge (expired ?)"
-      flash[:error] = "Invalid challenge (expired ?)" # TODO localiser
-      redirect_to home_url
-    end
-  end
-
-  def refuse_challenge
-    # TODO
-    redirect_to home_url
-  end
-
-  def start_challenge
-    logger.info "Starting a new challenge with user #{params[:id]}"
-    challenged = Account.get(params[:id])
-    challenged.be_challenged!(@me)
-    flash[:notice] = "#{challenged.full_name} has been challenged"
+    logger.info "Sending invites to the following users: #{params[:ids].inspect}"
+    # TODO stocker pour ne pas renvoyer d'invite de suite
+    # TODO envoyer notif FB
+#    if params[:ids]
+#      params[:ids].each do |id|
+#        account = Account.first(:facebook_id => id)
+#        unless account
+#          name = @me.friends[id.to_i]
+#          if name
+#            account = Account.create(:facebook_id => id, :full_name => name, :discovered_through => @me.id)
+#          end
+#        end
+#        if account
+#          if account.be_challenged!(@me)
+#            logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
+#          else
+#            logger.error "An error occured when challenging user #{account.full_name} (id=#{account.id})"
+#          end
+#        else
+#          logger.error "Impossible to challenge account with fbid=#{id} since it doesn't seem to exist"
+#        end
+#      end
+#    end
     redirect_to home_url
   end
 
@@ -191,23 +122,6 @@ class UserController < FacebookController
 
     @search_total = results.count
     @search       = results.all(:limit => BARS_PER_PAGE, :offset => (@search_page - 1) * BARS_PER_PAGE)
-  end
-
-  def set_current_challenges(page)
-    results                      = @me.current_challenges
-    @current_challenges_page     = page
-    @current_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
-    @current_challenges_total    = results.count
-    @pending_challenges_total    = @me.pending_challenges_count
-    @current_challenges          = results # TODO réactiver un truc du genre [((@current_challenges_page - 1) * CHALLENGES_PER_PAGE)...(@current_challenges_page * CHALLENGES_PER_PAGE)]
-  end
-
-  def set_sent_challenges(page)
-    results                   = @me.new_sent_challenges
-    @sent_challenges_page     = page
-    @sent_challenges_max_page = [1, (results.count.to_f / CHALLENGES_PER_PAGE).ceil].max
-    @sent_challenges_total    = results.count
-    @sent_challenges          = results.all(:limit => CHALLENGES_PER_PAGE, :offset => (@sent_challenges_page - 1) * CHALLENGES_PER_PAGE)
   end
 
 end

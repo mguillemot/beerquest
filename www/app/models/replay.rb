@@ -4,7 +4,6 @@ class Replay
   property :id, Serial
   property :account_id, Integer, :min => 1 # Note: required declaration to have NULLable FK
   property :bar_id, Integer, :min => 1 # Note: required declaration to have NULLable FK
-  property :challenge_id, Integer, :min => 1
   property :score, Integer, :index => true
   property :mode, String, :required => true # solo, vs
   property :game_version, String
@@ -64,7 +63,6 @@ class Replay
 
   belongs_to :account
   belongs_to :bar
-  belongs_to :challenge
 
   def self.finished
     self.all(:game_over => true)

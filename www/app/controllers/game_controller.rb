@@ -10,12 +10,8 @@ class GameController < ApplicationController
       #replay.seed           = 1234 # Test only
       replay.token_use_time = DateTime.now
       replay.save
-      case replay.mode
-        when 'solo'
-          result[:turns] = replay.bar.turns
-        when 'vs'
-          replay.challenge.accept! params[:raise]
-          result[:turns] = Game::Constants::DEFAULT_INITIAL_TURNS
+      if replay.mode == 'solo'
+        result[:turns] = replay.bar.turns
       end
       result[:replay_id] = replay.id
       result[:seed]      = replay.seed
@@ -100,17 +96,6 @@ class GameController < ApplicationController
         if replay.score > bar_best
           logger.info "New bar record!"
           result[:barHigh] = true
-        end
-      elsif replay.mode == 'vs'
-        replay.save
-        logger.info "Replay #{replay.id} ended with success with score #{replay.score}"
-
-        # Update corresponding challenge
-        replay.challenge.end!(replay.score)
-        if replay.challenge.status == 'won'
-          logger.info "Challenge #{replay.challenge.id} won and counter-challenge created!"
-        else
-          logger.info "Challenge #{replay.challenge.id} lost!"
         end
       end
 

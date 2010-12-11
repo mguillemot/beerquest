@@ -70,7 +70,8 @@ class Bar
   end
 
   def weekly_top_scores
-    Replay.extract_bar_scores_of(self)
+    return @weekly_top_scores if @weekly_top_scores
+    @weekly_top_scores = Replay.extract_bar_scores_of(self)[0...30]
   end
 
   def messages

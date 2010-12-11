@@ -25,13 +25,13 @@
           %td.sidebar{:rowspan => 3}
             = render :partial => 'scores'
         %tr.bottom1
-          %td.actuality
-            RSS
-          %td.clients
+          %td#rss
+            = render :partial => 'rss'
+          %td#activity{:rowspan => 2}
             = render :partial => 'messages'
         %tr.bottom2
-          %td.actuality
-            Stats
+          %td#stats
+            = render :partial => 'stats'
     %td.small.shadow
   %tr.small
     %td.small

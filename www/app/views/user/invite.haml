@@ -3,7 +3,7 @@
     %fb:fbml
       %fb:request-form{:method => 'POST',
           :type => t('invite.type'),
-          :content => "#{t('invite.message')} <fb:req-choice url=\"#{BeerQuest::FB_APP_URL}#{accept_challenge_path(@me.id)}\" label=\"#{t('invite.accept')}\" /><fb:req-choice url=\"#{BeerQuest::FB_APP_URL}#{refuse_challenge_path(@me.id)}\" label=\"#{t('invite.refuse')}\" />",
+          :content => "#{t('invite.message')} <fb:req-choice url=\"#{BeerQuest::FB_APP_URL}\" label=\"#{t('invite.accept')}\" />",
           :action => invite_end_url}
         %fb:multi-friend-selector{:actiontext => t('invite.selector'),
           :showborder => 'true',

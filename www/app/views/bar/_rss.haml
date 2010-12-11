@@ -1,0 +1,4 @@
+%ul.rss
+  - @rss.each do |rss|
+    %li
+      %a{:href => rss[:url], :target => '_blank'}= rss[:title]

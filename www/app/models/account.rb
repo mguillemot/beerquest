@@ -21,8 +21,6 @@ class Account
   has n, :barships, :constraint => :destroy
   has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
   has n, :replays, :constraint => :set_nil
-  has n, :challenges, :constraint => :destroy
-  has n, :sent_challenges, :model => Challenge, :child_key => :sent_by_id, :constraint => :destroy
   has n, :donations, :constraint => :set_nil
 
   def profile_picture
@@ -44,18 +42,6 @@ class Account
 
   def best_score_weekly_in_bar(bar)
     weekly_completed_games_in_bar(bar).max(:score) || 0
-  end
-
-  def current_challenges
-    pending_challenges + pending_sent_challenges.all(:parent.not => nil)
-  end
-
-  def pending_challenges_count
-    pending_challenges.size
-  end
-
-  def new_sent_challenges
-    pending_sent_challenges.all(:parent => nil)
   end
 
   def already_invited_friends_fbids
@@ -81,7 +67,8 @@ class Account
   end
 
   def weekly_friends_scores
-    Replay.extract_friends_scores_of(self)
+    return @weekly_friends_scores if @weekly_friends_scores
+    @weekly_friends_scores = Replay.extract_friends_scores_of(self)
   end
 
   private
@@ -100,28 +87,6 @@ class Account
 
   def weekly_completed_games_in_bar(bar)
     weekly_completed_games.all(:bar => bar)
-  end
-
-  def replays_with(friend)
-    result = []
-    completed_games.all(:mode => 'vs').each { |r| result.push(r) if r.challenge.sent_by == friend }
-    result
-  end
-
-  def pending_challenges
-    challenges.all(:status => Challenge::STATUS_PENDING)
-  end
-
-  def pending_sent_challenges
-    sent_challenges.all(:status => Challenge::STATUS_PENDING)
-  end
-
-  def challenges_with(friend)
-    challenges.all(:sent_by => friend)
-  end
-
-  def sent_challenges_with(friend)
-    sent_challenges.all(:account => friend)
   end
 
 end

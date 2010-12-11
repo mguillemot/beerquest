@@ -1,13 +1,13 @@
 %ul.messages
   - @bar.messages.each do |msg|
     %li
-      = image_tag msg.account.profile_picture, :alt => msg.account.full_name, :class => 'mini-portrait'
+      = image_tag msg.account.profile_picture, :alt => msg.account.first_name, :class => 'mini-portrait'
       = image_tag 'mini-biere.png', :alt => t('beers')
       %span.score= msg.score
       = "-"
       %span.date= l(msg.updated_at, :format => :short)
       %br
-      %span.name= msg.account.full_name
+      %span.name= msg.account.first_name
       -#&laquo;
       -#= msg.message
       -#&raquo;

@@ -52,31 +52,7 @@
 
     %td.small
     %td.right-col
-      = image_tag "titre-mode-battle_#{I18n.locale}.png", :alt => t('home.battle.mode'), :class => 'col-title'
-      .col-content
-        %table.player
-          %tr
-            %td.portrait{:rowspan => 2}
-              = image_tag @me.profile_picture, :alt => @me.full_name, :class => 'portrait'
-            %td.score-desc= t 'home.battle.respect_points_count', :count => @me.total_victories
-          %tr
-            %td.score-desc= t 'home.battle.shame_points_count', :count => @me.total_defeats
-        %table.action
-          %tr
-            %td.description= t 'home.battle.play_description_html'
-            %td.action
-              .button
-                = link_to t('home.battle.button_html'), invite_url
-        %ul.tabs
-          %li
-            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.current.title', :count => @pending_challenges_total
-          %li.last
-            %a{:href => 'javascript:void(0)'}= t 'home.battle.tabs.sent.title', :count => @sent_challenges_total
-        .panes
-          .pane#current
-            = render :partial => 'current_challenges'
-          .pane#sent
-            = render :partial => 'sent_challenges'
+      (nothing...)
     %td.small.shadow
   %tr.small
     %td.small

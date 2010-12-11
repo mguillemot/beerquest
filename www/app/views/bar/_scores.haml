@@ -8,7 +8,11 @@
 .panes
   .pane#friends-scores
     %table.barscore-grid
-      = render :partial => 'barscore', :collection => @me.weekly_friends_scores
+      = render :partial => 'barscore', :collection => @me.weekly_friends_scores[0...3]
+      %tr
+        %td.invite{:colspan => 2}
+          %a{:href => invite_url} INVITE FRIENDS
+      = render :partial => 'barscore', :collection => @me.weekly_friends_scores[3..-1]
   .pane#bar-scores
     %table.barscore-grid
       = render :partial => 'barscore', :collection => @bar.weekly_top_scores

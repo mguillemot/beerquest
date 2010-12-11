@@ -8,6 +8,8 @@ table.bar-area {
   text-align: left;
   border-collapse: separate;
   border-spacing: 4px;
+  height: 200px;
+  max-height: 200px;
 }
 
 table.bar-area td {
@@ -15,12 +17,39 @@ table.bar-area td {
   text-align: left;
 }
 
-table.bar-area tr.bottom td.bar-scores {
-  width: 260px;
+table.bar-area td#rss {
+  width: 200px;
+  height: 80px;
+  background: #fff4c7;
+  border: 1px solid #ff8800;
+  padding: 4px;
+  overflow: hidden;
 }
 
-table.bar-area tr.bottom td.friends-scores {
-  width: 260px;
+table.bar-area td#stats {
+  width: 200px;
+  height: 50px;
+  background: #fff4c7;
+  border: 1px solid #ff8800;
+  padding: 4px;
+  overflow: hidden;
+}
+
+table.bar-area tr.bottom1 {
+  height: 50px;
+}
+
+table.bar-area tr.bottom2 {
+  height: 30px;
+}
+
+table.bar-area td#activity {
+  width: 200px;
+  height: 200px;
+  background: #fff4c7;
+  border: 1px solid #ff8800;
+  padding: 4px;
+  overflow: hidden;
 }
 
 table.bar-area tr.bottom td.bar-stats {
@@ -86,7 +115,7 @@ td.bar-name a {
 #game {
   width: 520px;
   height: 320px;
-  overflow: none;
+  overflow: hidden;
 }
 
 ul.rss li {

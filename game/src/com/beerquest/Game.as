@@ -18,8 +18,8 @@ public class Game extends EventDispatcher {
         }
         _scoreGoal = scoreGoal;
         _me = me;
-        _remainingTurns = initialTurns;
         dispatchEvent(new Event("meChanged"));
+        remainingTurns = initialTurns;
         _rand = new DeadBeefRandom(seed);
         _board = new BoardState(_rand);
         _board.generateRandomWithoutGroups(DiscardEventBuffer.INSTANCE);
