@@ -56,26 +56,11 @@ class UserController < FacebookController
     logger.info "Sending invites to the following users: #{params[:ids].inspect}"
     # TODO stocker pour ne pas renvoyer d'invite de suite
     # TODO envoyer notif FB
-#    if params[:ids]
-#      params[:ids].each do |id|
-#        account = Account.first(:facebook_id => id)
-#        unless account
-#          name = @me.friends[id.to_i]
-#          if name
-#            account = Account.create(:facebook_id => id, :full_name => name, :discovered_through => @me.id)
-#          end
-#        end
-#        if account
-#          if account.be_challenged!(@me)
-#            logger.info "Challenged user #{account.full_name} (id=#{account.id}) successfully"
-#          else
-#            logger.error "An error occured when challenging user #{account.full_name} (id=#{account.id})"
-#          end
-#        else
-#          logger.error "Impossible to challenge account with fbid=#{id} since it doesn't seem to exist"
-#        end
-#      end
-#    end
+    if params[:ids]
+      params[:ids].each do |id|
+        @me.invites.create(:friend_facebook_id => id)
+      end
+    end
     redirect_to home_url
   end
 
