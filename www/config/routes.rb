@@ -38,7 +38,8 @@ BeerQuest::Application.routes.draw do
   # Admin & debug
   get "admin/log-as/:id" ,          :to => "admin#log_as"
   get "admin/check-game/:id",       :to => "admin#check_game"
-  get "admin/test_accounts",        :to => "admin#test_accounts"
-  post "admin/new_test_account",    :to => "admin#new_test_account"
+  get "admin/restrictions",         :to => "admin#restrictions"
+  get "admin/test-accounts",        :to => "admin#test_accounts"
+  post "admin/new-test-account",    :to => "admin#new_test_account"
 
 end

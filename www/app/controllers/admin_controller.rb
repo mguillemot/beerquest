@@ -115,24 +115,30 @@ class AdminController < ApplicationController
     redirect_to :controller => 'admin', :action => 'test_accounts'
   end
 
+  def restrictions
+    set_restrictions({})
+    restrictions = get_restrictions
+    render :text => restrictions.inspect
+  end
+
   private
 
   def admin_required
     Rails.env == 'development' || @admin
   end
 
-  def check_restrictions
+  def get_restrictions
     logger.debug "Checking FB restrictions..."
-    @restrictions = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.getRestrictionInfo', {'format' => 'JSON'})
-    @restrictions.gsub!(/\\(.)/, '\1')
-    @restrictions = @restrictions[1..-2]
-    @restrictions = JSON.parse(@restrictions)
-    logger.debug "Current restrictions are: #{@restrictions.inspect}"
-    true
+    restrictions = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.getRestrictionInfo', {'format' => 'JSON'})
+    restrictions.gsub!(/\\(.)/, '\1')
+    restrictions = restrictions[1..-2]
+    restrictions = JSON.parse(restrictions)
+    logger.debug "Current restrictions are: #{restrictions.inspect}"
+    restrictions
   end
 
-  def set_restrictions
-    restrictions = {:type => 'alcohol'}
+  def set_restrictions(restrictions)
+    #ex: restrictions = {:type => 'alcohol'}
     logger.debug "Setting FB restrictions to #{restrictions.to_json}..."
     res = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.setRestrictionInfo', {'restriction_str' => restrictions.to_json, 'format' => 'JSON'})
     unless res == 'true'
