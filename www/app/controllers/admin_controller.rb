@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
 
   before_filter :admin_required
-  before_filter :check_restrictions
 
   # To log as another user (to see what he sees...)
   def log_as
