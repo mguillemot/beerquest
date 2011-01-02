@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RUBY_MODULE" version="4">
+  <component name="GemRequirementsHolder" version="3">
+    <requirement>
+      <requirement>
+        <dependency name="actionmailer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="actionpack" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="activesupport" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-adjust" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-aggregates" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-constraints" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-migrations" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-mysql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-observer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-rails" version="1.0.4" bound="EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-serializer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-timestamps" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-transactions" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-types" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="dm-validations" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="haml" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="hashie" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="json" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="mini_fb" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$/www/vendor/gems/mini_fb-1.1.5" git="false" path="true" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="mongrel" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="rails3-redis-session-store" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$/www/vendor/gems/rails3-redis-session-store-0.3.0" git="false" path="true" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="railties" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="redis" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="rest-client" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="system_timer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="www/Gemfile" />
+    </requirement>
+  </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
+

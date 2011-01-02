@@ -97,6 +97,7 @@ class FacebookController < ApplicationController
       @me.timezone       = facebook_account[:timezone] # 9
       @me.login_count    += 1
       @me.last_login     = DateTime.now
+      @me.save
 
       # Friends
       my_current_friends = @me.friendships.inject({}) do |friends, f|
