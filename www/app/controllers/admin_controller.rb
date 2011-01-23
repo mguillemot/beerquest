@@ -124,10 +124,15 @@ class AdminController < ApplicationController
   def check_restrictions
     logger.debug "Checking FB restrictions..."
     @restrictions = MiniFB.call(BeerQuest::FB_API_KEY, BeerQuest::FB_SECRET, 'admin.getRestrictionInfo', {'format' => 'JSON'})
-    @restrictions.gsub!(/\\(.)/, '\1')
-    @restrictions = @restrictions[1..-2]
-    @restrictions = JSON.parse(@restrictions)
-    logger.debug "Current restrictions are: #{@restrictions.inspect}"
+    logger.debug "Raw restrictions are: #{@restrictions}"
+    begin
+      @restrictions.gsub!(/\\(.)/, '\1')
+      @restrictions = @restrictions[1..-2]
+      @restrictions = JSON.parse(@restrictions)
+      logger.debug "Current restrictions are: #{@restrictions.inspect}"
+    rescue JSON::ParserError => e
+      logger.error "Error while parsing JSON restrictions: #{e}"
+    end
     true
   end
 

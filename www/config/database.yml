@@ -5,10 +5,11 @@ defaults: &defaults
 
 development:
   adapter: mysql
-  database: beerquest_development
+  database: beerquest
   username: root
-  password: 
+  password: XDu3=Td4
   host: localhost
+  port: 3308
   <<: *defaults
 
 test:

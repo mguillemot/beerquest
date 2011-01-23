@@ -1,7 +1,7 @@
 package com.beerquest {
 public class Constants {
 
-    public static const VERSION:Number = 1.02;
+    public static const VERSION:Number = 1.03;
     public static const DEBUG:Boolean = false;
 
     public static const BOARD_SIZE:int = 8;

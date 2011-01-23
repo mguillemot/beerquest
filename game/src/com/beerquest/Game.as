@@ -13,7 +13,7 @@ import flash.events.EventDispatcher;
 public class Game extends EventDispatcher {
 
     public function start(scoreGoal:int, me:PlayerData, seed:int, initialTurns:int):void {
-        if (_me != null) {
+        if (_me != null || _started) {
             throw "cannot start game multiple times";
         }
         _scoreGoal = scoreGoal;
@@ -24,10 +24,14 @@ public class Game extends EventDispatcher {
         _board = new BoardState(_rand);
         _board.generateRandomWithoutGroups(DiscardEventBuffer.INSTANCE);
         _initialBoardEncodedState = _board.encodedState();
+        _started = true;
         execute(new GameEvent(GameEvent.GAME_START, _board.clone()));
     }
 
     internal function execute(event:Event):void {
+        if (!_started) {
+            return;
+        }
         dispatchEvent(event);
         switch (event.type) {
             case GameEvent.PHASE_END:
@@ -122,6 +126,10 @@ public class Game extends EventDispatcher {
     }
 
     public function executeCapacity(capacity:Capacity, token:TokenType, eventBuffer:EventBuffer):void {
+        if (_gameOver) {
+            trace("Dropping capacity use of " + capacity.name + " after game over");
+            return;
+        }
         me.useCapacity(capacity, token);
         switch (capacity) {
             case Capacity.DIVINE_PEANUTS:
@@ -228,6 +236,7 @@ public class Game extends EventDispatcher {
         return _scoreGoal;
     }
 
+    private var _started:Boolean = false;
     private var _scoreGoal:int;
     private var _me:PlayerData;
     private var _initialTurns:int;

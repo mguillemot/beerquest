@@ -27,14 +27,7 @@
       <requirement>
         <dependency name="actionpack" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
-      <source manual="true" />
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activemodel" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
@@ -52,7 +45,6 @@
       <requirement>
         <dependency name="activesupport" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
-      <source manual="true" />
       <source from="Gemfile" />
     </requirement>
     <requirement>
@@ -165,21 +157,9 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="i18n" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="json" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="mail" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
@@ -190,12 +170,6 @@
     <requirement>
       <requirement>
         <dependency name="mini_fb" version="0" bound="GREATER_OR_EQUAL" url="file://$MODULE_DIR$/vendor/gems/mini_fb-1.1.5" git="false" path="true" doRequire="true" />
-      </requirement>
-      <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="mongrel" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
     </requirement>
@@ -214,12 +188,6 @@
     <requirement>
       <requirement>
         <dependency name="rack-mount" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rack-test" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source manual="true" />
     </requirement>
@@ -262,19 +230,7 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="system_timer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="thor" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="treetop" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source manual="true" />
     </requirement>
@@ -294,75 +250,69 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack-test (v0.5.6, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rack-test-0.5.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] daemons (v1.1.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/daemons-1.1.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] fastthread (v1.0.7, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/fastthread-1.0.7)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] system_timer (v1.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/system_timer-1.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] stringex (v1.1.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/stringex-1.1.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-do-adapter (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-do-adapter-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-types (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-types-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-observer (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-observer-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] do_mysql (v0.10.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/do_mysql-0.10.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-core (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-core-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] fastercsv (v1.5.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/fastercsv-1.5.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-mysql-adapter (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-mysql-adapter-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] gem_plugin (v0.2.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/gem_plugin-0.2.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] json_pure (v1.4.6, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/json_pure-1.4.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-aggregates (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-aggregates-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-timestamps (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-timestamps-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-serializer (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-serializer-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-validations (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-validations-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] cgi_multipart_eof_fix (v2.5.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/cgi_multipart_eof_fix-2.5.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] uuidtools (v2.1.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/uuidtools-2.1.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-adjust (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-adjust-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-migrations (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-migrations-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-constraints (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-constraints-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] mongrel (v1.1.5, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mongrel-1.1.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] json (v1.4.6, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/json-1.4.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-transactions (v1.0.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-transactions-1.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] abstract (v1.0.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/abstract-1.0.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] polyglot (v0.3.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/polyglot-0.3.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack (v1.2.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rack-1.2.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] treetop (v1.4.8, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/treetop-1.4.8)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack-mount (v0.6.13, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rack-mount-0.6.13)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] mime-types (v1.16, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mime-types-1.16)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activesupport-3.0.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rake (v0.8.7, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rake-0.8.7)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] erubis (v2.6.6, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/erubis-2.6.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] tzinfo (v0.3.23, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/tzinfo-0.3.23)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] builder (v2.1.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/builder-2.1.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] i18n (v0.4.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/i18n-0.4.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-active_model (v1.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-active_model-1.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-rails (v1.0.4, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/dm-rails-1.0.4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.1.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/redis-2.1.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activesupport-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionmailer-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/railties-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] haml (v3.0.24, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/haml-3.0.24)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activesupport-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/railties-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activemodel (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activemodel-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] thor (v0.14.6, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/thor-0.14.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] mail (v2.2.10, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mail-2.2.10)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] bundler (v1.0.7, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/bundler-1.0.7)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] builder (v3.0.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/builder-3.0.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] arel (v2.0.4, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/arel-2.0.4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activerecord-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] treetop (v1.4.9, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/treetop-1.4.9)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activeresource-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rails-3.0.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] hashie (v0.4.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/hashie-0.4.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rest-client (v1.6.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rest-client-1.6.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rails3-redis-session-store (v0.3.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/rails3-redis-session-store-0.3.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] addressable (v2.2.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/addressable-2.2.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] data_objects (v0.10.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/data_objects-0.10.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activemodel (v3.0.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/activemodel-3.0.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] extlib (v0.9.15, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/extlib-0.9.15)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] mysql (v2.8.1, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/mysql-2.8.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] arel (v2.0.6, C:/Ruby192/lib/ruby/gems/1.9.1/gems/arel-2.0.6)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] stringex (v1.1.0, C:/Ruby192/lib/ruby/gems/1.9.1/gems/stringex-1.1.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-do-adapter (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-do-adapter-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-types (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-types-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-observer (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-observer-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] do_mysql (v0.10.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/do_mysql-0.10.2-x86-mingw32)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-core (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-core-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-mysql-adapter (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-mysql-adapter-1.0.2)" level="application" />
+    <orderEntry type="library" name="[gem] gem_plugin (v0.2.3, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] json_pure (v1.4.6, C:/Ruby192/lib/ruby/gems/1.9.1/gems/json_pure-1.4.6)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-aggregates (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-aggregates-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-timestamps (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-timestamps-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-serializer (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-serializer-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-validations (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-validations-1.0.2)" level="application" />
+    <orderEntry type="library" name="[gem] cgi_multipart_eof_fix (v2.5.0, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] uuidtools (v2.1.1, C:/Ruby192/lib/ruby/gems/1.9.1/gems/uuidtools-2.1.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-adjust (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-adjust-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-migrations (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-migrations-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-constraints (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-constraints-1.0.2)" level="application" />
+    <orderEntry type="library" name="[gem] mongrel (v1.1.5, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] json (v1.4.6, C:/Ruby192/lib/ruby/gems/1.9.1/gems/json-1.4.6-x86-mingw32)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-transactions (v1.0.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-transactions-1.0.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] abstract (v1.0.0, C:/Ruby192/lib/ruby/gems/1.9.1/gems/abstract-1.0.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] polyglot (v0.3.1, C:/Ruby192/lib/ruby/gems/1.9.1/gems/polyglot-0.3.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rack (v1.2.1, C:/Ruby192/lib/ruby/gems/1.9.1/gems/rack-1.2.1)" level="application" />
+    <orderEntry type="library" name="[gem] treetop (v1.4.8, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rack-mount (v0.6.13, C:/Ruby192/lib/ruby/gems/1.9.1/gems/rack-mount-0.6.13)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] mime-types (v1.16, C:/Ruby192/lib/ruby/gems/1.9.1/gems/mime-types-1.16)" level="application" />
+    <orderEntry type="library" name="[gem] rake (v0.8.7, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] erubis (v2.6.6, C:/Ruby192/lib/ruby/gems/1.9.1/gems/erubis-2.6.6)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] tzinfo (v0.3.23, C:/Ruby192/lib/ruby/gems/1.9.1/gems/tzinfo-0.3.23)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] builder (v2.1.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/builder-2.1.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-active_model (v1.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-active_model-1.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] dm-rails (v1.0.4, C:/Ruby192/lib/ruby/gems/1.9.1/gems/dm-rails-1.0.4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, C:/Ruby192/lib/ruby/gems/1.9.1/gems/redis-2.1.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] redis (v2.1.1, C:/Ruby192/lib/ruby/gems/1.9.1/gems/redis-2.1.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/activesupport-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/actionmailer-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/railties-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/activesupport-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] railties (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/railties-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] thor (v0.14.6, C:/Ruby192/lib/ruby/gems/1.9.1/gems/thor-0.14.6)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] bundler (v1.0.7, C:/Ruby192/lib/ruby/gems/1.9.1/gems/bundler-1.0.7)" level="application" />
+    <orderEntry type="library" name="[gem] builder (v3.0.0, null)" level="application" />
+    <orderEntry type="library" name="[gem] arel (v2.0.4, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/activerecord-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/activeresource-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/rails-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] hashie (v0.4.0, C:/Ruby192/lib/ruby/gems/1.9.1/gems/hashie-0.4.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rest-client (v1.6.1, C:/Ruby192/lib/ruby/gems/1.9.1/gems/rest-client-1.6.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] addressable (v2.2.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/addressable-2.2.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] data_objects (v0.10.2, C:/Ruby192/lib/ruby/gems/1.9.1/gems/data_objects-0.10.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] extlib (v0.9.15, C:/Ruby192/lib/ruby/gems/1.9.1/gems/extlib-0.9.15)" level="application" />
+    <orderEntry type="library" name="[gem] mysql (v2.8.1, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] haml (v3.0.25, C:/Ruby192/lib/ruby/gems/1.9.1/gems/haml-3.0.25)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/actionpack-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] mail (v2.2.14, C:/Ruby192/lib/ruby/gems/1.9.1/gems/mail-2.2.14)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rack-test (v0.5.7, C:/Ruby192/lib/ruby/gems/1.9.1/gems/rack-test-0.5.7)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] treetop (v1.4.9, C:/Ruby192/lib/ruby/gems/1.9.1/gems/treetop-1.4.9)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activemodel (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/activemodel-3.0.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] fastercsv (v1.5.4, C:/Ruby192/lib/ruby/gems/1.9.1/gems/fastercsv-1.5.4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] i18n (v0.5.0, C:/Ruby192/lib/ruby/gems/1.9.1/gems/i18n-0.5.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.3, C:/Ruby192/lib/ruby/gems/1.9.1/gems/actionpack-3.0.3)" level="application" />
   </component>
 </module>
 

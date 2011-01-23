@@ -133,6 +133,8 @@ public class BoardView extends UIComponent {
             trace("*********** EXECUTE " + e.type);
             onGemsSwapped(e as GemsSwappedEvent);
             dispatchEvent(new UiGameEvent(e));
+        } else if (_destroyCursor != 0 && e.type == UiCapacityExecutionEvent.ASK_FOR_EXECUTION) {
+            trace("Drop duplicate ASK_FOR_EXECUTION event");
         } else if (_currentAction == "") {
             trace("*********** EXECUTE " + e.type);
             switch (e.type) {
