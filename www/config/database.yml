@@ -1,22 +1,20 @@
 defaults: &defaults
+  adapter: mysql
   encoding: UTF-8
   reconnect: false
   pool: 5
 
 development:
-  adapter: mysql
-  database: beerquest
-  username: root
-  password: XDu3=Td4
+  database: beerquest_development
+  username: beerquest
+  password: glouglou
   host: localhost
-  port: 3308
   <<: *defaults
 
 test:
-  adapter: sqlite
-  database: db/beerquest_test.sqlite
-  username: root
-  password:
+  database: beerquest_test
+  username: beerquest
+  password: glouglou
   host: localhost
   <<: *defaults
 
