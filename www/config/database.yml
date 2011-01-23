@@ -6,8 +6,8 @@ defaults: &defaults
 
 development:
   database: beerquest_development
-  username: beerquest
-  password: glouglou
+  username: root
+  password:
   host: localhost
   <<: *defaults
 

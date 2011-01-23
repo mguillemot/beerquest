@@ -2,6 +2,8 @@ require 'rss/2.0'
 
 class BarController < FacebookController
 
+  layout 'widget', :only => :widget
+
   def show
     @nav  = 'bar'
     @bar  = Bar.get!(params[:id])
@@ -42,6 +44,15 @@ class BarController < FacebookController
     respond_to do |format|
       format.js { render :layout => false }
     end
+  end
+
+  def widget
+    @bar  = Bar.get!(params[:id])
+    @bgcolor = "fee734"
+    @bgcolor = params[:bgcolor] if params[:bgcolor] =~ /[0-9a-z]{6}/i
+    @width = 240
+    @width = params[:width].to_i if params[:width].to_i >= 100 && params[:width].to_i <= 200 # TODO régler bornes
+    
   end
 
 end

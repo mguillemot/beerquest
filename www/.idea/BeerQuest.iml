@@ -163,6 +163,12 @@
     </requirement>
     <requirement>
       <requirement>
+        <dependency name="mongrel" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
         <dependency name="polyglot" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source manual="true" />
@@ -213,6 +219,12 @@
     <requirement>
       <requirement>
         <dependency name="rest-client" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="system_timer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
     </requirement>
@@ -298,6 +310,9 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] i18n (v0.5.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/i18n-0.5.0)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v3.0.3, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/actionpack-3.0.3)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] system_timer (v1.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/system_timer-1.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] json (v1.5.0, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/json-1.5.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] treetop (v1.4.9, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/treetop-1.4.9)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] builder (v2.1.2, /home/erhune/.rvm/gems/ree-1.8.7-2010.02/gems/builder-2.1.2)" level="application" />
   </component>
 </module>
 

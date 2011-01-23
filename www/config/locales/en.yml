@@ -32,7 +32,7 @@ en:
         one: "1 Customer"
         other: "%{count} Customers"
       high_score: "Hi Score:"
-      enter_button: "Enter this Bar"
+      enter_button: "PLAY in this bar"
     notice_html: "You can ask us to create a bar named after your website.<br/>Please see our %{link} for more details."
     notice_link: "Bartners page"
   bar:
@@ -206,3 +206,8 @@ en:
     accept: "Ok, let's see!"
     refuse: "Oh no, pleeease!"
     selector: "So your friends think they can beat you at drinking?!?"
+  widget:
+    title_html: 'Our iBar is <span class="open">OPEN</span> on Facebook!'
+    beer_count: "drunk in our iBar"
+    ranking: "Bar rank: #%{rank}"
+    footer: "Beer Quest IV is a social Puzzle Game!"

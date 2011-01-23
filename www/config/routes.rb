@@ -12,6 +12,7 @@ BeerQuest::Application.routes.draw do
   # Bar pages
   get "bar/:id",                    :to => "bar#show",                       :as => 'bar'
   get "bar/:id/messages",           :to => "bar#async_messages",             :as => 'async_bar_messages'
+  get "widget/bar/:id",             :to => "bar#widget",                     :as => 'bar_widget'
 
   # Tutorial
   get "tutorial/:page",             :to => "tutorial#index",                 :as => 'tutorial'

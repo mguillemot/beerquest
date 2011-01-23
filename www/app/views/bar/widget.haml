@@ -1,0 +1,61 @@
+#widget{:style => "width:#{@width}px"}
+  .title= t('widget.title_html')
+  #box
+    .banner
+      %a{:href => "#{BeerQuest::FB_APP_URL}#{bar_path(@bar)}"}
+        = image_tag @bar.banner_small, :alt => @bar.name, :class => 'bar-banner'
+    .content{:style => "background-color:##{@bgcolor}"}
+      = number_with_delimiter(@bar.total_beers)
+      = image_tag 'mini-biere.png', :alt => t('beers')
+      = t('widget.beer_count')
+      %hr
+      .scores
+        %ul
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          %li Début
+          - 25.times do |i|
+            %li= "Joueur #{i}"
+          %li Mid
+          - 25.times do |i|
+            %li= "Joueur #{i+25}"
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+          %li Fin
+      %hr
+      .button
+        %a{:href => "#{BeerQuest::FB_APP_URL}#{bar_path(@bar)}"}
+          = image_tag "play-in-this-bar_#{I18n.locale}.png", :alt => t('home.bar.enter_button')
+    .footer
+      = image_tag "bq-16x16.png", :alt => t('beerquest'), :width => 16, :height => 16
+      = t('widget.footer')
+
+:javascript
+  $(function()
+  {
+    $('.scores').autoscroll({
+      step: 200,
+      onEdge: function(edge) {
+        if (edge.y == 'bottom') {
+          $(this).autoscroll('rewind', { step: 1000000, speed: 1 });          
+        }
+      }
+    });
+  });

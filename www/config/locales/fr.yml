@@ -32,7 +32,7 @@ fr:
         one: "1 Client"
         other: "%{count} Clients"
       high_score: "Hi Score :"
-      enter_button: "Entrer dans ce Bar"
+      enter_button: "JOUER dans ce bar"
     notice_html: "Il est possible de demander la création d'un bar au nom d'un site.<br/>Se reporter à notre %{link} pour plus de détails."
     notice_link: "page Bartners"
   bar:
@@ -206,6 +206,11 @@ fr:
     accept: "On va voir ça !"
     refuse: "Oh non, pitié !"
     selector: "Défie tes amis à celui qui picolera le plus !"
+  widget:
+    title_html: 'Notre iBar est <span class="open">OUVERT</span> sur Facebook !'
+    beer_count: "bues dans notre iBar"
+    ranking: "#%{rank} au classement des bars"
+    footer: "Beer Quest IV est un puzzle-game social !"
 
   # http://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/fr.yml
   # WARNING: some changes below (tagged Erhune)
