@@ -22,6 +22,7 @@ class Account
   has n, :favorite_bars, :model => Bar, :through => :barships, :via => :bar
   has n, :replays, :constraint => :set_nil
   has n, :donations, :constraint => :set_nil
+  has n, :invites, :constraint => :destroy
 
   def profile_picture
     "http://graph.facebook.com/#{facebook_id}/picture"
