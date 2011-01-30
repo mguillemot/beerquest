@@ -56,9 +56,8 @@ class UserController < FacebookController
 
   def invite_end
     if params[:ids]
-      ids = params[:ids].split(',')
-      logger.info "Sent the following #{ids.length} invite requests with message #{session[:invite]}: #{ids.inspect}"
-      ids.each do |id|
+      logger.info "Sent the following #{params[:ids].length} invite requests with message #{session[:invite]}: #{params[:ids].inspect}"
+      params[:ids].each do |id|
         @me.invites.create(:request_id => id, :message => params[:msg], :lang => I18n.locale)
       end
     else
