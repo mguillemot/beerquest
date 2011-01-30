@@ -20,7 +20,7 @@ class FacebookController < ApplicationController
       redirect_to BeerQuest::FB_APP_URL
     else
       logger.error "FB login seems error => bust IFrame and start again"
-      bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
+      redirect_to_auth_page
     end
   end
 
@@ -51,7 +51,7 @@ class FacebookController < ApplicationController
       logger.debug "Access token is #{session[:access_token]}"
     else
       logger.warn "No access token found: busting IFrame"
-      bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
+      redirect_to_auth_page
       return false
     end
 
@@ -86,7 +86,7 @@ class FacebookController < ApplicationController
       rescue MiniFB::FaceBookError => ex
         logger.error "Facebook raised #{ex.inspect} => cancelling session & busting IFrame"
         reset_session
-        bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
+        redirect_to_auth_page
         return false
       end
       @me.first_name     = facebook_account[:first_name]
@@ -220,6 +220,11 @@ class FacebookController < ApplicationController
   def bust_iframe(url)
     render :text => "<html><body><script>parent.location.href='#{url}';</script></body></html>"
     true
+  end
+
+  def redirect_to_auth_page
+    query_string = (params[:request_ids]) ? "?request_ids=#{params[:request_ids]}" : ""
+    bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, "#{login_url}#{query_string}", :scope => "")
   end
 
   def facebook_signed_request? (signed_request, secret)
