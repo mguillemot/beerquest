@@ -2,7 +2,7 @@ class UserController < FacebookController
 
   protect_from_forgery :except => [:index, :invite_end] # index: canvas POST
 
-  BARS_PER_PAGE = 3
+  BARS_PER_PAGE   = 3
   INVITE_MESSAGES = 3
 
   def index
@@ -49,17 +49,20 @@ class UserController < FacebookController
   end
 
   def invite
-    @nav     = 'challenge'
-    @exclude = @me.already_invited_friends_fbids
-    @invite  = 1 + rand(INVITE_MESSAGES)
+    @nav             = 'challenge'
+    @exclude         = @me.already_invited_friends_fbids
+    session[:invite] = @invite = 1 + rand(INVITE_MESSAGES)
   end
 
   def invite_end
-    logger.info "Sent invites (msg=#{params[:msg]}, lang=#{I18n.locale}) to the following users: #{params[:ids].inspect}"
     if params[:ids]
-      params[:ids].each do |id|
-        @me.invites.create(:friend_facebook_id => id, :message => params[:msg], :lang => I18n.locale)
+      ids = params[:ids].split(',')
+      logger.info "Sent the following #{ids.length} invite requests with message #{session[:invite]}: #{ids.inspect}"
+      ids.each do |id|
+        @me.invites.create(:request_id => id, :message => params[:msg], :lang => I18n.locale)
       end
+    else
+      logger.warn "Invitation ended without sending any requests"
     end
     redirect_to home_url
   end

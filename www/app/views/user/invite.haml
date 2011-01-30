@@ -1,3 +1,4 @@
+.empty
 - invite_msg = t("invite.message#{@invite}")
 :javascript
   var initialized = function() {
@@ -9,10 +10,9 @@
       //filters: [{name: "", user_ids: []}]
     }, function(response) {
       if (response && response.request_ids) {
-        console.log(response.request_ids.join(','));
-        window.location = "/";
+        window.location = "#{invite_end_url}?ids=" + response.request_ids.join(',');
       } else {
-        window.location = "/";
+        window.location = "#{home_url}";
       }
     });
   };

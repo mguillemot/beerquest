@@ -7,7 +7,7 @@ BeerQuest::Application.routes.draw do
   get "bars/partners/:page",        :to => "user#async_partners",            :as => 'async_partners'
   get "bars/search/:prefix/:page",  :to => "user#async_search",              :as => 'async_search'
   get "invite",                     :to => "user#invite",                    :as => 'invite'
-  match "invite-done/:msg",         :to => "user#invite_end",                :as => 'invite_end', :via => [:get, :post]
+  match "invite-done",              :to => "user#invite_end",                :as => 'invite_end', :via => [:get, :post]
 
   # Bar pages
   get "bar/:id",                    :to => "bar#show",                       :as => 'bar'
