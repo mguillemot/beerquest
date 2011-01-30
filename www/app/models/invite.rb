@@ -6,6 +6,8 @@ class Invite
   property :request_id, Integer, :min => 0, :max => 2**64-1, :required => true, :index => true
   property :message, Integer
   property :lang, String
+  property :accepted_by, Integer, :min => 1 # TODO ajouter l'association
+  property :accepted_at, DateTime
   property :created_at, DateTime
   property :updated_at, DateTime
 

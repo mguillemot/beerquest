@@ -191,10 +191,11 @@ class FacebookController < ApplicationController
         logger.debug "Acceptation ##{i}: accepting request #{rid.to_i}"
         res = MiniFB.post(session[:access_token], rid.to_i, :method => :delete)
         logger.debug "Deletion result is #{res.inspect}"
-        invite = @me.invites.first(:request_id => rid.to_i)
+        invite = Invites.first(:request_id => rid.to_i)
         if invite
           logger.debug "Found correponding BQ invite: #{invite.inspect}"
-          invite.lang = "accepted" # TODO
+          invite.accepted_by = @me.id
+          invite.accepted_at = DateTime.now
           invite.save
           logger.debug "BQ invite saved: #{invite.saved?}"
         else
