@@ -1,15 +1,26 @@
-%fb:serverFbml{:width => '760px'}
-  %script{:type => 'text/fbml'}
-    %fb:fbml
+- invite_msg = t("invite.message#{@invite}")
+%h2 Invitation des amis
+:javascript
+  FB.ui({
+    method: 'apprequests',
+    title: "#{t('invite.selector')}",
+    message: "#{invite_msg}",
+    data: "tracking test",
+    //filters: [{name: "", user_ids: []}]
+  });
+
+-#%fb:serverFbml{:width => '760px'}
+-#  %script{:type => 'text/fbml'}
+-#    %fb:fbml
       -# type=bouton "Envoyer une demande XXXXXXX", titre box "Afficher l'aperçu de l'invitation XXXXXX", invitation "Vous avez une demande de XXXXXX"
-      %fb:request-form{:method => 'POST',
-          :type => t("beerquest"),
-          :content => t("invite.message#{@invite}"),
-          :action => invite_end_url(@invite)}
-        %fb:multi-friend-selector{:actiontext => t('invite.selector'),
-          :showborder => 'true',
-          :exclude_ids => @exclude.join(','),
-          :max => 35,
-          :bypass => 'cancel',
-          :email_invite => 'false',
-          :import_external_friends => 'false'}
+      -#%fb:request-form{:method => 'POST',
+      -#    :type => t("beerquest"),
+      -#    :content => t("invite.message#{@invite}"),
+      -#    :action => invite_end_url(@invite)}
+      -#  %fb:multi-friend-selector{:actiontext => ,
+      -#    :showborder => 'true',
+      -#    :exclude_ids => @exclude.join(','),
+      -#    :max => 35,
+      -#    :bypass => 'cancel',
+      -#    :email_invite => 'false',
+      -#    :import_external_friends => 'false'}
