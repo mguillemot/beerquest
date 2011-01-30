@@ -1,19 +1,18 @@
 - invite_msg = t("invite.message#{@invite}")
-%h2 Invitation des amis
 :javascript
   var initialized = function() {
     FB.ui({
       method: 'apprequests',
       title: "#{t('invite.selector')}",
       message: "#{invite_msg}",
-      data: "tracking test"
+      data: "uid=#{@me.id},msg=#{@invite}"
       //filters: [{name: "", user_ids: []}]
     }, function(response) {
-      console.log(response);
       if (response && response.request_ids) {
-        alert('ok');
+        console.log(response.request_ids.join(','));
+        window.location = "/";
       } else {
-        alert('Post was not published.');
+        window.location = "/";
       }
     });
   };
