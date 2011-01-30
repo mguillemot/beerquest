@@ -201,10 +201,12 @@ fr:
         question: "Pourquoi une démarche aussi loufoque ?"
         answer_html: "Parce que nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, <a href=\"http://blog.bq-4.com/?lang=fr\" target=\"_blank\">venez lire notre beer-blog</a> et nous donner vos conseils."
   invite:
-    type: "Défi BeerQuest"
-    message: "J'te prends quand tu veux à la picole !"
-    accept: "On va voir ça !"
-    refuse: "Oh non, pitié !"
+    message1:
+      type: "XXXXXXX"
+      message: "YYYYYYY"
+#      type: "Qui peut boire le plus ?"
+#      message: "%{name} t'invite à jouer à BeerQuest IV, un puzzle game où celui qui bois le plus de bière a le meilleur score ! Rejoins ton ami(e) pour savoir qui est le meilleur !"
+    accept: "ZZZZZZZZZ"
     selector: "Défie tes amis à celui qui picolera le plus !"
   widget:
     title_html: 'Notre iBar est <span class="open">OUVERT</span> sur Facebook !'

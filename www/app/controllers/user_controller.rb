@@ -5,6 +5,10 @@ class UserController < FacebookController
   BARS_PER_PAGE = 3
 
   def index
+    if params[:invited_by]
+      logger.info "This account was invited by #{params[:invited_by]}"
+    end
+
     unless @me.first_login
       # User's first login: send him to the default bar
       logger.debug "This is account #{@me.id} (#{@me.full_name}) first time here!"
@@ -50,6 +54,7 @@ class UserController < FacebookController
   def invite
     @nav     = 'challenge'
     @exclude = @me.already_invited_friends_fbids
+    @invite  = 1
   end
 
   def invite_end

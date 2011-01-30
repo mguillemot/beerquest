@@ -2,8 +2,8 @@
   %script{:type => 'text/fbml'}
     %fb:fbml
       %fb:request-form{:method => 'POST',
-          :type => t('invite.type'),
-          :content => "#{t('invite.message')} <fb:req-choice url=\"#{BeerQuest::FB_APP_URL}\" label=\"#{t('invite.accept')}\" />",
+          :type => t("invite.message#{@invite}.type"),
+          :content => "#{t("invite.message#{@invite}.message", :name => @me.first_name)} <fb:req-choice url=\"#{BeerQuest::FB_APP_URL}#{invited_by_url(@me.id)}\" label=\"#{t('invite.accept')}\" />",
           :action => invite_end_url}
         %fb:multi-friend-selector{:actiontext => t('invite.selector'),
           :showborder => 'true',
