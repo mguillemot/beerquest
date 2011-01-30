@@ -10,17 +10,10 @@ class FacebookController < ApplicationController
   before_filter :set_world_score
 
   def session_login
-    if session[:login_url]
-      full_url = session[:login_url]
-      logger.debug "Login URL was found in session: #{full_url}"
-    else
-      full_url = login_url
-      logger.warn "Login URL was NOT found in session: #{full_url}"
-    end
     reset_session
     if params[:code]
       logger.debug "Checking OAuth code..."
-      fb_oauth               = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, full_url, BeerQuest::FB_SECRET, params[:code])
+      fb_oauth               = MiniFB.oauth_access_token(BeerQuest::FB_APP_ID, login_url, BeerQuest::FB_SECRET, params[:code])
       session[:access_token] = fb_oauth['access_token']
       session[:facebook_id]  = MiniFB.get(session[:access_token], 'me').id
       logger.debug "Storing session: fbid=#{session[:facebook_id]} access_token=#{session[:access_token]}"
@@ -184,7 +177,7 @@ class FacebookController < ApplicationController
     end
 
     # Invitations Facebook
-    if params[:request_ids]
+    if params[:request_ids] || session[:request_ids]
       pending_requests = MiniFB.get(session[:access_token], 'me', :type => 'apprequests')
       # <#Hashie::Mash data=[<#Hashie::Mash application=<#Hashie::Mash id="135204849839083" name="Beer Quest IV"> created_time="2011-01-30T12:16:37+0000" data="tracking test" from=<#Hashie::Mash id="100001227767696" name="Gérard Thaist"> id="1591009777659" message="Je te paries que tu ne pourras pas boire plus de bière que moi ! Viens te mesure |  moi sur Beer Quest IV. C'est un puzzle game fun et rapide |  jouer où l'objectif est de boire un max de bière !" to=<#Hashie::Mash id="1308311126" name="Matthieu Guillemot">>]>
       logger.debug "#{pending_requests.length} pending requests found:"
@@ -192,7 +185,14 @@ class FacebookController < ApplicationController
         # pending_request.data # tracking data
         logger.debug "Request ##{i}: #{pending_request.inspect}"
       end
-      accepted_requests = params[:request_ids].split(',')
+      if session[:request_ids]
+        logger.debug "Accepted requests fetched from session: #{session[:request_ids]}"
+        accepted_requests = session[:request_ids].split(',')
+        session[:request_ids] = nil
+      else
+        logger.debug "Accepted requests fetched from params: #{params[:request_ids]}"
+        accepted_requests = params[:request_ids].split(',')
+      end
       logger.debug "#{accepted_requests.length} accepted requests received:"
       accepted_requests.each_with_index do |rid, i|
         logger.debug "Acceptation ##{i}: accepting request #{rid.to_i}"
@@ -230,9 +230,10 @@ class FacebookController < ApplicationController
   end
 
   def redirect_to_auth_page
-    query_string        = (params[:request_ids]) ? "?request_ids=#{params[:request_ids]}" : ""
-    session[:login_url] = "#{login_url}#{query_string}"
-    bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, session[:login_url], :scope => "")
+    if params[:request_ids]
+      session[:request_ids] = params[:request_ids]
+    end
+    bust_iframe MiniFB.oauth_url(BeerQuest::FB_APP_ID, login_url, :scope => "")
   end
 
   def facebook_signed_request? (signed_request, secret)
