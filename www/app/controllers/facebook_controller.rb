@@ -33,6 +33,15 @@ class FacebookController < ApplicationController
   private
 
   def user_details
+    # Invitations Facebook
+    if params[:request_ids]
+      pending_requests = MiniFB.get(session[:access_token], 'me', :type => 'apprequests')
+      logger.debug "Pending requests are: #{pending_requests.inspect}"
+      params[:request_ids].split(',').each do |rid|
+        logger.debug "Invitation #{rid.to_i} accepted"
+      end
+    end
+
     # Facebook user
     if params[:signed_request]
       logger.debug "Decoding signed request #{params[:signed_request]}"

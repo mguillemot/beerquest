@@ -203,8 +203,8 @@ fr:
   invite:
     selector: "Défie tes amis à celui qui picolera le plus !"
     message1: "Allez viens BOIRE UNE BIERE avec moi ! Puis 2 :-) puis 3 :-P Et voyons voir qui en boira le plus !"
-    message2: "Si t'AIMES LA BIERE, viens en boire une avec moi sur Beer Quest IV. C'est un Puzzle Game fun et rapide où le champion sera celui qui pourra en boire le plus ! Viens vite, c'est fun et rapide à jouer !"
-    message3: "Je te paries que tu ne pourras pas boire plus de bière que moi ! Viens te mesure à moi sur Beer Quest IV. C'est un puzzle game fun et rapide à jouer où l'objectif est de boire un max de bière !"
+    message2: "Si t'AIMES LA BIERE, viens en boire une avec moi sur Beer Quest IV."
+    message3: "Je te paries que tu ne pourras pas boire plus de bière que moi ! Viens te mesure à moi sur Beer Quest IV."
   widget:
     title_html: 'Notre iBar est <span class="open">OUVERT</span> sur Facebook !'
     beer_count: "bues dans notre iBar"
