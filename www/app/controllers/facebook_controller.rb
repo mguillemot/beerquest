@@ -10,6 +10,7 @@ class FacebookController < ApplicationController
   before_filter :set_world_score
 
   def session_login
+    request_ids = session[:request_ids]
     reset_session
     if params[:code]
       logger.debug "Checking OAuth code..."
@@ -17,6 +18,10 @@ class FacebookController < ApplicationController
       session[:access_token] = fb_oauth['access_token']
       session[:facebook_id]  = MiniFB.get(session[:access_token], 'me').id
       logger.debug "Storing session: fbid=#{session[:facebook_id]} access_token=#{session[:access_token]}"
+      if request_ids
+        logger.debug "Restoring accepted requests into session: #{request_ids}"
+        session[:request_ids] = request_ids
+      end
       redirect_to full_url
     else
       logger.error "FB login seems error => bust IFrame and start again"
