@@ -2,11 +2,13 @@
 - #{t('invite.selector')}
 %h2 Invitation des amis
 :javascript
-  FB.ui({
-    method: 'apprequests',
-    title: "blablabla",
-    message: "#{invite_msg}",
-    data: "tracking test"
-    //filters: [{name: "", user_ids: []}]
-  });
-  console.log("res");
+  var initialized = function() {
+    FB.ui({
+      method: 'apprequests',
+      title: "blablabla",
+      message: "#{invite_msg}",
+      data: "tracking test"
+      //filters: [{name: "", user_ids: []}]
+    });
+    console.log("res");
+  };
