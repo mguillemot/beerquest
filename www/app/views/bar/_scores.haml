@@ -7,7 +7,12 @@
 .panes
   .pane#bar-scores
     %table.score-grid
-      = render :partial => 'partials/individual_score', :collection => @bar.weekly_top_scores
+      = render :partial => 'partials/individual_score', :collection => @bar.weekly_top_scores[0...3]
+      %tr
+        %td.invite{:colspan => 2}
+          %a{:href => invite_url}
+            = image_tag "invite_#{I18n.locale}.png", :width => 162, :height => 58, :alt => t('bar.scores.invite')
+      = render :partial => 'partials/individual_score', :collection => @bar.weekly_top_scores[3..-1]
   .pane#friends-scores
     %table.score-grid
       = render :partial => 'partials/individual_score', :collection => @me.weekly_friends_scores[0...3]
