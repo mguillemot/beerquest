@@ -1,11 +1,10 @@
 - invite_msg = t("invite.message#{@invite}")
-- #{t('invite.selector')}
 %h2 Invitation des amis
 :javascript
   var initialized = function() {
     FB.ui({
       method: 'apprequests',
-      title: "blablabla",
+      title: "#{t('invite.selector')}",
       message: "#{invite_msg}",
       data: "tracking test"
       //filters: [{name: "", user_ids: []}]
