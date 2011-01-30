@@ -577,7 +577,7 @@ module MiniFB
         params["access_token"] = "#{(access_token)}"
         params["metadata"] = "1" if options[:metadata]
         options[:params] = params
-        options[:method] = :post
+        options[:method] ||= :post # Erhune: added ||= instead of = to allow :delete method
         return fetch(url, options)
 
     end

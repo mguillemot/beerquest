@@ -37,13 +37,22 @@ class FacebookController < ApplicationController
     if params[:request_ids]
       pending_requests = MiniFB.get(session[:access_token], 'me', :type => 'apprequests')
       # <#Hashie::Mash data=[<#Hashie::Mash application=<#Hashie::Mash id="135204849839083" name="Beer Quest IV"> created_time="2011-01-30T12:16:37+0000" data="tracking test" from=<#Hashie::Mash id="100001227767696" name="Gérard Thaist"> id="1591009777659" message="Je te paries que tu ne pourras pas boire plus de bière que moi ! Viens te mesure |  moi sur Beer Quest IV. C'est un puzzle game fun et rapide |  jouer où l'objectif est de boire un max de bière !" to=<#Hashie::Mash id="1308311126" name="Matthieu Guillemot">>]>
-      logger.debug "#{pending_requests.length }ending requests found"
-      pending_requests.data.each do |pending_request|
+      logger.debug "#{pending_requests.length} pending requests found:"
+      pending_requests.data.each_with_index do |pending_request,i|
         # pending_request.data # tracking data
-        logger.debug "Request: #{pending_request.inspect}"
+        logger.debug "Request ##{i}: #{pending_request.inspect}"
       end
-      params[:request_ids].split(',').each do |rid|
-        logger.debug "Invitation #{rid.to_i} accepted"
+      accepted_requests = params[:request_ids].split(',')
+      logger.debug "#{accepted_requests.length} accepted requests received:"
+      accepted_requests.each_with_index do |rid,i|
+        logger.debug "Acceptation ##{i}: accepting request #{rid.to_i}"
+        res = MiniFB.post(session[:access_token], rid.to_i, :method => :delete)
+        logger.debug "Deletion result is #{res.inspect}"
+        invite = Invite.first(:request_id => rid.to_i)
+        logger.debug "Found correponding BQ invite: #{invite.inspect}"
+        invite.lang = "accepted" # TODO
+        invite.save
+        logger.debug "BQ invite saved: #{invite.saved?}"
       end
     end
 
