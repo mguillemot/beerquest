@@ -201,11 +201,10 @@ en:
         question: "Pourquoi une démarche aussi loufoque ?"
         answer_html: "Parce que nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, <a href=\"http://blog.bq-4.com/?lang=en\" target=\"_blank\">venez lire notre beer-blog</a> et nous donner vos conseils."
   invite:
-    type: "BeerQuest Challenge"
-    message: "Come get some (beer), dood!"
-    accept: "Ok, let's see!"
-    refuse: "Oh no, pleeease!"
     selector: "So your friends think they can beat you at drinking?!?"
+    message1: "Allez viens BOIRE UNE BIERE avec moi ! Puis 2 :-) puis 3 :-P Et voyons voir qui en boira le plus !"
+    message2: "Si t'AIMES LA BIERE, viens en boire une avec moi sur Beer Quest IV. C'est un Puzzle Game fun et rapide où le champion sera celui qui pourra en boire le plus ! Viens vite, c'est fun et rapide à jouer !"
+    message3: "Je te paries que tu ne pourras pas boire plus de bière que moi ! Viens te mesure à moi sur Beer Quest IV. C'est un puzzle game fun et rapide à jouer où l'objectif est de boire un max de bière !"
   widget:
     title_html: 'Our iBar is <span class="open">OPEN</span> on Facebook!'
     beer_count: "drunk in our iBar"

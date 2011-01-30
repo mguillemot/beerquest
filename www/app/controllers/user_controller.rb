@@ -3,12 +3,9 @@ class UserController < FacebookController
   protect_from_forgery :except => [:index, :invite_end] # index: canvas POST
 
   BARS_PER_PAGE = 3
+  INVITE_MESSAGES = 3
 
   def index
-    if params[:invited_by]
-      logger.info "This account was invited by #{params[:invited_by]}"
-    end
-
     unless @me.first_login
       # User's first login: send him to the default bar
       logger.debug "This is account #{@me.id} (#{@me.full_name}) first time here!"
@@ -54,16 +51,14 @@ class UserController < FacebookController
   def invite
     @nav     = 'challenge'
     @exclude = @me.already_invited_friends_fbids
-    @invite  = 1
+    @invite  = 1 + rand(INVITE_MESSAGES)
   end
 
   def invite_end
-    logger.info "Sending invites to the following users: #{params[:ids].inspect}"
-    # TODO stocker pour ne pas renvoyer d'invite de suite
-    # TODO envoyer notif FB
+    logger.info "Sent invites (msg=#{params[:msg]}, lang=#{I18n.locale}) to the following users: #{params[:ids].inspect}"
     if params[:ids]
       params[:ids].each do |id|
-        @me.invites.create(:friend_facebook_id => id)
+        @me.invites.create(:friend_facebook_id => id, :message => params[:msg], :lang => I18n.locale)
       end
     end
     redirect_to home_url

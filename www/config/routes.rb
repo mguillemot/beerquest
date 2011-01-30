@@ -2,13 +2,12 @@ BeerQuest::Application.routes.draw do
 
   # User pages
   root                               :to => "user#index",                     :as => 'home', :via => [:get, :post] # Canvas POST
-  match "from/:invited_by",         :to => "user#index",                     :as => 'invited_by', :via => [:get, :post]
   get "world-score",                :to => "user#async_world_score",         :as => 'async_world_score'
   get "bars/favorites/:page",       :to => "user#async_favorites",           :as => 'async_favorites'
   get "bars/partners/:page",        :to => "user#async_partners",            :as => 'async_partners'
   get "bars/search/:prefix/:page",  :to => "user#async_search",              :as => 'async_search'
   get "invite",                     :to => "user#invite",                    :as => 'invite'
-  match "invite-done",              :to => "user#invite_end",                :as => 'invite_end', :via => [:get, :post]
+  match "invite-done/:msg",         :to => "user#invite_end",                :as => 'invite_end', :via => [:get, :post]
 
   # Bar pages
   get "bar/:id",                    :to => "bar#show",                       :as => 'bar'
