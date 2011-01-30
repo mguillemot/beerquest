@@ -8,6 +8,12 @@
       message: "#{invite_msg}",
       data: "tracking test"
       //filters: [{name: "", user_ids: []}]
+    }, function(response) {
+      console.log(response);
+      if (response && response.request_ids) {
+        alert('ok');
+      } else {
+        alert('Post was not published.');
+      }
     });
-    console.log("res");
   };

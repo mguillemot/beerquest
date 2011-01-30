@@ -36,7 +36,12 @@ class FacebookController < ApplicationController
     # Invitations Facebook
     if params[:request_ids]
       pending_requests = MiniFB.get(session[:access_token], 'me', :type => 'apprequests')
-      logger.debug "Pending requests are: #{pending_requests.inspect}"
+      # <#Hashie::Mash data=[<#Hashie::Mash application=<#Hashie::Mash id="135204849839083" name="Beer Quest IV"> created_time="2011-01-30T12:16:37+0000" data="tracking test" from=<#Hashie::Mash id="100001227767696" name="Gérard Thaist"> id="1591009777659" message="Je te paries que tu ne pourras pas boire plus de bière que moi ! Viens te mesure |  moi sur Beer Quest IV. C'est un puzzle game fun et rapide |  jouer où l'objectif est de boire un max de bière !" to=<#Hashie::Mash id="1308311126" name="Matthieu Guillemot">>]>
+      logger.debug "#{pending_requests.length }ending requests found"
+      pending_requests.data.each do |pending_request|
+        # pending_request.data # tracking data
+        logger.debug "Request: #{pending_request.inspect}"
+      end
       params[:request_ids].split(',').each do |rid|
         logger.debug "Invitation #{rid.to_i} accepted"
       end
