@@ -22,7 +22,7 @@ class FacebookController < ApplicationController
         logger.debug "Restoring accepted requests into session: #{request_ids}"
         session[:request_ids] = request_ids
       end
-      redirect_to full_url
+      redirect_to BeerQuest::FB_APP_URL
     else
       logger.error "FB login seems error => bust IFrame and start again"
       redirect_to_auth_page
