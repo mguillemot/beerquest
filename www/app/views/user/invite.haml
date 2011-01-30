@@ -1,8 +1,9 @@
 %fb:serverFbml{:width => '760px'}
   %script{:type => 'text/fbml'}
     %fb:fbml
+      -# type=bouton "Envoyer une demande XXXXXXX", titre box "Afficher l'aperçu de l'invitation XXXXXX", invitation "Vous avez une demande de XXXXXX"
       %fb:request-form{:method => 'POST',
-          :type => t("beerquest"), # bouton "Envoyer une demande XXXXXXX", titre box "Afficher l'aperçu de l'invitation XXXXXX", invitation "Vous avez une demande de XXXXXX"
+          :type => t("beerquest"),
           :content => t("invite.message#{@invite}"),
           :action => invite_end_url(@invite)}
         %fb:multi-friend-selector{:actiontext => t('invite.selector'),
