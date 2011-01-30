@@ -115,12 +115,9 @@ class AdminController < ApplicationController
   end
 
   def restrictions
-#    set_restrictions({})
-#    restrictions = get_restrictions
-#    render :text => restrictions.inspect
-    cred = MiniFB.authenticate_as_app(BeerQuest::FB_APP_ID, BeerQuest::FB_SECRET)
-    pending_requests = MiniFB.get(cred['access_token'], 1591135740808)
-    render :text => pending_requests.inspect
+    set_restrictions({})
+    restrictions = get_restrictions
+    render :text => restrictions.inspect
   end
 
   private

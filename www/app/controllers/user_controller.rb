@@ -49,16 +49,25 @@ class UserController < FacebookController
   end
 
   def invite
-    @nav             = 'challenge'
-    @exclude         = @me.already_invited_friends_fbids
-    session[:invite] = @invite = 1 + rand(INVITE_MESSAGES)
+    @nav     = 'challenge'
+    @exclude = @me.already_invited_friends_fbids
+    @invite  = 1 + rand(INVITE_MESSAGES)
   end
 
   def invite_end
     if params[:ids]
       logger.info "Sent the following #{params[:ids].length} invite requests with message #{session[:invite]}: #{params[:ids].inspect}"
+      cred = MiniFB.authenticate_as_app(BeerQuest::FB_APP_ID, BeerQuest::FB_SECRET)
       params[:ids].each do |id|
-        @me.invites.create(:request_id => id, :message => session[:invite], :lang => I18n.locale)
+        request = MiniFB.get(cred['access_token'], id)
+        @me.invites.create({
+                                   :request_id         => id,
+                                   :lang               => I18n.locale,
+                                   :data               => request.data,
+                                   :message            => request.message,
+                                   :friend_facebook_id => request.to.id,
+                                   :friend_name        => request.to.name
+                           })
       end
     else
       logger.warn "Invitation ended without sending any requests"
