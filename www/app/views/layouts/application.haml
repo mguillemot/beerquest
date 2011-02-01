@@ -37,9 +37,26 @@
 
   %body
     #fb-root
-    = javascript_include_tag "http://connect.facebook.net/#{I18n.locale == :fr ? 'fr_FR' : 'en_US'}/all.js"
     :javascript
-      FB.init({appId: "#{BeerQuest::FB_API_KEY}", status: true, cookie: true, xfbml: true});
+      var initialized = function(){};
+      window.fbAsyncInit = function() {
+        FB.init({appId: "#{BeerQuest::FB_API_KEY}", status: true, cookie: true, xfbml: true});
+        //FB.Canvas.setAutoResize();
+        FB.Array.forEach([200, 600, 1000, 2000, 5000, 10000], function(delay) {
+          setTimeout(function() { FB.Arbiter.inform("setSize", FB.Canvas._computeContentSize()) }, delay);
+        });
+        initialized();
+      };
+      (function() {
+        var e = document.createElement('script');
+        e.async = true;
+        e.src = document.location.protocol + '//connect.facebook.net/#{I18n.locale == :fr ? 'fr_FR' : 'en_US'}/all.js';
+        document.getElementById('fb-root').appendChild(e);
+      }());
+
+      function reloadWorldScore() {
+        $.get("#{async_world_score_url}");
+      }
     #main
       #header
         #banner
