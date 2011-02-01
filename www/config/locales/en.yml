@@ -201,10 +201,10 @@ en:
         question: "Pourquoi une démarche aussi loufoque ?"
         answer_html: "Parce que nous voulons dominer le monde, or statistiquement il est plus probable que nous puissions y arriver en faisant n'importe quoi plutôt qu'en établissant un long plan réfléchis et machiavélique. Mais si vous croyez pouvoir dominer le monde avant nous, <a href=\"http://blog.bq-4.com/?lang=en\" target=\"_blank\">venez lire notre beer-blog</a> et nous donner vos conseils."
   invite:
-    selector: "So your friends think they can beat you at drinking?!?"
+    selector: "Your friends think they can drink more than you?!?"
     message1: "Come and DRINK A BEER with me! Then 2... or 3... And let's see who drinks the most!"
     message2: "If you LIKE BEER, come and drink one with me on Beer Quest IV."
-    message3: "I bet you won't drink more beer than me. Come and challenge me on Beer Quest IV!"
+    message3: "I bet you won't drink mor ebeer than me. Come and challenge me on Beer Quest IV!"
   widget:
     title_html: 'Our iBar is <span class="open">OPEN</span> on Facebook!'
     beer_count: "drunk in our iBar"
