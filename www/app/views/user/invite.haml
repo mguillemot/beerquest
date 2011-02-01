@@ -1,7 +1,6 @@
 .empty
 - invite_msg = t("invite.message#{@invite}")
 :javascript
-  var initialized = function() {
     FB.ui({
       method: 'apprequests',
       title: "#{t('invite.selector')}",
@@ -20,4 +19,3 @@
         window.location = "#{home_url}";
       }
     });
-  };
