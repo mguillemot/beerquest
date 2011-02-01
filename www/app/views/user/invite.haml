@@ -1,21 +1,4 @@
 .empty
 - invite_msg = t("invite.message#{@invite}")
 :javascript
-    FB.ui({
-      method: 'apprequests',
-      title: "#{t('invite.selector')}",
-      message: "#{invite_msg}",
-      data: "uid=#{@me.id},msg=#{@invite}"
-      //filters: [{name: "", user_ids: []}]
-    }, function(response) {
-      if (response && response.request_ids) {
-        $.post("#{invite_end_url}", {
-          authenticity_token: "#{form_authenticity_token}",
-          ids: response.request_ids
-        }, function() {
-          window.location = "#{home_url}";
-        });
-      } else {
-        window.location = "#{home_url}";
-      }
-    });
+  FB.ui({ method: 'apprequests', message: 'Here is a new Requests dialog...'});
