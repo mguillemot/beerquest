@@ -4,6 +4,20 @@
   var initialized = function() {
     FB.ui({
       method: 'apprequests',
-      message: "#{invite_msg}"
+      title: "So your friends think they can beat you at drinking",
+      message: "#{invite_msg}",
+      data: "uid=#{@me.id},msg=#{@invite}"
+      //filters: [{name: "", user_ids: []}]
+    }, function(response) {
+      if (response && response.request_ids) {
+        $.post("#{invite_end_url}", {
+          authenticity_token: "#{form_authenticity_token}",
+          ids: response.request_ids
+        }, function() {
+          window.location = "#{home_url}";
+        });
+      } else {
+        window.location = "#{home_url}";
+      }
     });
   };
