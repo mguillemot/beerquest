@@ -86,7 +86,7 @@ class Replay
     scores = []
     raw.each do |r|
       acc = accounts[r.account_id]
-      scores << {:rank => scores.length + 1, :account_id => acc.id, :profile_picture => acc.profile_picture, :name => acc.first_name, :score => r.score}
+      scores << {:rank => scores.length + 1, :account_id => acc.id, :profile_picture => acc.profile_picture, :name => acc.display_name, :score => r.score}
     end
     scores
   end
@@ -108,7 +108,7 @@ class Replay
     scores = []
     raw.each do |r|
       acc = accounts[r.account_id]
-      scores << {:rank => scores.length + 1, :account_id => acc.id, :profile_picture => acc.profile_picture, :name => acc.first_name, :score => r.score}
+      scores << {:rank => scores.length + 1, :account_id => acc.id, :profile_picture => acc.profile_picture, :name => acc.display_name, :score => r.score}
     end
     scores
   end

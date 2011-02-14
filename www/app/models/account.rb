@@ -28,6 +28,10 @@ class Account
     "http://graph.facebook.com/#{facebook_id}/picture"
   end
 
+  def display_name
+    (first_name.length > 20) ? "#{first_name[0..20]}..." : first_name
+  end
+
   def last_bar
     # TODO updater les barships pour savoir lequel est le VRAI last
     last_barship = barships.first(:order => :updated_at.desc)
