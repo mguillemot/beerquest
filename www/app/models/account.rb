@@ -29,7 +29,7 @@ class Account
   end
 
   def display_name
-    (first_name.length > 15) ? "#{first_name[0..15]}..." : first_name
+    (first_name.length > 10) ? "#{first_name[0...10]}..." : first_name
   end
 
   def last_bar
