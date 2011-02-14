@@ -33,9 +33,8 @@ class Account
   end
 
   def last_bar
-    # TODO updater les barships pour savoir lequel est le VRAI last
-    last_barship = barships.first(:order => :updated_at.desc)
-    last_barship ? last_barship.bar : Bar.default_bar
+    last_replay = replays.first(:order => :created_at.desc)
+    last_replay ? replay.bar : Bar.default_bar
   end
 
   def total_beers
