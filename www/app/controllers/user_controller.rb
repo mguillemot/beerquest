@@ -15,6 +15,7 @@ class UserController < FacebookController
       return true
     end
 
+    logger.debug "This is NOT account #{@me.id} (#{@me.full_name}) first time, his last replay is #{@me.replays.first(:order => :created_at.desc)}"
     @nav = 'home'
 #    set_favorites(1)
 #    set_partners(1)
