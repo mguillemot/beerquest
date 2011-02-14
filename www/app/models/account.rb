@@ -34,7 +34,7 @@ class Account
 
   def last_bar
     last_replay = replays.first(:order => :created_at.desc)
-    last_replay ? replay.bar : Bar.default_bar
+    last_replay ? last_replay.bar : Bar.default_bar
   end
 
   def total_beers
