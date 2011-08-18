@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <cross-domain-policy>
   <allow-access-from domain="localhost" />
-  <allow-access-from domain="erhune.iobb.net" />
   <allow-access-from domain="www.bq-4.com" />
+  <allow-access-from domain="npng.org" />
 </cross-domain-policy>

@@ -44,11 +44,11 @@ module ApplicationHelper
   def client_swf
     file = Game::Constants::RELEASE_VERSION
     file = "#{Game::Constants::DEBUG_VERSION}-debug" if @admin
-    "/swf/BeerQuest-#{file}.swf"
+    static_asset_url("BeerQuest-#{file}.swf", 'swf')
   end
 
-  def static_asset_url(asset)
-    "http://www.bq-4.com/images/#{asset}"
+  def static_asset_url(asset, type = 'images')
+    "https://npng.org/#{type}/#{asset}"
   end
 
   def blog_url
