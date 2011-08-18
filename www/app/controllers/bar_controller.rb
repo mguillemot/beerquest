@@ -36,7 +36,7 @@ class BarController < FacebookController
   end
 
   def async_messages
-    logger.debug "Récupération du bar #{params[:id]}..."
+    logger.debug "Get bar #{params[:id]}..."
     @bar = Bar.get!(params[:id])
     logger.debug "Messages for bar #{@bar.id}"
     respond_to do |format|
