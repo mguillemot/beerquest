@@ -7,6 +7,10 @@ DM_VERSION    = '1.0.2'
 #  gem 'mongrel'
 #end
 
+group :production
+  gem 'unicorn'
+end
+
 #gem 'rails',                RAILS_VERSION
 #gem 'activerecord',         RAILS_VERSION
 #gem 'activeresource',       RAILS_VERSION
@@ -30,11 +34,12 @@ gem 'dm-observer', DM_VERSION
 gem 'dm-serializer', DM_VERSION
 gem 'dm-adjust', DM_VERSION
 
-gem 'system_timer' if RUBY_PLATFORM =~ /linux/
+#gem 'system_timer' if RUBY_PLATFORM =~ /linux/
 gem 'redis'
 gem 'rails3-redis-session-store', '0.3.0', :path => "vendor/gems/rails3-redis-session-store-0.3.0"
 
 gem 'haml'
+gem 'sass'
 
 gem 'json'
 gem 'rest-client'
